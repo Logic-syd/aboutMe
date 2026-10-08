@@ -68,3 +68,10 @@ To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/ab
 - Production build and ESLint passed. Chrome checks at 1440, 768, 390 and 320 pixels covered 24 project selections, 92 technology selections and 24 case-study destinations. Real sphere dragging, click-to-expand, root reset, orbit rotation, zoom controls, keyboard selection, reduced motion and forced WebGL failure all passed, with no unexpected browser errors.
 - Homepage plus all six detail routes passed 28 page/viewport checks: HTTP 200, no horizontal overflow, no console or page errors, no failed resources, valid link/anchor targets and correct unreleased statuses. The 404 and keyboard skip link also passed.
 - Desktop and phone graph screenshots reviewed. Production dependency audit: zero vulnerabilities. Public Vercel deployment still requires account login.
+
+## Left-expanding branch layout correction
+
+- Corrected the expanded composition: the root remains near the center-right, the five unselected projects move to the right, and the selected project emits technology spheres to the left. Contribution nodes extend farther left.
+- Replaced immediate position reassignment with spring motion. New child nodes start at their parent's actual position, with short staggered delays; reduced motion still updates positions immediately.
+- Adapted tablet label widths and line boxes; phones keep five compact project satellites on the right and expose their names through the existing project picker.
+- Production build and ESLint passed. Four viewport sizes (1440, 768, 390, 320) covered 24 branch layouts, verifying root position, sibling direction, left expansion and labels within the scene. Actual animated launch traveled left from its parent. The 24 project selections, 92 technology selections, dragging, rotation, keyboard, reduced motion and WebGL fallback checks passed without unexpected browser errors.

@@ -146,3 +146,9 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 @media(max-width:650px){.three-stage-hint{width:calc(100% - 30px);max-width:none;white-space:normal;line-height:1.6}}
 
 @media(max-width:650px){.label-project{width:105px;white-space:normal}.label-technology{max-width:105px;white-space:normal}}
+
+@media(min-width:651px) and (max-width:1000px){.label-project{width:110px;white-space:normal}.label-root{padding:8px 10px;min-width:100px}.label-root strong{font-size:18px}.space-label strong{font-size:11px}.label-leaf{width:110px}.label-leaf strong{font-size:10px}.label-technology{max-width:105px;white-space:normal}}
+/* Keep label line boxes proportional to their text, including wrapped titles. */
+.space-label{font-size:12px}
+@media(min-width:651px) and (max-width:1000px){.space-label{font-size:11px}.space-label.label-root strong{font-size:18px}}
+@media(max-width:650px){.space-label{font-size:10px}}
