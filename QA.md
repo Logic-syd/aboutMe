@@ -44,3 +44,15 @@ To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/ab
 - Editing prompt: Apply opaque gray privacy masks to the personal/group title, full map geography/route and portrait; retain Tencent Maps attribution where possible; preserve original timer, metrics, Chinese instructions and controls; do not invent or redesign the interface.
 - Verified `http://www.danzle.com/web/index.html` returned HTTP 200 and the company title 上海淡竹体育科技有限公司. HTTPS failed certificate validation, so the supplied working HTTP link is used and labeled as the company website, not a mini-program demo.
 - Validation for this addition: production build, ESLint and TypeScript passed; browser checks at 1440, 768, 390 and 320 pixels confirmed no horizontal overflow or console errors, successful image loading, a working full-image popup and the exact company-link destination.
+
+
+## Interactive project graph and schematic career map
+
+- React Flow renders all six projects and ten technology/approach categories. Project selections display responsibilities, technologies, accurate release status and a case-study link; technology selections expose related projects.
+- Phone layouts show a focused, readable subgraph rather than a shrunken full network. The complete six-project picker and optional case-card view remain available.
+- Leaflet uses an original local SVG with a non-geographic coordinate system. Munich is enlarged on the left and labeled as the current base; Shanghai and Hangzhou appear on the right. Explicitly labeled not to scale.
+- User-confirmed work areas: NeuVerge-Tron / Sungrow — Munich; Danzhu — Caohejing, Shanghai; GLP — Zhangjiang, Pudong, Shanghai; Longshine — near West Lake, Hangzhou; Fingard — near Xixi Wetland, Hangzhou.
+- The published schematic makes no requests to external map or geocoding services. The provisional geographic basemap was removed.
+- Browser checks at 1440, 768, 390 and 320 pixels: 24 case-study link checks, 58 technology selections, 20 company selections and 20 actual map-pin clicks passed, plus graph zoom/reset, map reset and the six-card disclosure. No horizontal overflow or browser errors.
+- Graph and map screenshots reviewed at desktop and phone sizes.
+- Keyboard activation of project selectors, technology nodes, company selectors and map pins passed. With the map illustration deliberately blocked, the fallback message and experience navigation remained usable. Zero third-party network requests were observed. Production dependency audit reports zero vulnerabilities.

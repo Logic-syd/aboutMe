@@ -11,7 +11,7 @@ export function Header({ detail = false }: { detail?: boolean }) {
   </header>;
 }
 export function Footer() {
-  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link><p>Thoughtful interfaces. Reliable delivery.</p><a href="#top">Back to top ↑</a></footer>;
+  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link><p>Built with Next.js, React Flow & Leaflet.</p><a href="#top">Back to top ↑</a></footer>;
 }
 export function Contact() {
   return <section id="contact" className="contact-section">
