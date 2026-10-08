@@ -11,3 +11,85 @@
 /* Keep case-study body copy comfortable on compact screens. */
 .project-description{font-size:14px}.small-project>p:not(.eyebrow),.about-copy p,.experience-row p:last-child{font-size:14px}.project-name{font-size:12px}.text-link{font-size:13px}.tags li{font-size:10px}.work-note{font-size:11px}
 @media(max-width:650px){.project-description,.small-project>p:not(.eyebrow),.about-copy p,.experience-row p:last-child{font-size:14px}.about-copy .large-copy{font-size:20px}.hero-bottom p{font-size:15px}}
+
+/* An original portfolio composition inspired by editorial, orbital layouts. */
+:root{--paper:#f5f4f0;--line:#d9d8d2;--ink:#222321;--muted:#62645e;--pink:#ab4364}
+.craft-header{max-width:none;height:64px;border-bottom:1px solid var(--line);padding:0 36px;background:var(--paper)}
+.craft-header .wordmark{font-size:30px;letter-spacing:-2px;padding-right:29px;border-right:1px solid var(--line);height:64px;display:flex;align-items:center}
+.craft-header nav{font-family:monospace;text-transform:uppercase;letter-spacing:1.5px;font-size:11px;gap:32px}
+.craft-header .nav-contact{border-radius:0;background:var(--ink);color:var(--paper);border-color:var(--ink);padding:12px 20px}
+.craft-header .nav-contact:hover{background:var(--pink);color:#fff}
+.orbit-hero{position:relative;padding:0;isolation:isolate;min-height:810px;overflow:hidden;max-width:1800px;margin:0 auto}
+.hero-topline{position:absolute;left:36px;right:36px;top:24px;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.hero-topline .eyebrow,.hero-role,.hero-base,.hero-bottomline,.orbit-card-meta,.orbit-card-state,.tech-strip,.section-heading .eyebrow,.more-work-heading>span{font-family:monospace}
+.hero-topline .eyebrow{font-size:10px;letter-spacing:1.3px;color:var(--muted)}
+.hero-topline .availability{background:var(--paper);font-size:10px}
+.orbit-lines{position:absolute;inset:-30px 0;z-index:-2;color:#b4b3a9;opacity:.62;pointer-events:none}
+.orbit-lines svg{height:100%;width:100%;stroke-width:.8}
+.hero-center{position:relative;z-index:2;margin:0 auto;text-align:center;padding-top:233px;max-width:910px;pointer-events:none}
+.hero-center::before{content:"";position:absolute;inset:168px -35px 0;z-index:-1;background:radial-gradient(ellipse closest-side,var(--paper) 70%,#f5f4f000 100%);pointer-events:none}
+.hero-center a{pointer-events:auto}
+.hero-role{font-size:11px;letter-spacing:2.2px;color:var(--muted)}
+.orbit-hero h1{font-family:Arial,Helvetica,sans-serif;font-size:clamp(72px,8.5vw,122px);font-weight:800;line-height:1;letter-spacing:-7px;margin:21px 0 25px;white-space:nowrap}
+.orbit-hero h1 .pink-period{color:var(--pink)}
+.hero-center h2{font-size:32px;font-weight:500;letter-spacing:-1.1px;line-height:1.2}
+.hero-center h2 em{font-weight:400;color:var(--pink)}
+.mobile-break{display:none}
+.hero-intro{max-width:435px;margin:22px auto 0;color:var(--muted);font-size:16px;line-height:1.8}
+.hero-actions{display:flex;justify-content:center;gap:12px;margin-top:29px}
+.hero-actions .button{border-radius:0;padding:14px 20px;gap:24px;font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:.8px;border:1px solid var(--ink)}
+.button-outline{background:var(--paper);color:var(--ink)}
+.button-outline:hover{background:var(--blush);color:var(--ink);border-color:var(--pink)}
+.hero-base{font-size:9px;letter-spacing:1.2px;color:var(--muted);margin-top:25px}
+.hero-base span{margin:0 12px;color:var(--pink)}
+.hero-bottomline{position:absolute;bottom:21px;left:36px;right:36px;display:flex;justify-content:space-between;align-items:center;font-size:9px;letter-spacing:1px;color:var(--muted);gap:20px}
+.hero-bottomline>span:last-child{max-width:170px;text-align:right;line-height:1.6}
+.hero-bottomline a:hover{color:var(--pink)}
+.orbit-axis{position:absolute;top:90px;bottom:90px;right:0;display:flex;flex-direction:column;justify-content:space-between;color:#797b73;font-family:monospace;font-size:8px;pointer-events:none}
+.orbit-axis span{display:flex;align-items:center;gap:8px}.orbit-axis span::after{content:"";width:14px;height:1px;background:#a4a59c}
+.orbit-card{position:absolute;width:173px;z-index:1;background:#f9f8f4;border:1px solid #d1d2c9;padding:15px 16px;box-shadow:0 8px 24px #353c2910;transition:transform .2s,border-color .2s;line-height:1.5}
+.orbit-card:hover{transform:translateY(-6px) rotate(0);border-color:var(--pink)}
+.orbit-card-meta{display:flex;justify-content:space-between;align-items:center;font-size:8px;letter-spacing:1px;color:var(--muted);margin-bottom:14px}
+.orbit-card-meta>span:last-child{color:var(--pink);font-size:14px}
+.orbit-card strong{font-size:17px;font-weight:500;letter-spacing:-.5px;display:block}
+.orbit-card-detail{font-size:10px;color:var(--muted);display:block;margin-top:3px}
+.orbit-card-state{font-size:8px;display:flex;align-items:center;gap:5px;margin-top:15px;color:#5b6258}
+.orbit-card-state i{width:4px;height:4px;background:#738263;border-radius:50%}.orbit-card-state.is-progress i{background:#a87b43}
+.orbit-card-1{left:17%;top:85px;transform:rotate(-7deg);background:#ecefe4}
+.orbit-card-2{right:16%;top:86px;transform:rotate(7deg);background:#f2e8dc}
+.orbit-card-3{left:3.7%;top:350px;transform:rotate(-5deg);background:#eee5ef}
+.orbit-card-4{right:3.7%;top:350px;transform:rotate(5deg);background:#f1e3e7}
+.orbit-card-5{left:17%;bottom:75px;transform:rotate(5deg);background:#e7ebe8}
+.orbit-card-6{right:16%;bottom:75px;transform:rotate(-6deg);background:#e8eaf0}
+.tech-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:17px 0;font-size:10px;text-transform:uppercase;letter-spacing:1.4px}
+.tech-strip>div{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap}.tech-strip span{display:flex;align-items:center;gap:11px}.tech-strip i{width:4px;height:4px;background:var(--pink)}
+.work-section{padding-top:82px}.section-heading h2{font-size:40px;letter-spacing:-1.6px;max-width:650px}.section-heading>p{font-size:13px}
+.craft-projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line);margin-bottom:57px}
+.craft-projects .featured-project{display:flex;flex-direction:column;gap:0;padding:0;margin:0;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);align-items:stretch;min-width:0}
+.craft-projects .diagram-link{padding:15px 15px 0}.craft-projects .diagram{border-radius:0;min-height:270px;padding:14px 11px}
+.craft-projects .diagram-flow{width:91%;padding:13px 0}.craft-projects .flow-node{padding:9px 10px;font-size:10px;gap:9px;border-radius:2px}
+.craft-projects .diagram figcaption{font-size:8px;letter-spacing:0}.craft-projects .diagram-top{font-size:8px;letter-spacing:.7px}
+.craft-projects .project-copy{padding:26px;display:flex;flex-direction:column;align-items:start;flex:1}
+.craft-projects .project-kicker{font-size:9px;letter-spacing:.5px;min-height:29px}.craft-projects .status{font-size:10px}
+.craft-projects .project-copy h3{font-size:29px;line-height:1.1;margin:19px 0 14px;max-width:none;min-height:96px}
+.craft-projects .project-name{font-size:11px;min-height:36px}.craft-projects .project-description{font-size:14px;line-height:1.85;margin-bottom:21px}
+.craft-projects .tags{margin-top:auto}.craft-projects .text-link{font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:.3px}
+.project-grid{gap:0;border-left:1px solid var(--line)}.small-project{border-radius:0;border-left:0}.small-project-top{font-family:monospace;font-size:19px}.tags li{border-radius:0}
+.about-section{background:#efeee8}.about-grid h2{font-size:49px}.experience-domain{font-family:monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+.contact-section{background:#f0e0e4;border-top:1px solid #dec9d0}.contact-inner h2{font-size:49px}.footer .wordmark{font-size:29px}
+.case-header h1{font-weight:600}.case-study .diagram,.delivery{border-radius:0}
+@media(min-width:1700px){.orbit-card-3{left:9%}.orbit-card-4{right:9%}}
+@media(max-width:1100px) and (min-width:651px){.orbit-hero{min-height:780px}.hero-center{padding-top:229px}.orbit-hero h1{font-size:9vw;letter-spacing:-5px}.hero-center h2{font-size:28px}.orbit-card{width:147px;padding:12px}.orbit-card strong{font-size:15px}.orbit-card-1,.orbit-card-5{left:10%}.orbit-card-2,.orbit-card-6{right:10%}.orbit-card-3{left:2%;top:398px}.orbit-card-4{right:2%;top:398px}.hero-intro{max-width:350px;font-size:15px}.craft-projects .project-copy{padding:20px}.craft-projects .project-copy h3{font-size:25px;min-height:115px}.craft-projects .diagram-link{padding:9px 9px 0}.craft-projects .diagram-flow{width:100%}.craft-projects .diagram figcaption{font-size:7px}.craft-projects .flow-node{font-size:9px;gap:6px;padding:8px}.craft-projects .project-kicker{font-size:8px}.hero-actions .button{padding:13px;font-size:10px;gap:12px}}
+@media(max-width:800px) and (min-width:651px){.orbit-card-3,.orbit-card-4{top:580px}.orbit-card-5,.orbit-card-6{bottom:auto;top:90px}.orbit-card-1{left:4%;top:130px}.orbit-card-2{right:4%;top:130px}.orbit-card-5{left:27%;top:65px}.orbit-card-6{right:27%;top:65px}.hero-center{padding-top:295px}.hero-center h2{font-size:26px}.hero-bottomline{bottom:15px}.hero-bottomline>span:last-child{display:none}.craft-projects{grid-template-columns:1fr}.craft-projects .featured-project{display:grid;grid-template-columns:1fr 1fr}.craft-projects .diagram-link{padding:15px}.craft-projects .diagram{height:100%;min-height:310px}.craft-projects .project-copy h3{min-height:0}.craft-projects .project-kicker,.craft-projects .project-name{min-height:0}.craft-projects .project-copy{padding:25px 20px}.craft-projects .flow-node{font-size:12px;padding:12px}}
+@media(max-width:650px){
+.craft-header{height:64px;padding:0 20px}.craft-header .wordmark{height:64px;padding-right:20px;font-size:29px}.craft-header nav{gap:17px;font-size:9px;letter-spacing:.4px}.craft-header .nav-contact{padding:9px 12px}.craft-header .nav-contact span{margin-left:4px}
+.orbit-hero{min-height:0;padding:0 23px 24px;overflow:hidden}.hero-topline{position:relative;left:auto;right:auto;top:auto;padding-top:22px;gap:12px}.hero-topline .eyebrow{font-size:8px;letter-spacing:.6px}.hero-topline .availability{font-size:8px;padding:4px 8px;gap:5px}.hero-topline .availability i{width:4px;height:4px}
+.orbit-lines{inset:-50px -230px 190px;opacity:.42}.hero-center{padding-top:63px;max-width:100%;}.hero-center::before{inset:20px -70px -20px;background:radial-gradient(ellipse closest-side,var(--paper) 70%,#f5f4f000 100%)}
+.hero-role{font-size:9px;letter-spacing:1.3px}.orbit-hero h1{font-size:clamp(39px,10.8vw,69px);letter-spacing:-2.6px;line-height:1.05;margin:20px 0 21px;font-weight:800}.hero-center h2{font-size:27px;letter-spacing:-.8px;line-height:1.2}.mobile-break{display:block}.hero-intro{max-width:340px;font-size:14px;line-height:1.85;margin-top:20px}.hero-actions{gap:9px;margin-top:24px}.hero-actions .button{font-size:9px;letter-spacing:.3px;padding:13px 11px;gap:12px}.hero-base{font-size:8px;letter-spacing:.7px;margin-top:21px}.hero-base span{margin:0 6px}
+.orbit-projects{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:43px;z-index:2}.orbit-card{position:relative;inset:auto;width:auto;padding:12px 13px;transform:none!important;box-shadow:none;min-width:0}.orbit-card-meta{font-size:7px;letter-spacing:.8px;margin-bottom:7px}.orbit-card-meta>span:last-child{font-size:12px}.orbit-card strong{font-size:16px;letter-spacing:-.4px}.orbit-card-detail{font-size:9px;margin-top:3px}.orbit-card-state{font-size:7px;margin-top:11px}.orbit-axis{display:none}
+.hero-bottomline{position:relative;inset:auto;margin-top:27px;font-size:8px;letter-spacing:.5px;gap:10px}.hero-bottomline>span:last-child{display:none}
+.tech-strip{padding:15px 0;font-size:9px;letter-spacing:.8px}.tech-strip>div{display:grid;grid-template-columns:repeat(3,1fr);row-gap:11px;column-gap:15px}.tech-strip span{gap:7px}
+.work-section{padding-top:52px}.section-heading h2{font-size:33px;letter-spacing:-1.3px}.section-heading>p{font-size:12px}.craft-projects{grid-template-columns:1fr;margin-bottom:34px}.craft-projects .diagram-link{padding:14px 14px 0}.craft-projects .diagram{min-height:265px;padding:16px 14px}.craft-projects .diagram-flow{width:85%;padding:12px 0}.craft-projects .flow-node{padding:10px 13px;font-size:11px}.craft-projects .diagram figcaption{font-size:8px}.craft-projects .project-copy{padding:24px}.craft-projects .project-copy h3{min-height:0;font-size:31px;max-width:320px;margin-top:16px}.craft-projects .project-kicker,.craft-projects .project-name{min-height:0}.craft-projects .project-kicker{font-size:9px}.craft-projects .project-description{font-size:14px;margin-bottom:17px}.craft-projects .tags{margin-bottom:23px}.project-grid{grid-template-columns:1fr}.small-project{border-top:0}.small-project:first-child{border-top:1px solid var(--line)}.about-grid h2{font-size:40px}.contact-inner h2{font-size:39px}
+}
+@media(prefers-reduced-motion:reduce){.orbit-card{transition:none}}
+@media(max-width:650px){.orbit-hero{display:flex;flex-direction:column}.hero-topline{order:0}.hero-center{order:1;width:100%}.orbit-projects{order:2}.hero-bottomline{order:3}}

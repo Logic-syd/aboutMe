@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export function Header({ detail = false }: { detail?: boolean }) {
-  return <header className="site-header shell">
-    <Link className="wordmark" href="/" aria-label="Yidan Shao home">yidan<span>.</span></Link>
+  return <header className="site-header shell craft-header">
+    <Link className="wordmark" href="/" aria-label="Yidan Shao home">ys<span>.</span></Link>
     <nav aria-label="Main navigation">
       <a href={detail ? '/#work' : '#work'}>Work</a>
       <a href={detail ? '/#about' : '#about'}>About</a>
@@ -11,7 +11,7 @@ export function Header({ detail = false }: { detail?: boolean }) {
   </header>;
 }
 export function Footer() {
-  return <footer className="shell footer"><Link className="wordmark" href="/">yidan<span>.</span></Link><p>Thoughtful interfaces. Reliable delivery.</p><a href="#top">Back to top ↑</a></footer>;
+  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link><p>Thoughtful interfaces. Reliable delivery.</p><a href="#top">Back to top ↑</a></footer>;
 }
 export function Contact() {
   return <section id="contact" className="contact-section">
