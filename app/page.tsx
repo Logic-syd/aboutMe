@@ -45,7 +45,7 @@ export default function Home() {
           <div><p className="experience-domain">{experience.domain}</p><p className="experience-description">{experience.description}</p>{experience.project && <Link className="text-link experience-case-link" href={`/projects/${experience.project}`}>Read case study <span aria-hidden="true">↗</span></Link>}</div>
         </article>)}</div>
       </section>
-      <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><p className="eyebrow">04 / GROWTH MAP</p><h2 id="experience-title">Places that shaped my work.</h2></div><p>From Shanghai and Hangzhou to Munich.<br />Select a location to explore my experience.</p></div><CareerMap /></section>
+      <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><p className="eyebrow">04 / GROWTH MAP</p><h2 id="experience-title">Places that shaped my work.</h2></div><p>From Shanghai and Hangzhou to Munich.<br />Explore the places, people and memories along the way.</p></div><CareerMap /></section>
       <Contact />
     </main>
     <Footer />

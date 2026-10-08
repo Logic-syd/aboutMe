@@ -110,3 +110,12 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Failure removes the entire 3D explorer, including its fixed-height stage and controls, and renders all six case cards directly. Cards reuse the original content, status labels and detail links. Supported browsers retain the graph and optional card disclosure.
 - Final production build, TypeScript, ESLint and whitespace checks passed. Forced unsupported WebGL at 1440, 768, 390 and 320 pixels verified six visible cards, no dead stage or disclosure, correct unreleased statuses and 24 actual detail-page clicks. Desktop and phone fallback screenshots were reviewed.
 - Blocked context access, a lost live context, blocked dynamic imports and stalled imports all showed the same visible cards. Healthy WebGL in four viewport sizes passed 24 project/technology branch selections; no unexpected browser errors or horizontal overflow occurred.
+
+
+## Place stories and geographic area maps
+
+- Modification branch: `codex/place-stories-map`. Retained the enlarged Munich schematic and added five real geographic area views, loaded from local simplified OpenStreetMap GeoJSON. Maps use the portfolio palette; visible OSM attribution and ODbL extract documentation are included. No runtime external map requests or API keys are needed.
+- Place-led descriptions use verified common English names and link to official sources. Company reflections and personal memories come from the user, including Munich culture and English Garden/Freiheit coffee weekends, Caohejing game-company events, Zhangjiang plaid shirts, Friday West Lake traffic and after-work Xixi runs. Public geographic context is separate from first-person memories.
+- Corrected the most-recent-first work order to place GLP before Longshine. Schematic pins retain their correct physical locations through ID-based coordinates. The existing six project cases and release statuses are preserved.
+- Production build (including TypeScript) and ESLint passed. Browser checks at 1440, 768, 390 and 320 pixels covered 20 place selections, 20 actual schematic-pin selections, keyboard activation, area reset and return to overview. All five maps rendered vector geometry with attribution, correct place/company content and no horizontal overflow.
+- Failed map-data loading showed a compact notice with the place story still readable; return to overview remained usable. Healthy checks recorded no console/page errors and no third-party requests. Desktop Munich/West Lake and phone Xixi screenshots were visually reviewed.

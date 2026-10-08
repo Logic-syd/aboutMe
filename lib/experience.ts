@@ -1,7 +1,7 @@
 export const experiences = [
   { id: 'sungrow', company: 'NeuVerge-Tron / Sungrow', city: 'Munich', area: 'Munich, Germany', domain: 'Energy & API products', description: 'Led the React frontend and European API-platform rollout, including localization, regional themes, testing and post-launch iteration.', project: 'renewable-energy-api' },
   { id: 'danzhu', company: 'Danzhu (淡竹)', city: 'Shanghai', area: 'Caohejing area · Shanghai', domain: 'Sports education · Web & mobile', description: 'Built training interfaces with React, TypeScript, React Native and Vue / uni-app, including camera integration, movement feedback and a running mini-program.', project: 'sports-education' },
-  { id: 'longshine', company: 'Longshine (朗新)', city: 'Hangzhou', area: 'Near West Lake · Hangzhou', domain: 'Internal platforms & field operations', description: 'Contributed to technical selection and led an internal low-code platform for work orders and marketing applications.', project: 'low-code-platform' },
   { id: 'glp', company: 'GLP', city: 'Shanghai', area: 'Zhangjiang, Pudong · Shanghai', domain: 'Logistics & supply chain finance', description: 'Frontend work on logistics and supply-chain finance workflows.', project: null },
+  { id: 'longshine', company: 'Longshine (朗新)', city: 'Hangzhou', area: 'Near West Lake · Hangzhou', domain: 'Internal platforms & field operations', description: 'Contributed to technical selection and led an internal low-code platform for work orders and marketing applications.', project: 'low-code-platform' },
   { id: 'fingard', company: 'Fingard (保融)', city: 'Hangzhou', area: 'Near Xixi Wetland · Hangzhou', domain: 'Treasury management SaaS', description: 'Worked on a Vue-based treasury management SaaS product.', project: null },
 ];
