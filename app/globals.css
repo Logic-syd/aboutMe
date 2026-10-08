@@ -180,3 +180,5 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 
 @media(max-width:650px){.three-stage{height:560px}}
 .professional-work-section .experience-row .experience-description{font-size:14px;color:var(--muted);line-height:1.85;max-width:none}
+
+.project-fallback-notice{margin-bottom:24px;padding:12px 16px;border-left:3px solid var(--pink);background:var(--blush);font-size:13px;color:var(--ink)}

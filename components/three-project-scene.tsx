@@ -13,7 +13,7 @@ type Gradient = readonly [string, string, string];
 type Point = [number, number, number];
 type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; gradient?: Gradient; color: string; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
-type Props = { interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
+type Props = { onUnavailable: () => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
 const colors = ['#dba0b3', '#d4bf98', '#b7aad2', '#a8c4c0', '#bac797', '#a7bdd6'];
 const rootGradient: Gradient = ['#ffe3cc', '#dd719f', '#8771d2'];
 const leafGradient: Gradient = ['#f0f7c8', '#79bea8', '#748dc8'];
@@ -214,8 +214,9 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
 }
 
 export default function ThreeProjectScene(props: Props) {
-  const [failed, setFailed] = useState(false);
   const labelPortal = useRef<HTMLDivElement>(null!);
-  if (failed) return <div className="three-loading">3D rendering is unavailable. All projects and connections remain accessible below.</div>;
-  return <div className="three-renderer"><div className="three-label-layer" ref={labelPortal} /><Canvas camera={{ position: [0, 3.5, 17], fov: 43 }} dpr={[1, 1.5]} frameloop={props.animate && props.visible ? 'always' : 'demand'} gl={{ antialias: true, alpha: false, powerPreference: 'low-power' }} fallback={<div className="three-loading">3D is unavailable. Use the project buttons below.</div>} onCreated={({ gl }) => { gl.domElement.addEventListener('webglcontextlost', event => { event.preventDefault(); setFailed(true); }, { once: true }); }}><Scene {...props} labelPortal={labelPortal} /></Canvas></div>;
+  return <div className="three-renderer"><div className="three-label-layer" ref={labelPortal} /><Canvas camera={{ position: [0, 3.5, 17], fov: 43 }} dpr={[1, 1.5]} frameloop={props.animate && props.visible ? 'always' : 'demand'} gl={{ antialias: true, alpha: false, powerPreference: 'low-power' }} onCreated={({ gl }) => {
+    gl.domElement.addEventListener('webglcontextlost', event => { event.preventDefault(); props.onUnavailable(); }, { once: true });
+    props.onReady();
+  }}><Scene {...props} labelPortal={labelPortal} /></Canvas></div>;
 }

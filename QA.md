@@ -102,3 +102,11 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Final build (including TypeScript) and ESLint passed. Browser checks covered 35 page/viewport combinations at 1440, 1024, 768, 390 and 320 pixels, all navigation destinations, correct unreleased statuses, six case-card entrances and twelve actual graph-to-detail clicks. No horizontal overflow or unexpected console/page errors.
 - After the mobile spacing adjustment, both phone sizes were rechecked across all seven routes (14 combinations) and twelve actual case-study clicks, with no errors. Desktop and phone screenshots were visually reviewed.
 - Changes are isolated on the modification branch; production deployment still follows `main`.
+
+
+## Automatic project-card fallback
+
+- Added a shared presentation component around the graph and existing server-rendered case content. Unsupported WebGL 2 skips the scene import; render errors, context loss and a 12-second initialization timeout also switch to cards.
+- Failure removes the entire 3D explorer, including its fixed-height stage and controls, and renders all six case cards directly. Cards reuse the original content, status labels and detail links. Supported browsers retain the graph and optional card disclosure.
+- Final production build, TypeScript, ESLint and whitespace checks passed. Forced unsupported WebGL at 1440, 768, 390 and 320 pixels verified six visible cards, no dead stage or disclosure, correct unreleased statuses and 24 actual detail-page clicks. Desktop and phone fallback screenshots were reviewed.
+- Blocked context access, a lost live context, blocked dynamic imports and stalled imports all showed the same visible cards. Healthy WebGL in four viewport sizes passed 24 project/technology branch selections; no unexpected browser errors or horizontal overflow occurred.
