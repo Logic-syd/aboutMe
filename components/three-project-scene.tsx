@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Html, OrbitControls, Line } from '@react-three/drei';
+import Link from 'next/link';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { projects } from '@/lib/projects';
@@ -17,7 +18,7 @@ const colors = ['#dba0b3', '#d4bf98', '#b7aad2', '#a8c4c0', '#bac797', '#a7bdd6'
 const rootGradient: Gradient = ['#ffe3cc', '#dd719f', '#8771d2'];
 const leafGradient: Gradient = ['#f0f7c8', '#79bea8', '#748dc8'];
 const gradients: Gradient[] = [rootGradient, ['#fff0ab', '#daa06e', '#ae6eb5'], ['#f1c4ff', '#a282e4', '#689bd3'], ['#d0f3dd', '#68b8b3', '#8979ce'], ['#f2f5b6', '#aac477', '#6eaaa7'], ['#d4f3ff', '#7faadd', '#a17ac9']];
-const compactPositions: Point[] = [[-3.1, 2.4, .6], [-3.1, -1.8, 1], [0, -4.8, -.5], [3.1, -1.8, .1], [3.1, 2.4, -1], [0, 5.4, -.2]];
+const compactPositions: Point[] = [[-3.1, 2.4, .6], [-3.1, -2.8, 1], [0, -6.3, -.5], [3.1, -2.8, .1], [3.1, 2.4, -1], [0, 5.4, -.2]];
 const initialPositions: Point[] = [[-4.3, 2.1, .6], [-4.1, -1.7, 1], [-.3, -3, -.5], [4.2, -1.8, .1], [4, 2, -1], [.1, 3.3, -.2]];
 
 function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, pulse }: { pulse: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
@@ -118,7 +119,9 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[1.18, .018, 8, 96]} /><meshStandardMaterial color="#b46282" metalness={.6} roughness={.2} /></mesh>}
     {item.active && item.kind !== 'root' && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, .025, 8, 64]} /><meshStandardMaterial color="#d3497c" emissive="#d3497c" emissiveIntensity={.4} /></mesh>}
     {!item.quiet && <Html portal={labelPortal} center position={[0, -size - .24, .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
-      {item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>PROJECT / 0{item.index + 1}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
+      <div className="space-node-label">{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>PROJECT / 0{item.index + 1}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
+        {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} style={{ pointerEvents: 'auto' }}>Read case study <span aria-hidden="true">↗</span></Link>}
+      </div>
     </Html>}
   </group>;
 }

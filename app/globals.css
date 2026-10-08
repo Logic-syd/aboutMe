@@ -152,3 +152,31 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .space-label{font-size:12px}
 @media(min-width:651px) and (max-width:1000px){.space-label{font-size:11px}.space-label.label-root strong{font-size:18px}}
 @media(max-width:650px){.space-label{font-size:10px}}
+
+/* Section navigation and direct case-study entrances. */
+.craft-header{justify-content:flex-start;gap:30px}
+.craft-header nav{flex:1;min-width:0;justify-content:space-between;gap:20px}
+.nav-sections{display:flex;align-items:center;gap:28px}
+.nav-sections a,.craft-header .nav-contact{white-space:nowrap}
+.craft-header .nav-contact{margin-left:auto}
+.professional-work-section{padding-bottom:40px}
+.experience-row .experience-city{font-size:12px;margin-top:10px;color:var(--muted)}
+.experience-case-link{margin-top:15px}
+.space-node-label{display:flex;flex-direction:column;align-items:center}
+.space-case-link{background:#faf9f6;border:1px solid #d4d0c7;border-top:0;border-radius:0 0 5px 5px;padding:5px 10px;font-size:10px;color:#873650;white-space:nowrap;box-shadow:0 3px 8px #30253009;min-height:27px;display:flex;align-items:center;gap:12px}
+.space-case-link:hover{background:#f8e4ed;text-decoration:underline;text-underline-offset:3px}
+.graph-case-button{border-radius:0;gap:20px;font-size:13px}
+@media(max-width:1000px) and (min-width:761px){.craft-header{padding:0 24px;gap:22px}.craft-header nav{font-size:10px;letter-spacing:.7px}.nav-sections{gap:20px}.craft-header .nav-contact{padding:12px 16px}}
+@media(max-width:760px){
+  .craft-header{display:grid;grid-template-columns:auto 1fr;height:auto;gap:0;padding:0 20px}
+  .craft-header .wordmark{grid-row:1;grid-column:1;height:62px;padding-right:20px}
+  .craft-header nav{display:contents;font-size:10px;letter-spacing:.2px}
+  .craft-header .nav-contact{grid-column:2;grid-row:1;justify-self:end;margin:0;padding:10px 14px}
+  .craft-header .nav-contact span{margin-left:8px}
+  .nav-sections{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+  .nav-sections a{min-height:46px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:0}
+}
+@media(max-width:650px){.professional-work-section{padding-bottom:20px}.space-case-link{font-size:9px;padding:4px 7px;gap:6px;min-height:26px}.graph-case-button{width:100%;justify-content:space-between;min-height:44px}}
+
+@media(max-width:650px){.three-stage{height:560px}}
+.professional-work-section .experience-row .experience-description{font-size:14px;color:var(--muted);line-height:1.85;max-width:none}

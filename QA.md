@@ -93,3 +93,12 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - No unexpected console errors, JavaScript page errors or failed resources. Public 404 behavior and the keyboard skip link passed.
 - Desktop and phone checks confirmed actual WebGL rendering, twelve project/technology branch selections and ten experience selections. The local SVG map and redacted screenshot loaded publicly. Graph screenshots were reviewed.
 - The first-version delivery goal is complete: the portfolio has a verified public production URL that opens without recruiter authentication.
+
+## Navigation, opportunity copy and case-study entrances — modification branch
+
+- Branch: `codex/navigation-opportunities`. Header links now read About Me, My Projects, My Work and Growth Map directly after the wordmark; the existing contact CTA stays on the right. Phones use two rows. Detail-page navigation returns to the matching homepage section.
+- Added a work summary using the same five confirmed experience records as the map. Contact welcomes frontend and full-stack engineering opportunities, relocation and new challenges without changing the professional title or inventing experience.
+- Every visible project node has a separate direct case-study link. Sphere/label activation still expands the graph; the selected project also exposes a prominent case-study button below the scene. Mobile spacing accommodates the extra links.
+- Final build (including TypeScript) and ESLint passed. Browser checks covered 35 page/viewport combinations at 1440, 1024, 768, 390 and 320 pixels, all navigation destinations, correct unreleased statuses, six case-card entrances and twelve actual graph-to-detail clicks. No horizontal overflow or unexpected console/page errors.
+- After the mobile spacing adjustment, both phone sizes were rechecked across all seven routes (14 combinations) and twelve actual case-study clicks, with no errors. Desktop and phone screenshots were visually reviewed.
+- Changes are isolated on the modification branch; production deployment still follows `main`.
