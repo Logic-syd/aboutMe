@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { RouteScroll } from '@/components/route-scroll';
 
 export const metadata: Metadata = {
   title: { default: 'Yidan Shao — Senior Frontend Engineer', template: '%s | Yidan Shao' },
@@ -10,5 +11,5 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#faf9f6' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><a className="skip-link" href="#main">Skip to content</a>{children}</body></html>;
+  return <html lang="en"><body><RouteScroll /><a className="skip-link" href="#main">Skip to content</a>{children}</body></html>;
 }
