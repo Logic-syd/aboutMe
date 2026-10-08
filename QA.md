@@ -22,9 +22,9 @@
 
 ## Deployment state
 
-Source has been pushed to `Logic-syd/aboutMe`, branch `main`. Vercel CLI reports **Logged out**. There is no verified public production URL yet.
+Source is published from `Logic-syd/aboutMe`, branch `main`, through Vercel. Verified public production URL: https://about-me-henna-alpha.vercel.app/. The user’s deployment dashboard showed build `1654cc8` as Ready, and fresh signed-out browser contexts independently confirmed public access.
 
-To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/aboutMe`, retain the detected Next.js preset and root directory, and select **Deploy**. No environment variables are required. Ensure the resulting production URL can be opened in a signed-out browser.
+Vercel is connected to the repository with `main` as the production source. Future pushes to `main` update the production site. No environment variables are required. The earlier login-related notes below describe the historical state before the user completed the first deployment.
 
 ## Reference-inspired visual update
 
@@ -84,3 +84,12 @@ To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/ab
 - Reduced motion suppresses recoil. Hover and recoil continue to settle correctly when ambient motion is paused and rendering uses demand frames.
 - Build and ESLint passed. Actual browser samples measured roughly six pixels of recoil for root-label clicks, technology-label clicks, direct contribution-sphere clicks and keyboard activation, then verified settling. No page errors occurred.
 - Four viewport sizes passed 24 approved branch layouts, 24 project selections and 92 technology selections, plus real dragging, rotation, keyboard, reduced-motion and forced WebGL-failure checks. Desktop/phone gradient screenshots were reviewed; no horizontal overflow or unexpected browser errors occurred.
+
+
+## Public production verification — 8 October 2026
+
+- Public URL: https://about-me-henna-alpha.vercel.app/. The latest visual implementation was deployed from commit `1654cc8`; verification used fresh browser contexts without Vercel sign-in or existing cookies.
+- Homepage and all six detail routes passed 28 page/viewport checks at 1440, 768, 390 and 320 pixels: HTTP 200, correct titles/landmarks, nonempty link destinations, valid anchors, correct unreleased project statuses and no horizontal overflow.
+- No unexpected console errors, JavaScript page errors or failed resources. Public 404 behavior and the keyboard skip link passed.
+- Desktop and phone checks confirmed actual WebGL rendering, twelve project/technology branch selections and ten experience selections. The local SVG map and redacted screenshot loaded publicly. Graph screenshots were reviewed.
+- The first-version delivery goal is complete: the portfolio has a verified public production URL that opens without recruiter authentication.

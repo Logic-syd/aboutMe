@@ -1,5 +1,7 @@
 # Yidan Shao — Portfolio
 
+Public portfolio: https://about-me-henna-alpha.vercel.app/
+
 English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project knowledge graph, six expandable case cards, a Leaflet career map and contact links. Each project has a statically generated detail route.
 
 ## Local development
@@ -21,6 +23,8 @@ npm start
 ```
 
 ## Deploy to Vercel
+
+The production site is published at https://about-me-henna-alpha.vercel.app/ and was verified in signed-out browser contexts on 8 October 2026. The Vercel project is connected to this GitHub repository, with `main` as the production branch. Future pushes to `main` update the same production domain.
 
 Import `Logic-syd/aboutMe` at https://vercel.com/new, keep the detected Next.js preset and repository root, then select Deploy. No environment variables or database are required. Alternatively run `npx vercel login` followed by `npx vercel --prod` from this directory. Keep deployment protection disabled for the production portfolio so recruiters can access it without signing in.
 
