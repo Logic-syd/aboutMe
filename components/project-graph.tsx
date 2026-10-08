@@ -18,6 +18,7 @@ class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean
 
 export function ProjectGraph() {
   const [selection, setSelection] = useState<GraphSelection>({ project: null, technology: null });
+  const [interaction, setInteraction] = useState({ nodeId: '', revision: 0 });
   const [motion, setMotion] = useState(true);
   const [view, setView] = useState({ reset: 0, zoom: 0 });
   const [visible, setVisible] = useState(false);
@@ -32,14 +33,14 @@ export function ProjectGraph() {
     return () => observer.disconnect();
   }, []);
   const project = selection.project === null ? null : projects[selection.project];
-  const selectProject = useCallback((index: number) => { setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null }); }, []);
-  const selectTechnology = useCallback((index: number) => { setSelection(current => ({ ...current, technology: current.technology === index ? null : index })); }, []);
-  const reset = useCallback(() => { setSelection({ project: null, technology: null }); setView(current => ({ reset: current.reset + 1, zoom: 0 })); }, []);
+  const selectProject = useCallback((index: number) => { setInteraction(current => ({ nodeId: projects[index].slug, revision: current.revision + 1 })); setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null }); }, []);
+  const selectTechnology = useCallback((index: number) => { if (selection.project !== null) setInteraction(current => ({ nodeId: `${projects[selection.project!].slug}-tech-${index}`, revision: current.revision + 1 })); setSelection(current => ({ ...current, technology: current.technology === index ? null : index })); }, [selection.project]);
+  const reset = useCallback(() => { setInteraction(current => ({ nodeId: 'root', revision: current.revision + 1 })); setSelection({ project: null, technology: null }); setView(current => ({ reset: current.reset + 1, zoom: 0 })); }, []);
   return <div className="project-explorer three-explorer">
     <div className="explorer-toolbar"><div><span className="eyebrow">PROJECT CONSTELLATION / THREE.JS</span><p>One idea. Many connections.</p></div><span className="graph-key"><i />{selection.technology !== null ? 'Level 03 / Contributions' : project ? 'Level 02 / Technologies' : 'Level 01 / Projects'}</span></div>
     <div ref={region} className="three-stage" aria-label="Interactive three-dimensional project knowledge graph">
       <div className="three-corner-label" aria-hidden="true"><span>{String(projects.length).padStart(2, '0')} PROJECTS</span><span>EXPLORE IN THREE DIMENSIONS</span></div>
-      <SceneBoundary>{loaded ? <ThreeGraph selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
+      <SceneBoundary>{loaded ? <ThreeGraph interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
       <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
       <p className="three-stage-hint">Drag space to orbit · Drag a sphere to move it · Click to expand</p>
     </div>

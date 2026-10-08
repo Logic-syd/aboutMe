@@ -75,3 +75,12 @@ To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/ab
 - Replaced immediate position reassignment with spring motion. New child nodes start at their parent's actual position, with short staggered delays; reduced motion still updates positions immediately.
 - Adapted tablet label widths and line boxes; phones keep five compact project satellites on the right and expose their names through the existing project picker.
 - Production build and ESLint passed. Four viewport sizes (1440, 768, 390, 320) covered 24 branch layouts, verifying root position, sibling direction, left expansion and labels within the scene. Actual animated launch traveled left from its parent. The 24 project selections, 92 technology selections, dragging, rotation, keyboard, reduced motion and WebGL fallback checks passed without unexpected browser errors.
+
+
+## Gradient materials and consistent click springs
+
+- Added diagonal three-stop vertex-color gradients while retaining the glossy physical material. Projects have distinct pastel palettes; technology spheres inherit the selected project palette, and contribution spheres use mint/blue tones. No image assets or external texture requests were added.
+- Added a shared interaction revision so physical sphere clicks, project/technology labels, HTML pickers and keyboard activation trigger the same gentle position/scale spring. Contribution-sphere clicks also recoil. Pressed spheres compress slightly; node repositioning uses a lightly underdamped spring.
+- Reduced motion suppresses recoil. Hover and recoil continue to settle correctly when ambient motion is paused and rendering uses demand frames.
+- Build and ESLint passed. Actual browser samples measured roughly six pixels of recoil for root-label clicks, technology-label clicks, direct contribution-sphere clicks and keyboard activation, then verified settling. No page errors occurred.
+- Four viewport sizes passed 24 approved branch layouts, 24 project selections and 92 technology selections, plus real dragging, rotation, keyboard, reduced-motion and forced WebGL-failure checks. Desktop/phone gradient screenshots were reviewed; no horizontal overflow or unexpected browser errors occurred.
