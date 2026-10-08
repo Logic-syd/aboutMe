@@ -65,7 +65,11 @@ export function CareerMap() {
 
   useEffect(() => {
     markers.current.forEach((marker, index) => {
-      marker.getElement()?.classList.toggle('is-selected', experiences[index].id === selectedId);
+      const active = experiences[index].id === selectedId;
+      const icon = marker.getElement();
+      icon?.classList.toggle('is-selected', active);
+      icon?.setAttribute('aria-pressed', String(active));
+      marker.setZIndexOffset(active ? 1000 : 0);
     });
   }, [selectedId, mapState]);
 
