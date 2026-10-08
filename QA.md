@@ -4,7 +4,7 @@
 
 - Next.js, TypeScript and Tailwind CSS; responsive English homepage and six static case-study routes.
 - Three featured projects, three additional case cards, biography, selected employment summary and contact links.
-- Original, explicitly labeled workflow diagrams. All six projects are written case studies, with no product screenshots or public demos.
+- Original, explicitly labeled workflow diagrams. All six projects include written case studies, with no public demos. The Danzhu case now includes a user-supplied running mini-program screenshot with privacy redactions.
 - Coffee & Craft Beer Discovery Map and EU Data Act Data Export Center are explicitly **In development · Not released** on both the homepage and detail pages.
 - Sports-education contribution explicitly excludes training the vision-recognition models.
 - No phone number, invented employment dates, unverified impact figures, internal code or empty buttons.
@@ -33,3 +33,14 @@ To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/ab
 - Retained the light background, restrained pink accents, all six case studies and their release statuses. On mobile, project index cards use a two-column grid.
 - Reran all 28 page/viewport checks successfully after the redesign. Additionally clicked all six orbital project links at 1440, 1024, 768, 650, 390 and 320 pixels (36 navigations), verifying the destination, top-of-page position and return link.
 - Final production build, ESLint and TypeScript checks passed. Vercel still requires account login before a public production URL can be confirmed.
+
+
+## Danzhu running mini-program evidence
+
+- User confirmed Vue / uni-app and requested privacy redaction and a Danzhu company link. Specific implementation ownership beyond contribution to this mini-program is not inferred from the screenshot.
+- Added a selected running-screen preview, a full redacted image link and a note that many other commercial interfaces are not suitable for public display.
+- The original attachment is not included in the repository. The published image covers the top personal/group title, the entire map geography and route, and the portrait. Tencent Maps attribution remains visible.
+- Asset: `public/images/danzhu-running-redacted.png` (853 × 1844). Created with built-in imagegen; the visible caption states AI-assisted privacy redaction. This is an edited rendition, not claimed to be pixel-identical outside the masks.
+- Editing prompt: Apply opaque gray privacy masks to the personal/group title, full map geography/route and portrait; retain Tencent Maps attribution where possible; preserve original timer, metrics, Chinese instructions and controls; do not invent or redesign the interface.
+- Verified `http://www.danzle.com/web/index.html` returned HTTP 200 and the company title 上海淡竹体育科技有限公司. HTTPS failed certificate validation, so the supplied working HTTP link is used and labeled as the company website, not a mini-program demo.
+- Validation for this addition: production build, ESLint and TypeScript passed; browser checks at 1440, 768, 390 and 320 pixels confirmed no horizontal overflow or console errors, successful image loading, a working full-image popup and the exact company-link destination.

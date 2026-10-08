@@ -50,16 +50,16 @@ export const projects: Project[] = [
   },
   {
     slug: 'sports-education', number: '04', title: 'AI Sports-Education & Mobile Training Platform', shortTitle: 'Connecting movement and feedback.',
-    category: 'Sports education · Web + mobile', organization: 'Danzhu (淡竹)', status: 'Commercial work · Written case study',
-    description: 'Web and mobile training interfaces connecting camera input, movement feedback and the training experience across React, React Native and Vue.',
-    tags: ['React', 'TypeScript', 'React Native', 'Vue'], role: 'Web and mobile frontend development',
+    category: 'Sports education · Web + mobile', organization: 'Danzhu (淡竹)', status: 'Commercial work · Selected screenshot',
+    description: 'Web and mobile training interfaces connecting camera input, movement feedback and the training experience across React, React Native and Vue / uni-app.',
+    tags: ['React', 'TypeScript', 'React Native', 'Vue / uni-app'], role: 'Web and mobile frontend development',
     problem: 'An AI sports-education product needed interfaces that connected camera input and movement feedback with usable web and mobile training experiences.',
-    responsibilities: ['Built React / TypeScript web interfaces for the sports-education product.', 'Worked on React Native mobile training screens, camera integration and movement-feedback interfaces.', 'Contributed to the Vue mobile frontend.'],
+    responsibilities: ['Built React / TypeScript web interfaces for the sports-education product.', 'Worked on React Native mobile training screens, camera integration and movement-feedback interfaces.', 'Contributed to the Vue mobile frontend and a Vue / uni-app running mini-program.'],
     decisions: [
       { title: 'Connect the training interaction', text: 'Focused on the frontend connection between camera access, movement feedback and training screens.' },
-      { title: 'Work across delivery surfaces', text: 'Implemented interfaces across React web, React Native and Vue mobile experiences as required by the product.' }
+      { title: 'Work across delivery surfaces', text: 'Implemented interfaces across React web, React Native and Vue / uni-app mobile experiences as required by the product.' }
     ],
-    delivery: 'Commercial frontend contributions are presented as a written case study. My role was interface and integration work, not training the vision-recognition models. Public release details and a public demo are not provided.',
+    delivery: 'Commercial frontend contributions are presented through a written case study and one privacy-redacted screenshot of the Vue / uni-app running mini-program. Many other commercial interfaces are not suitable for public display. My role was interface and integration work, not training the vision-recognition models. The company website is linked for product context; it is not a live demo of this mini-program.',
     flow: ['Camera input', 'Movement feedback', 'Training interface']
   },
   {
