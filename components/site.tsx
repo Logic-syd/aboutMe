@@ -1,0 +1,23 @@
+import Link from 'next/link';
+
+export function Header({ detail = false }: { detail?: boolean }) {
+  return <header className="site-header shell">
+    <Link className="wordmark" href="/" aria-label="Yidan Shao home">yidan<span>.</span></Link>
+    <nav aria-label="Main navigation">
+      <a href={detail ? '/#work' : '#work'}>Work</a>
+      <a href={detail ? '/#about' : '#about'}>About</a>
+      <a className="nav-contact" href={detail ? '/#contact' : '#contact'}>Let’s talk <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>;
+}
+export function Footer() {
+  return <footer className="shell footer"><Link className="wordmark" href="/">yidan<span>.</span></Link><p>Thoughtful interfaces. Reliable delivery.</p><a href="#top">Back to top ↑</a></footer>;
+}
+export function Contact() {
+  return <section id="contact" className="contact-section">
+    <div className="shell contact-inner">
+      <div><p className="eyebrow">04 / GET IN TOUCH</p><h2>Let’s build something<br /><em>that matters.</em></h2><p>Open to Senior Frontend Engineer opportunities.<br />Based in Munich. Open to relocate.</p></div>
+      <div className="contact-links"><a className="email-link" href="mailto:yidanshao622@gmail.com">yidanshao622@gmail.com <span aria-hidden="true">↗</span></a><div className="social-links"><a href="https://github.com/Logic-syd">GitHub ↗</a><a href="https://linkedin.com/in/yidanshao/">LinkedIn ↗</a></div></div>
+    </div>
+  </section>;
+}
