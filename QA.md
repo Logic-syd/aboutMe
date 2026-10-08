@@ -46,7 +46,7 @@ To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/ab
 - Validation for this addition: production build, ESLint and TypeScript passed; browser checks at 1440, 768, 390 and 320 pixels confirmed no horizontal overflow or console errors, successful image loading, a working full-image popup and the exact company-link destination.
 
 
-## Interactive project graph and schematic career map
+## Initial interactive project graph and schematic career map (superseded graph renderer)
 
 - React Flow renders all six projects and ten technology/approach categories. Project selections display responsibilities, technologies, accurate release status and a case-study link; technology selections expose related projects.
 - Phone layouts show a focused, readable subgraph rather than a shrunken full network. The complete six-project picker and optional case-card view remain available.
@@ -56,3 +56,15 @@ To publish: sign in at https://vercel.com/new using GitHub, import `Logic-syd/ab
 - Browser checks at 1440, 768, 390 and 320 pixels: 24 case-study link checks, 58 technology selections, 20 company selections and 20 actual map-pin clicks passed, plus graph zoom/reset, map reset and the six-card disclosure. No horizontal overflow or browser errors.
 - Graph and map screenshots reviewed at desktop and phone sizes.
 - Keyboard activation of project selectors, technology nodes, company selectors and map pins passed. With the map illustration deliberately blocked, the fallback message and experience navigation remained usable. Zero third-party network requests were observed. Production dependency audit reports zero vulnerabilities.
+
+
+## Three.js knowledge graph iteration
+
+- Replaced React Flow with Three.js, React Three Fiber and Drei. Initial state displays a large floating root sphere and all six first-level project spheres. A selected project unfolds its technologies; a selected technology reveals contribution nodes. Only one project/technology branch is open at a time.
+- Added sphere dragging with elastic scale feedback, orbit rotation, explicit zoom/reset controls and a motion pause button. Light ceramic materials, pink connection accents and a floor with orbital rings retain the portfolio’s visual direction.
+- Phone layouts focus on the selected branch and keep all six projects and all technologies accessible through HTML controls. Labels use a dedicated overlay; small screens show fewer simultaneous labels as the branch expands.
+- Lazy-loads the scene near the viewport, stops continuous rendering offscreen, respects reduced-motion preferences and retains project/technology navigation without WebGL.
+- Added the user-confirmed Zhihuishu knowledge-graph experience to the biography: Three.js, floating/draggable sphere nodes, elastic feedback, three-level expansion and a single open branch. No dates, location or seventh case study were invented.
+- Production build and ESLint passed. Chrome checks at 1440, 768, 390 and 320 pixels covered 24 project selections, 92 technology selections and 24 case-study destinations. Real sphere dragging, click-to-expand, root reset, orbit rotation, zoom controls, keyboard selection, reduced motion and forced WebGL failure all passed, with no unexpected browser errors.
+- Homepage plus all six detail routes passed 28 page/viewport checks: HTTP 200, no horizontal overflow, no console or page errors, no failed resources, valid link/anchor targets and correct unreleased statuses. The 404 and keyboard skip link also passed.
+- Desktop and phone graph screenshots reviewed. Production dependency audit: zero vulnerabilities. Public Vercel deployment still requires account login.
