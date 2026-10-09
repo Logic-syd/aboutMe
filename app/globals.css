@@ -218,23 +218,53 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .place-source-link:hover{color:var(--pink)}
 @media(max-width:650px){.career-location-picker button{min-height:135px}.career-location-picker .place-company-label{font-size:10px;margin-top:6px}.place-story{padding:24px 20px}.place-story h3{font-size:26px}.place-memory{font-size:17px}.career-map-canvas.geographic-map{height:370px}.place-map-badge{top:16px;left:16px;max-width:190px;padding:10px 12px}.place-map-badge strong{font-size:17px}.place-map-north{top:18px;right:16px}.place-map-reset{right:16px;bottom:56px;font-size:10px}.place-story-links{align-items:start;flex-direction:column}}
 
-/* One complete constellation; the scene grows to keep every project readable. */
+/* One orbit contains the whole catalog. Labels sit below the visible spheres. */
 .three-explorer{container:constellation / inline-size}
-.three-stage{height:max(650px,calc(var(--project-rows) * 128px + 160px),var(--project-sibling-height))}
-.space-node-label.is-satellite .label-project{min-width:0;width:110px;padding:5px 7px;white-space:normal}
-.space-node-label.is-satellite .label-project strong{font-size:10px}
-.space-node-label.is-satellite .label-project span{font-size:7px}
-@container constellation (width < 900px){.three-stage{height:max(590px,calc(var(--project-mobile-rows) * 118px + 160px),var(--project-sibling-height))}.space-node-label.is-satellite .label-project{width:86px}}
-@container constellation (width < 650px){.three-stage{height:max(520px,calc(var(--project-mobile-rows) * 108px + 160px))}.space-label{font-size:10px;padding:5px 7px;min-width:0}.space-label strong{font-size:10px}.space-label span{font-size:7px;letter-spacing:.5px}.space-label.label-root{min-width:0;padding:5px 7px}.space-label.label-root strong{font-size:17px}.label-project,.label-technology{width:105px;white-space:normal}.label-leaf{width:95px;white-space:normal}.label-leaf strong{font-size:9px}}
-@container constellation (width < 300px){.label-project{width:88px}.space-label.label-root{width:70px;padding:5px}}
+.three-stage{height:max(720px,calc(var(--project-count) * 50px + 240px))}
+.space-node-label.is-project{width:152px;display:grid;grid-template-columns:minmax(0,1fr) 30px;align-items:center;border:1px solid transparent;border-radius:14px;background:#faf9f6c4;transition:background .2s,border-color .2s,box-shadow .2s}
+.space-node-label.is-project:hover,.space-node-label.is-project:focus-within{background:#fffafc;border-color:#d5a9b9;box-shadow:0 5px 22px #8b436b12}
+.space-node-label.is-project:has(.active){background:#f9e8ef;border-color:#cc86a1}
+.space-node-label.is-project .label-project{width:100%;min-width:0;padding:8px 0 8px 11px;background:none;border:0;border-radius:12px;box-shadow:none;white-space:normal;text-align:left;line-height:1.25}
+.space-node-label.is-project .label-project span{font-size:8px;letter-spacing:1px;color:#a64869;margin-bottom:4px}
+.space-node-label.is-project .label-project strong{font-size:12px;font-weight:500}
+.space-node-label.is-project .space-case-link{position:relative;right:auto;bottom:auto;width:30px;height:42px;color:#a13d60;border-radius:9px;transition:color .15s,transform .2s}
+.space-node-label.is-project .space-case-link::before{display:none}
+.space-node-label.is-project .space-case-link:hover{color:#70203e;transform:translate(1px,-2px)}
+.space-node-label.is-project .space-case-link svg{width:19px;height:19px}
+.space-label.label-root{padding:4px 12px;min-width:0;background:#f6f1f0dd;border:0;box-shadow:none;border-radius:12px}
+.space-label.label-root span{font-size:8px}
+.space-label.label-root strong{font-size:25px}
+.space-label.label-technology{max-width:132px;white-space:normal;font-size:11px;border-radius:12px;background:#faf9f6e8;border-color:#d5c8cc;box-shadow:none;padding:7px 10px}
+.space-label.label-technology strong{font-size:11px}
+.space-label.label-leaf{width:132px;border-radius:12px;box-shadow:none}
+.space-label.label-technology.active{background:#f5dfe9;border-color:#bc527b}
+.three-stage-hint{bottom:28px;right:24px;left:auto;font-size:10px}
+@container constellation (width < 900px){
+ .three-stage{height:max(740px,calc(var(--project-count) * 70px + 170px))}
+ .space-node-label.is-project{width:110px}
+ .space-node-label.is-project .label-project strong{font-size:11px}
+ .space-label.label-leaf{width:108px}
+ .space-label.label-leaf strong{font-size:10px}
+ .space-label.label-technology{max-width:112px}
+ .three-stage-hint{left:20px;right:auto;bottom:69px}
+}
+@container constellation (width < 650px){
+ .three-stage{height:max(780px,calc(var(--project-count) * 82px + 150px))}
+ .space-node-label.is-project{width:98px;grid-template-columns:minmax(0,1fr) 26px;border-radius:10px}
+ .space-node-label.is-project .label-project{padding:6px 0 6px 7px}
+ .space-node-label.is-project .label-project strong{font-size:10px}
+ .space-node-label.is-project .space-case-link{width:26px;height:44px}
+ .space-label.label-root{width:auto;padding:4px 7px}
+ .space-label.label-root strong{font-size:20px}
+ .space-label.label-root span{font-size:7px;letter-spacing:.4px}
+ .space-label.label-technology,.space-label.label-leaf{width:98px;max-width:98px;padding:6px 7px}
+ .space-label.label-technology strong,.space-label.label-leaf strong{font-size:10px}
+ .three-stage-hint{left:15px;bottom:66px;font-size:9px;max-width:calc(100% - 30px)}
+}
+@container constellation (width < 300px){.space-node-label.is-project{width:84px}.space-label.label-root{width:70px}.space-label.label-root strong{font-size:16px}.space-label.label-technology,.space-label.label-leaf{width:86px;max-width:86px}}
 .project-grid .small-project{display:flex;flex-direction:column;min-width:0}
 .project-grid .small-project>.text-link{margin-top:auto;align-self:flex-start}
 @media(min-width:651px) and (max-width:1000px){.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
-@media(max-width:380px){.label-project{width:88px}.label-root{width:70px;padding:5px}}
-
-/* Reserve the corner inside each card for its independent detail link. */
-.space-node-label.is-project .label-project{padding-bottom:36px}
 
 /* Published projects can share verified links and genuine product screens. */
 .project-public-links{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:22px}
