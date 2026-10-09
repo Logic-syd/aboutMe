@@ -1,9 +1,6 @@
 import Link from 'next/link';
 import { projects } from '@/lib/projects';
 
-const labels = ['Energy APIs', 'Discovery map', 'Data exports', 'Sports & training', 'Low-code tools', 'Operations'];
-const details = ['European release', 'Independent product', 'Async workflows', 'Web + mobile', 'Configurable interfaces', 'Charts + maps'];
-
 export function OrbitScene() {
   return <>
     <div className="orbit-lines" aria-hidden="true">
@@ -16,10 +13,10 @@ export function OrbitScene() {
       </svg>
     </div>
     <nav className="orbit-projects" aria-label="Explore project case studies">
-      {projects.map((project, index) => <Link className={`orbit-card orbit-card-${index + 1}`} href={`/projects/${project.slug}`} key={project.slug}>
+      {projects.filter(project => project.heroTitle).slice(0, 6).map((project, index) => <Link className={`orbit-card orbit-card-${index + 1}`} href={`/projects/${project.slug}`} key={project.slug}>
         <span className="orbit-card-meta"><span>PROJECT / {project.number}</span><span aria-hidden="true">↗</span></span>
-        <strong>{labels[index]}</strong>
-        <span className="orbit-card-detail">{details[index]}</span>
+        <strong>{project.heroTitle}</strong>
+        <span className="orbit-card-detail">{project.heroDetail}</span>
         <span className={`orbit-card-state ${project.inDevelopment ? 'is-progress' : ''}`}><i />{project.inDevelopment ? 'In development' : index === 0 ? 'Launched' : 'Case study'}</span>
       </Link>)}
     </nav>

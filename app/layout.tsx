@@ -5,7 +5,7 @@ import { RouteScroll } from '@/components/route-scroll';
 export const metadata: Metadata = {
   title: { default: 'Yidan Shao — Senior Frontend Engineer', template: '%s | Yidan Shao' },
   description: 'Senior Frontend Engineer in Munich with 7+ years of experience in React, TypeScript and Vue. Selected work in energy, data workflows and web and mobile products. Open to relocate.',
-  openGraph: { title: 'Yidan Shao — Senior Frontend Engineer', description: 'Thoughtful interfaces. Reliable delivery. Explore six frontend project case studies.', type: 'website', locale: 'en_US' },
+  openGraph: { title: 'Yidan Shao — Senior Frontend Engineer', description: 'Thoughtful interfaces. Reliable delivery. Explore frontend project case studies across energy, payments and digital products.', type: 'website', locale: 'en_US' },
   twitter: { card: 'summary', title: 'Yidan Shao — Senior Frontend Engineer' },
   robots: { index: true, follow: true },
 };

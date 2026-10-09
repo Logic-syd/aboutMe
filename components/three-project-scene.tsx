@@ -7,19 +7,28 @@ import Link from 'next/link';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { projects } from '@/lib/projects';
-import { graphLeaves, graphTitles, type GraphSelection } from '@/lib/graph';
+import { GRAPH_PAGE_SIZE, graphLeaves, graphTitles, type GraphSelection } from '@/lib/graph';
 
 type Gradient = readonly [string, string, string];
 type Point = [number, number, number];
 type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; gradient?: Gradient; color: string; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
-type Props = { onUnavailable: () => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
-const colors = ['#dba0b3', '#d4bf98', '#b7aad2', '#a8c4c0', '#bac797', '#a7bdd6'];
+type Props = { projectOffset: number; onUnavailable: () => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
+const colors = ['#dba0b3', '#d4bf98', '#b7aad2', '#a8c4c0', '#bac797', '#a7bdd6', '#e7ad95'];
 const rootGradient: Gradient = ['#ffe3cc', '#dd719f', '#8771d2'];
 const leafGradient: Gradient = ['#f0f7c8', '#79bea8', '#748dc8'];
-const gradients: Gradient[] = [rootGradient, ['#fff0ab', '#daa06e', '#ae6eb5'], ['#f1c4ff', '#a282e4', '#689bd3'], ['#d0f3dd', '#68b8b3', '#8979ce'], ['#f2f5b6', '#aac477', '#6eaaa7'], ['#d4f3ff', '#7faadd', '#a17ac9']];
-const compactPositions: Point[] = [[-3.1, 2.4, .6], [-3.1, -2.8, 1], [0, -6.3, -.5], [3.1, -2.8, .1], [3.1, 2.4, -1], [0, 5.4, -.2]];
-const initialPositions: Point[] = [[-4.3, 2.1, .6], [-4.1, -1.7, 1], [-.3, -3, -.5], [4.2, -1.8, .1], [4, 2, -1], [.1, 3.3, -.2]];
+const gradients: Gradient[] = [rootGradient, ['#fff0ab', '#daa06e', '#ae6eb5'], ['#f1c4ff', '#a282e4', '#689bd3'], ['#d0f3dd', '#68b8b3', '#8979ce'], ['#f2f5b6', '#aac477', '#6eaaa7'], ['#d4f3ff', '#7faadd', '#a17ac9'], ['#ffe2ae', '#dc967d', '#a377ad']];
+// Distribute any project count around an ellipse instead of six fixed slots.
+function initialProjectPosition(index: number, count: number, compact: boolean): Point {
+  if (compact) {
+    const rows = Math.ceil(count / 2);
+    const row = index % rows;
+    const height = rows > 1 ? 4.6 - row * 9.2 / (rows - 1) : 0;
+    return [index < rows ? -4.4 : 4.4, index < rows ? height : -height, Math.sin(index * 1.3) * .6];
+  }
+  const angle = Math.PI * 5 / 6 + index * Math.PI * 2 / count;
+  return [Math.cos(angle) * 4.9, Math.sin(angle) * 3.9, Math.sin(index * 1.3) * .6];
+}
 
 function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, pulse }: { pulse: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
   const group = useRef<THREE.Group>(null);
@@ -75,6 +84,7 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     target.y += float;
     const step = Math.min(delta, 1 / 30);
     age.current += step;
+    const positionChanged = group.current.position.distanceToSquared(target) > .000001;
     if (reducedMotion) { group.current.position.copy(target); velocity.current.set(0, 0, 0); }
     else if (age.current >= 0) {
       velocity.current.addScaledVector(target.clone().sub(group.current.position), step * 58);
@@ -90,7 +100,8 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     }
     shell.current?.scale.setScalar(scaleValue.current);
     onPosition(item.id, group.current.position);
-    if (group.current.position.distanceTo(target) > .002 || velocity.current.length() > .01 || age.current < 0 || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
+    // HTML labels need the next frame's updated world matrices after an immediate move.
+    if ((reducedMotion && positionChanged) || group.current.position.distanceTo(target) > .002 || velocity.current.length() > .01 || age.current < 0 || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
   });
   function down(event: ThreeEvent<PointerEvent>) {
     event.stopPropagation(); pressed.current = true; dragging.current = true; moved.current = 0; last.current = { x: event.clientX, y: event.clientY }; onDrag(true);
@@ -118,8 +129,8 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     </mesh>
     {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[1.18, .018, 8, 96]} /><meshStandardMaterial color="#b46282" metalness={.6} roughness={.2} /></mesh>}
     {item.active && item.kind !== 'root' && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, .025, 8, 64]} /><meshStandardMaterial color="#d3497c" emissive="#d3497c" emissiveIntensity={.4} /></mesh>}
-    {!item.quiet && <Html portal={labelPortal} center position={[0, -size - .24, .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
-      <div className="space-node-label">{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>PROJECT / 0{item.index + 1}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
+    {!item.quiet && <Html portal={labelPortal} center position={[0, -size - (item.kind === 'project' && screen.width < 650 ? 1.9 : .24), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
+      <div className="space-node-label">{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>PROJECT / {projects[item.index].number}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
         {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} style={{ pointerEvents: 'auto' }}>Read case study <span aria-hidden="true">↗</span></Link>}
       </div>
     </Html>}
@@ -155,25 +166,29 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
   const expanded = selection.project !== null;
   const compactLeaves = compact && selection.technology !== null;
   const aspect = size.width / size.height;
-  const distance = compact ? 29 : expanded ? Math.max(19, 26 / (2 * Math.tan(THREE.MathUtils.degToRad(43 / 2)) * aspect)) : 17;
+  const distance = compact ? Math.max(29, 14.6 / (2 * Math.tan(THREE.MathUtils.degToRad(43 / 2)) * aspect)) : expanded ? Math.max(19, 26 / (2 * Math.tan(THREE.MathUtils.degToRad(43 / 2)) * aspect)) : 17;
   const items = useMemo(() => {
     const rootPosition: Point = expanded ? compact ? [2.5, .8, -.5] : [2.6, .25, -.5] : [0, 0, 0];
     const selectedPosition: Point = compact ? [0, 5.3, .7] : [-1.5, .4, .7];
     const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, gradient: rootGradient, color: '#dca3b9', active: false, index: 0, onSelect: onReset }];
     let sibling = 0;
-    projects.forEach((project, index) => {
+    const sceneProjects = projects.slice(props.projectOffset, props.projectOffset + GRAPH_PAGE_SIZE);
+    sceneProjects.forEach((project, slot) => {
+      const index = props.projectOffset + slot;
       const active = selection.project === index;
       const rank = active ? 0 : sibling++;
-      const angle = (rank - 2) * .48;
-      const siblingPosition: Point = compact ? [4.7, 4.1 - rank * 1.9, -.6] : [rootPosition[0] + 4.6 * Math.cos(angle), (rank - 2) * 2.6, -.8 + .3 * Math.cos(angle)];
-      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position: expanded ? active ? selectedPosition : siblingPosition : compact ? compactPositions[index] : initialPositions[index], quiet: compact && expanded && !active, gradient: gradients[index], color: colors[index], active, index, onSelect: () => onProject(index) });
+      const siblingCount = sceneProjects.length - 1;
+      const spread = rank - (siblingCount - 1) / 2;
+      const angle = spread * 1.92 / Math.max(1, siblingCount - 1);
+      const siblingPosition: Point = compact ? [4.7, 4.1 - rank * 7.6 / Math.max(1, siblingCount - 1), -.6] : [rootPosition[0] + 4.6 * Math.cos(angle), spread * 10.4 / Math.max(1, siblingCount - 1), -.8 + .3 * Math.cos(angle)];
+      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position: expanded ? active ? selectedPosition : siblingPosition : initialProjectPosition(slot, sceneProjects.length, compact), quiet: compact && expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
     });
     if (selection.project !== null) {
       const project = projects[selection.project];
       project.tags.forEach((tag, index) => {
         if (compactLeaves && selection.technology !== index) return;
         const position: Point = compact ? compactLeaves ? [-1.1, 2, .6] : [-3, (project.tags.length - 1) * 1.1 - index * 2.2 - .8, .6] : [-6.1 - Math.cos(index * 1.4) * .2, (project.tags.length - 1) * .95 - index * 1.9, .5 + Math.sin(index) * .4];
-        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, spawn: selectedPosition, spawnFrom: project.slug, delay: index * .075, gradient: gradients[selection.project!], color: '#ead8df', active: selection.technology === index, index, onSelect: () => onTechnology(index) });
+        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, spawn: selectedPosition, spawnFrom: project.slug, delay: index * .075, gradient: gradients[selection.project! % gradients.length], color: '#ead8df', active: selection.technology === index, index, onSelect: () => onTechnology(index) });
       });
       if (selection.technology !== null) {
         const technology = result.find(node => node.id === `${project.slug}-tech-${selection.technology}`)!;
@@ -181,7 +196,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
       }
     }
     return result;
-  }, [expanded, compact, compactLeaves, selection, onReset, onProject, onTechnology]);
+  }, [expanded, compact, compactLeaves, selection, onReset, onProject, onTechnology, props.projectOffset]);
   useEffect(() => {
     destination.current = new THREE.Vector3(0, 3.5, distance);
     lookAt.current.set(0, 0, 0);

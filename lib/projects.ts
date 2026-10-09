@@ -2,11 +2,15 @@ export type Project = {
   slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
   status: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
-  delivery: string; flow: string[];
+  delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
+  featured?: boolean; heroTitle?: string; heroDetail?: string;
 };
 
 export const projects: Project[] = [
   {
+    graphTitle: "Energy API platform", contributions: [["React frontend leadership", "European release delivery"], ["Typed frontend implementation"], ["API integration", "Integration testing"], ["Multilingual interfaces", "Regional theme configuration"]],
+    featured: true,
+    heroTitle: "Energy APIs", heroDetail: "European release",
     slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
     category: 'Energy · Regional delivery', organization: 'NeuVerge-Tron / Sungrow', status: 'European version launched',
     description: 'Leading the React frontend and European rollout of an API platform, from integration and localization to testing and post-launch iteration.',
@@ -21,6 +25,9 @@ export const projects: Project[] = [
     flow: ['API integration', 'Language + theme', 'European release']
   },
   {
+    graphTitle: "Coffee & beer map", contributions: [["React map experience", "Server-side rendering"], ["Backend development", "Data import workflows"], ["500+ curated venues", "Data access policies"], ["Server-rendered web experience"]],
+    featured: true,
+    heroTitle: "Discovery map", heroDetail: "Independent product",
     slug: 'discovery-map', number: '02', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
     category: 'Independent product · Full stack', organization: 'Personal project', status: 'In development · Not released', inDevelopment: true,
     description: 'An independently built discovery product with 500+ curated places, connecting a React / Next.js map experience to a structured location dataset.',
@@ -35,6 +42,9 @@ export const projects: Project[] = [
     flow: ['Curated places', 'PostgreSQL', 'Map discovery']
   },
   {
+    graphTitle: "Data export center", contributions: [["Export interface implementation"], ["Typed export workflows"], ["Task states", "Retry and download"], ["Data scope", "Permission-aware actions"]],
+    featured: true,
+    heroTitle: "Data exports", heroDetail: "Async workflows",
     slug: 'data-export-center', number: '03', title: 'EU Data Act Data Export Center', shortTitle: 'Clarity through a complex export.',
     category: 'Data access · Async workflows', organization: 'Commercial project', status: 'In development · Not released', inDevelopment: true,
     description: 'A Vue 3 / TypeScript interface for data exports, making scope, permissions, asynchronous jobs, retries and downloads understandable.',
@@ -49,6 +59,8 @@ export const projects: Project[] = [
     flow: ['Scope + access', 'Async export', 'Retry / download']
   },
   {
+    graphTitle: "Sports & training", contributions: [["Web training interfaces"], ["Typed web implementation"], ["Mobile training screens", "Camera and feedback integration"], ["Running mini-program", "Vue mobile frontend"]],
+    heroTitle: "Sports & training", heroDetail: "Web + mobile",
     slug: 'sports-education', number: '04', title: 'AI Sports-Education & Mobile Training Platform', shortTitle: 'Connecting movement and feedback.',
     category: 'Sports education · Web + mobile', organization: 'Danzhu (淡竹)', status: 'Commercial work · Selected screenshot',
     description: 'Web and mobile training interfaces connecting camera input, movement feedback and the training experience across React, React Native and Vue / uni-app.',
@@ -63,6 +75,8 @@ export const projects: Project[] = [
     flow: ['Camera input', 'Movement feedback', 'Training interface']
   },
   {
+    graphTitle: "Low-code platform", contributions: [["Configurable pages", "Field-team applications"], ["Reusable components"], ["Theme switching"]],
+    heroTitle: "Low-code tools", heroDetail: "Configurable interfaces",
     slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Reusable tools for field teams.',
     category: 'Developer tools · Internal platform', organization: 'Longshine', status: 'Internal platform · Written case study',
     description: 'Leading an internal low-code platform for field-service work orders and marketing applications, with configurable pages and reusable components.',
@@ -77,6 +91,8 @@ export const projects: Project[] = [
     flow: ['Page configuration', 'Reusable components', 'Field applications']
   },
   {
+    graphTitle: "Operations dashboard", contributions: [["Initial dashboard frontend ownership"], ["Typed monitoring interfaces"], ["Monitoring charts"], ["Geographic visualization"]],
+    heroTitle: "Operations", heroDetail: "Charts + maps",
     slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'A national view of operations.',
     category: 'Operations · Data visualization', organization: 'State Grid project', status: 'Served 1,000+ operators',
     description: 'React / TypeScript operations interfaces with ECharts and map visualization. Sole frontend ownership of the initial nationwide monitoring dashboard.',
@@ -89,5 +105,22 @@ export const projects: Project[] = [
     ],
     delivery: 'The platform served 1,000+ operators. This is a written case study of my frontend contribution; internal dashboards, data and source code are not reproduced.',
     flow: ['Operational data', 'Charts + maps', 'Operator overview']
+  },
+  {
+    graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend rebuild"], ["PHP-based product upgrade", "Zero-to-one frontend contribution"], ["Batch and single payments", "Insurance collections and payouts"], ["Reconciliation statements"]],
+    slug: 'ronghe-pay', number: '07', title: 'Ronghe Pay — Insurance Payments Platform', shortTitle: 'Care in every payment.',
+    category: 'Fintech · Collections & payouts', organization: 'Fingard (保融) · 融合付', status: 'Commercial project · Written case study',
+    description: 'Contributed to Ronghe Pay from zero to one at Fingard, building the Vue 2 frontend for a 2018 upgrade of an existing PHP-based insurance payments product.',
+    tags: ['Vue 2', 'Frontend modernization', 'Payment workflows', 'Reconciliation'], role: 'Frontend development · Zero-to-one Vue 2 rebuild',
+    problem: 'Insurers needed to collect premiums and pay claims across banks without opening a separate account at every bank. Ronghe Pay connected insurers with banks through one platform: insurers could submit batch files for premium collections through authorized banks, make claim payouts to customers, and use single-payment flows, including real-time settlement where supported. Reconciliation statements and additional value-added services completed the payment workflow.',
+    responsibilities: ['Contributed to Ronghe Pay from zero to one as a frontend developer at Fingard.', 'Built the Vue 2 frontend as the existing PHP-based product was upgraded in 2018.', 'Worked with the insurance payments domain, including batch and single transactions, premium collections, claim payouts and reconciliation.'],
+    decisions: [
+      { title: 'A new frontend for an existing product', text: 'The 2018 upgrade used Vue 2 for the new frontend. My zero-to-one contribution refers to this frontend rebuild; the product already had a PHP-based version.' },
+      { title: 'Batch and single-payment workflows', text: 'The product supported both file-based batch operations and single transactions. Premium collections relied on authorized banks; claim payouts moved money back to customers. Some single-payment flows supported real-time settlement.' },
+      { title: 'Reconciliation as part of the payment experience', text: 'The platform provided reconciliation statements alongside collections and payouts, giving insurers a record to check after money moved.' }
+    ],
+    lesson: 'This was where I began learning the payment domain. When an interface concerns money, accuracy and timeliness are essential: the experience has to make the movement of funds understandable and dependable.',
+    delivery: 'A written case study of historical commercial frontend work, including the 2018 Vue 2 rebuild. No public launch date, transaction-volume claims, internal screenshots or source code are provided. The diagram illustrates the business workflow rather than the product interface.',
+    flow: ['Insurer instructions', 'Authorized bank payments', 'Reconciliation statements']
   }
 ];
