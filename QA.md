@@ -121,7 +121,7 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Failed map-data loading showed a compact notice with the place story still readable; return to overview remained usable. Healthy checks recorded no console/page errors and no third-party requests. Desktop Munich/West Lake and phone Xixi screenshots were visually reviewed.
 
 
-## Ronghe Pay and a catalog that can grow
+## Ronghe Pay and the initial catalog iteration (pagination superseded below)
 
 - Branch: `codex/fingard-payment-project`. Added a seventh written case for Fingard’s Ronghe Pay (融合付), covering the user-confirmed 2018 Vue 2 frontend rebuild of an existing PHP-based product. Business context includes insurance premium collections, claim payouts, batch/single payments, some real-time settlement, reconciliation and unspecified value-added services. The frontend role is separate from bank-side platform capabilities.
 - Added a payment-domain learning section on accuracy and timeliness. Vue 2 is the confirmed framework; modernization, payment workflows and reconciliation are documented concerns. No unconfirmed component/state libraries, launch dates, transaction figures or public demos/screenshots were added. Work summary and Xixi/Fingard growth-map context link to the new detail route. Original cases and unreleased statuses are retained.
@@ -132,3 +132,14 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Four viewports (1440, 768, 390, 320) passed 28 real project selections, 108 technology selections, 28 detail-route checks, graph pagination/search, new-case navigation, the Fingard map link and the seven-card unsupported-WebGL fallback. No overflow, overlapping overview labels, unexpected console errors or page errors.
 - An isolated temporary copy with seventeen layout fixtures passed twelve page checks and 68 project/technology selections across the same viewports. All pages stayed bounded to six project spheres; search, keyboard paging, correct card-grid columns and all seventeen cards were checked. Test fixtures were not added to this repository or deployed.
 - Normal-motion desktop/phone checks also passed animated paging, direct sphere-label expansion, technology activation, pause and reset, with no browser errors.
+
+
+## Complete project constellation — pagination removed
+
+- Removed the six-project limit, paging controls, search filter and page-switching state. The initial 3D scene and HTML project picker include every case. Selecting a project keeps the root center-right, gathers all other project spheres on the right and opens its technologies to the left. One branch is expanded at a time.
+- Positions derive from the catalog size, with balanced curved columns, pixel-based label spacing, responsive camera framing and a stage that grows with the catalog. Container queries keep the scene height aligned with its actual width. The phone overview labels every project; an expanded phone branch retains other projects as small satellite spheres, with the complete HTML picker still available.
+- Retained gradient materials, spring motion, direct case-study links and the immediate all-card fallback when 3D is unavailable. No fixture projects or new claims about the user's past technologies were added to the real catalog.
+- The production Webpack build, TypeScript, ESLint and whitespace checks passed. Four browser viewports (1440, 768, 390 and 320 pixels) verified all seven simultaneous overview labels, 28 project selections and 108 technology selections. Overview, expanded and contribution labels stayed within the scene without overlaps; reset restored all projects. No horizontal overflow, console errors or page errors were recorded.
+- An isolated seventeen-project copy passed the same four viewport sizes, with all seventeen overview labels together, 68 project/technology selections, reset and all seventeen cards. No pagination or search controls remained. Desktop and phone screenshots were visually reviewed. This supersedes the earlier paginated-catalog checks.
+- Normal-motion checks at 1440 and 390 pixels confirmed animated repositioning, clicks on floating project/technology labels, pause/reset and direct Ronghe Pay detail links. Forced unsupported WebGL immediately showed all seven case cards without the 3D stage. No browser errors occurred.
+- Additional large-catalog checks at 1440, 1001 and 700 pixels verified the container breakpoints, right-edge margin, expanded branches and reset after the final spacing correction.

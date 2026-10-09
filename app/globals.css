@@ -212,19 +212,18 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .place-source-link:hover{color:var(--pink)}
 @media(max-width:650px){.career-location-picker button{min-height:135px}.career-location-picker .place-company-label{font-size:10px;margin-top:6px}.place-story{padding:24px 20px}.place-story h3{font-size:26px}.place-memory{font-size:17px}.career-map-canvas.geographic-map{height:370px}.place-map-badge{top:16px;left:16px;max-width:190px;padding:10px 12px}.place-map-badge strong{font-size:17px}.place-map-north{top:18px;right:16px}.place-map-reset{right:16px;bottom:56px;font-size:10px}.place-story-links{align-items:start;flex-direction:column}}
 
-/* The catalog grows independently from the bounded 3D scene. */
-.graph-pagination{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.graph-pagination button{padding:10px 14px;border:1px solid var(--line);background:var(--paper);font-size:12px;min-height:40px}
-.graph-pagination button:not(:disabled):hover{background:var(--blush)}
-.graph-pagination button:disabled{opacity:.4;cursor:default}
-.graph-pagination span{font:11px monospace;color:var(--muted);text-align:center}
-.project-catalog-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 24px;background:#f0efeb}
-.project-catalog-heading label{font-size:15px}
-.project-catalog-heading input{width:min(380px,60%);padding:11px 12px;border:1px solid var(--line);background:var(--paper);font-size:12px;min-width:0;border-radius:0}
-.project-search-empty{padding:20px 24px;font-size:13px;color:var(--muted)}
-.project-search-empty button{color:var(--pink);text-decoration:underline}
+/* One complete constellation; the scene grows to keep every project readable. */
+.three-explorer{container:constellation / inline-size}
+.three-stage{height:max(650px,calc(var(--project-rows) * 128px + 160px),var(--project-sibling-height))}
+.space-node-label.is-satellite .label-project{min-width:0;width:110px;padding:5px 7px;white-space:normal}
+.space-node-label.is-satellite .label-project strong{font-size:10px}
+.space-node-label.is-satellite .label-project span{font-size:7px}
+.space-node-label.is-satellite .space-case-link{font-size:9px;min-height:23px;padding:3px 7px;gap:6px}
+@container constellation (width < 900px){.three-stage{height:max(590px,calc(var(--project-mobile-rows) * 118px + 160px),var(--project-sibling-height))}.space-node-label.is-satellite .label-project{width:86px}.space-node-label.is-satellite .space-case-link{font-size:8px;padding:3px 4px;gap:3px}}
+@container constellation (width < 650px){.three-stage{height:max(520px,calc(var(--project-mobile-rows) * 108px + 160px))}.space-label{font-size:10px;padding:5px 7px;min-width:0}.space-label strong{font-size:10px}.space-label span{font-size:7px;letter-spacing:.5px}.space-label.label-root{min-width:0;padding:5px 7px}.space-label.label-root strong{font-size:17px}.label-project,.label-technology{width:105px;white-space:normal}.label-leaf{width:95px;white-space:normal}.label-leaf strong{font-size:9px}}
+@container constellation (width < 300px){.label-project{width:88px}.space-label.label-root{width:70px;padding:5px}}
 .project-grid .small-project{display:flex;flex-direction:column;min-width:0}
 .project-grid .small-project>.text-link{margin-top:auto;align-self:flex-start}
 @media(min-width:651px) and (max-width:1000px){.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:650px){.graph-pagination{gap:8px;padding:12px}.graph-pagination button{font-size:10px;padding:8px}.graph-pagination span{font-size:9px}.project-catalog-heading{align-items:stretch;flex-direction:column;gap:12px;padding:18px}.project-catalog-heading input{width:100%;font-size:16px}}
+
 @media(max-width:380px){.label-project{width:88px}.label-root{width:70px;padding:5px}.space-case-link{font-size:8px;padding:4px 5px;gap:4px}}
