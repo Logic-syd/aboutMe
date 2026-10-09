@@ -163,8 +163,14 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .experience-row .experience-city{font-size:12px;margin-top:10px;color:var(--muted)}
 .experience-case-link{margin-top:15px}
 .space-node-label{display:flex;flex-direction:column;align-items:center}
-.space-case-link{background:#faf9f6;border:1px solid #d4d0c7;border-top:0;border-radius:0 0 5px 5px;padding:5px 10px;font-size:10px;color:#873650;white-space:nowrap;box-shadow:0 3px 8px #30253009;min-height:27px;display:flex;align-items:center;gap:12px}
-.space-case-link:hover{background:#f8e4ed;text-decoration:underline;text-underline-offset:3px}
+.space-node-label.is-project{position:relative}
+.space-case-link{position:absolute;right:3px;bottom:3px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:#fff}
+.space-case-link::before{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--pink);transition:background .15s}
+.space-case-link svg{position:relative;width:18px;height:18px}
+.space-case-link:focus-visible{outline-offset:1px}
+.three-stage-hint>span{color:var(--pink);font-weight:700}
+.space-case-link:hover::before{background:#7d2947}
+.space-node-label.is-project:hover .label-project{border-color:var(--pink)}
 .graph-case-button{border-radius:0;gap:20px;font-size:13px}
 @media(max-width:1000px) and (min-width:761px){.craft-header{padding:0 24px;gap:22px}.craft-header nav{font-size:10px;letter-spacing:.7px}.nav-sections{gap:20px}.craft-header .nav-contact{padding:12px 16px}}
 @media(max-width:760px){
@@ -176,7 +182,7 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
   .nav-sections{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
   .nav-sections a{min-height:46px;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:0}
 }
-@media(max-width:650px){.professional-work-section{padding-bottom:20px}.space-case-link{font-size:9px;padding:4px 7px;gap:6px;min-height:26px}.graph-case-button{width:100%;justify-content:space-between;min-height:44px}}
+@media(max-width:650px){.professional-work-section{padding-bottom:20px}.graph-case-button{width:100%;justify-content:space-between;min-height:44px}}
 
 @media(max-width:650px){.three-stage{height:560px}}
 .professional-work-section .experience-row .experience-description{font-size:14px;color:var(--muted);line-height:1.85;max-width:none}
@@ -218,12 +224,14 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .space-node-label.is-satellite .label-project{min-width:0;width:110px;padding:5px 7px;white-space:normal}
 .space-node-label.is-satellite .label-project strong{font-size:10px}
 .space-node-label.is-satellite .label-project span{font-size:7px}
-.space-node-label.is-satellite .space-case-link{font-size:9px;min-height:23px;padding:3px 7px;gap:6px}
-@container constellation (width < 900px){.three-stage{height:max(590px,calc(var(--project-mobile-rows) * 118px + 160px),var(--project-sibling-height))}.space-node-label.is-satellite .label-project{width:86px}.space-node-label.is-satellite .space-case-link{font-size:8px;padding:3px 4px;gap:3px}}
+@container constellation (width < 900px){.three-stage{height:max(590px,calc(var(--project-mobile-rows) * 118px + 160px),var(--project-sibling-height))}.space-node-label.is-satellite .label-project{width:86px}}
 @container constellation (width < 650px){.three-stage{height:max(520px,calc(var(--project-mobile-rows) * 108px + 160px))}.space-label{font-size:10px;padding:5px 7px;min-width:0}.space-label strong{font-size:10px}.space-label span{font-size:7px;letter-spacing:.5px}.space-label.label-root{min-width:0;padding:5px 7px}.space-label.label-root strong{font-size:17px}.label-project,.label-technology{width:105px;white-space:normal}.label-leaf{width:95px;white-space:normal}.label-leaf strong{font-size:9px}}
 @container constellation (width < 300px){.label-project{width:88px}.space-label.label-root{width:70px;padding:5px}}
 .project-grid .small-project{display:flex;flex-direction:column;min-width:0}
 .project-grid .small-project>.text-link{margin-top:auto;align-self:flex-start}
 @media(min-width:651px) and (max-width:1000px){.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-@media(max-width:380px){.label-project{width:88px}.label-root{width:70px;padding:5px}.space-case-link{font-size:8px;padding:4px 5px;gap:4px}}
+@media(max-width:380px){.label-project{width:88px}.label-root{width:70px;padding:5px}}
+
+/* Reserve the corner inside each card for its independent detail link. */
+.space-node-label.is-project .label-project{padding-bottom:36px}

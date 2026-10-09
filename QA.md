@@ -143,3 +143,9 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - An isolated seventeen-project copy passed the same four viewport sizes, with all seventeen overview labels together, 68 project/technology selections, reset and all seventeen cards. No pagination or search controls remained. Desktop and phone screenshots were visually reviewed. This supersedes the earlier paginated-catalog checks.
 - Normal-motion checks at 1440 and 390 pixels confirmed animated repositioning, clicks on floating project/technology labels, pause/reset and direct Ronghe Pay detail links. Forced unsupported WebGL immediately showed all seven case cards without the 3D stage. No browser errors occurred.
 - Additional large-catalog checks at 1440, 1001 and 700 pixels verified the container breakpoints, right-edge margin, expanded branches and reset after the final spacing correction.
+
+## Integrated project-detail arrows
+
+- Replaced the separate Read case study strip beneath every 3D node with a pink arrow inside the card's lower-right corner. The title/sphere still expands technologies; the arrow remains an independent semantic link with a project-specific accessible name, an Open case study tooltip and a 32-pixel click target. The scene hint explains the arrow, while the full detail CTA below the graph is retained.
+- Production build, TypeScript, ESLint and whitespace checks passed. Browser checks at 1440, 768, 390 and 320 pixels covered 28 project selections, arrow containment, accessible names and mouse/keyboard navigation to the case page. No browser errors occurred. Desktop and phone card screenshots were reviewed.
+- The isolated seventeen-project graph also passed overview, expanded-label bounds/overlap checks and reset at 1440, 1001 and 700 pixels with the revised cards.
