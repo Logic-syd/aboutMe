@@ -2,7 +2,7 @@
 
 Public portfolio: https://about-me-henna-alpha.vercel.app/
 
-English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project knowledge graph, seven expandable case cards, a Leaflet career map and contact links. Each project has a statically generated detail route.
+English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project knowledge graph, eight expandable case cards, a Leaflet career map and contact links. Each project has a statically generated detail route.
 
 ## Local development
 
@@ -32,9 +32,9 @@ Import `Logic-syd/aboutMe` at https://vercel.com/new, keep the detected Next.js 
 
 Project content is in `lib/projects.ts`; graph labels and contribution details are in `lib/graph.ts`; homepage biography is in `app/page.tsx`, confirmed work areas are in `lib/experience.ts`, and place descriptions and personal reflections are in `lib/place-stories.ts`. Contact links are in `components/site.tsx`. Update verified facts at their source before publication. Do not imply that the discovery map or export center has launched. Their current status is **In development · Not released**.
 
-All seven projects include written case studies. The Danzhu case also includes one user-provided screenshot of a Vue / uni-app running mini-program, with privacy redactions, and a verified link to the company website. Other commercial interfaces are not publicly shown. Original workflow illustrations are explicitly labeled and do not represent product screenshots. There are no proprietary code samples, fabricated employment dates, unverified outcome metrics, phone numbers, empty actions, or unverified demo/source links. The sports-education case distinguishes frontend camera and feedback integration from model training.
+All eight projects include written case studies. Mountain Chess also includes two genuine product screenshots and verified Live Demo and Source Code links. The Danzhu case also includes one user-provided screenshot of a Vue / uni-app running mini-program, with privacy redactions, and a verified link to the company website. Other commercial interfaces are not publicly shown. Original workflow illustrations are explicitly labeled and do not represent product screenshots. There are no proprietary code samples, fabricated employment dates, unverified outcome metrics, phone numbers, empty actions, or unverified demo/source links. The sports-education case distinguishes frontend camera and feedback integration from model training.
 
-The empty starting repository contained no runnable game, so none is included. The site uses system fonts, CSS diagrams, an original local SVG career map and a local SVG favicon, with no third-party tracking or external asset dependencies.
+Mountain Chess is an independently published game, documented as the eighth case with its own live and source links. The site uses system fonts, CSS diagrams, an original local SVG career map and a local SVG favicon, with no third-party tracking or external asset dependencies.
 
 
 ## Homepage navigation
@@ -51,7 +51,7 @@ The growth map focuses on places and personal memories, followed by a short refl
 
 React Three Fiber / Drei and Leaflet describe the implementation of this portfolio; they are not added as unverified technologies in past employment.
 
-The current edition retains the initial six projects and adds Ronghe Pay, a user-confirmed Fingard insurance-payments case. Zhihuishu’s Three.js knowledge-graph work is mentioned in the biography using user-confirmed details, without inventing dates, a location or an additional case study. Future projects can be added incrementally. 3D loads near the viewport, pauses when offscreen, respects reduced motion and keeps project and technology controls keyboard-accessible. Unsupported WebGL 2, scene errors, context loss, or scene initialization exceeding 12 seconds automatically remove the entire 3D explorer and show all project case cards immediately, without a disclosure click.
+The current edition retains the initial six projects and adds Ronghe Pay, a user-confirmed Fingard insurance-payments case, and Mountain Chess, a live personal game inspired by hiking breaks. Zhihuishu’s Three.js knowledge-graph work is mentioned in the biography using user-confirmed details, without inventing dates, a location or an additional case study. Future projects can be added incrementally. 3D loads near the viewport, pauses when offscreen, respects reduced motion and keeps project and technology controls keyboard-accessible. Unsupported WebGL 2, scene errors, context loss, or scene initialization exceeding 12 seconds automatically remove the entire 3D explorer and show all project case cards immediately, without a disclosure click.
 
 
 ## Ronghe Pay (融合付)
@@ -64,8 +64,17 @@ Project counts and fallback cards derive from the project data. All projects sta
 
 ### Adding future cases
 
-Add a `Project` object in `lib/projects.ts`, with a unique stable `slug`, its `number`, confirmed content, tags and delivery status. Optional `graphTitle` gives its short graph label; `contributions` contains the contribution leaves for each corresponding tag. Without contribution leaves, the graph falls back to the documented role. Only mark a project `featured: true` when it should be one of the three featured cards. Only set `heroTitle` and `heroDetail` when it should occupy a selected hero entrance (maximum six). Append new cases without renumbering existing URLs.
+Add a `Project` object in `lib/projects.ts`, with a unique stable `slug`, its `number`, confirmed content, tags and delivery status. Optional `links` exposes verified public demo/source URLs; `screenshots` provides real images for the shared product gallery, with an optional `screenshotCredit`. Optional `graphTitle` gives its short graph label; `contributions` contains the contribution leaves for each corresponding tag. Without contribution leaves, the graph falls back to the documented role. Only mark a project `featured: true` when it should be one of the three featured cards. Only set `heroTitle` and `heroDetail` when it should occupy a selected hero entrance (maximum six). Append new cases without renumbering existing URLs.
 
 The data feeds static detail routes, counts, project selectors, the complete graph, cards and next-case navigation; it does not require another graph-title/leaf array or per-project coordinates. Set `project` on the matching experience in `lib/experience.ts` when its work-summary and growth-map links should point to the new case. Keep public release status, frameworks and responsibilities source-grounded.
 
 Scalability was checked with seventeen temporary test fixtures in an isolated copy outside this repository. No fixture cases are included in the actual portfolio.
+
+
+## Mountain Chess (高山棋局)
+
+The eighth case is at `/projects/mountain-chess`. Yidan's motivation—wanting to play chess during solo hiking breaks—leads into the product and engineering decisions. The public repository and deployed v1.4.3 application were inspected: native HTML/CSS/JavaScript, a local chess opponent with shallow search and alpha-beta pruning, Service Worker caching and readiness checks, LocalStorage saves, power-saving behavior and Chinese/English/German interfaces. No React, TypeScript, calibrated playing strength or measured battery savings are claimed for this project.
+
+Live game: https://logic-syd.github.io/chessOffline/dist/ · Public source: https://github.com/Logic-syd/chessOffline. The shared public-links component appears in its selected graph detail, case card and case header. The application source is publicly viewable; the portfolio does not imply an open-source license for the entire application.
+
+`public/images/mountain-chess-board.png` is an unmodified browser screenshot captured from the real English application. `public/images/mountain-chess-checkmate.png` is the user's original German victory screenshot. Captions identify each source and the gallery links to the project's chess-piece artwork credits. The existing Danzhu screenshot and all previous cases remain intact.

@@ -4,6 +4,9 @@ export type Project = {
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
   delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
   featured?: boolean; heroTitle?: string; heroDetail?: string;
+  links?: { label: 'Live Demo' | 'Source Code'; href: string }[];
+  screenshots?: { src: string; width: number; height: number; alt: string; caption: string }[];
+  screenshotCredit?: { label: string; href: string };
 };
 
 export const projects: Project[] = [
@@ -122,5 +125,42 @@ export const projects: Project[] = [
     lesson: 'This was where I began learning the payment domain. When an interface concerns money, accuracy and timeliness are essential: the experience has to make the movement of funds understandable and dependable.',
     delivery: 'A written case study of historical commercial frontend work, including the 2018 Vue 2 rebuild. No public launch date, transaction-volume claims, internal screenshots or source code are provided. The diagram illustrates the business workflow rather than the product interface.',
     flow: ['Insurer instructions', 'Authorized bank payments', 'Reconciliation statements']
+  },
+  {
+    slug: 'mountain-chess', number: '08', title: 'Mountain Chess — Offline Chess for Hiking', shortTitle: 'A chessboard for a mountain break.',
+    graphTitle: 'Mountain chess', category: 'Personal product · Offline game', organization: 'Independent project', status: 'Live · Offline play after setup',
+    description: 'I love hiking and chess, so I built a game for solo breaks in the mountains: a local computer opponent, saved games and offline play after the first online setup.',
+    tags: ['JavaScript', 'PWA / Service Worker', 'Local chess engine', 'LocalStorage / i18n'], role: 'Independent developer · Product, interface and game logic',
+    contributions: [
+      ['Responsive board and game controls', 'No framework or runtime dependencies'],
+      ['Versioned asset caching', 'Offline-readiness checks'],
+      ['Legal moves and game outcomes', 'Local search with three difficulty settings'],
+      ['Save and resume on the same device', 'Chinese, English and German interfaces']
+    ],
+    problem: 'I enjoy hiking as much as chess. When I stopped for a rest alone in the mountains, I wanted to play a game without depending on a signal or finding an opponent. That personal need became Mountain Chess: a small, phone-friendly game that can travel with me, remember an unfinished position and work after its resources have been cached.',
+    responsibilities: [
+      'Designed and built the responsive chessboard, move feedback, game controls and win/draw screens.',
+      'Implemented chess rules and a computer opponent that runs on the device, with three difficulty settings.',
+      'Added Service Worker caching, PWA installation metadata and an explicit offline-readiness check.',
+      'Persisted the game and preferences locally, and provided Chinese, English and German interfaces.',
+      'Published the static application on GitHub Pages and built a default power-saving mode for use on a phone.'
+    ],
+    decisions: [
+      { title: 'Make offline readiness something I can check', text: 'A Service Worker caches the application, chess pieces and language resources. The readiness check verifies the active worker, version and cached files. Before a hike, I can check those resources and reopen the game offline to confirm it is ready.' },
+      { title: 'Keep the game and opponent on the device', text: 'Native HTML, CSS and JavaScript keep the application free of framework and runtime dependencies. The computer uses shallow minimax search with alpha-beta pruning and position evaluation. Three settings adjust search and move selection for casual play without a server.' },
+      { title: 'Spend work only when it is needed', text: 'The computer calculates during its own turn. Pending computer turns pause when the page is hidden; power-saving mode is on by default and reduces animation while disabling sound and vibration. Move highlights and game-result feedback remain available.' },
+      { title: 'Let a short break become a resumable game', text: 'LocalStorage preserves the position, move history and preferences in the same browser. Undo, board rotation and side selection support casual sessions. The three interface languages are cached too, and switching language keeps the current game intact.' }
+    ],
+    delivery: 'Published and playable on GitHub Pages, with a public source repository. The gallery shows the live English interface and a German checkmate screen from my phone. Offline use requires an initial online visit and completed caching; saved games remain in the same device and browser.',
+    flow: ['Cache before the hike', 'Play on the device', 'Save & resume'],
+    links: [
+      { label: 'Live Demo', href: 'https://logic-syd.github.io/chessOffline/dist/' },
+      { label: 'Source Code', href: 'https://github.com/Logic-syd/chessOffline' }
+    ],
+    screenshots: [
+      { src: '/images/mountain-chess-board.png', width: 780, height: 1688, alt: 'The live Mountain Chess app in English, with its offline-ready indicator, chessboard, local computer opponent and game controls.', caption: 'English board · Captured from the live application.' },
+      { src: '/images/mountain-chess-checkmate.png', width: 1206, height: 2622, alt: 'Mountain Chess in German, displaying a checkmate victory and an option to play another game.', caption: 'German checkmate screen · My original phone screenshot.' }
+    ],
+    screenshotCredit: { label: 'Chess-piece artwork credits', href: 'https://github.com/Logic-syd/chessOffline/blob/main/dist/pieces/NOTICE.txt' }
   }
 ];

@@ -235,3 +235,19 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 
 /* Reserve the corner inside each card for its independent detail link. */
 .space-node-label.is-project .label-project{padding-bottom:36px}
+
+/* Published projects can share verified links and genuine product screens. */
+.project-public-links{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:22px}
+.project-public-links .text-link{font-size:12px;gap:13px;color:var(--pink);border-color:var(--pink)}
+.project-public-links .text-link:hover{color:var(--ink);border-color:var(--ink)}
+.small-project .project-public-links{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);width:100%}
+.project-gallery{padding:42px 36px;margin-top:34px;border:1px solid #d6ded4;background:#edf1e9}
+.project-gallery-heading{text-align:center;max-width:570px;margin:0 auto 30px}
+.project-gallery-heading h2{font-size:34px;margin:12px 0 14px}
+.project-gallery-heading>p:last-child{font-size:13px;color:var(--muted);line-height:1.8}
+.project-gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,300px));gap:36px;justify-content:center;align-items:start}
+.project-screenshot-link{display:block;background:#0b211c;border:1px solid #254b40;border-radius:12px;overflow:hidden}
+.project-screenshot-link img{display:block;width:100%;height:auto;max-height:650px;object-fit:contain}
+.project-gallery figcaption{font-size:11px;line-height:1.7;color:var(--muted);margin-top:13px}
+.screenshot-credit{display:block;text-align:center;font-size:11px;margin-top:25px;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+@media(max-width:650px){.project-gallery{padding:26px 18px;margin-top:26px}.project-gallery-heading h2{font-size:27px}.project-gallery-grid{grid-template-columns:minmax(0,280px);gap:28px}.project-screenshot-link img{max-height:540px}.project-public-links{gap:12px 22px}.project-public-links .text-link{font-size:12px}}

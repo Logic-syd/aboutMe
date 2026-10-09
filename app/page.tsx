@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ProjectLinks } from '@/components/project-links';
 import { ProjectShowcase } from '@/components/project-showcase';
 import { CareerMap } from '@/components/career-map';
 import { projects } from '@/lib/projects';
@@ -33,7 +34,7 @@ export default function Home() {
           <div className="project-copy"><div className="project-kicker"><span>{project.number} / {project.category}</span></div><span className={`status ${project.inDevelopment ? 'status-progress' : ''}`}><i />{project.status}</span><h3><Link href={`/projects/${project.slug}`}>{project.shortTitle}</Link></h3><p className="project-name">{project.title}</p><p className="project-description">{project.description}</p><ul className="tags" aria-label="Technologies">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><Link className="text-link" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link></div>
         </article>)}</div>
         <div className="more-work-heading"><h3>More work, same attention.</h3><span>{String(projects.filter(project => !project.featured).length).padStart(2, '0')} MORE CASE STUDIES</span></div>
-        <div className="project-grid">{projects.filter(project => !project.featured).map(project => <article className="small-project" key={project.slug}><div className="small-project-top"><span>{project.number}</span><span aria-hidden="true">↗</span></div><p className="eyebrow">{project.organization}</p><h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3><p>{project.description}</p><span className="small-status">{project.status}</span><ul className="tags" aria-label="Technologies">{project.tags.slice(0, 3).map(tag => <li key={tag}>{tag}</li>)}</ul><Link className="text-link" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link></article>)}</div>
+        <div className="project-grid">{projects.filter(project => !project.featured).map(project => <article className="small-project" key={project.slug}><div className="small-project-top"><span>{project.number}</span><span aria-hidden="true">↗</span></div><p className="eyebrow">{project.organization}</p><h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3><p>{project.description}</p><span className="small-status">{project.status}</span><ul className="tags" aria-label="Technologies">{project.tags.slice(0, 3).map(tag => <li key={tag}>{tag}</li>)}</ul><Link className="text-link" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link><ProjectLinks project={project} /></article>)}</div>
         </ProjectShowcase>
         <p className="work-note">Commercial work is presented through written case studies, with a selected privacy-redacted screenshot in the Danzhu case. All workflow diagrams are labeled illustrations.</p>
       </section>
