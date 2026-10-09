@@ -7,17 +7,17 @@ import Link from 'next/link';
 import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { projects } from '@/lib/projects';
-import { graphLeaves, graphTitles, type GraphSelection } from '@/lib/graph';
+import { graphLeaves, graphSiblingGap, graphTitles, type GraphSelection } from '@/lib/graph';
 
 type Gradient = readonly [string, string, string];
 type Point = [number, number, number];
 type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; gradient?: Gradient; color: string; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { onUnavailable: () => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
-const colors = ['#dba0b3', '#d4bf98', '#b7aad2', '#a8c4c0', '#bac797', '#a7bdd6', '#e7ad95', '#7eae96'];
+const colors = ['#dba0b3', '#d4bf98', '#b7aad2', '#a8c4c0', '#bac797', '#a7bdd6', '#e7ad95', '#7eae96', '#a1c9b6'];
 const rootGradient: Gradient = ['#ffe3cc', '#dd719f', '#8771d2'];
 const leafGradient: Gradient = ['#f0f7c8', '#79bea8', '#748dc8'];
-const gradients: Gradient[] = [rootGradient, ['#fff0ab', '#daa06e', '#ae6eb5'], ['#f1c4ff', '#a282e4', '#689bd3'], ['#d0f3dd', '#68b8b3', '#8979ce'], ['#f2f5b6', '#aac477', '#6eaaa7'], ['#d4f3ff', '#7faadd', '#a17ac9'], ['#ffe2ae', '#dc967d', '#a377ad'], ['#f3e3a5', '#7bb99f', '#225e54']];
+const gradients: Gradient[] = [rootGradient, ['#fff0ab', '#daa06e', '#ae6eb5'], ['#f1c4ff', '#a282e4', '#689bd3'], ['#d0f3dd', '#68b8b3', '#8979ce'], ['#f2f5b6', '#aac477', '#6eaaa7'], ['#d4f3ff', '#7faadd', '#a17ac9'], ['#ffe2ae', '#dc967d', '#a377ad'], ['#f3e3a5', '#7bb99f', '#225e54'], ['#fff1b8', '#92c8ad', '#d49bb9']];
 // All projects remain in one scene. Wider screens use four curved columns;
 // narrow screens use two, with spacing measured in pixels to protect labels.
 function initialProjectPosition(index: number, count: number, width: number, worldPerPixel: number): Point {
@@ -200,8 +200,8 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
       const siblingPosition: Point = compact
         ? [4.7 + column * 1.2, -spread * Math.min(1.9, 8 / Math.max(1, rows - 1)), -.6]
         : siblingCount > 7
-          ? [siblingX * size.width * worldPerPixel, -spread * 90 * worldPerPixel, -.8 + .2 * Math.cos(row)]
-          : [rootPosition[0] + 4.6 * Math.cos(angle), spread * 108 * worldPerPixel, -.8 + .3 * Math.cos(angle)];
+          ? [siblingX * size.width * worldPerPixel, -spread * graphSiblingGap * worldPerPixel, -.8 + .2 * Math.cos(row)]
+          : [rootPosition[0] + 4.6 * Math.cos(angle), spread * graphSiblingGap * worldPerPixel, -.8 + .3 * Math.cos(angle)];
       result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position: expanded ? active ? selectedPosition : siblingPosition : initialProjectPosition(index, projects.length, size.width, worldPerPixel), quiet: compact && expanded && !active, satellite: expanded && !active && projects.length > 8, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
     });
     if (selection.project !== null) {

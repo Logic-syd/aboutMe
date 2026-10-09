@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ProjectLinks } from '@/components/project-links';
 import { projects } from '@/lib/projects';
-import { graphLeaves, graphTitles, type GraphSelection } from '@/lib/graph';
+import { graphLeaves, graphSiblingGap, graphTitles, type GraphSelection } from '@/lib/graph';
 
 const ThreeGraph = dynamic(() => import('@/components/three-project-scene'), { ssr: false, loading: () => <div className="three-loading">Preparing the 3D constellation…</div> });
 function subscribeMotion(callback: () => void) { const query = window.matchMedia('(prefers-reduced-motion: reduce)'); query.addEventListener('change', callback); return () => query.removeEventListener('change', callback); }
@@ -58,7 +58,7 @@ export function ProjectGraph({ onUnavailable }: { onUnavailable: () => void }) {
   const selectTechnology = useCallback((index: number) => { if (selection.project !== null) setInteraction(current => ({ nodeId: `${projects[selection.project!].slug}-tech-${index}`, revision: current.revision + 1 })); setSelection(current => ({ ...current, technology: current.technology === index ? null : index })); }, [selection.project]);
   const reset = useCallback(() => { setInteraction(current => ({ nodeId: 'root', revision: current.revision + 1 })); setSelection({ project: null, technology: null }); setView(current => ({ reset: current.reset + 1, zoom: 0 })); }, []);
   const siblingRows = Math.ceil((projects.length - 1) / (projects.length > 8 ? 2 : 1));
-  const layoutStyle = { '--project-rows': Math.ceil(projects.length / 4), '--project-mobile-rows': Math.ceil(projects.length / 2), '--project-sibling-height': `${siblingRows * (projects.length > 8 ? 90 : 108) + 160}px` } as CSSProperties;
+  const layoutStyle = { '--project-rows': Math.ceil(projects.length / 4), '--project-mobile-rows': Math.ceil(projects.length / 2), '--project-sibling-height': `${siblingRows * graphSiblingGap + 160}px` } as CSSProperties;
   return <div className="project-explorer three-explorer" style={layoutStyle}>
     <div className="explorer-toolbar"><div><span className="eyebrow">PROJECT CONSTELLATION / THREE.JS</span><p>One idea. Many connections.</p></div><span className="graph-key"><i />{selection.technology !== null ? 'Level 03 / Contributions' : project ? 'Level 02 / Technologies' : 'Level 01 / Projects'}</span></div>
     <div ref={region} className="three-stage" aria-label="Interactive three-dimensional project knowledge graph">
