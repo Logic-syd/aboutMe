@@ -17,7 +17,7 @@ Open the local address printed by Next.js. If port 3000 is busy, use `npm run de
 
 ## Explore
 
-Click a building or one of the six location buttons. The character moves to that location and a story panel links to the relevant projects, work experience or contact address. Below the town, the original interactive Three.js sphere explorer connects all twelve projects to their technologies and contributions. Case-study notebooks are available through the disclosure beneath it, or appear directly if 3D is unavailable. The existing Leaflet growth map and place stories remain below the work experience. Keyboard users can Tab to a building and press Enter; phone users can use the larger location buttons. Motion can be paused and respects reduced-motion settings.
+Click a building or one of the six location buttons. The character moves to that location and a story panel links to the relevant projects, work experience or contact address. Below the town, the original interactive Three.js sphere explorer connects all thirteen projects to their technologies and contributions. Case-study notebooks are available through the disclosure beneath it, or appear directly if 3D is unavailable. The existing Leaflet growth map and place stories remain below the work experience. Keyboard users can Tab to a building and press Enter; phone users can use the larger location buttons. Motion can be paused and respects reduced-motion settings.
 
 The town uses original SVG pixel artwork and CSS, with no WebGL, external art downloads or new dependencies. The sphere explorer uses WebGL when available and retains its graphics guidance and retry behavior. The town remains usable without WebGL. Existing product screenshots also appear as previews in the corresponding notebook cards.
 

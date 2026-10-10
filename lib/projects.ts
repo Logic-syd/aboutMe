@@ -307,5 +307,29 @@ export const projects: Project[] = [
     ],
     delivery: 'The mini-program served multiple universities and multiple primary schools in Shanghai. My frontend work covered student training, weak-network data handling, teacher result management and report exports, with separate university and primary-school experiences. The gallery shows an original, privacy-redacted running-session screenshot.',
     flow: ['Student training', 'Save + upload results', 'Teacher review + export']
+  },
+  {
+    slug: 'weibo-deleter', number: '13', title: 'Weibo Deleter — A Small Browser Extension', shortTitle: 'A small tool for a friend’s repetitive task.',
+    graphTitle: 'Weibo deleter', category: 'Personal tool · Browser extension', organization: 'Independent project', status: 'Personal tool · Public source',
+    description: 'A small React browser extension built for a friend who wanted to delete Weibo posts in batches. It turns a deeply nested, roughly four-click deletion flow into a selectable batch operation.',
+    tags: ['React / Vite', 'Chrome Extension / MV3', 'DOM automation'], role: 'Independent developer',
+    contributions: [
+      ['Post selection popup', 'Progress and result messages'],
+      ['Popup-to-content-script messaging'],
+      ['Nested menu and confirmation handling', 'Sequential batch operations', 'Adapting to Weibo UI changes']
+    ],
+    problem: 'A friend wanted to delete old Weibo posts in batches, but Weibo did not offer a quick way to do it. The delete action was buried behind several interactions—roughly four clicks—and frequent interface changes made the relevant elements difficult to locate.',
+    responsibilities: [
+      'Built a React / Vite extension popup for selecting posts and showing operation progress.',
+      'Implemented content-script DOM interaction and messaging to process selected posts sequentially.',
+      'Worked on locating nested menu actions and confirmation controls as Weibo’s page structure changed.'
+    ],
+    decisions: [
+      { title: 'Follow the page interaction step by step', text: 'The content script opens each post’s menu, locates the deletion action and handles confirmation, with pauses between steps for the page to respond.' },
+      { title: 'Expect the interface to change', text: 'The difficult part was locating controls that only appear after earlier clicks. Weibo’s redesigns also meant revisiting DOM selectors and menu structure rather than treating the automation as a one-time implementation.' }
+    ],
+    delivery: 'A small personal browser-extension project with public source code, built around a friend’s practical need.',
+    flow: ['Select posts', 'Menu + confirmation', 'Batch progress'],
+    links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/weibo-deleter' }]
   }
 ];
