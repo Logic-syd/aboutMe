@@ -203,3 +203,10 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Verified Escape/close focus restoration, switching between duplicate triggers for the same place, forward/backward keyboard exit, outside-pointer dismissal, scroll-away dismissal and case-study navigation.
 - Studio retains only the energy API case and the all-projects link. Previews now contain only the place name, a short title and links; descriptions and footer hints were removed.
 - Compact-layout recheck passed at all four viewport sizes: bubbles are 240px wide, 117px tall on desktop (157px for Studio), and 131px tall on mobile (179px for Studio). Mobile links retain 44px touch targets. ESLint, TypeScript, production build and the interaction checks above passed again.
+
+## API developer-platform draft — 10 October 2026
+
+- Added a dedicated API case with a local developer-console reconstruction. Personal scope reflects the owner's latest clarification: European delivery, online debugging and application management; EU Data Act work remains unreleased.
+- ESLint, TypeScript and the production build passed. Browser checks at 1440px, 390px and 320px verified responsive layout, no horizontal overflow or runtime errors, and keyboard activation of all four engineering disclosures.
+- Interaction checks covered both synthetic endpoints, raw JSON, five-site selection, English/Chinese, permission rejection before routing, explicit timeout recovery, reset and cancellation of stale in-flight results when inputs change. Mobile Run reveals the request trace in the viewport and respects reduced motion.
+- Demo data, credentials and routes are synthetic. No live requests or internal screenshots are used. Kept on the feature branch pending additional Data Act documents and final case scope.

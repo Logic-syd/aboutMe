@@ -11,21 +11,21 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    graphTitle: "Energy API platform", contributions: [["React frontend leadership", "European release delivery"], ["Typed frontend implementation"], ["API integration", "Integration testing"], ["Multilingual interfaces", "Regional theme configuration"]],
+    graphTitle: "Energy API platform", contributions: [["React frontend development", "European delivery"], ["Typed frontend implementation"], ["Online API debugging", "Request and response integration"], ["Application management", "Developer workflows"]],
     featured: true,
-    heroTitle: "Energy APIs", heroDetail: "European release",
+    heroTitle: "Energy APIs", heroDetail: "Developer platform",
     slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
-    category: 'Energy · Regional delivery', organization: 'NeuVerge-Tron / Sungrow', status: 'European version launched',
-    description: 'Leading the React frontend and European rollout of an API platform, from integration and localization to testing and post-launch iteration.',
-    tags: ['React', 'TypeScript', 'API integration', 'Localization'], role: 'Frontend lead · European rollout',
-    problem: 'An energy API platform needed a European frontend release that brought API integration, multiple languages and regional presentation into a coherent product experience.',
-    responsibilities: ['Led React frontend implementation and API integration.', 'Delivered multilingual interfaces and region-specific theme configuration.', 'Owned frontend testing for the European rollout and continued iterating after launch.'],
+    category: 'Energy · Developer experience', organization: 'NeuVerge-Tron / Sungrow', status: 'EU Data Act work in progress',
+    description: 'Frontend work on a renewable-energy developer platform, covering European delivery, online API debugging and application management. Current EU Data Act work is in development.',
+    tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'Frontend development · European delivery',
+    problem: 'Developers need to move from API documentation to application authorization and working calls across regional sites. The platform brings these workflows together with application management and operational tooling.',
+    responsibilities: ['Contribute to European frontend delivery, with ongoing work focused on EU Data Act requirements.', 'Develop online API debugging workflows.', 'Implement application-management interfaces for developers.'],
     decisions: [
-      { title: 'Regional configuration as a frontend concern', text: 'Handled language and regional theme configuration as part of the product implementation, so the European release could express its own presentation requirements.' },
-      { title: 'Delivery beyond implementation', text: 'Carried frontend ownership through integration, testing and the European launch, then into post-launch improvements.' }
+      { title: 'Regional context reaches the request layer', text: 'The platform separates build environments from business sites. Site selection determines the default gateway, while individual requests can override it for flows such as registration.' },
+      { title: 'A debugger needs a different response contract', text: 'Online debugging checks application permissions and uses application-level credentials. It preserves the raw API response instead of applying the ordinary portal result wrapper.' }
     ],
-    delivery: 'The European version launched. My work included testing, release delivery and post-launch iteration. This is a written case study; no internal screenshots, proprietary code or public product demo are included.',
-    flow: ['API integration', 'Language + theme', 'European release']
+    delivery: 'My scope covers European delivery, online debugging and application management. The EU Data Act work is still in development and has not launched. The interactive case uses illustrative data and makes no live API requests.',
+    flow: ['Application access', 'Regional gateway', 'API response']
   },
   {
     graphTitle: "Coffee & beer map", contributions: [["React map experience", "Server-side rendering"], ["Backend development", "Data import workflows"], ["500+ curated venues", "Data access policies"], ["Server-rendered web experience"]],
