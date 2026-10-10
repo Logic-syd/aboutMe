@@ -5,7 +5,7 @@ import { SportsAssessmentDemo } from '@/components/sports-assessment-demo';
 import styles from './sports-case-study.module.css';
 
 const contexts = [
-  { number: '01', title: 'Zhongkao examinations', text: 'Used in physical-education assessments for China’s high-school entrance examinations.' },
+  { number: '01', title: 'High-school entrance PE exams', text: 'Used in physical-education assessments for China’s high-school entrance examinations.' },
   { number: '02', title: 'Sports-school training', text: 'Used in everyday training at sports schools, with scoring and assessment reports.' },
   { number: '03', title: 'Middle-school PE', text: 'Used in physical-education classes to connect exercise with individual feedback.' },
 ];
@@ -29,8 +29,8 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
         </div>
         <div className={styles.context}>
           <span className={styles.contextLabel}><i /> IN REAL-WORLD USE</span>
-          <h2>From PE class<br />to the Zhongkao.</h2>
-          <p>The system has been used in China’s Zhongkao sports examinations, sports-school training and middle-school PE classes.</p>
+          <h2>China’s high-school entrance PE exams.</h2>
+          <p>The system has been used in China’s high-school entrance PE examinations, sports-school training and middle-school PE classes.</p>
           <a href="#sports-demo" className={styles.tryLink}>Explore the interactive demo <span aria-hidden="true">↓</span></a>
         </div>
       </header>
@@ -47,7 +47,7 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
       <div className={styles.facts}>
         <div><span>MY ROLE</span><p>Frontend development<br />jQuery → React migration</p></div>
         <div><span>TECHNICAL FOCUS</span><p>Canvas · Video streams · WebSocket<br />Multi-person results · Audio-visual synchronization</p></div>
-        <div><span>IN THIS CASE</span><nav aria-label="On this case study"><a href="#sports-demo">Play the demo ↘</a><a href="#sports-pipeline">Follow the data ↘</a><a href="#sports-migration">Explore the migration ↘</a></nav></div>
+        <div><span>IN THIS CASE</span><nav aria-label="On this case study"><a href="#sports-demo">Play the demo ↘</a><a href="#sports-pipeline">Follow the data ↘</a><a href="#sports-scaling">From 2 to 8 cameras ↘</a><a href="#sports-migration">Explore the migration ↘</a></nav></div>
       </div>
 
       <section id="sports-pipeline" className={styles.pipelineSection} aria-labelledby="pipeline-heading">
@@ -64,9 +64,32 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
         <p className={styles.pipelineNote}>System workflow illustration. AI analysis and face recognition are backend capabilities; my contribution was frontend implementation and integration.</p>
       </section>
 
+      <section id="sports-scaling" className={styles.scaling} aria-labelledby="scaling-heading">
+        <div className={styles.sectionHeading}>
+          <div><p className={styles.kicker}>03 / THE SCALING CHALLENGE</p><h2 id="scaling-heading">More cameras. A harder stability problem.</h2></div>
+          <p>Increasing the number of cameras brought richer assessment data—and a persistent stream-stalling issue.</p>
+        </div>
+        <div className={styles.scalingBody}>
+          <div className={styles.cameraCount} aria-label="Camera inputs increased from 2 to 8"><span>2 <i aria-hidden="true">→</i> 8</span><p>CAMERA INPUTS</p></div>
+          <div className={styles.scalingCopy}>
+            <p>When we expanded from two cameras to eight, the system could capture more data. But in certain operating states, the data stream would stall. This became a difficult, long-running issue for the team.</p>
+            <p className={styles.scalingOutcome}>The team eventually resolved the stream-stalling issue after a sustained period of investigation and debugging.</p>
+            <details className={styles.investigation}>
+              <summary>How I would investigate this today <span aria-hidden="true">+</span></summary>
+              <p>A diagnostic approach to this class of multi-stream problem:</p>
+              <ol>
+                <li><strong>Trace each input through the pipeline.</strong> Correlate camera and session IDs with timestamps at capture, AI response and rendering to locate where progress stops.</li>
+                <li><strong>Inspect queue growth and processing cost.</strong> Check whether decoding, analysis or rendering falls behind incoming data. Bound preview-frame queues while preserving scored results.</li>
+                <li><strong>Reproduce state transitions.</strong> Exercise start, pause, end and restart paths, checking that subscriptions and camera resources are released and one stalled source cannot block the others.</li>
+              </ol>
+            </details>
+          </div>
+        </div>
+      </section>
+
       <section id="sports-migration" className={styles.migration} aria-labelledby="migration-heading">
         <div className={styles.migrationCopy}>
-          <p className={styles.kicker}>03 / MODERNIZING THE FRONTEND</p>
+          <p className={styles.kicker}>04 / MODERNIZING THE FRONTEND</p>
           <h2 id="migration-heading">A new frontend.<br />A very live environment.</h2>
           <p>I migrated existing jQuery code to React in a system where camera input, scoring updates and visual feedback all meet on one screen.</p>
           <p>The work covered the training and examination interfaces alongside Canvas operations, video transmission, WebSocket updates and audio-visual synchronization.</p>
@@ -80,7 +103,7 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
       </section>
 
       <section className={styles.usageSection} aria-labelledby="usage-heading">
-        <div className={styles.sectionHeading}><div><p className={styles.kicker}>04 / WHERE IT IS USED</p><h2 id="usage-heading">Built for actual school days.</h2></div><p>One system supporting formal assessment and everyday practice in China.</p></div>
+        <div className={styles.sectionHeading}><div><p className={styles.kicker}>05 / WHERE IT IS USED</p><h2 id="usage-heading">Built for actual school days.</h2></div><p>One system supporting formal assessment and everyday practice in China.</p></div>
         <div className={styles.usageGrid}>{contexts.map(context => <article key={context.number}><span>{context.number}</span><h3>{context.title}</h3><p>{context.text}</p></article>)}</div>
       </section>
 
