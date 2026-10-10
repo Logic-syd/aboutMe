@@ -35,7 +35,7 @@ export const placeStories: Record<string, PlaceStory> = {
     headline: 'A place built around possibility.',
     description: 'Zhangjiang Science City, in Shanghai’s Pudong district, brings together software, research and technology businesses. It is one of the city’s best-known centres for innovation.',
     memory: 'For me, Zhangjiang was a gathering place for programmers. My lasting image of the streets is a sea of plaid shirts—a familiar kind of developer uniform.',
-    reflection: 'GLP gave me the opportunity to work in an international finance environment. I learned to communicate across time zones and languages, and to see collaboration from a wider perspective.',
+    reflection: 'Working on an SME financing system at GLP introduced me to the demands of international business software. Time zones, currencies and exchange rates were part of the product requirements, deepening my understanding of how regional context affects financial interfaces.',
     bounds: [[31.175, 121.565], [31.225, 121.635]], reference: [31.20, 121.60],
     source: { title: 'Zhangjiang High-tech Zone', url: 'https://english.shanghai.gov.cn/en-NationalDevelopmentZone/20231209/e6616881e28647d1a1472156cf8d9d1b.html' },
   },

@@ -15,7 +15,7 @@ type Point = [number, number, number];
 type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; muted?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
-const colors = ['#d9a2b5', '#8fbbd9', '#94c5b6', '#b7a1d1', '#dbb395', '#a0afdc', '#d9a09b', '#8abfc3', '#d3c296', '#bc9fc2'];
+const colors = ['#d9a2b5', '#8fbbd9', '#94c5b6', '#b7a1d1', '#dbb395', '#a0afdc', '#d9a09b', '#8abfc3', '#d3c296', '#bc9fc2', '#a1bdb0'];
 // The warm core, colored planets, pale glass satellites and ivory pearls
 // distinguish roles without depending only on their radius.
 const rootGradient: Gradient = ['#fff0c9', '#efd3ad', '#e9b3a2'];
@@ -31,6 +31,7 @@ const gradients: Gradient[] = [
   ['#d0ecea', '#a9d4d4', '#92c5c8'],
   ['#faf0cc', '#ebdbb5', '#dbc6a1'],
   ['#eee0ed', '#d6bddb', '#c1a4ca'],
+  ['#e3ecdc', '#c6d9bd', '#a9c4ad'],
 ];
 function satelliteGradient(gradient: Gradient): Gradient {
   const lighten = (color: string) => `#${new THREE.Color(color).lerp(new THREE.Color('#ffffff'), .42).getHexString()}`;

@@ -230,5 +230,30 @@ export const projects: Project[] = [
     ],
     delivery: 'A written case study of commercial frontend work at Longshine across multiple regional dashboards. The workflow illustration summarizes the shared foundation and local customization work.',
     flow: ['Shared dashboard foundation', 'Maps + route tracking', 'Regional customizations']
+  },
+  {
+    slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'Financing across markets, time zones and currencies.',
+    graphTitle: 'SME financing', category: 'Fintech · International business systems', organization: 'GLP (普洛斯)', status: 'Commercial work · Written case study',
+    description: 'Frontend development for a financing system helping small and medium-sized enterprises access funding across domestic and international markets, with demanding requirements around time zones, currencies and exchange rates.',
+    tags: ['Financing workflows', 'Time zones', 'Currencies', 'Exchange rates'], role: 'Frontend development · International financing system',
+    contributions: [
+      ['SME financing system interfaces', 'Domestic and international business context'],
+      ['Time-zone requirements in business interfaces'],
+      ['Currency context in financial interfaces'],
+      ['Exchange-rate requirements in financing workflows']
+    ],
+    problem: 'The financing system helped small and medium-sized enterprises access funding and served both domestic and overseas markets. That international scope made time zones, currencies and exchange rates important business requirements: financial information needed to remain understandable across regional contexts.',
+    responsibilities: [
+      'Contributed frontend development to the SME financing system at GLP.',
+      'Worked with financing workflows serving domestic and international markets.',
+      'Worked with strict business requirements around time zones, currencies and exchange rates in the frontend.'
+    ],
+    decisions: [
+      { title: 'Time zones are part of the business context', text: 'Serving different markets meant that a date or time could not be understood without its regional context. This project developed my familiarity with time-zone requirements in business systems.' },
+      { title: 'Financial amounts need currency and rate context', text: 'Currencies and exchange rates were central to the financing system’s requirements. The experience strengthened my understanding of the precision and context that financial interfaces require.' },
+      { title: 'Understand the process behind international interfaces', text: 'The product combined SME financing workflows with domestic and overseas requirements. Working in this environment broadened my experience of business software where regional differences affect how financial information is presented and understood.' }
+    ],
+    delivery: 'Commercial frontend work on a GLP financing system for small and medium-sized enterprises. This case focuses on the business context and cross-region requirements of my work; it does not claim specific financing volumes or a public product launch.',
+    flow: ['SME financing needs', 'Domestic + overseas markets', 'Time + currency context']
   }
 ];
