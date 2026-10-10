@@ -188,3 +188,10 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Simulated failed chunk download: the message identifies a download failure and Reload page recovers after connectivity returns.
 - Simulated disabled WebGL and context loss: distinct messages explain graphics availability and interruption; project cards remain available.
 - User-reported Chrome on Intel MacBook Pro lists WebGL as Disabled; enabling browser graphics acceleration is required for the WebGL scene. The actual device and public Vercel deployment were not accessible from this environment.
+
+## Interactive sports case — 11 October 2026
+
+- Dedicated `/projects/sports-education` page states user-confirmed Zhongkao examination, sports-school training and middle-school PE use. Its interactive Canvas recreation uses sample participants and scores.
+- ESLint, TypeScript and production build passed. Chromium checks at 1440px, 390px and 320px verified responsive layout and no horizontal overflow; the existing student mini-program case still renders its shared template and screenshot.
+- Browser checks verified 1,200ms result delay, pause/resume, pending-result completion, reset during pending results, participant changes, hidden-tab pausing, reduced motion, tracking-overlay control and keyboard operation of workflow disclosures.
+- Final-score speech was exercised through a stubbed browser speech API, including completion and reset paths. Actual audible output depends on the visitor's browser/installed voices and was not verified in headless Chromium.
