@@ -62,20 +62,37 @@ export const projects: Project[] = [
     flow: ['Scope + access', 'Async export', 'Retry / download']
   },
   {
-    graphTitle: "Sports & training", contributions: [["Web training interfaces"], ["Typed web implementation"], ["Mobile training screens", "Camera and feedback integration"], ["Running mini-program", "Vue mobile frontend"]],
-    heroTitle: "Sports & training", heroDetail: "Web + mobile",
-    slug: 'sports-education', number: '04', title: 'AI Sports-Education & Mobile Training Platform', shortTitle: 'Connecting movement and feedback.',
-    category: 'Sports education · Web + mobile', organization: 'Danzhu (淡竹)', status: 'Commercial work · Selected screenshot',
-    description: 'Web and mobile training interfaces connecting camera input, movement feedback and the training experience across React, React Native and Vue / uni-app.',
-    tags: ['React', 'TypeScript', 'React Native', 'Vue / uni-app'], role: 'Web and mobile frontend development',
-    problem: 'An AI sports-education product needed interfaces that connected camera input and movement feedback with usable web and mobile training experiences.',
-    responsibilities: ['Built React / TypeScript web interfaces for the sports-education product.', 'Worked on React Native mobile training screens, camera integration and movement-feedback interfaces.', 'Contributed to the Vue mobile frontend and a Vue / uni-app running mini-program.'],
-    decisions: [
-      { title: 'Connect the training interaction', text: 'Focused on the frontend connection between camera access, movement feedback and training screens.' },
-      { title: 'Work across delivery surfaces', text: 'Implemented interfaces across React web, React Native and Vue / uni-app mobile experiences as required by the product.' }
+    graphTitle: "AI sports assessment", contributions: [
+      ["React training and exam interfaces", "TV-based presentation"],
+      ["Canvas drawing and manipulation", "Visual feedback presentation"],
+      ["Camera capture", "Video-stream transmission to backend AI"],
+      ["Real-time scoring data", "Frontend result updates"],
+      ["Audio-visual synchronization", "Post-training spoken results"],
+      ["Multiple simultaneous participants", "Face-recognition integration", "Individual score presentation"]
     ],
-    delivery: 'Commercial frontend contributions are presented through a written case study and one privacy-redacted screenshot of the Vue / uni-app running mini-program. Many other commercial interfaces are not suitable for public display. My role was interface and integration work, not training the vision-recognition models. The company website is linked for product context; it is not a live demo of this mini-program.',
-    flow: ['Camera input', 'Movement feedback', 'Training interface']
+    heroTitle: "AI sports assessment", heroDetail: "Canvas + real-time video",
+    slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
+    category: 'Sports education · Real-time assessment', organization: 'Danzhu (淡竹)', status: 'Commercial frontend work',
+    description: 'A TV-based sports examination and everyday training system connecting camera video with backend AI analysis. Developed React interfaces with Canvas, video-stream transmission and WebSocket scoring updates, alongside synchronized audio-visual feedback and spoken results.',
+    tags: ['React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · Real-time training & assessment',
+    problem: 'Students needed a system for physical-education entrance examinations as well as everyday training, fitness assessment and analysis reports. Multiple people could train or take an exam together. The system needed face recognition to distinguish participants and had to turn camera input and backend AI scores into timely, understandable feedback on a TV display.',
+    responsibilities: [
+      'Developed React interfaces for TV-based sports examinations, everyday training, fitness assessment and analysis reports.',
+      'Worked with camera capture and video-stream transmission to the backend AI analysis system.',
+      'Used Canvas drawing and manipulation to implement visual presentation.',
+      'Integrated WebSocket-based real-time scoring data from the backend into the frontend.',
+      'Handled audio-visual synchronization and spoken score announcements after training.',
+      'Worked on multi-person assessment interfaces and integration with face recognition to distinguish participants and present individual results.'
+    ],
+    decisions: [
+      { title: 'Connect capture, AI analysis and presentation', text: 'The camera provided input to the backend AI analysis system, which returned scoring data to the frontend. My work focused on video transmission, data integration and presenting the results in the training and examination interfaces.' },
+      { title: 'Use Canvas alongside real-time data', text: 'Canvas drawing and manipulation supported the visual interface, while WebSocket carried real-time scoring data from the backend. The frontend brought those updates into the ongoing assessment experience.' },
+      { title: 'Keep visual and spoken feedback coordinated', text: 'The system required audio-visual synchronization during training and spoken results after each session. My frontend work included coordinating these forms of feedback with the assessment experience.' },
+      { title: 'Support several participants in one session', text: 'Multiple people could train or take an exam together. The system used face recognition to distinguish participants; the frontend needed to present assessment data for the corresponding people.' },
+      { title: 'Cover practice as well as examinations', text: 'The same system supported high-school entrance sports examinations and daily training, with scoring, fitness assessment and analysis reports. The frontend presented both the live session and its results.' }
+    ],
+    delivery: 'Commercial frontend work combining React, Canvas, video transmission, real-time scoring, audio-visual synchronization and multi-person assessment. AI analysis and face recognition were backend capabilities integrated into the frontend experience.',
+    flow: ['Camera video', 'Backend AI analysis', 'Live scores + reports']
   },
   {
     graphTitle: "Low-code platform", contributions: [["Configurable pages", "Field-team applications"], ["Reusable components"], ["Theme switching"]],
@@ -237,10 +254,10 @@ export const projects: Project[] = [
     description: 'React frontend development for an SME financing system spanning domestic and overseas markets, with a focus on business interfaces and requirements around time zones, currencies and exchange rates.',
     tags: ['React', 'Business interfaces', 'Time zones', 'Currencies & exchange rates'], role: 'React frontend development',
     contributions: [
-      ['React business interfaces'],
+      ['React business interfaces', 'Business requirements to UI'],
       ['SME financing workflows'],
-      ['Time-zone requirements'],
-      ['Currency and exchange-rate context']
+      ['Cross-region date and time context'],
+      ['Currency-aware financial presentation', 'Exchange-rate context']
     ],
     problem: 'An SME financing system needed business interfaces for domestic and overseas markets, where dates, currencies and exchange rates required careful handling.',
     responsibilities: [
@@ -250,9 +267,36 @@ export const projects: Project[] = [
     ],
     decisions: [
       { title: 'React for business interfaces', text: 'Worked on React interfaces for the financing system, translating business requirements into frontend screens.' },
-      { title: 'Time and currency context', text: 'Cross-region requirements made time zones, currencies and exchange rates part of the frontend work, building my experience with financial data presentation in international business systems.' }
+      { title: 'Date and time interpretation across regions', text: 'Time-zone requirements make the distinction between a timestamp and its local display important. Dates and times need an unambiguous regional context when a financing workflow spans domestic and overseas markets.' },
+      { title: 'Currency-aware amounts and exchange rates', text: 'Financial interfaces need to keep an amount’s currency clear and distinguish monetary values from the exchange rates used to interpret them. Relevant frontend concerns include decimal precision, rounding and number formatting across markets.' },
+      { title: 'Separate business values from display formatting', text: 'Cross-region financial requirements call for a clear distinction between underlying business data and how a screen presents it. Date, amount and currency formatting need to preserve the meaning of the data throughout the interface.' }
     ],
     delivery: 'React frontend contributions to an SME financing system at GLP, with experience in business interfaces and cross-region financial requirements.',
     flow: ['React interfaces', 'Financing workflows', 'Time + currency context']
+  },
+  {
+    slug: 'running-mini-program', number: '12', title: 'Sports Training Mini-Program', shortTitle: 'Running and free training, on mobile.',
+    graphTitle: 'Sports mini-program', category: 'Sports education · Mobile training', organization: 'Danzhu (淡竹)', status: 'Commercial work · Selected screenshot',
+    description: 'Frontend development for a Vue / uni-app sports mini-program with running and free-training modes. The running interface presents activity timing, progress, metrics, route maps and checkpoints.',
+    tags: ['Vue', 'uni-app', 'Running & free training', 'Maps & checkpoints'], role: 'Mobile frontend development',
+    contributions: [
+      ['Vue frontend implementation'],
+      ['Sports mini-program interfaces'],
+      ['Running and free-training modes', 'Running-session metrics and controls'],
+      ['Route map and checkpoint presentation']
+    ],
+    problem: 'The sports mini-program supported both running and free training. Its running mode needed to keep timing, progress, metrics and route information accessible alongside in-session controls.',
+    responsibilities: [
+      'Contributed to the Vue / uni-app sports mini-program frontend for running and free training.',
+      'Worked on the mobile running-session interface and its activity information.',
+      'Presented route maps and checkpoints alongside the running session.'
+    ],
+    decisions: [
+      { title: 'Two modes within one mini-program', text: 'Running and free training were modes of the same sports mini-program, bringing both activities into one mobile product.' },
+      { title: 'Keep the session information together', text: 'The selected interface brings together an activity timer, progress, running metrics and in-session controls on a mobile screen.' },
+      { title: 'Connect activity with route context', text: 'Route maps and checkpoints provide geographic context alongside the session information.' }
+    ],
+    delivery: 'Commercial Vue / uni-app frontend work. One original running-session screenshot is shown with personal identifiers and location details redacted. The company website provides product context.',
+    flow: ['Running session', 'Metrics + route', 'Session controls']
   }
 ];

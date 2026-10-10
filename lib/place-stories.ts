@@ -26,7 +26,7 @@ export const placeStories: Record<string, PlaceStory> = {
     headline: 'Ideas in the middle of a city.',
     description: 'Caohejing Hi-Tech Park is one of Shanghai’s established technology districts, with a lively mix of software, research and game development. ByteDance and miHoYo are among the names associated with its tech and gaming community.',
     memory: 'I associate this neighbourhood with ByteDance, miHoYo and the energy of a busy tech community. I often came across miHoYo events here.',
-    reflection: 'Danzhu’s focus on AI and student education made the work exciting and purposeful. It introduced me to AI-powered products and high-concurrency systems, while keeping students at the centre of the experience.',
+    reflection: 'At Danzhu, I connected camera input and backend AI scoring with real-time sports assessment interfaces, and separately worked on a sports mini-program for running and free training. The work brought together student education, live video and visual and spoken feedback.',
     bounds: [[31.14, 121.37], [31.19, 121.44]], reference: [31.166, 121.407],
     source: { title: 'Caohejing Hi-Tech Park', url: 'https://english.shanghai.gov.cn/en-NationalDevelopmentZone/20231222/a77cb9e77147498e9740f0c394feb8bb.html' },
   },

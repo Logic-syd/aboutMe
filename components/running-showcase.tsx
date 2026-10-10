@@ -5,7 +5,7 @@ export function RunningShowcase() {
     <div className="running-copy">
       <p className="eyebrow">PRODUCT SNAPSHOT / VUE + UNI-APP</p>
       <h2 id="running-title">A running session, on mobile.</h2>
-      <p>I contributed to a running mini-program built with Vue and uni-app. This selected screen shows an activity timer, progress, running metrics and in-session controls.</p>
+      <p>I contributed to a sports mini-program built with Vue and uni-app, supporting running and free training. This selected screen from the running mode shows an activity timer, progress, running metrics and in-session controls.</p>
       <p>The full screen also includes a route map and checkpoints. Personal identifiers and location details are redacted; the preview focuses on the activity controls.</p>
       <div className="sharing-note"><h3>What I can show</h3><p>Many of the commercial interfaces I worked on are not suitable for public display. This selected screenshot complements the written case study; the remaining work is described through my responsibilities and technical approach.</p></div>
       <a className="text-link" href="http://www.danzle.com/web/index.html" target="_blank" rel="noopener noreferrer">Visit Danzhu’s official website <span aria-hidden="true">↗</span></a>
