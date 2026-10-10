@@ -195,3 +195,10 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - ESLint, TypeScript and production build passed. Chromium checks at 1440px, 390px and 320px verified responsive layout and no horizontal overflow; the existing student mini-program case still renders its shared template and screenshot.
 - Browser checks verified 1,200ms result delay, pause/resume, pending-result completion, reset during pending results, participant changes, hidden-tab pausing, reduced motion, tracking-overlay control and keyboard operation of workflow disclosures.
 - Final-score speech was exercised through a stubbed browser speech API, including completion and reset paths. Actual audible output depends on the visitor's browser/installed voices and was not verified in headless Chromium.
+
+## Pixel-town preview discoverability — 11 October 2026
+
+- Replaced the below-the-fold story panel with a viewport-constrained preview beside the clicked building or navigation button. Initial map remains unobstructed.
+- ESLint, TypeScript and production build passed. Browser checks at 1440×1000, 1280×650, 390×844 and 320×640 covered all six buildings and all six navigation buttons, visible card bounds, no forced scrolling, and correct links.
+- Verified Escape/close focus restoration, switching between duplicate triggers for the same place, forward/backward keyboard exit, outside-pointer dismissal, scroll-away dismissal and case-study navigation.
+- Studio retains only the energy API case and the all-projects link. Preview summaries are concise; full project detail remains at the destination.

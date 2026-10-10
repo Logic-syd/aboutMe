@@ -1,18 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { projects } from '@/lib/projects';
 import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
 const places: { id: PlaceId; name: string; subtitle: string; x: number; y: number; color: string; roof: string; title: string; story: string; slugs: string[]; href: string; action: string }[] = [
-  { id: 'studio', name: 'The studio', subtitle: 'Commercial work', x: 21, y: 25, color: '#e7d7c4', roof: '#978fa6', title: 'A place for complex problems.', story: 'Energy APIs, city dashboards, payments and tools for teams. My work connects frontend implementation with the details that make a product usable.', slugs: ['renewable-energy-api'], href: '#work', action: 'Browse all projects' },
-  { id: 'cafe', name: 'Coffee corner', subtitle: 'An independent product', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Good places are worth finding.', story: 'I’m building a coffee and craft beer discovery map around more than 500 curated venues. It brings together a map interface, location data and full-stack development.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'Visit the case study' },
-  { id: 'cabin', name: 'Mountain hut', subtitle: 'Hiking meets chess', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'A chessboard for a mountain break.', story: 'I enjoy hiking and chess. Mountain Chess grew from wanting to play during a solo hiking break, with a computer opponent and offline play after the first online setup.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'Explore Mountain Chess' },
-  { id: 'station', name: 'The station', subtitle: 'Places & experience', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'Different places. A growing perspective.', story: 'My work has taken me through Hangzhou, Shanghai and Munich. Each team brought a different product domain, a different way to collaborate, and something to carry forward.', slugs: [], href: '#professional-work', action: 'Follow my work experience' },
-  { id: 'bottles', name: 'Bottle shop', subtitle: 'A playful everyday idea', x: 49, y: 67, color: '#d8e4d9', roof: '#8baaa2', title: 'Small routines can become playful ideas.', story: 'After moving to Germany, unfamiliar drinks bottles inspired Pfand Pause: a fictional sorting puzzle with six bottle designs and ten levels.', slugs: ['pfand-pause'], href: '/projects/pfand-pause', action: 'Explore Pfand Pause' },
-  { id: 'post', name: 'The post office', subtitle: 'Say hello', x: 77, y: 62, color: '#ead9ce', roof: '#bb9991', title: 'There’s room for a new conversation.', story: 'I’m based in Munich, open to relocation, and looking for frontend and full-stack engineering opportunities. Let’s talk about a product, a team, or a new challenge.', slugs: [], href: 'mailto:yidanshao622@gmail.com', action: 'Send me a note' },
+  { id: 'studio', name: 'The studio', subtitle: 'Commercial work', x: 21, y: 25, color: '#e7d7c4', roof: '#978fa6', title: 'APIs & commercial products.', story: 'Explore my European energy API release, or browse the full collection of commercial projects.', slugs: ['renewable-energy-api'], href: '#work', action: 'Browse all projects' },
+  { id: 'cafe', name: 'Coffee corner', subtitle: 'An independent product', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', story: 'An independent discovery map with 500+ curated venues. Currently in development.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'Visit the case study' },
+  { id: 'cabin', name: 'Mountain hut', subtitle: 'Hiking meets chess', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', story: 'A chess game for hiking breaks, with a local opponent and offline play after setup.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'Explore Mountain Chess' },
+  { id: 'station', name: 'The station', subtitle: 'Places & experience', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'My work experience.', story: 'Frontend work across energy, education and finance in Hangzhou, Shanghai and Munich.', slugs: [], href: '#professional-work', action: 'Follow my work experience' },
+  { id: 'bottles', name: 'Bottle shop', subtitle: 'A playful everyday idea', x: 49, y: 67, color: '#d8e4d9', roof: '#8baaa2', title: 'Pfand Pause.', story: 'A bottle-sorting puzzle inspired by moving to Germany. Six bottle designs, ten levels.', slugs: ['pfand-pause'], href: '/projects/pfand-pause', action: 'Explore Pfand Pause' },
+  { id: 'post', name: 'The post office', subtitle: 'Say hello', x: 77, y: 62, color: '#ead9ce', roof: '#bb9991', title: 'Let’s build something.', story: 'Based in Munich and open to relocation. Get in touch about frontend and full-stack opportunities.', slugs: [], href: 'mailto:yidanshao622@gmail.com', action: 'Send me a note' },
 ];
 
 function Building({ place }: { place: typeof places[number] }) {
@@ -40,6 +41,95 @@ export function PixelTown() {
   const [selected, setSelected] = useState<PlaceId>('studio');
   const [motion, setMotion] = useState(true);
   const place = places.find(item => item.id === selected)!;
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [activation, setActivation] = useState(0);
+  const previewId = useId();
+  const preview = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement | null>(null);
+  const map = useRef<HTMLDivElement>(null);
+  const closePreview = useCallback((restoreFocus = true) => {
+    setPreviewOpen(false);
+    if (restoreFocus) trigger.current?.focus({ preventScroll: true });
+  }, []);
+  const choosePlace = (id: PlaceId, button: HTMLButtonElement) => {
+    trigger.current = button;
+    setSelected(id);
+    setActivation(value => value + 1);
+    setPreviewOpen(true);
+  };
+  useLayoutEffect(() => {
+    if (!previewOpen || !preview.current || !trigger.current) return;
+    const card = preview.current;
+    const position = () => {
+      if (!trigger.current) return;
+      const anchor = trigger.current.getBoundingClientRect();
+      const bounds = map.current?.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const viewportLeft = viewport?.offsetLeft ?? 0, viewportTop = viewport?.offsetTop ?? 0;
+      const viewportWidth = viewport?.width ?? window.innerWidth, viewportHeight = viewport?.height ?? window.innerHeight;
+      card.style.maxWidth = `${Math.max(0, viewportWidth - 24)}px`;
+      card.style.maxHeight = `${Math.max(0, viewportHeight - 24)}px`;
+      const width = card.offsetWidth, height = card.offsetHeight;
+      const minX = viewportLeft + 12, minY = viewportTop + 12;
+      const maxX = Math.max(minX, viewportLeft + viewportWidth - width - 12);
+      const maxY = Math.max(minY, viewportTop + viewportHeight - height - 12);
+      if (anchor.bottom < viewportTop || anchor.top > viewportTop + viewportHeight) {
+        closePreview(false);
+        return;
+      }
+      const isMapTrigger = trigger.current.dataset.mapBuilding === 'true';
+      let x = anchor.left + anchor.width / 2 - width / 2;
+      let y = anchor.bottom + 12;
+      if (viewportWidth > 700 && isMapTrigger) {
+        // Prefer the inner side of the town, so the selected building stays visible.
+        const leftHalf = bounds ? anchor.left + anchor.width / 2 < bounds.left + bounds.width / 2 : anchor.left < viewportWidth / 2;
+        x = leftHalf ? anchor.right + 14 : anchor.left - width - 14;
+        y = anchor.top + anchor.height / 2 - height / 2;
+      } else if (y > maxY && anchor.top - height - 12 >= minY) {
+        y = anchor.top - height - 12;
+      }
+      card.style.left = `${Math.max(minX, Math.min(maxX, x))}px`;
+      card.style.top = `${Math.max(minY, Math.min(maxY, y))}px`;
+      card.style.visibility = 'visible';
+    };
+    position();
+    card.focus({ preventScroll: true });
+    const resize = new ResizeObserver(position);
+    resize.observe(card);
+    window.addEventListener('resize', position);
+    window.addEventListener('scroll', position, true);
+    window.visualViewport?.addEventListener('resize', position);
+    window.visualViewport?.addEventListener('scroll', position);
+    const outside = (event: PointerEvent) => {
+      const target = event.target;
+      if (target instanceof Element && !card.contains(target) && !target.closest('[data-town-trigger]')) closePreview(false);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); closePreview(); }
+      if (event.key !== 'Tab' || !card.contains(document.activeElement)) return;
+      const stops = Array.from(card.querySelectorAll<HTMLElement>('button, a[href]'));
+      if (event.shiftKey && (document.activeElement === card || document.activeElement === stops[0])) {
+        event.preventDefault(); closePreview();
+      } else if (!event.shiftKey && document.activeElement === stops.at(-1)) {
+        event.preventDefault();
+        const locations = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-town-trigger]'));
+        const next = locations[locations.indexOf(trigger.current!) + 1] ?? trigger.current;
+        closePreview(false);
+        next?.focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener('pointerdown', outside);
+    document.addEventListener('keydown', escape);
+    return () => {
+      resize.disconnect();
+      window.removeEventListener('resize', position);
+      window.removeEventListener('scroll', position, true);
+      window.visualViewport?.removeEventListener('resize', position);
+      window.visualViewport?.removeEventListener('scroll', position);
+      document.removeEventListener('pointerdown', outside);
+      document.removeEventListener('keydown', escape);
+    };
+  }, [previewOpen, selected, activation, closePreview]);
   return <section className={styles.townSection} aria-labelledby="town-title">
     <div className={styles.intro}>
       <p className={styles.kicker}>MUNICH, GERMANY · OPEN TO RELOCATE</p>
@@ -54,7 +144,7 @@ export function PixelTown() {
     </div>
     <div className={styles.gameWindow}>
       <div className={styles.windowBar}><span><i /> EXPLORE MY LITTLE TOWN</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion}>{motion ? 'Pause motion' : 'Resume motion'}</button></div>
-      <div className={`${styles.map} ${motion ? '' : styles.paused}`}>
+      <div ref={map} className={`${styles.map} ${motion ? '' : styles.paused}`} aria-describedby={`${previewId}-hint`}>
         <svg viewBox="0 0 1000 620" className={styles.landscape} aria-hidden="true" shapeRendering="crispEdges">
           <rect width="1000" height="620" fill="#e5ebdf" /><rect width="1000" height="160" fill="#dae5e7" />
           <path d="M0 140V107H60V87H130V107H195V122H250V95H310V65H360V95H410V120H475V95H530V74H590V97H630V115H680V85H745V55H790V85H850V105H930V80H1000V160H0Z" fill="#bacbd0" />
@@ -70,13 +160,22 @@ export function PixelTown() {
           <rect x="584" y="353" width="56" height="9" fill="#a99b87" /><rect x="589" y="362" width="5" height="12" fill="#897f72" /><rect x="629" y="362" width="5" height="12" fill="#897f72" />
           <path d="M136 582H852" stroke="#b0a99d" strokeWidth="9" /><path d="M142 574V590M167 574V590M192 574V590M217 574V590M242 574V590M267 574V590M292 574V590M317 574V590" stroke="#c4b9a7" strokeWidth="4" />
         </svg>
-        {places.map(item => <button key={item.id} className={`${styles.building} ${selected === item.id ? styles.selected : ''}`} style={{ left: `${item.x}%`, top: `${item.y}%` }} onClick={() => setSelected(item.id)} aria-label={`Explore ${item.name}`} aria-pressed={selected === item.id}><Building place={item} /><span className={styles.buildingLabel}>{item.name}</span></button>)}
+        {places.map(item => <button key={item.id} className={`${styles.building} ${previewOpen && selected === item.id ? styles.selected : ''}`} style={{ left: `${item.x}%`, top: `${item.y}%` }} onClick={event => choosePlace(item.id, event.currentTarget)} aria-label={`Explore ${item.name}`} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger data-map-building="true"><Building place={item} /><span className={styles.buildingLabel}>{item.name}</span></button>)}
         <div className={styles.avatar} style={{ left: `${place.x+5}%`, top: `${place.y+23}%` }} aria-hidden="true"><span className={styles.avatarBubble}>Hi!</span><svg viewBox="0 0 24 34" shapeRendering="crispEdges"><ellipse cx="12" cy="32" rx="10" ry="2" fill="#65736a" opacity=".2" /><path d="M6 3H18V6H21V19H3V6H6Z" fill="#655867" /><rect x="7" y="8" width="11" height="12" fill="#efd0b5" /><rect x="7" y="7" width="12" height="4" fill="#655867" /><rect x="9" y="13" width="2" height="2" fill="#544c54" /><rect x="15" y="13" width="2" height="2" fill="#544c54" /><rect x="6" y="20" width="14" height="9" fill="#b890a4" /><rect x="3" y="22" width="4" height="7" fill="#efd0b5" /><rect x="19" y="22" width="3" height="7" fill="#efd0b5" /><path d="M7 29H11V33H5V31H7ZM15 29H19V31H21V33H15Z" fill="#6e747d" /></svg></div>
-        <span className={styles.mapBadge}>MUNICH BASED · CURIOUS EVERYWHERE</span>
+        <span id={`${previewId}-hint`} className={styles.mapBadge}>CLICK A BUILDING · OPEN A PREVIEW ↗</span>
       </div>
-      <div className={styles.locationNav} aria-label="Choose a place">{places.map((item,index) => <button key={item.id} aria-pressed={selected === item.id} onClick={() => setSelected(item.id)}><span>0{index+1}</span>{item.name}</button>)}</div>
+      <div className={styles.locationNav} aria-label="Choose a place">{places.map((item,index) => <button key={item.id} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}><span>0{index+1}</span>{item.name}</button>)}</div>
     </div>
-    <div className={styles.story} aria-live="polite"><div className={styles.storyHeading}><p className={styles.kicker}>YOU’RE AT / {place.name}</p><h2>{place.title}</h2><span className={styles.subtitle}>{place.subtitle}</span></div><div className={styles.storyBody}><p>{place.story}</p><div className={styles.storyLinks}>{place.slugs.filter(slug => slug !== place.href.replace('/projects/','')).map(slug => <Link key={slug} href={`/projects/${slug}`}>{projects.find(project => project.slug === slug)?.title}<span>↗</span></Link>)}<a className={styles.primaryLink} href={place.href}>{place.action}<span>↗</span></a></div></div></div>
-    <p className={styles.mapHint}>Choose a building to explore. No controls to learn — just follow your curiosity.</p>
+    {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} aria-describedby={`${previewId}-summary`} tabIndex={-1} className={styles.preview}>
+      <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>
+      <p className={styles.previewCategory}>{place.subtitle}</p>
+      <h2 id={`${previewId}-title`}>{place.title}</h2>
+      <p id={`${previewId}-summary`} className={styles.previewSummary}>{place.story}</p>
+      <div className={styles.previewLinks}>
+        {place.slugs.filter(slug => slug !== place.href.replace('/projects/','')).map(slug => <Link key={slug} href={`/projects/${slug}`} onClick={() => closePreview(false)}>{projects.find(project => project.slug === slug)?.title}<span aria-hidden="true">↗</span></Link>)}
+        <a className={styles.previewPrimary} href={place.href} onClick={() => closePreview(false)}>{place.action}<span aria-hidden="true">↗</span></a>
+      </div>
+      <p className={styles.previewHint}>Choose another building to keep exploring.</p>
+    </div>, document.body)}
   </section>;
 }
