@@ -7,13 +7,13 @@ import { projects } from '@/lib/projects';
 import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
-const places: { id: PlaceId; name: string; subtitle: string; x: number; y: number; color: string; roof: string; title: string; story: string; slugs: string[]; href: string; action: string }[] = [
-  { id: 'studio', name: 'The studio', subtitle: 'Commercial work', x: 21, y: 25, color: '#e7d7c4', roof: '#978fa6', title: 'APIs & commercial products.', story: 'Explore my European energy API release, or browse the full collection of commercial projects.', slugs: ['renewable-energy-api'], href: '#work', action: 'Browse all projects' },
-  { id: 'cafe', name: 'Coffee corner', subtitle: 'An independent product', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', story: 'An independent discovery map with 500+ curated venues. Currently in development.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'Visit the case study' },
-  { id: 'cabin', name: 'Mountain hut', subtitle: 'Hiking meets chess', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', story: 'A chess game for hiking breaks, with a local opponent and offline play after setup.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'Explore Mountain Chess' },
-  { id: 'station', name: 'The station', subtitle: 'Places & experience', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'My work experience.', story: 'Frontend work across energy, education and finance in Hangzhou, Shanghai and Munich.', slugs: [], href: '#professional-work', action: 'Follow my work experience' },
-  { id: 'bottles', name: 'Bottle shop', subtitle: 'A playful everyday idea', x: 49, y: 67, color: '#d8e4d9', roof: '#8baaa2', title: 'Pfand Pause.', story: 'A bottle-sorting puzzle inspired by moving to Germany. Six bottle designs, ten levels.', slugs: ['pfand-pause'], href: '/projects/pfand-pause', action: 'Explore Pfand Pause' },
-  { id: 'post', name: 'The post office', subtitle: 'Say hello', x: 77, y: 62, color: '#ead9ce', roof: '#bb9991', title: 'Let’s build something.', story: 'Based in Munich and open to relocation. Get in touch about frontend and full-stack opportunities.', slugs: [], href: 'mailto:yidanshao622@gmail.com', action: 'Send me a note' },
+const places: { id: PlaceId; name: string; x: number; y: number; color: string; roof: string; title: string; slugs: string[]; href: string; action: string }[] = [
+  { id: 'studio', name: 'The studio', x: 21, y: 25, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api'], href: '#work', action: 'More projects' },
+  { id: 'cafe', name: 'Coffee corner', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'View project' },
+  { id: 'cabin', name: 'Mountain hut', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'View project' },
+  { id: 'station', name: 'The station', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'My work experience.', slugs: [], href: '#professional-work', action: 'View experience' },
+  { id: 'bottles', name: 'Bottle shop', x: 49, y: 67, color: '#d8e4d9', roof: '#8baaa2', title: 'Pfand Pause.', slugs: ['pfand-pause'], href: '/projects/pfand-pause', action: 'View project' },
+  { id: 'post', name: 'The post office', x: 77, y: 62, color: '#ead9ce', roof: '#bb9991', title: 'Let’s build something.', slugs: [], href: 'mailto:yidanshao622@gmail.com', action: 'Email me' },
 ];
 
 function Building({ place }: { place: typeof places[number] }) {
@@ -166,16 +166,13 @@ export function PixelTown() {
       </div>
       <div className={styles.locationNav} aria-label="Choose a place">{places.map((item,index) => <button key={item.id} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}><span>0{index+1}</span>{item.name}</button>)}</div>
     </div>
-    {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} aria-describedby={`${previewId}-summary`} tabIndex={-1} className={styles.preview}>
+    {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} tabIndex={-1} className={styles.preview}>
       <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>
-      <p className={styles.previewCategory}>{place.subtitle}</p>
       <h2 id={`${previewId}-title`}>{place.title}</h2>
-      <p id={`${previewId}-summary`} className={styles.previewSummary}>{place.story}</p>
       <div className={styles.previewLinks}>
-        {place.slugs.filter(slug => slug !== place.href.replace('/projects/','')).map(slug => <Link key={slug} href={`/projects/${slug}`} onClick={() => closePreview(false)}>{projects.find(project => project.slug === slug)?.title}<span aria-hidden="true">↗</span></Link>)}
+        {place.slugs.filter(slug => slug !== place.href.replace('/projects/','')).map(slug => <Link key={slug} href={`/projects/${slug}`} onClick={() => closePreview(false)}>{projects.find(project => project.slug === slug)?.graphTitle}<span aria-hidden="true">↗</span></Link>)}
         <a className={styles.previewPrimary} href={place.href} onClick={() => closePreview(false)}>{place.action}<span aria-hidden="true">↗</span></a>
       </div>
-      <p className={styles.previewHint}>Choose another building to keep exploring.</p>
     </div>, document.body)}
   </section>;
 }
