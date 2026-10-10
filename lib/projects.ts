@@ -94,26 +94,26 @@ export const projects: Project[] = [
     flow: ['Page configuration', 'Reusable components', 'Field applications']
   },
   {
-    graphTitle: "Components & work orders", contributions: [["Frontend component development"], ["Typed frontend implementation"], ["Reusable interface components"], ["Work-order system interfaces"]],
-    heroTitle: "Operations", heroDetail: "Components + work orders",
-    slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Building blocks for everyday operations.',
-    category: 'Enterprise systems · Components & work orders', organization: 'Longshine (朗新) · State Grid project', status: 'Commercial work · Written case study',
-    description: 'Developed frontend components and work-order interfaces for a State Grid management system at Longshine, as part of a development programme involving a 1,000-person team.',
-    tags: ['React', 'TypeScript', 'Reusable components', 'Work orders'], role: 'Frontend development · Components & work-order system',
-    problem: 'The State Grid management system brought together operational workflows within a large development programme. My work focused on the frontend components used to build its interfaces and on the work-order system that supported day-to-day operational tasks.',
+    graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"]],
+    heroTitle: "Operations", heroDetail: "Component library + workflows",
+    slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Reusable components. Workflow-aware interfaces.',
+    category: 'Enterprise systems · Component library & workflows', organization: 'Longshine (朗新) · State Grid project', status: 'Commercial work · Written case study',
+    description: 'Developed a shared frontend component library and work-order interfaces for a State Grid management system at Longshine. This combined hands-on experience building reusable UI with a deeper understanding of business workflows—skills I bring to SaaS frontend development.',
+    tags: ['React', 'TypeScript', 'Component library', 'Business workflows'], role: 'Frontend development · Component library & work-order system',
+    problem: 'Enterprise software needs reusable interface building blocks as well as screens that reflect how the business operates. Within a 1,000-person State Grid development programme, my work connected component-library development with the practical workflows of a work-order system.',
     responsibilities: [
-      'Contributed to the State Grid management system at Longshine within a 1,000-person development team.',
-      'Developed frontend components for the management system.',
-      'Implemented frontend interfaces for the work-order system.',
-      'Collaborated with the wider project team on component and work-order development.'
+      'Developed reusable frontend components as part of the management system’s shared component library.',
+      'Implemented work-order system interfaces, applying shared components to business-facing screens.',
+      'Built familiarity with business-system workflows through work-order development, connecting process requirements with frontend implementation.',
+      'Collaborated within a 1,000-person development team at Longshine.'
     ],
     decisions: [
-      { title: 'Components as building blocks', text: 'Worked on the component layer of the management system, creating reusable interface elements for its frontend.' },
-      { title: 'Connect components with operational work', text: 'Alongside component development, implemented interfaces in the work-order system. This connected shared frontend building blocks with a concrete operational use case.' },
-      { title: 'Deliver within a large team', text: 'The development programme involved a 1,000-person team. Working on a defined part of this larger system gave me practical experience of collaboration at that scale.' }
+      { title: 'Build for reuse across business interfaces', text: 'Component-library development was a core part of my contribution. I worked on reusable UI building blocks that could support the management system’s interfaces, gaining practical experience with the shared frontend foundations used in enterprise products.' },
+      { title: 'Understand the workflow behind the screen', text: 'Working on the work-order system deepened my understanding of how business processes translate into interfaces. This experience helps me approach a screen in the context of the wider workflow and the task it needs to support.' },
+      { title: 'Bring both perspectives to SaaS development', text: 'This project combined component-library experience with business-system implementation. I bring both to SaaS frontend work: developing reusable UI and understanding the operational processes that the product needs to make usable.' }
     ],
-    delivery: 'Commercial frontend work at Longshine, focused on components and the work-order system. The 1,000-person figure describes the development team. This written case study presents my contribution within that programme.',
-    flow: ['Frontend components', 'Work-order interfaces', 'Operational workflows']
+    delivery: 'Commercial component-library and work-order frontend development at Longshine, within a 1,000-person project team. The experience strengthened both my ability to build reusable enterprise interfaces and my understanding of business workflows—foundations for SaaS frontend development.',
+    flow: ['Shared component library', 'Work-order interfaces', 'Business workflows']
   },
   {
     graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend rebuild"], ["PHP-based product upgrade", "Zero-to-one frontend contribution"], ["Batch and single payments", "Insurance collections and payouts"], ["Reconciliation statements"]],
