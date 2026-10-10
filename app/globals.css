@@ -281,3 +281,28 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .project-gallery figcaption{font-size:11px;line-height:1.7;color:var(--muted);margin-top:13px}
 .screenshot-credit{display:block;text-align:center;font-size:11px;margin-top:25px;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
 @media(max-width:650px){.project-gallery{padding:26px 18px;margin-top:26px}.project-gallery-heading h2{font-size:27px}.project-gallery-grid{grid-template-columns:minmax(0,280px);gap:28px}.project-screenshot-link img{max-height:540px}.project-public-links{gap:12px 22px}.project-public-links .text-link{font-size:12px}}
+
+/* Pixel-town concept: scoped so the existing case-study pages stay readable. */
+.pixel-portfolio{background:#f8f6ed;--paper:#f8f6ed;--ink:#414541;--muted:#757a70;--pink:#a5768b;--line:#d9dccf;--blush:#efe4e7}
+.pixel-portfolio .craft-header{background:#f8f6ed;border-bottom:1px solid #d9dccf}
+.pixel-portfolio .wordmark{font-family:monospace;letter-spacing:-2px}
+.pixel-portfolio .tech-strip{background:#e9eddf;border-top:1px solid #d3dbca;border-bottom:1px solid #d3dbca}
+.pixel-portfolio .work-section{padding-top:65px}.pixel-portfolio .section-heading h2{font-family:Georgia,serif;letter-spacing:-1px;font-size:38px}
+.pixel-portfolio .eyebrow{font-family:monospace;font-weight:400;letter-spacing:1.2px}
+.pixel-portfolio .town-project-card{border:1px solid #d0d4c5;border-radius:0;background:#fffdf5;box-shadow:4px 4px 0 #e7e8da;padding:26px}
+.pixel-portfolio .small-project-top>span:first-child{font:22px monospace;color:#a58d9b}
+.pixel-portfolio .town-card-stamp{font:34px monospace;color:#a6b9a0;border:1px dashed #c2cbb7;padding:2px 8px;line-height:1}
+.pixel-portfolio .town-project-card:nth-child(3n+2) .town-card-stamp{color:#bba1aa;border-color:#d6c5ca}
+.pixel-portfolio .town-project-card:nth-child(3n) .town-card-stamp{color:#9cabb9;border-color:#c7d0d7}
+.pixel-portfolio .town-project-card h3{font-size:23px;font-family:Georgia,serif;letter-spacing:-.4px}
+.pixel-portfolio .town-project-card .tags li{border-radius:0;background:#f5f4e9;border-color:#dddccd}
+.pixel-portfolio .about-section{background:#edeedf;border-color:#d7dccb}
+.pixel-portfolio .about-grid h2,.pixel-portfolio .contact-inner h2{font-family:Georgia,serif;font-weight:400}
+.pixel-portfolio .professional-work-section{background:#f8f6ed}
+.pixel-portfolio .contact-section{background:#eedfe4}.pixel-portfolio .footer{font-family:monospace}
+@media(max-width:650px){.pixel-portfolio .work-section{padding-top:45px}.pixel-portfolio .section-heading h2{font-size:30px}.pixel-portfolio .project-grid{gap:20px}}
+
+.pixel-portfolio .town-card-preview{position:relative;display:block;width:100%;height:180px;overflow:hidden;margin:0 0 22px;border:1px solid #d9dccf;background:#eeeede}
+.pixel-portfolio .town-card-preview img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.pixel-portfolio .town-card-preview>span{position:absolute;bottom:8px;left:8px;background:#fffdf2eb;padding:4px 7px;font:8px monospace;letter-spacing:1px;color:#6e7965;border:1px solid #d6dccb}
+.pixel-portfolio .project-list-disclosure{margin-top:22px}.pixel-portfolio .project-case-cards{margin-top:24px}

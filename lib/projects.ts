@@ -62,20 +62,39 @@ export const projects: Project[] = [
     flow: ['Scope + access', 'Async export', 'Retry / download']
   },
   {
-    graphTitle: "Sports & training", contributions: [["Web training interfaces"], ["Typed web implementation"], ["Mobile training screens", "Camera and feedback integration"], ["Running mini-program", "Vue mobile frontend"]],
-    heroTitle: "Sports & training", heroDetail: "Web + mobile",
-    slug: 'sports-education', number: '04', title: 'AI Sports-Education & Mobile Training Platform', shortTitle: 'Connecting movement and feedback.',
-    category: 'Sports education · Web + mobile', organization: 'Danzhu (淡竹)', status: 'Commercial work · Selected screenshot',
-    description: 'Web and mobile training interfaces connecting camera input, movement feedback and the training experience across React, React Native and Vue / uni-app.',
-    tags: ['React', 'TypeScript', 'React Native', 'Vue / uni-app'], role: 'Web and mobile frontend development',
-    problem: 'An AI sports-education product needed interfaces that connected camera input and movement feedback with usable web and mobile training experiences.',
-    responsibilities: ['Built React / TypeScript web interfaces for the sports-education product.', 'Worked on React Native mobile training screens, camera integration and movement-feedback interfaces.', 'Contributed to the Vue mobile frontend and a Vue / uni-app running mini-program.'],
-    decisions: [
-      { title: 'Connect the training interaction', text: 'Focused on the frontend connection between camera access, movement feedback and training screens.' },
-      { title: 'Work across delivery surfaces', text: 'Implemented interfaces across React web, React Native and Vue / uni-app mobile experiences as required by the product.' }
+    graphTitle: "AI sports assessment", contributions: [
+      ["jQuery-to-React code migration", "React training and exam interfaces", "TV-based presentation"],
+      ["Canvas drawing and manipulation", "Visual feedback presentation"],
+      ["Camera capture", "Video-stream transmission to backend AI"],
+      ["Real-time scoring data", "Frontend result updates"],
+      ["Audio-visual synchronization", "Post-training spoken results"],
+      ["Multiple simultaneous participants", "Face-recognition integration", "Individual score presentation"]
     ],
-    delivery: 'Commercial frontend contributions are presented through a written case study and one privacy-redacted screenshot of the Vue / uni-app running mini-program. Many other commercial interfaces are not suitable for public display. My role was interface and integration work, not training the vision-recognition models. The company website is linked for product context; it is not a live demo of this mini-program.',
-    flow: ['Camera input', 'Movement feedback', 'Training interface']
+    heroTitle: "AI sports assessment", heroDetail: "Canvas + real-time video",
+    slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
+    category: 'Sports education · Real-time assessment', organization: 'Danzhu (淡竹)', status: 'Commercial frontend work',
+    description: 'Migrated a TV-based sports examination and training system from jQuery to React. The frontend connects camera video with backend AI analysis using Canvas, video-stream transmission and WebSocket scoring updates, with synchronized audio-visual feedback and spoken results.',
+    tags: ['jQuery → React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · React migration & real-time assessment',
+    problem: 'Students needed a system for physical-education entrance examinations as well as everyday training, fitness assessment and analysis reports. Multiple people could train or take an exam together. The system needed face recognition to distinguish participants and had to turn camera input and backend AI scores into timely, understandable feedback on a TV display.',
+    responsibilities: [
+      'Migrated existing jQuery frontend code to React.',
+      'Developed React interfaces for TV-based sports examinations, everyday training, fitness assessment and analysis reports.',
+      'Worked with camera capture and video-stream transmission to the backend AI analysis system.',
+      'Used Canvas drawing and manipulation to implement visual presentation.',
+      'Integrated WebSocket-based real-time scoring data from the backend into the frontend.',
+      'Handled audio-visual synchronization and spoken score announcements after training.',
+      'Worked on multi-person assessment interfaces and integration with face recognition to distinguish participants and present individual results.'
+    ],
+    decisions: [
+      { title: 'Modernize the existing frontend with React', text: 'Migrated the system’s existing jQuery code to React, bringing its training and examination interfaces into a component-based frontend while working with camera, scoring and feedback integrations.' },
+      { title: 'Connect capture, AI analysis and presentation', text: 'The camera provided input to the backend AI analysis system, which returned scoring data to the frontend. My work focused on video transmission, data integration and presenting the results in the training and examination interfaces.' },
+      { title: 'Use Canvas alongside real-time data', text: 'Canvas drawing and manipulation supported the visual interface, while WebSocket carried real-time scoring data from the backend. The frontend brought those updates into the ongoing assessment experience.' },
+      { title: 'Keep visual and spoken feedback coordinated', text: 'The system required audio-visual synchronization during training and spoken results after each session. My frontend work included coordinating these forms of feedback with the assessment experience.' },
+      { title: 'Support several participants in one session', text: 'Multiple people could train or take an exam together. The system used face recognition to distinguish participants; the frontend needed to present assessment data for the corresponding people.' },
+      { title: 'Cover practice as well as examinations', text: 'The same system supported high-school entrance sports examinations and daily training, with scoring, fitness assessment and analysis reports. The frontend presented both the live session and its results.' }
+    ],
+    delivery: 'Commercial frontend work including jQuery-to-React migration, Canvas, video transmission, real-time scoring, audio-visual synchronization and multi-person assessment. AI analysis and face recognition were backend capabilities integrated into the frontend experience.',
+    flow: ['Camera video', 'Backend AI analysis', 'Live scores + reports']
   },
   {
     graphTitle: "Low-code platform", contributions: [["Configurable pages", "Field-team applications"], ["Reusable components"], ["Theme switching"]],
@@ -94,20 +113,26 @@ export const projects: Project[] = [
     flow: ['Page configuration', 'Reusable components', 'Field applications']
   },
   {
-    graphTitle: "Operations dashboard", contributions: [["Initial dashboard frontend ownership"], ["Typed monitoring interfaces"], ["Monitoring charts"], ["Geographic visualization"]],
-    heroTitle: "Operations", heroDetail: "Charts + maps",
-    slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'A national view of operations.',
-    category: 'Operations · Data visualization', organization: 'State Grid project', status: 'Served 1,000+ operators',
-    description: 'React / TypeScript operations interfaces with ECharts and map visualization. Sole frontend ownership of the initial nationwide monitoring dashboard.',
-    tags: ['React', 'TypeScript', 'ECharts', 'Maps'], role: 'Sole frontend developer for the initial national dashboard',
-    problem: 'Operations teams needed a nationwide view of monitoring information. The broader platform served more than 1,000 operators and combined operational data with geographical context.',
-    responsibilities: ['Independently owned the frontend of the initial nationwide monitoring dashboard.', 'Developed React / TypeScript operations and monitoring interfaces.', 'Used ECharts and map visualization to present monitoring information.'],
-    decisions: [
-      { title: 'Charts and geographical context', text: 'Combined ECharts and maps in the frontend to support the monitoring experience across national operations.' },
-      { title: 'Clear ownership of the first dashboard', text: 'Took sole responsibility for the frontend of the initial nationwide dashboard. This ownership refers to that initial dashboard, not the entire platform.' }
+    graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"]],
+    heroTitle: "Operations", heroDetail: "Component library + workflows",
+    slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Reusable components. Workflow-aware interfaces.',
+    category: 'Enterprise systems · Component library & workflows', organization: 'Longshine (朗新) · State Grid project', status: 'Commercial work · Written case study',
+    description: 'Developed a shared frontend component library and work-order interfaces for a State Grid management system at Longshine. This combined hands-on experience building reusable UI with a deeper understanding of business workflows—skills I bring to SaaS frontend development.',
+    tags: ['React', 'TypeScript', 'Component library', 'Business workflows'], role: 'Frontend development · Component library & work-order system',
+    problem: 'Enterprise software needs reusable interface building blocks as well as screens that reflect how the business operates. Within a 1,000-person State Grid development programme, my work connected component-library development with the practical workflows of a work-order system.',
+    responsibilities: [
+      'Developed reusable frontend components as part of the management system’s shared component library.',
+      'Implemented work-order system interfaces, applying shared components to business-facing screens.',
+      'Built familiarity with business-system workflows through work-order development, connecting process requirements with frontend implementation.',
+      'Collaborated within a 1,000-person development team at Longshine.'
     ],
-    delivery: 'The platform served 1,000+ operators. This is a written case study of my frontend contribution; internal dashboards, data and source code are not reproduced.',
-    flow: ['Operational data', 'Charts + maps', 'Operator overview']
+    decisions: [
+      { title: 'Build for reuse across business interfaces', text: 'Component-library development was a core part of my contribution. I worked on reusable UI building blocks that could support the management system’s interfaces, gaining practical experience with the shared frontend foundations used in enterprise products.' },
+      { title: 'Understand the workflow behind the screen', text: 'Working on the work-order system deepened my understanding of how business processes translate into interfaces. This experience helps me approach a screen in the context of the wider workflow and the task it needs to support.' },
+      { title: 'Bring both perspectives to SaaS development', text: 'This project combined component-library experience with business-system implementation. I bring both to SaaS frontend work: developing reusable UI and understanding the operational processes that the product needs to make usable.' }
+    ],
+    delivery: 'Commercial component-library and work-order frontend development at Longshine, within a 1,000-person project team. The experience strengthened both my ability to build reusable enterprise interfaces and my understanding of business workflows—foundations for SaaS frontend development.',
+    flow: ['Shared component library', 'Work-order interfaces', 'Business workflows']
   },
   {
     graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend rebuild"], ["PHP-based product upgrade", "Zero-to-one frontend contribution"], ["Batch and single payments", "Insurance collections and payouts"], ["Reconciliation statements"]],
@@ -201,26 +226,86 @@ export const projects: Project[] = [
     slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
     graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine (朗新)', status: 'Commercial work · Written case study',
     description: 'Built multiple large-screen dashboards as part of smart-city projects at Longshine, integrating map APIs and route tracking for Wuxi, Hainan and Taiyuan, with customizations for each location.',
-    tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization'], role: 'Frontend development · Dashboard implementation',
+    tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization'], role: 'Sole frontend developer for the initial dashboard · Regional delivery',
     contributions: [
       ['Map API integration', 'Geographic views within the dashboards'],
       ['Route tracking on maps'],
-      ['Multiple large-screen dashboards', 'Shared implementation foundation'],
+      ['Sole frontend ownership of the initial dashboard', 'Multiple regional dashboards'],
       ['Wuxi, Hainan and Taiyuan', 'Location-specific customizations']
     ],
     problem: 'Smart-city projects in different locations needed large-screen dashboards with map views and route tracking. The dashboards shared the same foundation, but Wuxi, Hainan and Taiyuan each had specific requirements that called for a customized version.',
     responsibilities: [
-      'Built multiple large-screen dashboard interfaces as part of smart-city projects at Longshine.',
+      'Solely owned frontend development of the initial smart-city dashboard at Longshine.',
+      'Built multiple large-screen dashboard interfaces for regional smart-city projects.',
       'Integrated map APIs into the dashboard experience.',
       'Implemented map-based route tracking.',
       'Worked from a shared foundation while adapting the dashboards to the specific requirements of Wuxi, Hainan and Taiyuan.'
     ],
     decisions: [
+      { title: 'Own the initial frontend', text: 'Was the sole frontend developer for the initial smart-city dashboard, then worked on regional dashboard versions built around a shared foundation.' },
       { title: 'Keep a common foundation across versions', text: 'The dashboards were based on the same foundation. My work covered multiple versions, carrying that common base into the implementation for each location.' },
       { title: 'Connect maps with route tracking', text: 'Map API integration and route tracking formed part of the large-screen interfaces, bringing geographic context and routes into the dashboard experience.' },
       { title: 'Adapt to local requirements', text: 'Wuxi, Hainan and Taiyuan each required specific customizations. The work combined the shared dashboard foundation with those differences rather than delivering an identical interface for every location.' }
     ],
     delivery: 'A written case study of commercial frontend work at Longshine across multiple regional dashboards. The workflow illustration summarizes the shared foundation and local customization work.',
     flow: ['Shared dashboard foundation', 'Maps + route tracking', 'Regional customizations']
+  },
+  {
+    slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'React interfaces for cross-region finance.',
+    graphTitle: 'SME financing', category: 'Fintech · React business interfaces', organization: 'GLP (普洛斯)', status: 'Commercial frontend work',
+    description: 'React frontend development for an SME financing system spanning domestic and overseas markets, with a focus on business interfaces and requirements around time zones, currencies and exchange rates.',
+    tags: ['React', 'Business interfaces', 'Time zones', 'Currencies & exchange rates'], role: 'React frontend development',
+    contributions: [
+      ['React business interfaces', 'Business requirements to UI'],
+      ['SME financing workflows'],
+      ['Cross-region date and time context'],
+      ['Currency-aware financial presentation', 'Exchange-rate context']
+    ],
+    problem: 'An SME financing system needed business interfaces for domestic and overseas markets, where dates, currencies and exchange rates required careful handling.',
+    responsibilities: [
+      'Developed React frontend interfaces for the financing system.',
+      'Worked on business screens supporting SME financing workflows.',
+      'Handled frontend requirements involving time zones, currencies and exchange rates.'
+    ],
+    decisions: [
+      { title: 'React for business interfaces', text: 'Worked on React interfaces for the financing system, translating business requirements into frontend screens.' },
+      { title: 'Date and time interpretation across regions', text: 'Time-zone requirements make the distinction between a timestamp and its local display important. Dates and times need an unambiguous regional context when a financing workflow spans domestic and overseas markets.' },
+      { title: 'Currency-aware amounts and exchange rates', text: 'Financial interfaces need to keep an amount’s currency clear and distinguish monetary values from the exchange rates used to interpret them. Relevant frontend concerns include decimal precision, rounding and number formatting across markets.' },
+      { title: 'Separate business values from display formatting', text: 'Cross-region financial requirements call for a clear distinction between underlying business data and how a screen presents it. Date, amount and currency formatting need to preserve the meaning of the data throughout the interface.' }
+    ],
+    delivery: 'React frontend contributions to an SME financing system at GLP, with experience in business interfaces and cross-region financial requirements.',
+    flow: ['React interfaces', 'Financing workflows', 'Time + currency context']
+  },
+  {
+    slug: 'running-mini-program', number: '12', title: 'Student Sports Mini-Program & Teacher Dashboard', shortTitle: 'From student training to teacher insights.',
+    graphTitle: 'Student sports platform', category: 'Education · Mobile training & administration', organization: 'Danzhu (淡竹)', status: 'Commercial work · Used by schools',
+    description: 'Vue / uni-app student training interfaces and a teacher management dashboard, serving multiple universities and Shanghai primary schools. The product combines running, camera-based exercise counting, weak-network data saving and deferred uploads with student results and report exports.',
+    tags: ['Vue / uni-app', 'Camera-based exercise tracking', 'Weak-network resilience', 'Peak running traffic', 'Teacher dashboard & exports', 'Age-specific experiences'], role: 'Frontend development · Student mini-program & teacher dashboard',
+    contributions: [
+      ['Student running and free-training interfaces'],
+      ['Phone-camera capture', 'Sit-ups, jumping jacks and squats', 'Exercise statistics presentation'],
+      ['Save training data under weak connectivity', 'Deferred data uploads'],
+      ['High-concurrency running periods', 'Student training frontend'],
+      ['Student result management', 'Teacher score-report exports'],
+      ['University and primary-school versions', 'Different AI movement criteria', 'Adapted visual and spoken feedback']
+    ],
+    problem: 'Students needed running and free-training tools, while teachers needed a management system to review results and export score reports. Running periods brought high concurrent usage, and weak connectivity required training data to be saved for later upload. University and primary-school versions also needed different movement-assessment criteria and age-appropriate visual and spoken feedback.',
+    responsibilities: [
+      'Developed Vue / uni-app student interfaces for running and free training, including running metrics, route maps and checkpoints.',
+      'Integrated phone-camera capture for exercise statistics across sit-ups, jumping jacks, squats and other activities.',
+      'Worked on weak-network data saving and deferred uploads for student training sessions.',
+      'Developed frontend interfaces for a product with high concurrent usage during peak running periods.',
+      'Worked on teacher management interfaces for reviewing student results and exporting score reports.',
+      'Adapted interface presentation and voice feedback for university and primary-school versions with different AI movement-assessment criteria.'
+    ],
+    decisions: [
+      { title: 'Keep training data through weak connectivity', text: 'The mini-program saved training data under weak-network conditions and deferred uploads. This allowed recording and transmission to happen at different times, addressing the connectivity constraints of student training.' },
+      { title: 'Combine running with camera-based exercise tracking', text: 'Running and free training belonged to one mini-program. Free-training activities included sit-ups, jumping jacks and squats, with phone-camera input supporting exercise statistics.' },
+      { title: 'Work within peak running usage', text: 'Running periods created high-concurrency demand across the product. My contribution was on the frontend for this student training environment, including its weak-network data handling.' },
+      { title: 'Connect student activity to teacher reporting', text: 'The teacher management system let teachers view student results and export score reports, connecting student training with school assessment and administration.' },
+      { title: 'Adapt the experience for different age groups', text: 'University and primary-school versions used different AI movement-assessment standards. Visual presentation and voice feedback were also adjusted for the respective student groups.' }
+    ],
+    delivery: 'The mini-program served multiple universities and multiple primary schools in Shanghai. My frontend work covered student training, weak-network data handling, teacher result management and report exports, with separate university and primary-school experiences. The gallery shows an original, privacy-redacted running-session screenshot.',
+    flow: ['Student training', 'Save + upload results', 'Teacher review + export']
   }
 ];

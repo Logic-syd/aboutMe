@@ -1,40 +1,29 @@
 import Link from 'next/link';
-import { ProjectLinks } from '@/components/project-links';
+import Image from 'next/image';
 import { ProjectShowcase } from '@/components/project-showcase';
+import { ProjectLinks } from '@/components/project-links';
+import { PixelTown } from '@/components/pixel-town';
 import { CareerMap } from '@/components/career-map';
 import { projects } from '@/lib/projects';
 import { experiences } from '@/lib/experience';
-import { Diagram } from '@/components/diagram';
-import { OrbitScene } from '@/components/orbit-scene';
 import { Contact, Footer, Header } from '@/components/site';
 
 export default function Home() {
-  return <div id="top">
+  return <div id="top" className="pixel-portfolio">
     <Header />
     <main id="main">
-      <section className="hero orbit-hero" aria-labelledby="hero-title">
-        <div className="hero-topline"><p className="eyebrow">PORTFOLIO / YIDAN SHAO</p><span className="availability"><i />Open to opportunities</span></div>
-        <div className="hero-center">
-          <p className="hero-role">SENIOR FRONTEND ENGINEER</p>
-          <h1 id="hero-title">YIDAN SHAO<span className="pink-period">.</span></h1>
-          <h2>Complex products.<br className="mobile-break" /> <em>Considered interfaces.</em></h2>
-          <p className="hero-intro">7+ years turning complex requirements into clear, dependable web and mobile experiences.</p>
-          <div className="hero-actions"><a className="button" href="#work">Explore my work <span aria-hidden="true">↘</span></a><a className="button button-outline" href="mailto:yidanshao622@gmail.com">Get in touch <span aria-hidden="true">↗</span></a></div>
-          <p className="hero-base">MUNICH, GERMANY <span>·</span> OPEN TO RELOCATE</p>
-        </div>
-        <OrbitScene />
-        <div className="hero-bottomline"><span>SELECTED WORK / 01—06</span><a href="#work">SCROLL TO EXPLORE ↓</a><span>THOUGHTFUL INTERFACES. RELIABLE DELIVERY.</span></div>
-      </section>
+      <PixelTown />
       <div className="tech-strip" aria-label="Core technologies"><div className="shell">{['React', 'TypeScript', 'Vue', 'Next.js', 'React Native', 'Node.js'].map(tech => <span key={tech}><i aria-hidden="true" />{tech}</span>)}</div></div>
       <section id="work" className="shell work-section" aria-labelledby="work-title">
-        <div className="section-heading"><div><p className="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">Connected by craft.</h2></div><p>{projects.length} projects. Shared technologies. <br />Explore the connections behind the work.</p></div>
+        <div className="section-heading"><div><p className="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">A constellation of ideas.</h2></div><p>{projects.length} projects. Explore the spheres, <br />then open a notebook for the work behind them.</p></div>
         <ProjectShowcase>
-        <div className="featured-projects craft-projects">{projects.filter(project => project.featured).map(project => <article className="featured-project" key={project.slug}>
-          <Link className="diagram-link" href={`/projects/${project.slug}`} aria-label={`Read ${project.title} case study`}><Diagram project={project} /></Link>
-          <div className="project-copy"><div className="project-kicker"><span>{project.number} / {project.category}</span></div><span className={`status ${project.inDevelopment ? 'status-progress' : ''}`}><i />{project.status}</span><h3><Link href={`/projects/${project.slug}`}>{project.shortTitle}</Link></h3><p className="project-name">{project.title}</p><p className="project-description">{project.description}</p><ul className="tags" aria-label="Technologies">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><Link className="text-link" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link></div>
+        <div className="project-grid">{projects.map(project => <article className="small-project town-project-card" key={project.slug}>
+          <div className="small-project-top"><span>{project.number}</span><span className="town-card-stamp" aria-hidden="true">▦</span></div>
+          {project.screenshots?.[0] && <Link className="town-card-preview" href={`/projects/${project.slug}`} aria-label={`View ${project.title} case study`}><Image src={project.screenshots[0].src} alt={project.screenshots[0].alt} width={project.screenshots[0].width} height={project.screenshots[0].height} sizes="(max-width: 650px) 85vw, 350px" /><span>PRODUCT SCREEN</span></Link>}
+          <p className="eyebrow">{project.organization}</p><h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3><p>{project.description}</p>
+          <span className="small-status">{project.status}</span><ul className="tags" aria-label="Technologies">{project.tags.slice(0, 3).map(tag => <li key={tag}>{tag}</li>)}</ul>
+          <Link className="text-link" href={`/projects/${project.slug}`}>Open the notebook <span aria-hidden="true">↗</span></Link><ProjectLinks project={project} />
         </article>)}</div>
-        <div className="more-work-heading"><h3>More work, same attention.</h3><span>{String(projects.filter(project => !project.featured).length).padStart(2, '0')} MORE CASE STUDIES</span></div>
-        <div className="project-grid">{projects.filter(project => !project.featured).map(project => <article className="small-project" key={project.slug}><div className="small-project-top"><span>{project.number}</span><span aria-hidden="true">↗</span></div><p className="eyebrow">{project.organization}</p><h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3><p>{project.description}</p><span className="small-status">{project.status}</span><ul className="tags" aria-label="Technologies">{project.tags.slice(0, 3).map(tag => <li key={tag}>{tag}</li>)}</ul><Link className="text-link" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link><ProjectLinks project={project} /></article>)}</div>
         </ProjectShowcase>
         <p className="work-note">Commercial work is presented through written case studies, with a selected privacy-redacted screenshot in the Danzhu case. All workflow diagrams are labeled illustrations.</p>
       </section>
@@ -49,6 +38,6 @@ export default function Home() {
       <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><p className="eyebrow">04 / GROWTH MAP</p><h2 id="experience-title">Places that shaped my work.</h2></div><p>From Shanghai and Hangzhou to Munich.<br />Explore the places, people and memories along the way.</p></div><CareerMap /></section>
       <Contact />
     </main>
-    <Footer />
+    <Footer pixel />
   </div>;
 }

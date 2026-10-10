@@ -14,8 +14,8 @@ export function Header({ detail = false }: { detail?: boolean }) {
     </nav>
   </header>;
 }
-export function Footer() {
-  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link><p>Built with Next.js, Three.js & Leaflet.</p><a href="#top">Back to top ↑</a></footer>;
+export function Footer({ pixel = false }: { pixel?: boolean } = {}) {
+  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link><p>{pixel ? 'A little world by Yidan Shao.' : 'Built with Next.js, Three.js & Leaflet.'}</p><a href="#top">Back to top ↑</a></footer>;
 }
 export function Contact() {
   return <section id="contact" className="contact-section">
