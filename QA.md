@@ -201,4 +201,5 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Replaced the below-the-fold story panel with a viewport-constrained preview beside the clicked building or navigation button. Initial map remains unobstructed.
 - ESLint, TypeScript and production build passed. Browser checks at 1440×1000, 1280×650, 390×844 and 320×640 covered all six buildings and all six navigation buttons, visible card bounds, no forced scrolling, and correct links.
 - Verified Escape/close focus restoration, switching between duplicate triggers for the same place, forward/backward keyboard exit, outside-pointer dismissal, scroll-away dismissal and case-study navigation.
-- Studio retains only the energy API case and the all-projects link. Preview summaries are concise; full project detail remains at the destination.
+- Studio retains only the energy API case and the all-projects link. Previews now contain only the place name, a short title and links; descriptions and footer hints were removed.
+- Compact-layout recheck passed at all four viewport sizes: bubbles are 240px wide, 117px tall on desktop (157px for Studio), and 131px tall on mobile (179px for Studio). Mobile links retain 44px touch targets. ESLint, TypeScript, production build and the interaction checks above passed again.
