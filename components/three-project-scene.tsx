@@ -12,25 +12,30 @@ import { graphLeaves, graphTitles, orbitPoints, type GraphSelection } from '@/li
 
 type Gradient = readonly [string, string, string];
 type Point = [number, number, number];
-type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
+type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; muted?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
-const colors = ['#cab1c8', '#dcc8a5', '#b7b2db', '#a8cfd0', '#c8d3b3', '#aec7df', '#e6bba9', '#acd2c4', '#d9b7cb'];
-// Dreamy pastel gradients with a soft glazed, pearl-like surface.
-const rootGradient: Gradient = ['#94bdd8', '#c1acd4', '#e8b4bf'];
-const leafGradient: Gradient = ['#aed8cf', '#c1cae0', '#e4c4d7'];
+const colors = ['#d9a2b5', '#8fbbd9', '#94c5b6', '#b7a1d1', '#dbb395', '#a0afdc', '#d9a09b', '#8abfc3', '#d3c296', '#bc9fc2'];
+// The warm core, colored planets, pale glass satellites and ivory pearls
+// distinguish roles without depending only on their radius.
+const rootGradient: Gradient = ['#fff0c9', '#efd3ad', '#e9b3a2'];
+const leafGradient: Gradient = ['#f6f0e5', '#e9e4df', '#dedbd8'];
 const gradients: Gradient[] = [
-  rootGradient,
-  ['#f1e3bd', '#e8cfb3', '#deb7b7'],
-  ['#a7bbdf', '#c5b0df', '#e5bed4'],
-  ['#a8d6d3', '#b6cce0', '#d4bee0'],
-  ['#c9ddbd', '#dce0c4', '#eccab8'],
-  ['#9fc7e5', '#b7bfe2', '#ddbed6'],
-  ['#e4bfd0', '#e8b9bd', '#efc9a8'],
-  ['#a4d4c7', '#bdd8ce', '#e2d2b9'],
-  ['#b4cce1', '#d1bbdd', '#eac4d3'],
-  ['#b0d7d6', '#c6bade', '#e8b9cc'],
+  ['#f3d9e3', '#e5b6cd', '#d8a7ba'],
+  ['#c9e6f1', '#a9cce6', '#99b6d8'],
+  ['#d2ebdb', '#b2d8c8', '#9ccbb9'],
+  ['#e6dbf1', '#ccbee6', '#b4a4d4'],
+  ['#fae5cb', '#f0cfb5', '#e4b6a3'],
+  ['#d9e0f6', '#bac8ed', '#a7b5df'],
+  ['#f4d5d0', '#e9bcb7', '#daa6a4'],
+  ['#d0ecea', '#a9d4d4', '#92c5c8'],
+  ['#faf0cc', '#ebdbb5', '#dbc6a1'],
+  ['#eee0ed', '#d6bddb', '#c1a4ca'],
 ];
+function satelliteGradient(gradient: Gradient): Gradient {
+  const lighten = (color: string) => `#${new THREE.Color(color).lerp(new THREE.Color('#ffffff'), .42).getHexString()}`;
+  return [lighten(gradient[0]), lighten(gradient[1]), lighten(gradient[2])];
+}
 function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse }: { anchors: Item[]; pixelScale: number; pulse: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Mesh>(null);
@@ -48,7 +53,7 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
   const size = item.radius;
   const { camera, size: screen, invalidate } = useThree();
   const geometry = useMemo(() => {
-    const sphere = new THREE.SphereGeometry(size, 40, 32);
+    const sphere = new THREE.SphereGeometry(size, item.kind === 'leaf' ? 24 : 40, item.kind === 'leaf' ? 16 : 32);
     const points = sphere.getAttribute('position');
     const shades = (item.gradient ?? rootGradient).map(color => new THREE.Color(color));
     const colors = new Float32Array(points.count * 3);
@@ -61,7 +66,7 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     }
     sphere.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     return sphere;
-  }, [size, item.gradient]);
+  }, [size, item.gradient, item.kind]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => {
     if (pulse > 0 && !reducedMotion) { scaleValue.current = .92; scaleVelocity.current = 1.7; velocity.current.y += pixelScale * 90; }
@@ -148,10 +153,16 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
   }
   return <group ref={group} name={`${item.kind}-${item.id}`} position={initialPosition}>
     <mesh ref={shell} geometry={geometry} castShadow onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => { pressed.current = false; dragging.current = false; offset.current.set(0, 0, 0); onDrag(false); invalidate(); }} onPointerOver={event => { event.stopPropagation(); setHovered(true); }} onPointerOut={() => setHovered(false)}>
-      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={0} roughness={.4} clearcoat={.3} clearcoatRoughness={.35} specularIntensity={.5} sheen={.15} sheenColor="#eadfea" sheenRoughness={.65} />
+      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={0}
+        roughness={item.kind === 'leaf' ? .9 : item.kind === 'technology' ? .18 : item.muted ? .68 : item.active ? .28 : .4}
+        clearcoat={item.kind === 'leaf' ? 0 : item.kind === 'technology' ? .6 : item.muted ? .05 : .35}
+        clearcoatRoughness={.3} specularIntensity={item.kind === 'leaf' ? .18 : item.muted ? .25 : .55}
+        transparent={item.kind === 'technology'} opacity={item.kind === 'technology' ? .62 : 1} depthWrite={item.kind !== 'technology'}
+        sheen={item.kind === 'root' ? .2 : item.kind === 'project' && !item.muted ? .15 : 0} sheenColor="#f0e1de" sheenRoughness={.65} />
     </mesh>
-    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#aaa0a7" metalness={0} roughness={.9} /></mesh>}
-    {item.active && item.kind !== 'root' && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, .025, 8, 64]} /><meshStandardMaterial color="#a48b97" roughness={.9} /></mesh>}
+    {item.kind === 'technology' && <mesh><sphereGeometry args={[size * .35, 20, 16]} /><meshBasicMaterial color={item.color} transparent opacity={.24} depthWrite={false} /></mesh>}
+    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#d7bc94" metalness={.12} roughness={.65} /></mesh>}
+    {item.active && (item.kind === 'project' || item.kind === 'technology') && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, pixelScale * .8, 8, 64]} /><meshStandardMaterial color={item.color} roughness={.65} emissive={item.color} emissiveIntensity={.08} /></mesh>}
     {!item.quiet && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
       <div data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].number}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
         {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} title="Read case study" style={{ pointerEvents: 'auto' }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>}
@@ -174,7 +185,7 @@ function Connection({ start, end, active, positions, animate }: { start: Item; e
     if (line.current && previous.current !== key) { line.current.geometry.dispose(); line.current.geometry = new THREE.TubeGeometry(curve, 24, active ? .018 : .009, 5, false); previous.current = key; }
     if (particle.current) particle.current.position.copy(curve.getPoint((state.clock.elapsedTime * .17 + end.index * .14) % 1));
   });
-  return <><mesh ref={line}><bufferGeometry /><meshBasicMaterial color={active ? '#a38e9a' : '#b3b3ac'} transparent opacity={active ? .55 : .3} /></mesh>{active && animate && <mesh ref={particle}><sphereGeometry args={[.045, 10, 8]} /><meshBasicMaterial color="#b6a1aa" /></mesh>}</>;
+  return <><mesh ref={line}><bufferGeometry /><meshBasicMaterial color={end.color} transparent opacity={active ? .65 : .18} /></mesh>{active && animate && <mesh ref={particle}><sphereGeometry args={[.045, 10, 8]} /><meshBasicMaterial color={end.color} /></mesh>}</>;
 }
 
 function Scene(props: Props & { labelPortal: LabelPortal }) {
@@ -207,7 +218,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     const rootPosition = point(rootX, rootY);
     const selectedPosition = compact ? point(-width * .03, height * .29, .2) : point(rootX - radiusX, rootY, .2);
     const projectRadius = (compact ? 18 : 27) * worldPerPixel;
-    const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 28 : 39) * worldPerPixel, gradient: rootGradient, color: '#dca3b9', active: false, index: 0, onSelect: onReset }];
+    const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 28 : 39) * worldPerPixel, gradient: rootGradient, color: '#d7bc94', active: false, index: 0, onSelect: onReset }];
     let sibling = 0;
     projects.forEach((project, index) => {
       const active = selection.project === index;
@@ -217,7 +228,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
       const position = expanded && active ? selectedPosition : expanded && compact
         ? point(rootX + satellite.x, satellite.y, -.2)
         : point((expanded ? rootX : 0) + anglePoint.x, anglePoint.y + 40, Math.sin(index * 1.3) * .18);
-      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position, radius: expanded && compact && !active ? worldPerPixel * 9 : projectRadius, quiet: compact && expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
+      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position, radius: expanded && compact && !active ? worldPerPixel * 9 : projectRadius, quiet: compact && expanded && !active, muted: expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
     });
     if (selection.project !== null) {
       const project = projects[selection.project];
@@ -225,13 +236,13 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
         if (compactLeaves && selection.technology !== index) return;
         const position = compact ? point(-width * .25, height * .12 - (compactLeaves ? 0 : index * 82), .1)
           : point(-width * .245, 40 + (project.tags.length - 1) * 47 - index * 94, .15);
-        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, radius: (compact ? 11 : 15) * worldPerPixel, spawn: selectedPosition, spawnFrom: project.slug, delay: index * .075, gradient: gradients[selection.project! % gradients.length], color: '#ead8df', active: selection.technology === index, index, onSelect: () => onTechnology(index) });
+        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, radius: (compact ? 11 : 15) * worldPerPixel, spawn: selectedPosition, spawnFrom: project.slug, delay: index * .075, gradient: satelliteGradient(gradients[selection.project! % gradients.length]), color: colors[selection.project! % colors.length], active: selection.technology === index, index, onSelect: () => onTechnology(index) });
       });
       if (selection.technology !== null) {
         const technology = result.find(node => node.id === `${project.slug}-tech-${selection.technology}`)!;
         graphLeaves(selection.project, selection.technology).forEach((label, index, all) => result.push({ id: `${technology.id}-leaf-${index}`, kind: 'leaf', label,
           position: compact ? point(-width * .25, -height * .04 - index * 90, .1) : point(-width * .414, technology.position[1] / worldPerPixel + (all.length - 1) * 44 - index * 88, .1),
-          radius: 8 * worldPerPixel, spawn: technology.position, spawnFrom: technology.id, delay: index * .09, gradient: leafGradient, color: '#b9cebd', active: true, index }));
+          radius: 8 * worldPerPixel, spawn: technology.position, spawnFrom: technology.id, delay: index * .09, gradient: leafGradient, color: '#c5bcb2', active: true, index }));
       }
     }
     return result;
