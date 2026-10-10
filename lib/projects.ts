@@ -196,5 +196,31 @@ export const projects: Project[] = [
       { src: '/images/pfand-pause-start.png', width: 780, height: 1902, alt: 'Pfand Pause in English, with its illustrated neighbourhood drinks shop and the invitation to start sorting bottles.', caption: 'The bottle-return shop · Captured from the local production build.' },
       { src: '/images/pfand-pause-game.png', width: 780, height: 2314, alt: 'Level three of Pfand Pause, showing bottle stacks, three waiting spaces, matching crates, the order queue and undo controls.', caption: 'Level 03 · Actual gameplay after completing the first two puzzles.' }
     ]
+  },
+  {
+    slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
+    graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine (朗新)', status: 'Commercial work · Written case study',
+    description: 'Built multiple large-screen dashboards as part of smart-city projects at Longshine, integrating map APIs and route tracking for Wuxi, Hainan and Taiyuan, with customizations for each location.',
+    tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization'], role: 'Frontend development · Dashboard implementation',
+    contributions: [
+      ['Map API integration', 'Geographic views within the dashboards'],
+      ['Route tracking on maps'],
+      ['Multiple large-screen dashboards', 'Shared implementation foundation'],
+      ['Wuxi, Hainan and Taiyuan', 'Location-specific customizations']
+    ],
+    problem: 'Smart-city projects in different locations needed large-screen dashboards with map views and route tracking. The dashboards shared the same foundation, but Wuxi, Hainan and Taiyuan each had specific requirements that called for a customized version.',
+    responsibilities: [
+      'Built multiple large-screen dashboard interfaces as part of smart-city projects at Longshine.',
+      'Integrated map APIs into the dashboard experience.',
+      'Implemented map-based route tracking.',
+      'Worked from a shared foundation while adapting the dashboards to the specific requirements of Wuxi, Hainan and Taiyuan.'
+    ],
+    decisions: [
+      { title: 'Keep a common foundation across versions', text: 'The dashboards were based on the same foundation. My work covered multiple versions, carrying that common base into the implementation for each location.' },
+      { title: 'Connect maps with route tracking', text: 'Map API integration and route tracking formed part of the large-screen interfaces, bringing geographic context and routes into the dashboard experience.' },
+      { title: 'Adapt to local requirements', text: 'Wuxi, Hainan and Taiyuan each required specific customizations. The work combined the shared dashboard foundation with those differences rather than delivering an identical interface for every location.' }
+    ],
+    delivery: 'A written case study of commercial frontend work at Longshine across multiple regional dashboards. The workflow illustration summarizes the shared foundation and local customization work.',
+    flow: ['Shared dashboard foundation', 'Maps + route tracking', 'Regional customizations']
   }
 ];

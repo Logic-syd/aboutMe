@@ -5,6 +5,7 @@ import Link from 'next/link';
 import type { Map as LeafletMap, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { experiences } from '@/lib/experience';
+import { projects } from '@/lib/projects';
 import { placeStories } from '@/lib/place-stories';
 import { PlaceMap } from '@/components/place-map';
 
@@ -99,7 +100,7 @@ export function CareerMap() {
         <p className="eyebrow">{place.name} / {place.region}</p><h3>{place.headline}</h3><p>{place.description}</p>
         {place.memory && <blockquote className="place-memory"><p>{place.memory}</p></blockquote>}
         <div className="place-reflection"><p className="eyebrow">WHAT I TAKE WITH ME</p><h4>{selected.company}</h4><p>{place.reflection}</p></div>
-        <div className="place-story-links"><a className="place-source-link" href={place.source.url}>About this place <span aria-hidden="true">↗</span></a>{selected.project && <Link className="text-link" href={`/projects/${selected.project}`}>Related project <span aria-hidden="true">↗</span></Link>}</div>
+        <div className="place-story-links"><a className="place-source-link" href={place.source.url}>About this place <span aria-hidden="true">↗</span></a>{[selected.project, ...(selected.relatedProjects ?? [])].filter(Boolean).map(slug => <Link key={slug} className="text-link" href={`/projects/${slug}`}>{selected.relatedProjects?.length ? projects.find(project => project.slug === slug)?.title : 'Related project'} <span aria-hidden="true">↗</span></Link>)}</div>
       </div>
     </div>
     <p className="map-note">{areaView ? 'Local maps use real OpenStreetMap geography, with a simplified visual style. The dashed circle locates a city or nearby landmark, not an office address.' : 'A personal growth map, not to scale. Munich is my current base. Select a place to explore its geography and the memories I take from it.'} Experiences are listed most recent first.</p>

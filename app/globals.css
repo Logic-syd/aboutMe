@@ -161,7 +161,7 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .craft-header .nav-contact{margin-left:auto}
 .professional-work-section{padding-bottom:40px}
 .experience-row .experience-city{font-size:12px;margin-top:10px;color:var(--muted)}
-.experience-case-link{margin-top:15px}
+.experience-case-links{display:flex;flex-wrap:wrap;gap:0 24px}.experience-case-link{margin-top:15px}
 .space-node-label{display:flex;flex-direction:column;align-items:center}
 .space-node-label.is-project{position:relative}
 .space-case-link{position:absolute;right:3px;bottom:3px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:#fff}
