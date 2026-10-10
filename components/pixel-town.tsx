@@ -13,7 +13,7 @@ const places: { id: PlaceId; name: string; x: number; y: number; color: string; 
   { id: 'cabin', name: 'Mountain hut', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'View project' },
   { id: 'station', name: 'The station', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'Where I’ve lived & worked.', slugs: [], href: '#experience', action: 'Explore my cities' },
   { id: 'bottles', name: 'Bottle shop', x: 49, y: 67, color: '#d8e4d9', roof: '#8baaa2', title: 'Pfand Pause.', slugs: ['pfand-pause'], href: '/projects/pfand-pause', action: 'View project' },
-  { id: 'post', name: 'The post office', x: 77, y: 62, color: '#ead9ce', roof: '#bb9991', title: 'Let’s build something.', slugs: [], href: 'mailto:yidanshao622@gmail.com', action: 'Email me' },
+  { id: 'post', name: 'The post office', x: 77, y: 62, color: '#ead9ce', roof: '#bb9991', title: 'Up for a coffee chat?', slugs: [], href: 'https://linkedin.com/in/yidanshao/', action: 'Let’s connect on LinkedIn' },
 ];
 
 function Building({ place }: { place: typeof places[number] }) {
