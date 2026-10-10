@@ -63,7 +63,7 @@ export const projects: Project[] = [
   },
   {
     graphTitle: "AI sports assessment", contributions: [
-      ["React training and exam interfaces", "TV-based presentation"],
+      ["jQuery-to-React code migration", "React training and exam interfaces", "TV-based presentation"],
       ["Canvas drawing and manipulation", "Visual feedback presentation"],
       ["Camera capture", "Video-stream transmission to backend AI"],
       ["Real-time scoring data", "Frontend result updates"],
@@ -73,10 +73,11 @@ export const projects: Project[] = [
     heroTitle: "AI sports assessment", heroDetail: "Canvas + real-time video",
     slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
     category: 'Sports education · Real-time assessment', organization: 'Danzhu (淡竹)', status: 'Commercial frontend work',
-    description: 'A TV-based sports examination and everyday training system connecting camera video with backend AI analysis. Developed React interfaces with Canvas, video-stream transmission and WebSocket scoring updates, alongside synchronized audio-visual feedback and spoken results.',
-    tags: ['React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · Real-time training & assessment',
+    description: 'Migrated a TV-based sports examination and training system from jQuery to React. The frontend connects camera video with backend AI analysis using Canvas, video-stream transmission and WebSocket scoring updates, with synchronized audio-visual feedback and spoken results.',
+    tags: ['jQuery → React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · React migration & real-time assessment',
     problem: 'Students needed a system for physical-education entrance examinations as well as everyday training, fitness assessment and analysis reports. Multiple people could train or take an exam together. The system needed face recognition to distinguish participants and had to turn camera input and backend AI scores into timely, understandable feedback on a TV display.',
     responsibilities: [
+      'Migrated existing jQuery frontend code to React.',
       'Developed React interfaces for TV-based sports examinations, everyday training, fitness assessment and analysis reports.',
       'Worked with camera capture and video-stream transmission to the backend AI analysis system.',
       'Used Canvas drawing and manipulation to implement visual presentation.',
@@ -85,13 +86,14 @@ export const projects: Project[] = [
       'Worked on multi-person assessment interfaces and integration with face recognition to distinguish participants and present individual results.'
     ],
     decisions: [
+      { title: 'Modernize the existing frontend with React', text: 'Migrated the system’s existing jQuery code to React, bringing its training and examination interfaces into a component-based frontend while working with camera, scoring and feedback integrations.' },
       { title: 'Connect capture, AI analysis and presentation', text: 'The camera provided input to the backend AI analysis system, which returned scoring data to the frontend. My work focused on video transmission, data integration and presenting the results in the training and examination interfaces.' },
       { title: 'Use Canvas alongside real-time data', text: 'Canvas drawing and manipulation supported the visual interface, while WebSocket carried real-time scoring data from the backend. The frontend brought those updates into the ongoing assessment experience.' },
       { title: 'Keep visual and spoken feedback coordinated', text: 'The system required audio-visual synchronization during training and spoken results after each session. My frontend work included coordinating these forms of feedback with the assessment experience.' },
       { title: 'Support several participants in one session', text: 'Multiple people could train or take an exam together. The system used face recognition to distinguish participants; the frontend needed to present assessment data for the corresponding people.' },
       { title: 'Cover practice as well as examinations', text: 'The same system supported high-school entrance sports examinations and daily training, with scoring, fitness assessment and analysis reports. The frontend presented both the live session and its results.' }
     ],
-    delivery: 'Commercial frontend work combining React, Canvas, video transmission, real-time scoring, audio-visual synchronization and multi-person assessment. AI analysis and face recognition were backend capabilities integrated into the frontend experience.',
+    delivery: 'Commercial frontend work including jQuery-to-React migration, Canvas, video transmission, real-time scoring, audio-visual synchronization and multi-person assessment. AI analysis and face recognition were backend capabilities integrated into the frontend experience.',
     flow: ['Camera video', 'Backend AI analysis', 'Live scores + reports']
   },
   {
@@ -275,28 +277,35 @@ export const projects: Project[] = [
     flow: ['React interfaces', 'Financing workflows', 'Time + currency context']
   },
   {
-    slug: 'running-mini-program', number: '12', title: 'Sports Training Mini-Program', shortTitle: 'Running and free training, on mobile.',
-    graphTitle: 'Sports mini-program', category: 'Sports education · Mobile training', organization: 'Danzhu (淡竹)', status: 'Commercial work · Selected screenshot',
-    description: 'Frontend development for a Vue / uni-app sports mini-program with running and free-training modes. The running interface presents activity timing, progress, metrics, route maps and checkpoints.',
-    tags: ['Vue', 'uni-app', 'Running & free training', 'Maps & checkpoints'], role: 'Mobile frontend development',
+    slug: 'running-mini-program', number: '12', title: 'Student Sports Mini-Program & Teacher Dashboard', shortTitle: 'From student training to teacher insights.',
+    graphTitle: 'Student sports platform', category: 'Education · Mobile training & administration', organization: 'Danzhu (淡竹)', status: 'Commercial work · Used by schools',
+    description: 'Vue / uni-app student training interfaces and a teacher management dashboard, serving multiple universities and Shanghai primary schools. The product combines running, camera-based exercise counting, weak-network data saving and deferred uploads with student results and report exports.',
+    tags: ['Vue / uni-app', 'Camera-based exercise tracking', 'Weak-network resilience', 'Peak running traffic', 'Teacher dashboard & exports', 'Age-specific experiences'], role: 'Frontend development · Student mini-program & teacher dashboard',
     contributions: [
-      ['Vue frontend implementation'],
-      ['Sports mini-program interfaces'],
-      ['Running and free-training modes', 'Running-session metrics and controls'],
-      ['Route map and checkpoint presentation']
+      ['Student running and free-training interfaces'],
+      ['Phone-camera capture', 'Sit-ups, jumping jacks and squats', 'Exercise statistics presentation'],
+      ['Save training data under weak connectivity', 'Deferred data uploads'],
+      ['High-concurrency running periods', 'Student training frontend'],
+      ['Student result management', 'Teacher score-report exports'],
+      ['University and primary-school versions', 'Different AI movement criteria', 'Adapted visual and spoken feedback']
     ],
-    problem: 'The sports mini-program supported both running and free training. Its running mode needed to keep timing, progress, metrics and route information accessible alongside in-session controls.',
+    problem: 'Students needed running and free-training tools, while teachers needed a management system to review results and export score reports. Running periods brought high concurrent usage, and weak connectivity required training data to be saved for later upload. University and primary-school versions also needed different movement-assessment criteria and age-appropriate visual and spoken feedback.',
     responsibilities: [
-      'Contributed to the Vue / uni-app sports mini-program frontend for running and free training.',
-      'Worked on the mobile running-session interface and its activity information.',
-      'Presented route maps and checkpoints alongside the running session.'
+      'Developed Vue / uni-app student interfaces for running and free training, including running metrics, route maps and checkpoints.',
+      'Integrated phone-camera capture for exercise statistics across sit-ups, jumping jacks, squats and other activities.',
+      'Worked on weak-network data saving and deferred uploads for student training sessions.',
+      'Developed frontend interfaces for a product with high concurrent usage during peak running periods.',
+      'Worked on teacher management interfaces for reviewing student results and exporting score reports.',
+      'Adapted interface presentation and voice feedback for university and primary-school versions with different AI movement-assessment criteria.'
     ],
     decisions: [
-      { title: 'Two modes within one mini-program', text: 'Running and free training were modes of the same sports mini-program, bringing both activities into one mobile product.' },
-      { title: 'Keep the session information together', text: 'The selected interface brings together an activity timer, progress, running metrics and in-session controls on a mobile screen.' },
-      { title: 'Connect activity with route context', text: 'Route maps and checkpoints provide geographic context alongside the session information.' }
+      { title: 'Keep training data through weak connectivity', text: 'The mini-program saved training data under weak-network conditions and deferred uploads. This allowed recording and transmission to happen at different times, addressing the connectivity constraints of student training.' },
+      { title: 'Combine running with camera-based exercise tracking', text: 'Running and free training belonged to one mini-program. Free-training activities included sit-ups, jumping jacks and squats, with phone-camera input supporting exercise statistics.' },
+      { title: 'Work within peak running usage', text: 'Running periods created high-concurrency demand across the product. My contribution was on the frontend for this student training environment, including its weak-network data handling.' },
+      { title: 'Connect student activity to teacher reporting', text: 'The teacher management system let teachers view student results and export score reports, connecting student training with school assessment and administration.' },
+      { title: 'Adapt the experience for different age groups', text: 'University and primary-school versions used different AI movement-assessment standards. Visual presentation and voice feedback were also adjusted for the respective student groups.' }
     ],
-    delivery: 'Commercial Vue / uni-app frontend work. One original running-session screenshot is shown with personal identifiers and location details redacted. The company website provides product context.',
-    flow: ['Running session', 'Metrics + route', 'Session controls']
+    delivery: 'The mini-program served multiple universities and multiple primary schools in Shanghai. My frontend work covered student training, weak-network data handling, teacher result management and report exports, with separate university and primary-school experiences. The gallery shows an original, privacy-redacted running-session screenshot.',
+    flow: ['Student training', 'Save + upload results', 'Teacher review + export']
   }
 ];
