@@ -5,7 +5,7 @@ import { SportsAssessmentDemo } from '@/components/sports-assessment-demo';
 import styles from './sports-case-study.module.css';
 
 const contexts = [
-  { number: '01', title: 'High-school entrance PE exams', text: 'Used in physical-education assessments for China’s high-school entrance examinations.' },
+  { number: '01', title: 'High-school entrance PE exams', text: 'Used in high-school entrance physical-education examinations in parts of China.' },
   { number: '02', title: 'Sports-school training', text: 'Used in everyday training at sports schools, with scoring and assessment reports.' },
   { number: '03', title: 'Middle-school PE', text: 'Used in physical-education classes to connect exercise with individual feedback.' },
 ];
@@ -28,9 +28,9 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
           <p className={styles.intro}>A TV-based sports examination and training system. I migrated its frontend from jQuery to React and connected live video, AI scoring and synchronized feedback.</p>
         </div>
         <div className={styles.context}>
-          <span className={styles.contextLabel}><i /> IN REAL-WORLD USE</span>
+          <span className={styles.contextLabel}><i /> IN REGIONAL USE</span>
           <h2>China’s high-school entrance PE exams.</h2>
-          <p>The system has been used in China’s high-school entrance PE examinations, sports-school training and middle-school PE classes.</p>
+          <p>The system has been used in high-school entrance PE examinations in parts of China, as well as sports-school training and middle-school PE classes.</p>
           <a href="#sports-demo" className={styles.tryLink}>Explore the interactive demo <span aria-hidden="true">↓</span></a>
         </div>
       </header>
@@ -103,7 +103,7 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
       </section>
 
       <section className={styles.usageSection} aria-labelledby="usage-heading">
-        <div className={styles.sectionHeading}><div><p className={styles.kicker}>05 / WHERE IT IS USED</p><h2 id="usage-heading">Built for actual school days.</h2></div><p>One system supporting formal assessment and everyday practice in China.</p></div>
+        <div className={styles.sectionHeading}><div><p className={styles.kicker}>05 / WHERE IT IS USED</p><h2 id="usage-heading">Built for actual school days.</h2></div><p>Regional examination use alongside everyday training and PE classes in China.</p></div>
         <div className={styles.usageGrid}>{contexts.map(context => <article key={context.number}><span>{context.number}</span><h3>{context.title}</h3><p>{context.text}</p></article>)}</div>
       </section>
 
