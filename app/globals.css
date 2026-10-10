@@ -185,6 +185,11 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 @media(max-width:650px){.professional-work-section{padding-bottom:20px}.graph-case-button{width:100%;justify-content:space-between;min-height:44px}}
 
 @media(max-width:650px){.three-stage{height:560px}}
+.professional-work-section .experience-row{grid-template-columns:minmax(200px,260px) minmax(0,1fr);gap:36px;align-items:start}
+.professional-work-section .experience-row>div{min-width:0}
+.professional-work-section .experience-case-link{max-width:100%;white-space:normal}
+@media(min-width:651px) and (max-width:900px){.professional-work-section .experience-row{grid-template-columns:190px minmax(0,1fr);gap:28px}}
+@media(max-width:650px){.professional-work-section .experience-row{grid-template-columns:minmax(0,1fr);gap:12px}}
 .professional-work-section .experience-row .experience-description{font-size:14px;color:var(--muted);line-height:1.85;max-width:none}
 
 .project-fallback-notice{margin-bottom:24px;padding:12px 16px;border-left:3px solid var(--pink);background:var(--blush);font-size:13px;color:var(--ink)}
