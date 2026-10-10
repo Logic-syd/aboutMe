@@ -177,3 +177,14 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - Normal-motion Chrome checks verified ambient drift, dragging a sphere far enough to tug the root, gradual return, settling within two pixels, click recoil and no accidental expansion after a drag. The final production build also passed these interactions and repeated floating-layout samples on both phone sizes. Existing case-page, release-status and nine-card WebGL-fallback checks passed during this revision.
 - An isolated seventeen-project fixture passed 38 overview/expanded/contribution layout states at desktop and tablet widths, with no clipped or overlapping labels and no JavaScript errors. At this higher fixture density some spheres partially meet neighboring labels; names and detail links remain readable. No fixtures were added to the real catalog. Desktop and phone screenshots of the actual nine-project layout were reviewed.
 - README describes the final orbit, labels and interactions. Temporary Next.js development artifacts were removed after stopping the development server; only intended source and documentation changes are included. Production continues to follow `main`.
+
+
+## 3D loading recovery
+
+- Verified production build, lint and TypeScript checks.
+- Chromium desktop (1440px) and mobile (390px): all ten project nodes, three-level expansion, and desktop sphere drag/spring return passed.
+- Reproduced the previous timeout by delaying the scene chunk 15 seconds. The updated view exposes cards after 12 seconds, keeps loading, and renders when the chunk arrives.
+- Simulated antialias context failure: initialization retries on the same canvas without antialiasing and renders successfully.
+- Simulated failed chunk download: the message identifies a download failure and Reload page recovers after connectivity returns.
+- Simulated disabled WebGL and context loss: distinct messages explain graphics availability and interruption; project cards remain available.
+- User-reported Chrome on Intel MacBook Pro lists WebGL as Disabled; enabling browser graphics acceleration is required for the WebGL scene. The actual device and public Vercel deployment were not accessible from this environment.
