@@ -65,17 +65,17 @@ export const projects: Project[] = [
     graphTitle: "AI sports assessment", contributions: [
       ["jQuery-to-React code migration", "React training and exam interfaces", "TV-based presentation"],
       ["Canvas drawing and manipulation", "Visual feedback presentation"],
-      ["Camera capture", "Video-stream transmission to backend AI"],
+      ["Camera capture", "Video-stream transmission to backend AI", "Scaling from 2 to 8 camera inputs"],
       ["Real-time scoring data", "Frontend result updates"],
       ["Audio-visual synchronization", "Post-training spoken results"],
       ["Multiple simultaneous participants", "Face-recognition integration", "Individual score presentation"]
     ],
     heroTitle: "AI sports assessment", heroDetail: "Canvas + real-time video",
     slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
-    category: 'Sports education · Real-time assessment', organization: 'Danzhu (淡竹)', status: 'Used in Zhongkao sports examinations',
-    description: 'Migrated a TV-based sports system from jQuery to React, used in China’s Zhongkao sports examinations, sports-school training and middle-school PE classes. The frontend connects camera video with backend AI analysis using Canvas, video-stream transmission and WebSocket scoring updates, with synchronized audio-visual feedback and spoken results.',
+    category: 'Sports education · Real-time assessment', organization: 'Danzhu (淡竹)', status: 'Used in high-school entrance PE exams',
+    description: 'Migrated a TV-based sports system from jQuery to React, used in China’s high-school entrance PE examinations, sports-school training and middle-school PE classes. The frontend connects camera video with backend AI analysis using Canvas, video-stream transmission and WebSocket scoring updates, with synchronized audio-visual feedback and spoken results.',
     tags: ['jQuery → React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · React migration & real-time assessment',
-    problem: 'The system is used in China’s Zhongkao physical-education examinations, everyday training at sports schools and middle-school PE classes, with fitness assessment and analysis reports. Multiple people could train or take an exam together. The system needed face recognition to distinguish participants and had to turn camera input and backend AI scores into timely, understandable feedback on a TV display.',
+    problem: 'The system is used in China’s high-school entrance physical-education examinations, everyday training at sports schools and middle-school PE classes, with fitness assessment and analysis reports. Multiple people could train or take an exam together. The system needed face recognition to distinguish participants and had to turn camera input and backend AI scores into timely, understandable feedback on a TV display.',
     responsibilities: [
       'Migrated existing jQuery frontend code to React.',
       'Developed React interfaces for TV-based sports examinations, everyday training, fitness assessment and analysis reports.',
@@ -86,6 +86,7 @@ export const projects: Project[] = [
       'Worked on multi-person assessment interfaces and integration with face recognition to distinguish participants and present individual results.'
     ],
     decisions: [
+      { title: 'Scaling from two cameras to eight', text: 'Increasing camera inputs from two to eight provided more data, but the stream could stall in certain operating states. This became a prolonged debugging challenge that the team eventually resolved.' },
       { title: 'Modernize the existing frontend with React', text: 'Migrated the system’s existing jQuery code to React, bringing its training and examination interfaces into a component-based frontend while working with camera, scoring and feedback integrations.' },
       { title: 'Connect capture, AI analysis and presentation', text: 'The camera provided input to the backend AI analysis system, which returned scoring data to the frontend. My work focused on video transmission, data integration and presenting the results in the training and examination interfaces.' },
       { title: 'Use Canvas alongside real-time data', text: 'Canvas drawing and manipulation supported the visual interface, while WebSocket carried real-time scoring data from the backend. The frontend brought those updates into the ongoing assessment experience.' },
@@ -93,7 +94,7 @@ export const projects: Project[] = [
       { title: 'Support several participants in one session', text: 'Multiple people could train or take an exam together. The system used face recognition to distinguish participants; the frontend needed to present assessment data for the corresponding people.' },
       { title: 'Cover practice as well as examinations', text: 'The same system supported high-school entrance sports examinations and daily training, with scoring, fitness assessment and analysis reports. The frontend presented both the live session and its results.' }
     ],
-    delivery: 'The system has been used in Zhongkao sports examinations in China, sports-school daily training and middle-school PE classes. My frontend work included jQuery-to-React migration, Canvas, video transmission, real-time scoring, audio-visual synchronization and multi-person assessment. AI analysis and face recognition were backend capabilities integrated into the frontend experience.',
+    delivery: 'The system has been used in high-school entrance PE examinations in China, sports-school daily training and middle-school PE classes. My frontend work included jQuery-to-React migration, Canvas, video transmission, real-time scoring, audio-visual synchronization and multi-person assessment. AI analysis and face recognition were backend capabilities integrated into the frontend experience.',
     flow: ['Camera video', 'Backend AI analysis', 'Live scores + reports']
   },
   {
