@@ -15,21 +15,21 @@ type Point = [number, number, number];
 type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
-const colors = ['#a9a0a8', '#b8aa98', '#a5a0b2', '#a0afa9', '#adb09c', '#9eacb9', '#bba596', '#a0ada3', '#b0a3ac'];
-// Muted blue / mauve / peach, with a soft matte finish rather than candy gloss.
-const rootGradient: Gradient = ['#8c9eaf', '#ad9da8', '#d2aa96'];
-const leafGradient: Gradient = ['#a0b2ad', '#b4b0aa', '#c6b19f'];
+const colors = ['#cab1c8', '#dcc8a5', '#b7b2db', '#a8cfd0', '#c8d3b3', '#aec7df', '#e6bba9', '#acd2c4', '#d9b7cb'];
+// Dreamy pastel gradients with a soft glazed, pearl-like surface.
+const rootGradient: Gradient = ['#94bdd8', '#c1acd4', '#e8b4bf'];
+const leafGradient: Gradient = ['#aed8cf', '#c1cae0', '#e4c4d7'];
 const gradients: Gradient[] = [
   rootGradient,
-  ['#a6aca0', '#bab0a1', '#d0b49d'],
-  ['#989bb0', '#b1a4af', '#c9b0a8'],
-  ['#8fa7aa', '#aeb5ad', '#c8b8a5'],
-  ['#a2ad9c', '#b8b5a4', '#c9b29e'],
-  ['#8e9fb1', '#a9afb8', '#c6b1a8'],
-  ['#a0a0aa', '#baa5a1', '#d0ac96'],
-  ['#92a6a0', '#acb1a6', '#c5b7a2'],
-  ['#9ba4b1', '#b5a7ae', '#ccb0a2'],
-  ['#91a0ad', '#aca2ad', '#c9aa98'],
+  ['#f1e3bd', '#e8cfb3', '#deb7b7'],
+  ['#a7bbdf', '#c5b0df', '#e5bed4'],
+  ['#a8d6d3', '#b6cce0', '#d4bee0'],
+  ['#c9ddbd', '#dce0c4', '#eccab8'],
+  ['#9fc7e5', '#b7bfe2', '#ddbed6'],
+  ['#e4bfd0', '#e8b9bd', '#efc9a8'],
+  ['#a4d4c7', '#bdd8ce', '#e2d2b9'],
+  ['#b4cce1', '#d1bbdd', '#eac4d3'],
+  ['#b0d7d6', '#c6bade', '#e8b9cc'],
 ];
 function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse }: { anchors: Item[]; pixelScale: number; pulse: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
   const group = useRef<THREE.Group>(null);
@@ -148,7 +148,7 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
   }
   return <group ref={group} name={`${item.kind}-${item.id}`} position={initialPosition}>
     <mesh ref={shell} geometry={geometry} castShadow onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => { pressed.current = false; dragging.current = false; offset.current.set(0, 0, 0); onDrag(false); invalidate(); }} onPointerOver={event => { event.stopPropagation(); setHovered(true); }} onPointerOut={() => setHovered(false)}>
-      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={0} roughness={.82} clearcoat={0} specularIntensity={.2} />
+      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={0} roughness={.4} clearcoat={.3} clearcoatRoughness={.35} specularIntensity={.5} sheen={.15} sheenColor="#eadfea" sheenRoughness={.65} />
     </mesh>
     {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#aaa0a7" metalness={0} roughness={.9} /></mesh>}
     {item.active && item.kind !== 'root' && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, .025, 8, 64]} /><meshStandardMaterial color="#a48b97" roughness={.9} /></mesh>}
@@ -257,7 +257,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
   const root = items[0];
   return <>
     <color attach="background" args={['#f0efeb']} /><fog attach="fog" args={['#f0efeb', distance + 8, distance + 50]} />
-    <ambientLight intensity={.8} /><hemisphereLight args={['#f2eeeb', '#b8aaa8', 1.5]} /><directionalLight position={[-6, 8, 6]} intensity={2} color="#f5efeb" /><directionalLight position={[4, -3, 3]} intensity={.65} color="#e8c6b3" />
+    <ambientLight intensity={.9} /><hemisphereLight args={['#faf5f1', '#ccc5d5', 1.5]} /><directionalLight position={[-6, 8, 6]} intensity={2.3} color="#fff5eb" /><directionalLight position={[4, -3, 3]} intensity={.7} color="#f4d7cf" />
     <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -Math.max(6.2, size.height * worldPerPixel / 2 + 1), 0]}><mesh receiveShadow><circleGeometry args={[16, 80]} /><meshStandardMaterial color="#e8e8e1" roughness={1} transparent opacity={.6} /></mesh>{[3, 6, 9, 12].map(radius => <Line key={radius} points={Array.from({length:97},(_,i)=>[Math.cos(i/96*Math.PI*2)*radius,Math.sin(i/96*Math.PI*2)*radius,.01] as Point)} color="#c7c8c0" lineWidth={.5} />)}</group>
     {items.filter(item => item.kind === 'project').map(item => <Connection key={`root-${item.id}`} start={root} end={item} active={item.active || !expanded} positions={positions} animate={props.animate} />)}
     {expanded && items.filter(item => item.kind === 'technology').map(item => <Connection key={`tech-${item.id}`} start={items.find(node => node.id === projects[props.selection.project!].slug)!} end={item} active={props.selection.technology === null || item.active} positions={positions} animate={props.animate} />)}
