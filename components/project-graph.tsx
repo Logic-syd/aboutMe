@@ -5,20 +5,21 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ProjectLinks } from '@/components/project-links';
 import { projects } from '@/lib/projects';
+import { classifySceneError, type SceneFailure } from '@/lib/scene-status';
 import { graphLeaves, graphTitles, type GraphSelection } from '@/lib/graph';
 
 const ThreeGraph = dynamic(() => import('@/components/three-project-scene'), { ssr: false, loading: () => <div className="three-loading">Preparing the 3D constellation…</div> });
 function subscribeMotion(callback: () => void) { const query = window.matchMedia('(prefers-reduced-motion: reduce)'); query.addEventListener('change', callback); return () => query.removeEventListener('change', callback); }
 const getMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const getServerMotion = () => true;
-class SceneBoundary extends Component<{ children: ReactNode; onUnavailable: () => void }, { failed: boolean }> {
+class SceneBoundary extends Component<{ children: ReactNode; onUnavailable: (reason: SceneFailure) => void }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
-  componentDidCatch() { this.props.onUnavailable(); }
+  componentDidCatch(error: Error) { console.error('3D scene failed:', error); this.props.onUnavailable(classifySceneError(error)); }
   render() { return this.state.failed ? null : this.props.children; }
 }
 
-export function ProjectGraph({ onUnavailable }: { onUnavailable: () => void }) {
+export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason: SceneFailure) => void; onSlow: (slow: boolean) => void }) {
   const [selection, setSelection] = useState<GraphSelection>({ project: null, technology: null });
   const [interaction, setInteraction] = useState({ nodeId: '', revision: 0 });
   const [motion, setMotion] = useState(true);
@@ -26,7 +27,7 @@ export function ProjectGraph({ onUnavailable }: { onUnavailable: () => void }) {
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [ready, setReady] = useState(false);
-  const sceneReady = useCallback(() => setReady(true), []);
+  const sceneReady = useCallback(() => { setReady(true); onSlow(false); }, [onSlow]);
   const region = useRef<HTMLDivElement>(null);
   const reducedMotion = useSyncExternalStore(subscribeMotion, getMotion, getServerMotion);
   useEffect(() => {
@@ -37,22 +38,18 @@ export function ProjectGraph({ onUnavailable }: { onUnavailable: () => void }) {
       setVisible(entry.isIntersecting);
       if (!entry.isIntersecting || requested) return;
       requested = true;
-      // Check WebGL 2 before importing the scene, so unsupported browsers skip it.
-      try {
-        const context = document.createElement('canvas').getContext('webgl2');
-        if (!context) { onUnavailable(); return; }
-        context.getExtension('WEBGL_lose_context')?.loseContext();
-        setLoaded(true);
-      } catch { onUnavailable(); }
+      // Let the actual renderer create its context; a throwaway probe needlessly
+      // allocates a second GPU context and can disagree with renderer options.
+      setLoaded(true);
     }, { rootMargin: '100px' });
     observer.observe(element);
     return () => observer.disconnect();
   }, [onUnavailable]);
   useEffect(() => {
     if (!loaded || ready) return;
-    const timeout = window.setTimeout(onUnavailable, 12000);
+    const timeout = window.setTimeout(() => onSlow(true), 12000);
     return () => window.clearTimeout(timeout);
-  }, [loaded, ready, onUnavailable]);
+  }, [loaded, ready, onSlow]);
   const project = selection.project === null ? null : projects[selection.project];
   const selectProject = useCallback((index: number) => { setInteraction(current => ({ nodeId: projects[index].slug, revision: current.revision + 1 })); setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null }); }, []);
   const selectTechnology = useCallback((index: number) => { if (selection.project !== null) setInteraction(current => ({ nodeId: `${projects[selection.project!].slug}-tech-${index}`, revision: current.revision + 1 })); setSelection(current => ({ ...current, technology: current.technology === index ? null : index })); }, [selection.project]);
