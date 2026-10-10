@@ -15,10 +15,22 @@ type Point = [number, number, number];
 type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
-const colors = ['#dba0b3', '#d4bf98', '#b7aad2', '#a8c4c0', '#bac797', '#a7bdd6', '#e7ad95', '#7eae96', '#a1c9b6'];
-const rootGradient: Gradient = ['#ffe3cc', '#dd719f', '#8771d2'];
-const leafGradient: Gradient = ['#f0f7c8', '#79bea8', '#748dc8'];
-const gradients: Gradient[] = [rootGradient, ['#fff0ab', '#daa06e', '#ae6eb5'], ['#f1c4ff', '#a282e4', '#689bd3'], ['#d0f3dd', '#68b8b3', '#8979ce'], ['#f2f5b6', '#aac477', '#6eaaa7'], ['#d4f3ff', '#7faadd', '#a17ac9'], ['#ffe2ae', '#dc967d', '#a377ad'], ['#f3e3a5', '#7bb99f', '#225e54'], ['#fff1b8', '#92c8ad', '#d49bb9']];
+const colors = ['#a9a0a8', '#b8aa98', '#a5a0b2', '#a0afa9', '#adb09c', '#9eacb9', '#bba596', '#a0ada3', '#b0a3ac'];
+// Muted blue / mauve / peach, with a soft matte finish rather than candy gloss.
+const rootGradient: Gradient = ['#8c9eaf', '#ad9da8', '#d2aa96'];
+const leafGradient: Gradient = ['#a0b2ad', '#b4b0aa', '#c6b19f'];
+const gradients: Gradient[] = [
+  rootGradient,
+  ['#a6aca0', '#bab0a1', '#d0b49d'],
+  ['#989bb0', '#b1a4af', '#c9b0a8'],
+  ['#8fa7aa', '#aeb5ad', '#c8b8a5'],
+  ['#a2ad9c', '#b8b5a4', '#c9b29e'],
+  ['#8e9fb1', '#a9afb8', '#c6b1a8'],
+  ['#a0a0aa', '#baa5a1', '#d0ac96'],
+  ['#92a6a0', '#acb1a6', '#c5b7a2'],
+  ['#9ba4b1', '#b5a7ae', '#ccb0a2'],
+  ['#91a0ad', '#aca2ad', '#c9aa98'],
+];
 function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse }: { anchors: Item[]; pixelScale: number; pulse: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Mesh>(null);
@@ -42,9 +54,9 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     const colors = new Float32Array(points.count * 3);
     const tint = new THREE.Color();
     for (let index = 0; index < points.count; index++) {
-      const blend = THREE.MathUtils.clamp((points.getY(index) - points.getX(index) * .35 + points.getZ(index) * .2) / (size * 2.16) + .5, 0, 1);
-      if (blend < .5) tint.copy(shades[2]).lerp(shades[1], blend * 2);
-      else tint.copy(shades[1]).lerp(shades[0], (blend - .5) * 2);
+      const blend = THREE.MathUtils.clamp((points.getY(index) - points.getX(index) * .18) / (size * 2.05) + .5, 0, 1);
+      if (blend < .5) tint.copy(shades[2]).lerp(shades[1], THREE.MathUtils.smoothstep(blend * 2, 0, 1));
+      else tint.copy(shades[1]).lerp(shades[0], THREE.MathUtils.smoothstep((blend - .5) * 2, 0, 1));
       tint.toArray(colors, index * 3);
     }
     sphere.setAttribute('color', new THREE.BufferAttribute(colors, 3));
@@ -136,10 +148,10 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
   }
   return <group ref={group} name={`${item.kind}-${item.id}`} position={initialPosition}>
     <mesh ref={shell} geometry={geometry} castShadow onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => { pressed.current = false; dragging.current = false; offset.current.set(0, 0, 0); onDrag(false); invalidate(); }} onPointerOver={event => { event.stopPropagation(); setHovered(true); }} onPointerOut={() => setHovered(false)}>
-      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={.1} roughness={.28} clearcoat={1} clearcoatRoughness={.12} emissive={item.active ? '#9e3159' : '#000000'} emissiveIntensity={item.active ? .14 : 0} />
+      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={0} roughness={.82} clearcoat={0} specularIntensity={.2} />
     </mesh>
-    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#b46282" metalness={.6} roughness={.2} /></mesh>}
-    {item.active && item.kind !== 'root' && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, .025, 8, 64]} /><meshStandardMaterial color="#d3497c" emissive="#d3497c" emissiveIntensity={.4} /></mesh>}
+    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#aaa0a7" metalness={0} roughness={.9} /></mesh>}
+    {item.active && item.kind !== 'root' && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, .025, 8, 64]} /><meshStandardMaterial color="#a48b97" roughness={.9} /></mesh>}
     {!item.quiet && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
       <div data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].number}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
         {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} title="Read case study" style={{ pointerEvents: 'auto' }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>}
@@ -162,7 +174,7 @@ function Connection({ start, end, active, positions, animate }: { start: Item; e
     if (line.current && previous.current !== key) { line.current.geometry.dispose(); line.current.geometry = new THREE.TubeGeometry(curve, 24, active ? .018 : .009, 5, false); previous.current = key; }
     if (particle.current) particle.current.position.copy(curve.getPoint((state.clock.elapsedTime * .17 + end.index * .14) % 1));
   });
-  return <><mesh ref={line}><bufferGeometry /><meshBasicMaterial color={active ? '#bd4d78' : '#acaea8'} transparent opacity={active ? .85 : .35} /></mesh>{active && animate && <mesh ref={particle}><sphereGeometry args={[.045, 10, 8]} /><meshBasicMaterial color="#f581ad" /></mesh>}</>;
+  return <><mesh ref={line}><bufferGeometry /><meshBasicMaterial color={active ? '#a38e9a' : '#b3b3ac'} transparent opacity={active ? .55 : .3} /></mesh>{active && animate && <mesh ref={particle}><sphereGeometry args={[.045, 10, 8]} /><meshBasicMaterial color="#b6a1aa" /></mesh>}</>;
 }
 
 function Scene(props: Props & { labelPortal: LabelPortal }) {
@@ -245,7 +257,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
   const root = items[0];
   return <>
     <color attach="background" args={['#f0efeb']} /><fog attach="fog" args={['#f0efeb', distance + 8, distance + 50]} />
-    <ambientLight intensity={1.4} /><hemisphereLight args={['#fff8f5', '#a8b7ac', 2]} /><directionalLight position={[-5, 9, 7]} intensity={3.2} /><pointLight position={[5, 4, -3]} intensity={25} color="#f4a9c4" />
+    <ambientLight intensity={.8} /><hemisphereLight args={['#f2eeeb', '#b8aaa8', 1.5]} /><directionalLight position={[-6, 8, 6]} intensity={2} color="#f5efeb" /><directionalLight position={[4, -3, 3]} intensity={.65} color="#e8c6b3" />
     <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -Math.max(6.2, size.height * worldPerPixel / 2 + 1), 0]}><mesh receiveShadow><circleGeometry args={[16, 80]} /><meshStandardMaterial color="#e8e8e1" roughness={1} transparent opacity={.6} /></mesh>{[3, 6, 9, 12].map(radius => <Line key={radius} points={Array.from({length:97},(_,i)=>[Math.cos(i/96*Math.PI*2)*radius,Math.sin(i/96*Math.PI*2)*radius,.01] as Point)} color="#c7c8c0" lineWidth={.5} />)}</group>
     {items.filter(item => item.kind === 'project').map(item => <Connection key={`root-${item.id}`} start={root} end={item} active={item.active || !expanded} positions={positions} animate={props.animate} />)}
     {expanded && items.filter(item => item.kind === 'technology').map(item => <Connection key={`tech-${item.id}`} start={items.find(node => node.id === projects[props.selection.project!].slug)!} end={item} active={props.selection.technology === null || item.active} positions={positions} animate={props.animate} />)}
