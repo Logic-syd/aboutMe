@@ -17,10 +17,16 @@ Open the local address printed by Next.js. If port 3000 is busy, use `npm run de
 
 ## Explore
 
-Click a building or one of the six location buttons. The character moves to that location and a story panel links to the relevant projects, work experience or contact address. All ten project case studies remain available in the studio notebook list. Keyboard users can Tab to a building and press Enter; phone users can use the larger location buttons. Motion can be paused and respects reduced-motion settings.
+Click a building or one of the six location buttons. The character moves to that location and a story panel links to the relevant projects, work experience or contact address. Below the town, the original interactive Three.js sphere explorer connects all ten projects to their technologies and contributions. Case-study notebooks are available through the disclosure beneath it, or appear directly if 3D is unavailable. The existing Leaflet growth map and place stories remain below the work experience. Keyboard users can Tab to a building and press Enter; phone users can use the larger location buttons. Motion can be paused and respects reduced-motion settings.
 
-The town uses original SVG pixel artwork and CSS, with no WebGL, external art downloads or new dependencies. The existing sphere components remain in the checkout, but are not mounted on this concept homepage.
+The town uses original SVG pixel artwork and CSS, with no WebGL, external art downloads or new dependencies. The sphere explorer uses WebGL when available and retains its graphics guidance and retry behavior. The town remains usable without WebGL. Existing product screenshots also appear as previews in the corresponding notebook cards.
 
 ## Validation
 
 Lint, typecheck and production build passed. Chromium desktop (1440px) and mobile (390px), with WebGL disabled: all six location selections, story updates, keyboard interaction, motion controls, ten project cards and retained case-study routes passed, with no horizontal overflow or page errors.
+
+## Adding images one project at a time
+
+The detail pages already support real product galleries. Store images under `public/images/`, then add a `screenshots` entry to the project in `lib/projects.ts`: `src`, intrinsic `width` and `height`, descriptive `alt`, and a factual `caption`. The first image is also used in its notebook preview. A `screenshotCredit` can link to the image source when needed.
+
+Start with an overview screen, a workflow you implemented, and one detail that explains a design decision. Use images you can publish; redact personal/customer data before committing. Keep concept artwork and personal/place photos labeled separately from product screenshots. We can attach and caption a single image at a time rather than waiting for a complete set.

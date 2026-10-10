@@ -301,3 +301,8 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .pixel-portfolio .professional-work-section{background:#f8f6ed}
 .pixel-portfolio .contact-section{background:#eedfe4}.pixel-portfolio .footer{font-family:monospace}
 @media(max-width:650px){.pixel-portfolio .work-section{padding-top:45px}.pixel-portfolio .section-heading h2{font-size:30px}.pixel-portfolio .project-grid{gap:20px}}
+
+.pixel-portfolio .town-card-preview{position:relative;display:block;width:100%;height:180px;overflow:hidden;margin:0 0 22px;border:1px solid #d9dccf;background:#eeeede}
+.pixel-portfolio .town-card-preview img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.pixel-portfolio .town-card-preview>span{position:absolute;bottom:8px;left:8px;background:#fffdf2eb;padding:4px 7px;font:8px monospace;letter-spacing:1px;color:#6e7965;border:1px solid #d6dccb}
+.pixel-portfolio .project-list-disclosure{margin-top:22px}.pixel-portfolio .project-case-cards{margin-top:24px}
