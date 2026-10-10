@@ -2,7 +2,7 @@
 
 Public portfolio: https://about-me-henna-alpha.vercel.app/
 
-English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project knowledge graph, nine expandable case cards, a Leaflet career map and contact links. Each project has a statically generated detail route.
+English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project knowledge graph, ten expandable case cards, a Leaflet career map and contact links. Each project has a statically generated detail route.
 
 ## Local development
 
@@ -32,7 +32,7 @@ Import `Logic-syd/aboutMe` at https://vercel.com/new, keep the detected Next.js 
 
 Project content is in `lib/projects.ts`; graph labels and contribution details are in `lib/graph.ts`; homepage biography is in `app/page.tsx`, confirmed work areas are in `lib/experience.ts`, and place descriptions and personal reflections are in `lib/place-stories.ts`. Contact links are in `components/site.tsx`. Update verified facts at their source before publication. Do not imply that the discovery map or export center has launched. Their current status is **In development · Not released**.
 
-All nine projects include written case studies. Mountain Chess also includes two genuine product screenshots and verified Live Demo and Source Code links. Pfand Pause includes two screenshots of its local production build and a public source link; it is not publicly deployed. The Danzhu case also includes one user-provided screenshot of a Vue / uni-app running mini-program, with privacy redactions, and a verified link to the company website. Other commercial interfaces are not publicly shown. Original workflow illustrations are explicitly labeled and do not represent product screenshots. There are no proprietary code samples, fabricated employment dates, unverified outcome metrics, phone numbers, empty actions, or unverified demo/source links. The sports-education case distinguishes frontend camera and feedback integration from model training.
+All ten projects include written case studies. Mountain Chess also includes two genuine product screenshots and verified Live Demo and Source Code links. Pfand Pause includes two screenshots of its local production build and a public source link; it is not publicly deployed. The Danzhu case also includes one user-provided screenshot of a Vue / uni-app running mini-program, with privacy redactions, and a verified link to the company website. Other commercial interfaces are not publicly shown. Original workflow illustrations are explicitly labeled and do not represent product screenshots. There are no proprietary code samples, fabricated employment dates, unverified outcome metrics, phone numbers, empty actions, or unverified demo/source links. The sports-education case distinguishes frontend camera and feedback integration from model training.
 
 Mountain Chess is an independently published game, documented as the eighth case with its own live and source links. The site uses system fonts, CSS diagrams, an original local SVG career map and a local SVG favicon, with no third-party tracking or external asset dependencies.
 
@@ -55,7 +55,7 @@ The growth map focuses on places and personal memories, followed by a short refl
 
 React Three Fiber / Drei and Leaflet describe the implementation of this portfolio; they are not added as unverified technologies in past employment.
 
-The current edition retains the initial six projects and adds Ronghe Pay, a user-confirmed Fingard insurance-payments case; Mountain Chess, a published game inspired by hiking breaks; and Pfand Pause, a bottle-sorting puzzle inspired by moving to Germany. Zhihuishu’s Three.js knowledge-graph work is mentioned in the biography using user-confirmed details, without inventing dates, a location or an additional case study. Future projects can be added incrementally. 3D loads near the viewport, pauses when offscreen, respects reduced motion and keeps project and technology controls keyboard-accessible. Unsupported WebGL 2, scene errors, context loss, or scene initialization exceeding 12 seconds automatically remove the entire 3D explorer and show all project case cards immediately, without a disclosure click.
+The current edition retains the initial six projects and adds Ronghe Pay, a user-confirmed Fingard insurance-payments case; Mountain Chess, a published game inspired by hiking breaks; and Pfand Pause, a bottle-sorting puzzle inspired by moving to Germany. Future projects can be added incrementally. 3D loads near the viewport, pauses when offscreen, respects reduced motion and keeps project and technology controls keyboard-accessible. Unsupported WebGL 2, scene errors, context loss, or scene initialization exceeding 12 seconds show all project case cards immediately, without a disclosure click, with a Retry 3D view button to attempt loading the scene again.
 
 
 ## Ronghe Pay (融合付)
@@ -92,3 +92,8 @@ The ninth case is at `/projects/pfand-pause`. The user wanted to recognize unfam
 Source: https://github.com/Logic-syd/PfandPause. Repository commit `df4e945` confirms React, TypeScript, Vite, pure state transitions, complete undo, a solver using the same rules, SVG/CSS visuals, English/German interfaces, LocalStorage preferences and completion progress, and Web Audio. In-progress rounds are not restored after refresh, and no PWA/offline installation is claimed. The repository documents a playable production build without public deployment; its GitHub metadata also has no Pages deployment or homepage URL. Only Source Code is offered.
 
 `public/images/pfand-pause-start.png` and `public/images/pfand-pause-game.png` are unmodified browser screenshots of that repository's local production build. The gameplay image shows level three after actually completing levels one and two. Both reuse the shared gallery without adding layout exceptions.
+
+
+## Longshine smart-city dashboards
+
+The tenth case is at `/projects/smart-city-dashboards`. It covers large-screen dashboard work at Longshine, with map API integration and route tracking across Wuxi, Hainan and Taiyuan. These regional versions shared a foundation and included location-specific customizations. Frameworks, map providers and delivery metrics are not specified. The work summary and growth map link to both this case and the existing internal low-code platform case.
