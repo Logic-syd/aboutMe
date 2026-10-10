@@ -44,7 +44,7 @@ export const placeStories: Record<string, PlaceStory> = {
     headline: 'Water, gardens and a wider view.',
     description: 'West Lake is one of Hangzhou’s best-known attractions and a UNESCO World Heritage cultural landscape. Its lake, causeways, gardens and surrounding hills have inspired artists and poets for centuries.',
     memory: 'Beautiful, busy, and unmistakably Hangzhou. There were always plenty of visitors, and Friday traffic became part of my memory of working nearby.',
-    reflection: 'At Longshine, energy dashboards and low-code tools were both enjoyable to build and useful in practice. Joining an intensive development programme with a 1,000-person team gave me a new understanding of teamwork.',
+    reflection: 'At Longshine, energy dashboards and low-code tools were both enjoyable to build and useful in practice. Developing components and work-order interfaces for the State Grid management system within a 1,000-person team gave me a new understanding of teamwork.',
     bounds: [[30.21, 120.105], [30.27, 120.175]], reference: [30.24, 120.14],
     source: { title: 'West Lake Cultural Landscape', url: 'https://whc.unesco.org/en/list/1334/' },
   },

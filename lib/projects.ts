@@ -94,20 +94,26 @@ export const projects: Project[] = [
     flow: ['Page configuration', 'Reusable components', 'Field applications']
   },
   {
-    graphTitle: "Operations dashboard", contributions: [["Initial dashboard frontend ownership"], ["Typed monitoring interfaces"], ["Monitoring charts"], ["Geographic visualization"]],
-    heroTitle: "Operations", heroDetail: "Charts + maps",
-    slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'A national view of operations.',
-    category: 'Operations · Data visualization', organization: 'State Grid project', status: 'Served 1,000+ operators',
-    description: 'React / TypeScript operations interfaces with ECharts and map visualization. Sole frontend ownership of the initial nationwide monitoring dashboard.',
-    tags: ['React', 'TypeScript', 'ECharts', 'Maps'], role: 'Sole frontend developer for the initial national dashboard',
-    problem: 'Operations teams needed a nationwide view of monitoring information. The broader platform served more than 1,000 operators and combined operational data with geographical context.',
-    responsibilities: ['Independently owned the frontend of the initial nationwide monitoring dashboard.', 'Developed React / TypeScript operations and monitoring interfaces.', 'Used ECharts and map visualization to present monitoring information.'],
-    decisions: [
-      { title: 'Charts and geographical context', text: 'Combined ECharts and maps in the frontend to support the monitoring experience across national operations.' },
-      { title: 'Clear ownership of the first dashboard', text: 'Took sole responsibility for the frontend of the initial nationwide dashboard. This ownership refers to that initial dashboard, not the entire platform.' }
+    graphTitle: "Components & work orders", contributions: [["Frontend component development"], ["Typed frontend implementation"], ["Reusable interface components"], ["Work-order system interfaces"]],
+    heroTitle: "Operations", heroDetail: "Components + work orders",
+    slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Building blocks for everyday operations.',
+    category: 'Enterprise systems · Components & work orders', organization: 'Longshine (朗新) · State Grid project', status: 'Commercial work · Written case study',
+    description: 'Developed frontend components and work-order interfaces for a State Grid management system at Longshine, as part of a development programme involving a 1,000-person team.',
+    tags: ['React', 'TypeScript', 'Reusable components', 'Work orders'], role: 'Frontend development · Components & work-order system',
+    problem: 'The State Grid management system brought together operational workflows within a large development programme. My work focused on the frontend components used to build its interfaces and on the work-order system that supported day-to-day operational tasks.',
+    responsibilities: [
+      'Contributed to the State Grid management system at Longshine within a 1,000-person development team.',
+      'Developed frontend components for the management system.',
+      'Implemented frontend interfaces for the work-order system.',
+      'Collaborated with the wider project team on component and work-order development.'
     ],
-    delivery: 'The platform served 1,000+ operators. This is a written case study of my frontend contribution; internal dashboards, data and source code are not reproduced.',
-    flow: ['Operational data', 'Charts + maps', 'Operator overview']
+    decisions: [
+      { title: 'Components as building blocks', text: 'Worked on the component layer of the management system, creating reusable interface elements for its frontend.' },
+      { title: 'Connect components with operational work', text: 'Alongside component development, implemented interfaces in the work-order system. This connected shared frontend building blocks with a concrete operational use case.' },
+      { title: 'Deliver within a large team', text: 'The development programme involved a 1,000-person team. Working on a defined part of this larger system gave me practical experience of collaboration at that scale.' }
+    ],
+    delivery: 'Commercial frontend work at Longshine, focused on components and the work-order system. The 1,000-person figure describes the development team. This written case study presents my contribution within that programme.',
+    flow: ['Frontend components', 'Work-order interfaces', 'Operational workflows']
   },
   {
     graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend rebuild"], ["PHP-based product upgrade", "Zero-to-one frontend contribution"], ["Batch and single payments", "Insurance collections and payouts"], ["Reconciliation statements"]],
@@ -201,21 +207,23 @@ export const projects: Project[] = [
     slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
     graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine (朗新)', status: 'Commercial work · Written case study',
     description: 'Built multiple large-screen dashboards as part of smart-city projects at Longshine, integrating map APIs and route tracking for Wuxi, Hainan and Taiyuan, with customizations for each location.',
-    tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization'], role: 'Frontend development · Dashboard implementation',
+    tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization'], role: 'Sole frontend developer for the initial dashboard · Regional delivery',
     contributions: [
       ['Map API integration', 'Geographic views within the dashboards'],
       ['Route tracking on maps'],
-      ['Multiple large-screen dashboards', 'Shared implementation foundation'],
+      ['Sole frontend ownership of the initial dashboard', 'Multiple regional dashboards'],
       ['Wuxi, Hainan and Taiyuan', 'Location-specific customizations']
     ],
     problem: 'Smart-city projects in different locations needed large-screen dashboards with map views and route tracking. The dashboards shared the same foundation, but Wuxi, Hainan and Taiyuan each had specific requirements that called for a customized version.',
     responsibilities: [
-      'Built multiple large-screen dashboard interfaces as part of smart-city projects at Longshine.',
+      'Solely owned frontend development of the initial smart-city dashboard at Longshine.',
+      'Built multiple large-screen dashboard interfaces for regional smart-city projects.',
       'Integrated map APIs into the dashboard experience.',
       'Implemented map-based route tracking.',
       'Worked from a shared foundation while adapting the dashboards to the specific requirements of Wuxi, Hainan and Taiyuan.'
     ],
     decisions: [
+      { title: 'Own the initial frontend', text: 'Was the sole frontend developer for the initial smart-city dashboard, then worked on regional dashboard versions built around a shared foundation.' },
       { title: 'Keep a common foundation across versions', text: 'The dashboards were based on the same foundation. My work covered multiple versions, carrying that common base into the implementation for each location.' },
       { title: 'Connect maps with route tracking', text: 'Map API integration and route tracking formed part of the large-screen interfaces, bringing geographic context and routes into the dashboard experience.' },
       { title: 'Adapt to local requirements', text: 'Wuxi, Hainan and Taiyuan each required specific customizations. The work combined the shared dashboard foundation with those differences rather than delivering an identical interface for every location.' }
