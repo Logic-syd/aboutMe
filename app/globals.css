@@ -311,3 +311,68 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .pixel-portfolio .town-card-preview img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
 .pixel-portfolio .town-card-preview>span{position:absolute;bottom:8px;left:8px;background:#fffdf2eb;padding:4px 7px;font:8px monospace;letter-spacing:1px;color:#6e7965;border:1px solid #d6dccb}
 .pixel-portfolio .project-list-disclosure{margin-top:22px}.pixel-portfolio .project-case-cards{margin-top:24px}
+
+/* Readable commercial evidence precedes independent products and the 3D explorer. */
+.pixel-portfolio .commercial-work-section{padding-top:54px;padding-bottom:38px}
+.commercial-work-section .section-heading{margin-bottom:28px}
+.commercial-highlights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.commercial-highlight{--case-accent:#62775d;display:flex;flex-direction:column;min-width:0;padding:25px;border:1px solid #cbd2c1;border-top:4px solid var(--case-accent);background:#f0f2e6;box-shadow:4px 4px 0 #e1e5d7}
+.commercial-highlight-2{--case-accent:#96798d;background:#f4edf0;border-color:#dbccd4}
+.commercial-highlight-3{--case-accent:#738997;background:#eaf0f1;border-color:#cad6d9}
+.commercial-highlight-top{display:flex;justify-content:space-between;align-items:start;gap:15px;color:var(--case-accent);min-height:34px;margin-bottom:24px}
+.commercial-highlight-top>.eyebrow{font-size:9px;line-height:1.7;letter-spacing:.8px;max-width:210px}
+.commercial-highlight-top>span:last-child{font:24px/1 monospace;opacity:.65}
+.commercial-company{font:10px/1.7 monospace;color:#646d60;margin-bottom:10px}
+.commercial-highlight h3{font:400 29px/1.16 Georgia,serif;letter-spacing:-.6px;margin-bottom:16px}
+.commercial-highlight h3 a:hover{color:var(--case-accent)}
+.commercial-summary{font-size:14px;line-height:1.8;color:#616b5f}
+.commercial-contribution{padding-top:19px;margin-top:auto}
+.commercial-contribution>.eyebrow{font-size:9px;color:var(--case-accent);margin-bottom:9px}
+.commercial-contribution ul{list-style:none;margin:0;padding:0}
+.commercial-contribution li{padding:7px 0 7px 14px;position:relative;font-size:12px;line-height:1.6;color:#4f594d;border-top:1px solid #6d786425}
+.commercial-contribution li::before{content:"";position:absolute;left:0;top:14px;width:4px;height:4px;background:var(--case-accent)}
+.commercial-highlight .tags{margin:17px 0 22px}
+.commercial-highlight .tags li{border-color:#76816c40;background:#fffdf460}
+.commercial-case-actions{min-height:66px}
+.commercial-case-actions>.text-link{width:100%;justify-content:space-between;color:var(--case-accent);border-color:var(--case-accent);padding-bottom:7px}
+.commercial-related{display:block;margin-top:10px;font-size:11px;line-height:1.6;color:#65765d;text-decoration:underline;text-underline-offset:3px}
+.commercial-more{margin-top:30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.commercial-more summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;font-size:14px;font-weight:500;padding:18px 0}
+.commercial-more summary::-webkit-details-marker{display:none}
+.commercial-more summary>span:last-child{margin-left:auto;transition:transform .15s}
+.commercial-more[open] summary>span:last-child{transform:rotate(180deg)}
+.case-count{font:10px monospace;color:#65745f;background:#e5eadb;padding:4px 7px}
+.pixel-portfolio .commercial-more .project-grid{margin:5px 0 24px}
+.commercial-section-links{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:22px}
+.commercial-section-links .text-link{font-size:12px;color:#63735d;border-color:#63735d}
+.pixel-portfolio .professional-work-section{padding-top:35px;padding-bottom:35px}
+.pixel-portfolio .independent-work-section{border-top:1px solid var(--line)}
+.pixel-portfolio .small-project-top>.project-kind{font:8px/1.6 monospace;letter-spacing:.5px;color:#6e7e64;text-align:right;max-width:130px;align-self:center}
+.catalog-group+.catalog-group{margin-top:36px}
+.catalog-group-title{display:flex;align-items:center;justify-content:space-between;gap:18px;font:400 25px/1.3 Georgia,serif;margin-bottom:20px}
+.catalog-group-title span{font:10px monospace;color:var(--muted)}
+.graph-picker-group h3{padding:13px 20px;font:10px/1.6 monospace;text-transform:uppercase;letter-spacing:1px;border-top:1px solid var(--line);background:#e9eddf;color:#58684f}
+.graph-picker-group+.graph-picker-group h3{background:#eee5ec;color:#805e75}
+.commercial-more summary:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+@media(min-width:651px) and (max-width:1050px){
+  .commercial-highlights{grid-template-columns:1fr}
+  .commercial-highlight{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:30px;padding:24px}
+  .commercial-highlight-top,.commercial-company,.commercial-highlight h3,.commercial-summary{grid-column:1}
+  .commercial-highlight-top{margin-bottom:14px}
+  .commercial-contribution{grid-column:2;grid-row:2/5;margin:0;padding:0}
+  .commercial-highlight .tags{grid-column:2;grid-row:5;margin:0 0 14px}
+  .commercial-case-actions{grid-column:2;grid-row:6}
+}
+@media(max-width:650px){
+  .commercial-highlights{grid-template-columns:minmax(0,1fr);gap:20px}
+  .commercial-highlight{padding:22px}
+  .commercial-highlight h3{font-size:28px}
+  .commercial-highlight-top{margin-bottom:18px}
+  .commercial-case-actions{min-height:0}
+  .pixel-portfolio .commercial-work-section{padding-top:38px;padding-bottom:32px}
+  .commercial-section-links{flex-direction:column;align-items:start}
+  .commercial-section-links a{min-height:36px;align-items:center}
+  .pixel-portfolio .professional-work-section{padding-top:25px}
+  .catalog-group-title{font-size:22px}
+  .craft-header .nav-sections a{padding:6px 4px;text-align:center;line-height:1.5}
+}

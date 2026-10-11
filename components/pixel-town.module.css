@@ -25,3 +25,8 @@
 .previewLinks .previewPrimary:hover{background:#526b4b;color:#fffdf0}
 .preview a:focus-visible,.previewClose:focus-visible{outline:3px solid #a5768b;outline-offset:2px}
 @media(max-width:700px){.mapBadge{font-size:7px;padding:4px 6px;left:7px;bottom:6px}.previewClose{width:40px;height:40px}.previewLinks a{min-height:44px}}
+
+/* The six places are navigation themes, separate from the project catalogue. */
+.locationNav button span{font-size:7px;letter-spacing:.25px;line-height:1.5;min-height:21px;color:#7c8575}
+.facts>div:last-child strong{font-size:21px;line-height:1.5}
+@media(max-width:700px){.locationNav button span{font-size:7px;min-height:11px}.facts>div:last-child strong{font-size:20px}}
