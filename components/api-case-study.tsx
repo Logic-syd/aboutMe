@@ -35,7 +35,7 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
   return <div id="top" className={styles.page}>
     <Header detail />
     <main id="main" className={styles.main}>
-      <Link className={styles.back} href="/#project-explorer">← All projects</Link>
+      <Link className={styles.back} href="/#work">← All projects</Link>
       <header className={styles.hero}>
         <div>
           <p className={styles.kicker}>CASE 01 / SUNGROW · DEVELOPER EXPERIENCE</p>
@@ -113,7 +113,7 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
       </section>
 
       <div className={styles.contact}><div><p className={styles.kicker}>BUILDING A DEVELOPER PRODUCT?</p><h2>Let’s make the complex parts usable.</h2></div><a href="https://linkedin.com/in/yidanshao/">Let’s talk <span aria-hidden="true">↗</span></a></div>
-      <nav className={styles.next} aria-label="Case study navigation"><Link href="/#project-explorer">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
+      <nav className={styles.next} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
     </main>
     <Footer />
   </div>;
