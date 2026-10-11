@@ -4,7 +4,7 @@ export type Project = {
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
   delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
   featured?: boolean; heroTitle?: string; heroDetail?: string;
-  links?: { label: 'Live Demo' | 'Source Code'; href: string }[];
+  links?: { label: 'Live Demo' | 'Play on Game Jolt' | 'Source Code'; href: string }[];
   screenshots?: { src: string; width: number; height: number; alt: string; caption: string }[];
   screenshotCredit?: { label: string; href: string };
 };
@@ -192,33 +192,39 @@ export const projects: Project[] = [
   },
   {
     slug: 'pfand-pause', number: '09', title: 'Pfand Pause — A Bottle-Sorting Puzzle', shortTitle: 'A little order in a new country.',
-    graphTitle: 'Pfand Pause', category: 'Personal product · Puzzle game', organization: 'Independent project', status: 'Playable build · Not publicly released',
-    description: 'When I first moved to Germany, I struggled to tell the different bottles apart. I turned that everyday confusion into a small sorting game: a playful way to get familiar with the bottles around me.',
-    tags: ['React / TypeScript', 'Game state / Solver', 'SVG / CSS', 'LocalStorage / i18n'], role: 'Independent developer · Game design and frontend',
+    graphTitle: 'Pfand Pause', category: 'Personal product · Puzzle game', organization: 'Independent project', status: 'Published on Game Jolt',
+    description: 'Newly arrived students rarely seek out information about unfamiliar bottles, and find it hard to remember. Inspired by their feedback and my own move to Germany, I designed, built and published a bottle-sorting puzzle on Game Jolt.',
+    tags: ['React / TypeScript', 'Game state / Solver', 'SVG / CSS', 'LocalStorage / i18n'], role: 'Independent developer · Game design, development and publishing',
     contributions: [
-      ['Responsive game and interactive tutorial', 'Input locking during animations'],
+      ['Responsive game and interactive tutorial', 'Independent development and Game Jolt release'],
       ['Pure rules and complete undo', 'Ten levels checked with the same engine'],
       ['Six distinct bottle designs', 'Touch, keyboard and reduced motion'],
       ['Saved progress and preferences', 'English and German interfaces']
     ],
-    problem: 'Moving to Germany came with small, unfamiliar routines, including figuring out all the different drinks bottles. I wanted a more enjoyable way to become familiar with them, so I built Pfand Pause around a neighbourhood bottle-return counter. Players sort six bottle types into matching crates while keeping a small waiting area clear. The setting comes from everyday life; the puzzle uses its own sorting rules.',
+    problem: 'When I moved to Germany, I struggled to tell the different drinks bottles apart. Informal research with newly arrived students revealed a similar friction: they rarely set out to learn about bottle types, and the information is easy to forget. That suggested a small game where recognition happens through repeated play. I built Pfand Pause around a neighbourhood bottle-return counter: players sort six bottle types into matching crates while keeping a small waiting area clear.',
     responsibilities: [
+      'Used informal research with newly arrived students and my own experience in Germany to shape the game concept and visual recognition mechanics.',
       'Built the React / TypeScript game with Vite, including a phone-first board, level selection, settings and an interactive practice round.',
       'Implemented the rules, automatic bottle transfers, crate replacement, win/loss states and full-state undo.',
       'Created ten levels and a development solver that checks solutions using the same rules as the playable game.',
       'Created SVG / CSS bottle and shop visuals, English and German interfaces, keyboard controls and reduced-motion support.',
-      'Saved completed levels and preferences locally, and integrated Web Audio feedback and an English completion voice clip with mute and cancellation handling.'
+      'Saved completed levels and preferences locally, and integrated Web Audio feedback and an English completion voice clip with mute and cancellation handling.',
+      'Owned the complete game lifecycle, from concept and game design through development, level verification and public publishing on Game Jolt.'
     ],
     decisions: [
+      { title: 'Build familiarity through play', text: 'The student feedback pointed to both low motivation to read bottle information and difficulty remembering it. I chose repeated visual matching over a long explanation: players encounter the same six bottle designs in different arrangements, supported by a short interactive tutorial. The aim is to make an unfamiliar everyday routine more approachable.' },
       { title: 'One rules engine for play and verification', text: 'A pure TypeScript transition function takes a board state and a selected column, then returns the resulting state and animation frames. A memoized depth-first solver uses that same function to find winning paths for all ten levels. The solver stays out of the player bundle.' },
       { title: 'Treat a move as one complete action', text: 'Picking a bottle can trigger a full crate, a replacement order and transfers from the waiting area. The game settles that chain before checking whether the waiting area is full. A snapshot taken before the click makes Undo restore the entire action, while a synchronous input lock prevents repeated taps during animation.' },
       { title: 'Make the bottles recognizable in more than one way', text: 'Six bottle types have distinct shapes, colours and label patterns drawn in SVG. The interface supports tapping and keyboard activation, with an isolated interactive tutorial and optional reduced motion. There is no timer, leaving room to look at the bottles and plan a move.' },
       { title: 'Keep progress simple and resilient', text: 'Versioned LocalStorage saves completed levels, tutorial state, language and sound/motion preferences. The game remains playable if storage is blocked or damaged. English and German interfaces share the same game state; unfinished rounds are not persisted across a refresh.' },
       { title: 'Let audio follow the interaction', text: 'Web Audio provides short feedback sounds. An English completion clip is loaded locally and follows the victory sound; muting, changing language or leaving the screen cancels pending playback. Loading or decoding failures leave the game playable.' }
     ],
-    delivery: 'A playable ten-level build with a public source repository. The screenshots show the real application running locally. A public game deployment is not yet available. This is a fictional sorting puzzle inspired by German bottle returns, rather than a guide to deposit eligibility or refund amounts.',
+    delivery: 'Published Pfand Pause on Game Jolt, with ten playable levels and a public source repository. Taking the project from an everyday observation and student research through design, implementation, verification and release gave me practical experience with the complete game publishing process. The screenshots show the actual game captured from a local production build.',
     flow: ['Recognize a bottle', 'Match a crate', 'Make room for the next'],
-    links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/PfandPause' }],
+    links: [
+      { label: 'Play on Game Jolt', href: 'https://gamejolt.com/games/pfand-pause/1106213' },
+      { label: 'Source Code', href: 'https://github.com/Logic-syd/PfandPause' }
+    ],
     screenshots: [
       { src: '/images/pfand-pause-start.png', width: 780, height: 1902, alt: 'Pfand Pause in English, with its illustrated neighbourhood drinks shop and the invitation to start sorting bottles.', caption: 'The bottle-return shop · Captured from the local production build.' },
       { src: '/images/pfand-pause-game.png', width: 780, height: 2314, alt: 'Level three of Pfand Pause, showing bottle stacks, three waiting spaces, matching crates, the order queue and undo controls.', caption: 'Level 03 · Actual gameplay after completing the first two puzzles.' }
