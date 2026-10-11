@@ -1,19 +1,19 @@
-# API developer-platform case draft
+# Energy API and Data Act cases
 
-The dedicated case lives at `/projects/renewable-energy-api` on `feat/api-platform-case-study`. It is not yet merged: additional EU Data Act material is expected before finalizing the main narrative.
+`/projects/renewable-energy-api` presents the developer-platform work; `/projects/data-export-center` presents the associated data-access and export workflow. Both pages link to each other.
 
 ## Content scope
 
-The owner confirmed European delivery, online debugging and application management as personal responsibilities. Current EU Data Act work is still in development and has not launched. The case retains the owner-specified React / TypeScript stack. Architecture descriptions explain the platform rather than claiming ownership of every subsystem.
+The owner confirmed European delivery, online debugging and application management as personal responsibilities, with EU Data Act data access as the principal focus. The cases retain the owner-specified React / TypeScript stack. Portfolio copy omits development and release-status labels at the owner's request. It does not assert a launch or verified legal compliance.
 
-The provided architecture guide supports five configured business sites, user-level V1 and OAuth2 V2 documentation paths, site-aware gateway selection, application permission checks, raw debugging responses and distinct portal/debugger request contracts. These are platform characteristics, not adoption or performance metrics.
+Architecture descriptions explain the platform rather than claiming ownership of every subsystem. The supplied architecture guide supports regional gateways, application permission checks and distinct portal/debugger response contracts. The Data Act system design supplies workflow context for scope validation, asynchronous preparation, partial results, shared browser entry points and separate task/identity/download lifecycles. Public copy summarizes these frontend concerns without reproducing internal thresholds, delivery schedules or source images.
 
-## Interactive reconstruction
+## API reconstruction
 
-`components/api-platform-demo.tsx` is an entirely local simulation. It uses synthetic application IDs, sample endpoints and invented energy figures inside the documented `result_code` / `result_data` response envelope. No real API calls, credentials, encryption, internal source screenshots or internal network addresses are included.
+`components/api-platform-demo.tsx` uses synthetic application IDs, sample endpoints and invented energy figures inside the documented response envelope. It supports five sites, two endpoints, English/Chinese, permission rejection and explicit timeout recovery. Input changes cancel stale work. No API calls, real credentials or encryption occur.
 
-Visitors can change sites, switch the sample interface between English and Chinese, select two sample endpoints, encounter a missing permission and simulate a timeout. Recovery requires an explicit action. Changing any input cancels the pending run and clears stale results; unmounting clears timers. Mobile request/retry actions reveal the request trace and honor reduced-motion preferences.
+## Export reconstruction
 
-## Next content pass
+`components/data-export-demo.tsx` simulates scope selection, request confirmation, asynchronous preparation and download confirmation. It includes a configurable sample outcome, a deliberately fictional 12 MB limit, partial records, failure recovery, link expiration and task expiration. Scope changes and reset cancel pending work. A link can be renewed without rerunning a ready task; an expired task needs a new confirmed request.
 
-Use the forthcoming Data Act documents to identify the principal business workflow, concrete frontend constraints and the owner's technical decisions. Keep unreleased work separate from delivered platform capabilities, and clarify its relationship to the existing Data Export Center case before merging.
+Downloads are small local CSV/JSON files containing synthetic, read-only records with units and timezone-aware timestamps. Missing records use `null`; JSON includes scope and missing-data metadata. The demo does not reproduce the production archive, identity service or download infrastructure. All service-side authentication and authorization remain server responsibilities. Mobile actions bring the result into view and honor reduced motion.

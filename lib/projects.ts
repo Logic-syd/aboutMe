@@ -1,6 +1,6 @@
 export type Project = {
   slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
-  status: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
+  status?: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
   delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
   featured?: boolean; heroTitle?: string; heroDetail?: string;
@@ -15,16 +15,16 @@ export const projects: Project[] = [
     featured: true,
     heroTitle: "Energy APIs", heroDetail: "Developer platform",
     slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
-    category: 'Energy · Developer experience', organization: 'NeuVerge-Tron / Sungrow', status: 'EU Data Act work in progress',
-    description: 'Frontend work on a renewable-energy developer platform, covering European delivery, online API debugging and application management. Current EU Data Act work is in development.',
+    category: 'Energy · Developer experience', organization: 'NeuVerge-Tron / Sungrow',
+    description: 'Frontend work on a renewable-energy developer platform, covering European delivery, online API debugging and application management, with a focus on EU Data Act data-access workflows.',
     tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'Frontend development · European delivery',
     problem: 'Developers need to move from API documentation to application authorization and working calls across regional sites. The platform brings these workflows together with application management and operational tooling.',
-    responsibilities: ['Contribute to European frontend delivery, with ongoing work focused on EU Data Act requirements.', 'Develop online API debugging workflows.', 'Implement application-management interfaces for developers.'],
+    responsibilities: ['Contribute to European frontend delivery and EU Data Act data-access workflows.', 'Develop online API debugging workflows.', 'Implement application-management interfaces for developers.'],
     decisions: [
       { title: 'Regional context reaches the request layer', text: 'The platform separates build environments from business sites. Site selection determines the default gateway, while individual requests can override it for flows such as registration.' },
       { title: 'A debugger needs a different response contract', text: 'Online debugging checks application permissions and uses application-level credentials. It preserves the raw API response instead of applying the ordinary portal result wrapper.' }
     ],
-    delivery: 'My scope covers European delivery, online debugging and application management. The EU Data Act work is still in development and has not launched. The interactive case uses illustrative data and makes no live API requests.',
+    delivery: 'My scope covers European delivery, online debugging and application management, alongside EU Data Act frontend requirements. The interactive case uses illustrative data and makes no live API requests.',
     flow: ['Application access', 'Regional gateway', 'API response']
   },
   {
@@ -45,21 +45,22 @@ export const projects: Project[] = [
     flow: ['Curated places', 'PostgreSQL', 'Map discovery']
   },
   {
-    graphTitle: "Data export center", contributions: [["Export interface implementation"], ["Typed export workflows"], ["Task states", "Retry and download"], ["Data scope", "Permission-aware actions"]],
+    graphTitle: "Data export center", contributions: [["Data-access frontend implementation", "Shared browser-based export experience"], ["Typed request and task states"], ["Partial results and retry", "Separate task and link lifecycles"], ["Scope selection and validation", "Request and download verification"]],
     featured: true,
     heroTitle: "Data exports", heroDetail: "Async workflows",
     slug: 'data-export-center', number: '03', title: 'EU Data Act Data Export Center', shortTitle: 'Clarity through a complex export.',
-    category: 'Data access · Async workflows', organization: 'Commercial project', status: 'In development · Not released', inDevelopment: true,
-    description: 'A Vue 3 / TypeScript interface for data exports, making scope, permissions, asynchronous jobs, retries and downloads understandable.',
-    tags: ['Vue 3', 'TypeScript', 'Async tasks', 'Permissions'], role: 'Frontend implementation',
-    problem: 'A data export is a sequence of decisions and asynchronous states. Users need to understand which data they can request, what a task is doing and when a download is available.',
-    responsibilities: ['Implementing the Vue 3 / TypeScript data-export interface.', 'Handling data scope, permission-dependent interactions and asynchronous task states.', 'Working on retry and download flows as part of the export experience.'],
+    category: 'Data access · Async workflows', organization: 'NeuVerge-Tron / Sungrow',
+    description: 'A data-access frontend for EU Data Act requirements, turning scope selection, identity verification, asynchronous exports, partial results and download recovery into an understandable user journey.',
+    tags: ['React', 'TypeScript', 'Async tasks', 'Permissions'], role: 'Frontend implementation · EU data access',
+    problem: 'Exporting energy-device data spans ownership, scope limits, identity checks, asynchronous preparation and time-limited delivery. Users need to understand what they can request and recover without losing their original selection.',
+    responsibilities: ['Frontend work on data-access and export workflows for EU Data Act requirements.', 'Represent scope validation, identity confirmation and asynchronous task states in the interface.', 'Account for partial results, failure recovery and download verification.'],
     decisions: [
-      { title: 'Make the task lifecycle visible', text: 'The interface work covers scope selection, asynchronous processing, retry and download, rather than treating export as a single immediate action.' },
-      { title: 'Keep access part of the workflow', text: 'Accounting for permissions and data scope in the frontend so users can understand the available export actions.' }
+      { title: 'Keep three lifecycles distinct', text: 'An export task, an identity confirmation and a short-lived download link represent different states. Renewing a link does not recreate the task; an expired task requires a new request.' },
+      { title: 'Recover without losing the scope', text: 'Failure recovery retains the original selection. Partial exports preserve useful records, identify missing data and keep metadata alongside the machine-readable output.' },
+      { title: 'One browser-based flow across entry points', text: 'The system design uses a shared browser-based export journey for Web and embedded App entry points, with file delivery handled by the browser.' }
     ],
-    delivery: 'In development and not released. This case describes frontend work in progress; it does not claim a completed launch or independently verified regulatory compliance.',
-    flow: ['Scope + access', 'Async export', 'Retry / download']
+    delivery: 'The case explores frontend implementation for data access, export lifecycles and recovery. The interactive reconstruction uses synthetic records and local CSV/JSON downloads.',
+    flow: ['Scope + identity', 'Async preparation', 'Verified download']
   },
   {
     graphTitle: "AI sports assessment", contributions: [

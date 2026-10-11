@@ -39,15 +39,14 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
       <header className={styles.hero}>
         <div>
           <p className={styles.kicker}>CASE 01 / SUNGROW · DEVELOPER EXPERIENCE</p>
-          <h1>Energy APIs.<br /><em>Built for developers.</em></h1>
-          <p className={styles.intro}>A renewable-energy developer portal that connects documentation, application access and online debugging across regional sites.</p>
-          <a href="#api-playground" className={styles.tryLink}>Try an API call <span aria-hidden="true">↓</span></a>
+          <h1>Energy APIs.<br /><em>Data access, made clear.</em></h1>
+          <p className={styles.intro}>Frontend work connecting a renewable-energy developer platform with EU Data Act data-access requirements: API debugging, application management and understandable user workflows.</p>
+          <div className={styles.heroActions}><a href="#api-playground" className={styles.tryLink}>Try API debugging <span aria-hidden="true">↓</span></a><Link href="/projects/data-export-center#export-lab" className={styles.secondaryLink}>Explore data export <span aria-hidden="true">↗</span></Link></div>
         </div>
         <aside className={styles.ownership} aria-label="My role and delivery">
           <p className={styles.kicker}>MY PART IN THE PRODUCT</p>
           <h2>European delivery.<br />Developer workflows.</h2>
-          <p>My scope covers European delivery, online API debugging and application management, with ongoing work focused on the EU Data Act.</p>
-          <div className={styles.release}><i aria-hidden="true" /> {project.status}</div>
+          <p>My scope covers European delivery, online API debugging and application management, with a focus on EU Data Act data access.</p>
           <span className={styles.role}>{project.role}</span>
         </aside>
       </header>
@@ -99,10 +98,15 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
         </div>
       </section>
 
+      <section className={styles.dataFocus} aria-labelledby="api-data-title">
+        <div><p className={styles.kicker}>04 / EU DATA ACT · FRONTEND FOCUS</p><h2 id="api-data-title">Access is a user journey.</h2><p>Device owners need to understand what data they can obtain, how it is prepared and how to recover when a task or download fails. The frontend connects those decisions to the platform’s access rules.</p></div>
+        <div className={styles.focusSteps}><div><span>01</span><p><strong>Choose & verify</strong>Ownership-aware scope selection and identity confirmation before an export request.</p></div><div><span>02</span><p><strong>Follow & recover</strong>Asynchronous tasks, partial results and retries that retain the selected scope.</p></div><div><span>03</span><p><strong>Download & control</strong>Fresh download verification, expiration handling and user-managed sharing.</p></div><Link href="/projects/data-export-center#export-lab">Walk through the export experience <span aria-hidden="true">↗</span></Link></div>
+      </section>
+
       <section className={styles.delivery} aria-labelledby="api-delivery-title">
-        <div><p className={styles.kicker}>04 / MY DELIVERY SCOPE</p><h2 id="api-delivery-title">Where I contribute.</h2><p>European delivery, online debugging and application management. My EU Data Act work is still in development and has not launched.</p></div>
+        <div><p className={styles.kicker}>05 / MY DELIVERY SCOPE</p><h2 id="api-delivery-title">Where I contribute.</h2><p>European frontend delivery, online debugging and application management, with EU Data Act requirements shaping the data-access experience.</p></div>
         <ol className={styles.deliverySteps}>
-          <li><span>01</span><div><h3>European delivery</h3><p>Frontend work for the European platform, with current development centered on EU Data Act requirements.</p></div></li>
+          <li><span>01</span><div><h3>European delivery</h3><p>Frontend work for the European platform, centered on EU Data Act data-access requirements.</p></div></li>
           <li><span>02</span><div><h3>Online debugging</h3><p>Work on the developer-facing flow for making API calls and inspecting their responses.</p></div></li>
           <li><span>03</span><div><h3>Application management</h3><p>Work on the application interfaces that developers use to manage their API integrations.</p></div></li>
         </ol>

@@ -210,3 +210,10 @@ Vercel is connected to the repository with `main` as the production source. Futu
 - ESLint, TypeScript and the production build passed. Browser checks at 1440px, 390px and 320px verified responsive layout, no horizontal overflow or runtime errors, and keyboard activation of all four engineering disclosures.
 - Interaction checks covered both synthetic endpoints, raw JSON, five-site selection, English/Chinese, permission rejection before routing, explicit timeout recovery, reset and cancellation of stale in-flight results when inputs change. Mobile Run reveals the request trace in the viewport and respects reduced motion.
 - Demo data, credentials and routes are synthetic. No live requests or internal screenshots are used. Kept on the feature branch pending additional Data Act documents and final case scope.
+
+## Data Act export experience — 11 October 2026
+
+- Added a dedicated export case and connected it to the API case's data-access narrative. API and Data Act release/development labels are omitted from the pages, notebook cards and project-graph details; other project status labels remain.
+- ESLint, TypeScript and production build passed. Chromium checks at 1440px, 390px and 320px verified layout, keyboard disclosures, mobile result reveal and no runtime errors or horizontal overflow.
+- Verified identity confirmation before task creation and before download, exclusion of an unowned sample device, selection-size validation, empty-scope validation, stale-work cancellation on input changes and reset, partial data, retry with preserved scope, link renewal without task recreation and new requests after task expiration.
+- Actual local JSON and CSV downloads were inspected: synthetic scope, timezone-aware timestamps, useful records and missing values are retained. Sample estimates and the demo limit are explicitly fictional. No source document, internal screenshot, infrastructure address, private production threshold or delivery schedule is published.
