@@ -1,5 +1,5 @@
 export type Project = {
-  slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
+  kind: 'commercial' | 'independent'; slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
   status?: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
   delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
@@ -14,7 +14,7 @@ export const projects: Project[] = [
     graphTitle: "Energy API platform", contributions: [["React frontend development", "European delivery"], ["Typed frontend implementation"], ["Online API debugging", "Request and response integration"], ["Application management", "Developer workflows"]],
     featured: true,
     heroTitle: "Energy APIs", heroDetail: "Developer platform",
-    slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
+    kind: 'commercial', slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
     category: 'Energy · Developer experience', organization: 'NeuVerge-Tron / Sungrow',
     description: 'Frontend work on a renewable-energy developer platform, covering European delivery, online API debugging and application management, with a focus on EU Data Act data-access workflows.',
     tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'Frontend development · European delivery',
@@ -31,7 +31,7 @@ export const projects: Project[] = [
     graphTitle: "Coffee & beer map", contributions: [["React map experience", "Server-side rendering"], ["Backend development", "Data import workflows"], ["500+ curated venues", "Data access policies"], ["Server-rendered web experience"]],
     featured: true,
     heroTitle: "Discovery map", heroDetail: "Independent product",
-    slug: 'discovery-map', number: '02', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
+    kind: 'independent', slug: 'discovery-map', number: '02', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
     category: 'Independent product · Full stack', organization: 'Personal project', status: 'In development · Not released', inDevelopment: true,
     description: 'An independently built discovery product with 500+ curated places, connecting a React / Next.js map experience to a structured location dataset.',
     tags: ['Next.js', 'Node.js / Express', 'Supabase / PostgreSQL', 'SSR'], role: 'Independent developer · Frontend and backend',
@@ -48,7 +48,7 @@ export const projects: Project[] = [
     graphTitle: "Data export center", contributions: [["Data-access frontend implementation", "Shared browser-based export experience"], ["Typed request and task states"], ["Partial results and retry", "Separate task and link lifecycles"], ["Scope selection and validation", "Request and download verification"]],
     featured: true,
     heroTitle: "Data exports", heroDetail: "Async workflows",
-    slug: 'data-export-center', number: '03', title: 'EU Data Act Data Export Center', shortTitle: 'Clarity through a complex export.',
+    kind: 'commercial', slug: 'data-export-center', number: '03', title: 'EU Data Act Data Export Center', shortTitle: 'Clarity through a complex export.',
     category: 'Data access · Async workflows', organization: 'NeuVerge-Tron / Sungrow',
     description: 'A data-access frontend for EU Data Act requirements, turning scope selection, identity verification, asynchronous exports, partial results and download recovery into an understandable user journey.',
     tags: ['React', 'TypeScript', 'Async tasks', 'Permissions'], role: 'Frontend implementation · EU data access',
@@ -72,7 +72,7 @@ export const projects: Project[] = [
       ["Multiple simultaneous participants", "Face-recognition integration", "Individual score presentation"]
     ],
     heroTitle: "AI sports assessment", heroDetail: "Canvas + real-time video",
-    slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
+    kind: 'commercial', slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
     category: 'Sports education · Real-time assessment', organization: 'Danzhu (淡竹)', status: 'Regional use · High-school entrance PE exams',
     description: 'Migrated a TV-based sports system from jQuery to React, used for high-school entrance PE examinations in parts of China, as well as sports-school training and middle-school PE classes. The frontend connects camera video with backend AI analysis using Canvas, video-stream transmission and WebSocket scoring updates, with synchronized audio-visual feedback and spoken results.',
     tags: ['jQuery → React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · React migration & real-time assessment',
@@ -101,7 +101,7 @@ export const projects: Project[] = [
   {
     graphTitle: "Low-code platform", contributions: [["Configurable pages", "Field-team applications"], ["Reusable components"], ["Theme switching"]],
     heroTitle: "Low-code tools", heroDetail: "Configurable interfaces",
-    slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Reusable tools for field teams.',
+    kind: 'commercial', slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Reusable tools for field teams.',
     category: 'Developer tools · Internal platform', organization: 'Longshine', status: 'Internal platform · Written case study',
     description: 'Leading an internal low-code platform for field-service work orders and marketing applications, with configurable pages and reusable components.',
     tags: ['Low-code', 'Component architecture', 'Theming'], role: 'Frontend lead · Technical selection contributor',
@@ -117,7 +117,7 @@ export const projects: Project[] = [
   {
     graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"]],
     heroTitle: "Operations", heroDetail: "Component library + workflows",
-    slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Reusable components. Workflow-aware interfaces.',
+    kind: 'commercial', slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Reusable components. Workflow-aware interfaces.',
     category: 'Enterprise systems · Component library & workflows', organization: 'Longshine (朗新) · State Grid project', status: 'Commercial work · Written case study',
     description: 'Developed a shared frontend component library and work-order interfaces for a State Grid management system at Longshine. This combined hands-on experience building reusable UI with a deeper understanding of business workflows—skills I bring to SaaS frontend development.',
     tags: ['React', 'TypeScript', 'Component library', 'Business workflows'], role: 'Frontend development · Component library & work-order system',
@@ -138,7 +138,7 @@ export const projects: Project[] = [
   },
   {
     graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend rebuild"], ["PHP-based product upgrade", "Zero-to-one frontend contribution"], ["Batch and single payments", "Insurance collections and payouts"], ["Reconciliation statements"]],
-    slug: 'ronghe-pay', number: '07', title: 'Ronghe Pay — Insurance Payments Platform', shortTitle: 'Care in every payment.',
+    kind: 'commercial', slug: 'ronghe-pay', number: '07', title: 'Ronghe Pay — Insurance Payments Platform', shortTitle: 'Care in every payment.',
     category: 'Fintech · Collections & payouts', organization: 'Fingard (保融) · 融合付', status: 'Commercial project · Written case study',
     description: 'Contributed to Ronghe Pay from zero to one at Fingard, building the Vue 2 frontend for a 2018 upgrade of an existing PHP-based insurance payments product.',
     tags: ['Vue 2', 'Frontend modernization', 'Payment workflows', 'Reconciliation'], role: 'Frontend development · Zero-to-one Vue 2 rebuild',
@@ -154,7 +154,7 @@ export const projects: Project[] = [
     flow: ['Insurer instructions', 'Authorized bank payments', 'Reconciliation statements']
   },
   {
-    slug: 'mountain-chess', number: '08', title: 'Mountain Chess — Offline Chess for Hiking', shortTitle: 'A chessboard for a mountain break.',
+    kind: 'independent', slug: 'mountain-chess', number: '08', title: 'Mountain Chess — Offline Chess for Hiking', shortTitle: 'A chessboard for a mountain break.',
     graphTitle: 'Mountain chess', category: 'Personal product · Offline game', organization: 'Independent project', status: 'Published · Play online',
     description: 'I love hiking and chess, so I built a game for solo breaks in the mountains: a local computer opponent, saved games and offline play after the first online setup.',
     tags: ['JavaScript', 'PWA / Service Worker', 'Local chess engine', 'LocalStorage / i18n'], role: 'Independent developer · Product, interface and game logic',
@@ -191,7 +191,7 @@ export const projects: Project[] = [
     screenshotCredit: { label: 'Chess-piece artwork credits', href: 'https://github.com/Logic-syd/chessOffline/blob/main/dist/pieces/NOTICE.txt' }
   },
   {
-    slug: 'pfand-pause', number: '09', title: 'Pfand Pause — A Bottle-Sorting Puzzle', shortTitle: 'A little order in a new country.',
+    kind: 'independent', slug: 'pfand-pause', number: '09', title: 'Pfand Pause — A Bottle-Sorting Puzzle', shortTitle: 'A little order in a new country.',
     graphTitle: 'Pfand Pause', category: 'Personal product · Puzzle game', organization: 'Independent project', status: 'Published on Game Jolt',
     description: 'Newly arrived students rarely seek out information about unfamiliar bottles, and find it hard to remember. Inspired by their feedback and my own move to Germany, I designed, built and published a bottle-sorting puzzle on Game Jolt.',
     tags: ['React / TypeScript', 'Game state / Solver', 'SVG / CSS', 'LocalStorage / i18n'], role: 'Independent developer · Game design, development and publishing',
@@ -231,7 +231,7 @@ export const projects: Project[] = [
     ]
   },
   {
-    slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
+    kind: 'commercial', slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
     graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine (朗新)', status: 'Commercial work · Written case study',
     description: 'Built multiple large-screen dashboards as part of smart-city projects at Longshine, integrating map APIs and route tracking for Wuxi, Hainan and Taiyuan, with customizations for each location.',
     tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization'], role: 'Sole frontend developer for the initial dashboard · Regional delivery',
@@ -259,7 +259,7 @@ export const projects: Project[] = [
     flow: ['Shared dashboard foundation', 'Maps + route tracking', 'Regional customizations']
   },
   {
-    slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'React interfaces for cross-region finance.',
+    kind: 'commercial', slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'React interfaces for cross-region finance.',
     graphTitle: 'SME financing', category: 'Fintech · React business interfaces', organization: 'GLP (普洛斯)', status: 'Commercial frontend work',
     description: 'React frontend development for an SME financing system spanning domestic and overseas markets, with a focus on business interfaces and requirements around time zones, currencies and exchange rates.',
     tags: ['React', 'Business interfaces', 'Time zones', 'Currencies & exchange rates'], role: 'React frontend development',
@@ -285,7 +285,7 @@ export const projects: Project[] = [
     flow: ['React interfaces', 'Financing workflows', 'Time + currency context']
   },
   {
-    slug: 'running-mini-program', number: '12', title: 'Student Sports Mini-Program & Teacher Dashboard', shortTitle: 'From student training to teacher insights.',
+    kind: 'commercial', slug: 'running-mini-program', number: '12', title: 'Student Sports Mini-Program & Teacher Dashboard', shortTitle: 'From student training to teacher insights.',
     graphTitle: 'Student sports platform', category: 'Education · Mobile training & administration', organization: 'Danzhu (淡竹)', status: 'Commercial work · Used by schools',
     description: 'Vue / uni-app student training interfaces and a teacher management dashboard, serving multiple universities and Shanghai primary schools. The product combines running, camera-based exercise counting, weak-network data saving and deferred uploads with student results and report exports.',
     tags: ['Vue / uni-app', 'Camera-based exercise tracking', 'Weak-network resilience', 'Peak running traffic', 'Teacher dashboard & exports', 'Age-specific experiences'], role: 'Frontend development · Student mini-program & teacher dashboard',
@@ -317,7 +317,7 @@ export const projects: Project[] = [
     flow: ['Student training', 'Save + upload results', 'Teacher review + export']
   },
   {
-    slug: 'weibo-deleter', number: '13', title: 'Weibo Deleter — A Small Browser Extension', shortTitle: 'A small tool for a friend’s repetitive task.',
+    kind: 'independent', slug: 'weibo-deleter', number: '13', title: 'Weibo Deleter — A Small Browser Extension', shortTitle: 'A small tool for a friend’s repetitive task.',
     graphTitle: 'Weibo deleter', category: 'Personal tool · Browser extension', organization: 'Independent project', status: 'Personal tool · Public source',
     description: 'A small React browser extension built for a friend who wanted to delete Weibo posts in batches. It turns a deeply nested, roughly four-click deletion flow into a selectable batch operation.',
     tags: ['React / Vite', 'Chrome Extension / MV3', 'DOM automation'], role: 'Independent developer',

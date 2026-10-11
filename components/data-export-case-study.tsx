@@ -20,7 +20,7 @@ export function DataExportCaseStudy({ project, next }: { project: Project; next:
   return <div id="top" className={styles.page}>
     <Header detail />
     <main id="main" className={styles.main}>
-      <Link className={styles.back} href="/#work">← All projects</Link>
+      <Link className={styles.back} href="/#project-explorer">← All projects</Link>
       <header className={styles.hero}>
         <div><p className={styles.kicker}>CASE {project.number} / EU DATA ACT · ENERGY DATA ACCESS</p><h1>Your data.<br /><em>A clear way out.</em></h1><p className={styles.intro}>A data-access frontend for energy-device owners. Scope selection, identity checks, asynchronous preparation and download recovery become one understandable journey.</p><a href="#export-lab" className={styles.tryLink}>Try the export workflow <span aria-hidden="true">↓</span></a></div>
         <aside className={styles.ownership} aria-label="Frontend contribution"><p className={styles.kicker}>MY FRONTEND FOCUS</p><h2>Scope. State.<br />Recovery.</h2><p>Frontend implementation for EU Data Act data access, with attention to permission-aware selection, task states and actions that help users recover.</p><span className={styles.role}>{project.role}</span></aside>
@@ -50,7 +50,7 @@ export function DataExportCaseStudy({ project, next }: { project: Project; next:
         <div><p className={styles.kicker}>04 / BEYOND A ONE-TIME EXPORT</p><h2 id="export-sharing-title">Access stays in the user’s hands.</h2><p>The wider Data Act design connects exports with personal API access and third-party sharing. The frontend needs to make data scope, duration and the option to stop access explicit.</p></div>
         <div className={styles.focusSteps}><div><span>01</span><p><strong>Know the scope</strong>A data catalogue describes available fields, units, formats and access methods.</p></div><div><span>02</span><p><strong>Manage a grant</strong>Authorization defines the receiving application, selected data and duration.</p></div><div><span>03</span><p><strong>Pause or revoke</strong>Suspension is reversible; revocation ends a grant. The interface must explain the difference.</p></div><Link href="/projects/renewable-energy-api">Explore the connected API platform <span aria-hidden="true">↗</span></Link></div>
       </section>
-      <nav className={styles.next} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
+      <nav className={styles.next} aria-label="Case study navigation"><Link href="/#project-explorer">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
     </main><Footer />
   </div>;
 }

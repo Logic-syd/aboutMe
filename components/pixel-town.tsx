@@ -8,7 +8,7 @@ import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
 const places: { id: PlaceId; name: string; x: number; y: number; color: string; roof: string; title: string; slugs: string[]; href: string; action: string }[] = [
-  { id: 'studio', name: 'The studio', x: 21, y: 25, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api'], href: '#work', action: 'More projects' },
+  { id: 'studio', name: 'The studio', x: 21, y: 25, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api'], href: '#work', action: 'View commercial work' },
   { id: 'cafe', name: 'Coffee corner', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'View project' },
   { id: 'cabin', name: 'Mountain hut', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'View project' },
   { id: 'station', name: 'The station', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'Where I’ve lived & worked.', slugs: [], href: '#experience', action: 'Explore my cities' },
@@ -135,15 +135,15 @@ export function PixelTown() {
       <p className={styles.kicker}>MUNICH, GERMANY · OPEN TO RELOCATE</p>
       <h1 id="town-title">Yidan Shao<span>.</span></h1>
       <p className={styles.role}>Senior Frontend Engineer</p>
-      <p className={styles.bio}>I build web and mobile interfaces — from energy API platforms and city dashboards to independent maps and games.</p>
+      <p className={styles.bio}>I build complex web and mobile products: developer platforms, reusable component libraries and real-time interfaces.</p>
       <ul className={styles.skills} aria-label="Core technologies">{['React', 'TypeScript', 'Vue', 'Next.js'].map(skill => <li key={skill}>{skill}</li>)}</ul>
-      <div className={styles.facts}><div><strong>7+</strong><span>years in frontend</span></div><div><strong>{projects.length}</strong><span>project case studies</span></div></div>
-      <div className={styles.quickProjects}><p className={styles.kicker}>A FEW THINGS I’VE BUILT</p><Link href="/projects/renewable-energy-api">Energy API platform<span>Developer workflows ↗</span></Link><Link href="/projects/smart-city-dashboards">Smart-city dashboards<span>Maps & route tracking ↗</span></Link></div>
-      <div className={styles.actions}><a href="#work">View my projects <span>↗</span></a><a href="mailto:yidanshao622@gmail.com">Say hello ↗</a></div>
+      <div className={styles.facts}><div><strong>7+</strong><span>years in frontend</span></div><div><strong>Web + mobile</strong><span>enterprise products</span></div></div>
+      <div className={styles.quickProjects}><p className={styles.kicker}>SELECTED COMMERCIAL WORK</p><Link href="/projects/renewable-energy-api">Energy API platform<span>European delivery & developer workflows ↗</span></Link><Link href="/projects/operations-monitoring">Component library & work orders<span>Reusable UI & enterprise workflows ↗</span></Link></div>
+      <div className={styles.actions}><a href="#work">View commercial work <span>↗</span></a><a href="#independent">Independent products ↗</a></div>
       <div className={styles.identity}><span className={styles.dot} /> OPEN TO OPPORTUNITIES</div>
     </div>
     <div className={styles.gameWindow}>
-      <div className={styles.windowBar}><span><i /> EXPLORE MY LITTLE TOWN</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion}>{motion ? 'Pause motion' : 'Resume motion'}</button></div>
+      <div className={styles.windowBar}><span><i /> WORK, PRODUCTS & LIFE</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion}>{motion ? 'Pause motion' : 'Resume motion'}</button></div>
       <div ref={map} className={`${styles.map} ${motion ? '' : styles.paused}`} aria-describedby={`${previewId}-hint`}>
         <svg viewBox="0 0 1000 620" className={styles.landscape} aria-hidden="true" shapeRendering="crispEdges">
           <rect width="1000" height="620" fill="#e5ebdf" /><rect width="1000" height="160" fill="#dae5e7" />
@@ -164,7 +164,7 @@ export function PixelTown() {
         <div className={styles.avatar} style={{ left: `${place.x+5}%`, top: `${place.y+23}%` }} aria-hidden="true"><span className={styles.avatarBubble}>Hi!</span><svg viewBox="0 0 24 34" shapeRendering="crispEdges"><ellipse cx="12" cy="32" rx="10" ry="2" fill="#65736a" opacity=".2" /><path d="M6 3H18V6H21V19H3V6H6Z" fill="#655867" /><rect x="7" y="8" width="11" height="12" fill="#efd0b5" /><rect x="7" y="7" width="12" height="4" fill="#655867" /><rect x="9" y="13" width="2" height="2" fill="#544c54" /><rect x="15" y="13" width="2" height="2" fill="#544c54" /><rect x="6" y="20" width="14" height="9" fill="#b890a4" /><rect x="3" y="22" width="4" height="7" fill="#efd0b5" /><rect x="19" y="22" width="3" height="7" fill="#efd0b5" /><path d="M7 29H11V33H5V31H7ZM15 29H19V31H21V33H15Z" fill="#6e747d" /></svg></div>
         <span id={`${previewId}-hint`} className={styles.mapBadge}>CLICK A BUILDING · OPEN A PREVIEW ↗</span>
       </div>
-      <div className={styles.locationNav} aria-label="Choose a place">{places.map((item,index) => <button key={item.id} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}><span>0{index+1}</span>{item.name}</button>)}</div>
+      <div className={styles.locationNav} aria-label="Choose a place">{places.map(item => <button key={item.id} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}><span>{item.id === 'studio' ? 'COMMERCIAL WORK' : item.id === 'station' ? 'CITIES & STORIES' : item.id === 'post' ? 'COFFEE CHAT' : 'INDEPENDENT PRODUCT'}</span>{item.name}</button>)}</div>
     </div>
     {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} tabIndex={-1} className={styles.preview}>
       <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>
