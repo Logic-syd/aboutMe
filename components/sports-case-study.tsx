@@ -20,7 +20,7 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
   return <div id="top" className={styles.page}>
     <Header detail />
     <main id="main" className={styles.main}>
-      <Link className={styles.back} href="/#project-explorer">← All projects</Link>
+      <Link className={styles.back} href="/#work">← All projects</Link>
       <header className={styles.hero}>
         <div>
           <p className={styles.kicker}>CASE {project.number} / DANZHU · AI SPORTS ASSESSMENT</p>
@@ -108,7 +108,7 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
       </section>
 
       <Link href="/projects/running-mini-program" className={styles.related}><div><span className={styles.kicker}>ALSO AT DANZHU</span><h2>Training on a smaller screen.</h2><p>The student mini-program and teacher dashboard: camera-based exercises, weak-network saving and score reporting.</p></div><span aria-hidden="true">↗</span></Link>
-      <nav className={styles.next} aria-label="Case study navigation"><Link href="/#project-explorer">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
+      <nav className={styles.next} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
     </main>
     <Footer />
   </div>;

@@ -212,26 +212,30 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     const point = (x: number, y: number, z = 0): Point => [x * worldPerPixel, y * worldPerPixel, z];
     const labelWidth = compact ? width < 300 ? 84 : 98 : width < 900 ? 110 : 152;
     const radiusY = (height - 280) / 2;
-    const rootX = expanded ? width * (compact ? .21 : .19) : 0;
+    const rootX = expanded ? width * (compact ? .21 : .17) : 0;
     const rootY = expanded && compact ? 0 : 40;
-    const radiusX = Math.min(width * (expanded && !compact ? .215 : .34), width / 2 - rootX - labelWidth / 2 - (compact ? 10 : 18));
-    const overview = orbitPoints(projects.length, radiusX, radiusY, Math.PI / 2, labelWidth + 18, 78);
-    const focused = orbitPoints(projects.length, radiusX, radiusY, Math.PI, labelWidth + 18, 78);
+    const radiusX = Math.min(width * (expanded && !compact ? .245 : .34), width / 2 - rootX - labelWidth / 2 - (compact ? 10 : 18));
+    // Larger planets need more vertical clearance from the next project's label.
+    const verticalSpacing = compact ? 78 : expanded ? 130 : 150;
+    const overview = orbitPoints(projects.length, radiusX, radiusY, Math.PI / 2, labelWidth + 18, verticalSpacing);
+    const focused = orbitPoints(projects.length, radiusX, radiusY, Math.PI, labelWidth + 18, verticalSpacing);
     const satellites = orbitPoints(projects.length - 1, width * .19, height * .21);
     const rootPosition = point(rootX, rootY);
     const selectedPosition = compact ? point(-width * .03, height * .29, .2) : point(rootX - radiusX, rootY, .2);
-    const projectRadius = (compact ? 18 : 27) * worldPerPixel;
     const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 28 : 39) * worldPerPixel, gradient: rootGradient, color: '#d7bc94', active: false, index: 0, onSelect: onReset }];
     let sibling = 0;
     projects.forEach((project, index) => {
       const active = selection.project === index;
+      const commercial = project.kind === 'commercial';
+      const projectRadius = (compact ? commercial ? 25 : 18 : commercial ? 38 : 27) * worldPerPixel * (expanded && !active ? .72 : 1);
+      const satelliteRadius = (commercial ? 12 : 9) * worldPerPixel;
       const rank = active ? 0 : sibling++;
       const anglePoint = expanded ? focused[rank + 1] : overview[index];
       const satellite = satellites[rank];
       const position = expanded && active ? selectedPosition : expanded && compact
         ? point(rootX + satellite.x, satellite.y, -.2)
         : point((expanded ? rootX : 0) + anglePoint.x, anglePoint.y + 40, Math.sin(index * 1.3) * .18);
-      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position, radius: expanded && compact && !active ? worldPerPixel * 9 : projectRadius, quiet: compact && expanded && !active, muted: expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
+      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position, radius: expanded && compact && !active ? satelliteRadius : projectRadius, quiet: compact && expanded && !active, muted: expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
     });
     if (selection.project !== null) {
       const project = projects[selection.project];

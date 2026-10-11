@@ -26,7 +26,6 @@
 .preview a:focus-visible,.previewClose:focus-visible{outline:3px solid #a5768b;outline-offset:2px}
 @media(max-width:700px){.mapBadge{font-size:7px;padding:4px 6px;left:7px;bottom:6px}.previewClose{width:40px;height:40px}.previewLinks a{min-height:44px}}
 
-/* The six places are navigation themes, separate from the project catalogue. */
-.locationNav button span{font-size:7px;letter-spacing:.25px;line-height:1.5;min-height:21px;color:#7c8575}
-.facts>div:last-child strong{font-size:21px;line-height:1.5}
-@media(max-width:700px){.locationNav button span{font-size:7px;min-height:11px}.facts>div:last-child strong{font-size:20px}}
+/* Give commercial work a larger building within the existing town. */
+.commercialBuilding{width:24%}
+@media(max-width:700px){.commercialBuilding{width:26%;transform:translate(-50%,-34%)}}
