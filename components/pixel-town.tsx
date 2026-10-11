@@ -138,7 +138,7 @@ export function PixelTown() {
       <p className={styles.bio}>I build web and mobile interfaces — from energy API platforms and city dashboards to independent maps and games.</p>
       <ul className={styles.skills} aria-label="Core technologies">{['React', 'TypeScript', 'Vue', 'Next.js'].map(skill => <li key={skill}>{skill}</li>)}</ul>
       <div className={styles.facts}><div><strong>7+</strong><span>years in frontend</span></div><div><strong>{projects.length}</strong><span>project case studies</span></div></div>
-      <div className={styles.quickProjects}><p className={styles.kicker}>A FEW THINGS I’VE BUILT</p><Link href="/projects/renewable-energy-api">Energy API platform<span>European release ↗</span></Link><Link href="/projects/smart-city-dashboards">Smart-city dashboards<span>Maps & route tracking ↗</span></Link></div>
+      <div className={styles.quickProjects}><p className={styles.kicker}>A FEW THINGS I’VE BUILT</p><Link href="/projects/renewable-energy-api">Energy API platform<span>Developer workflows ↗</span></Link><Link href="/projects/smart-city-dashboards">Smart-city dashboards<span>Maps & route tracking ↗</span></Link></div>
       <div className={styles.actions}><a href="#work">View my projects <span>↗</span></a><a href="mailto:yidanshao622@gmail.com">Say hello ↗</a></div>
       <div className={styles.identity}><span className={styles.dot} /> OPEN TO OPPORTUNITIES</div>
     </div>

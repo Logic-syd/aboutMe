@@ -17,7 +17,7 @@ export function OrbitScene() {
         <span className="orbit-card-meta"><span>PROJECT / {project.number}</span><span aria-hidden="true">↗</span></span>
         <strong>{project.heroTitle}</strong>
         <span className="orbit-card-detail">{project.heroDetail}</span>
-        <span className={`orbit-card-state ${project.inDevelopment ? 'is-progress' : ''}`}><i />{project.inDevelopment ? 'In development' : index === 0 ? 'Launched' : 'Case study'}</span>
+        {project.status && <span className={`orbit-card-state ${project.inDevelopment ? 'is-progress' : ''}`}><i />{project.inDevelopment ? 'In development' : 'Case study'}</span>}
       </Link>)}
     </nav>
     <div className="orbit-axis" aria-hidden="true"><span>01</span><span>02</span><span>03</span><span>04</span></div>
