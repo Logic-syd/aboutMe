@@ -8,7 +8,7 @@ import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
 const places: { id: PlaceId; name: string; x: number; y: number; color: string; roof: string; title: string; slugs: string[]; href: string; action: string }[] = [
-  { id: 'studio', name: 'The studio', x: 21, y: 18, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api'], href: '#work', action: 'More projects' },
+  { id: 'studio', name: 'The studio', x: 21, y: 11, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api'], href: '#work', action: 'More projects' },
   { id: 'cafe', name: 'Coffee corner', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'View project' },
   { id: 'cabin', name: 'Mountain hut', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'View project' },
   { id: 'station', name: 'The station', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'Where I’ve lived & worked.', slugs: [], href: '#experience', action: 'Explore my cities' },
@@ -24,7 +24,14 @@ function Building({ place }: { place: typeof places[number] }) {
     <rect x="94" y="4" width="12" height="24" fill="#c3b4a6" /><rect x="91" y="4" width="18" height="6" fill="#ad9a8e" />
     <rect x="38" y="60" width="22" height="24" fill="#a6bec5" /><path d="M48 60V84M38 72H60" stroke="#f4ead9" strokeWidth="4" /><rect x="90" y="60" width="20" height="24" fill="#a6bec5" /><path d="M100 60V84M90 72H110" stroke="#f4ead9" strokeWidth="4" />
     <rect x="66" y="72" width="18" height="39" fill="#857a73" /><rect x="70" y="77" width="10" height="19" fill="#c7d6cd" /><rect x="78" y="99" width="3" height="3" fill="#eee1bf" />
-    {place.id === 'studio' && <><rect x="43" y="28" width="57" height="14" fill="#eae5df" /><rect x="49" y="32" width="8" height="6" fill="#9daab7" /><rect x="61" y="32" width="8" height="6" fill="#b699aa" /><rect x="73" y="32" width="20" height="6" fill="#a4b9a9" /></>}
+    {place.id === 'studio' && <g>
+      <rect x="42" y="26" width="5" height="10" fill="#786b79" /><rect x="95" y="26" width="5" height="10" fill="#786b79" />
+      <rect x="30" y="6" width="85" height="24" fill="#786b79" /><rect x="33" y="9" width="79" height="18" fill="#f8f3e6" />
+      <path d="M40 16H57V25H40ZM45 12H52V16H49V14H48V16H45Z" fill="#687a61" />
+      <path d="M40 20H57M48 19V22" stroke="#f8f3e6" strokeWidth="1" />
+      <text x="62" y="23" fill="#596b52" fontFamily="monospace" fontSize="13" fontWeight="700" letterSpacing="1">WORK</text>
+      <rect x="48" y="36" width="48" height="6" fill="#b6a0b1" />
+    </g>}
     {place.id === 'cafe' && <><path d="M30 52H118V63H30Z" fill="#f3e7d6" /><path d="M30 52H42V63H30ZM54 52H66V63H54ZM78 52H90V63H78ZM102 52H114V63H102Z" fill="#b88796" /><rect x="48" y="26" width="30" height="12" fill="#f6ece0" /><path d="M78 28H87V35H78" fill="none" stroke="#f6ece0" strokeWidth="4" /></>}
     {place.id === 'cabin' && <><path d="M35 52H112M35 91H112" stroke="#b89c83" strokeWidth="4" /><rect x="44" y="26" width="50" height="10" fill="#c8d3c8" /><path d="M50 34L60 24L70 34L79 23L91 34" fill="#798d83" /></>}
     {place.id === 'station' && <><rect x="55" y="21" width="33" height="25" fill="#f5eddf" /><rect x="69" y="25" width="4" height="10" fill="#7e8f93" /><rect x="71" y="32" width="9" height="4" fill="#7e8f93" /><rect x="5" y="93" width="23" height="17" fill="#ac9eae" /><rect x="9" y="96" width="8" height="7" fill="#d9e6e4" /></>}
@@ -160,11 +167,11 @@ export function PixelTown() {
           <rect x="584" y="353" width="56" height="9" fill="#a99b87" /><rect x="589" y="362" width="5" height="12" fill="#897f72" /><rect x="629" y="362" width="5" height="12" fill="#897f72" />
           <path d="M136 582H852" stroke="#b0a99d" strokeWidth="9" /><path d="M142 574V590M167 574V590M192 574V590M217 574V590M242 574V590M267 574V590M292 574V590M317 574V590" stroke="#c4b9a7" strokeWidth="4" />
         </svg>
-        {places.map(item => <button key={item.id} className={`${styles.building} ${item.id === 'studio' ? styles.commercialBuilding : ''} ${previewOpen && selected === item.id ? styles.selected : ''}`} style={{ left: `${item.x}%`, top: `${item.y}%` }} onClick={event => choosePlace(item.id, event.currentTarget)} aria-label={`Explore ${item.name}`} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger data-map-building="true"><Building place={item} /><span className={styles.buildingLabel}>{item.name}</span></button>)}
+        {places.map(item => <button key={item.id} className={`${styles.building} ${item.id === 'studio' ? styles.commercialBuilding : ''} ${previewOpen && selected === item.id ? styles.selected : ''}`} style={{ left: `${item.x}%`, top: `${item.y}%` }} onClick={event => choosePlace(item.id, event.currentTarget)} aria-label={`Explore ${item.id === 'studio' ? 'Commercial work' : item.name}`} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger data-map-building="true"><Building place={item} /><span className={styles.buildingLabel}>{item.id === 'studio' ? 'Commercial work' : item.name}</span></button>)}
         <div className={styles.avatar} style={{ left: `${place.x+5}%`, top: `${place.y+23}%` }} aria-hidden="true"><span className={styles.avatarBubble}>Hi!</span><svg viewBox="0 0 24 34" shapeRendering="crispEdges"><ellipse cx="12" cy="32" rx="10" ry="2" fill="#65736a" opacity=".2" /><path d="M6 3H18V6H21V19H3V6H6Z" fill="#655867" /><rect x="7" y="8" width="11" height="12" fill="#efd0b5" /><rect x="7" y="7" width="12" height="4" fill="#655867" /><rect x="9" y="13" width="2" height="2" fill="#544c54" /><rect x="15" y="13" width="2" height="2" fill="#544c54" /><rect x="6" y="20" width="14" height="9" fill="#b890a4" /><rect x="3" y="22" width="4" height="7" fill="#efd0b5" /><rect x="19" y="22" width="3" height="7" fill="#efd0b5" /><path d="M7 29H11V33H5V31H7ZM15 29H19V31H21V33H15Z" fill="#6e747d" /></svg></div>
         <span id={`${previewId}-hint`} className={styles.mapBadge}>CLICK A BUILDING · OPEN A PREVIEW ↗</span>
       </div>
-      <div className={styles.locationNav} aria-label="Choose a place">{places.map((item,index) => <button key={item.id} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}><span>0{index+1}</span>{item.name}</button>)}</div>
+      <div className={styles.locationNav} aria-label="Choose a place">{places.map((item,index) => <button key={item.id} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}><span>{item.id === 'studio' ? 'WORK' : `0${index+1}`}</span>{item.name}</button>)}</div>
     </div>
     {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} tabIndex={-1} className={styles.preview}>
       <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>

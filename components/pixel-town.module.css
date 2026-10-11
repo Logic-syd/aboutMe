@@ -27,5 +27,8 @@
 @media(max-width:700px){.mapBadge{font-size:7px;padding:4px 6px;left:7px;bottom:6px}.previewClose{width:40px;height:40px}.previewLinks a{min-height:44px}}
 
 /* Give commercial work a larger building within the existing town. */
-.commercialBuilding{width:24%}
-@media(max-width:700px){.commercialBuilding{width:26%;transform:translate(-50%,-34%)}}
+.commercialBuilding{width:30%;line-height:0}
+.commercialBuilding .buildingLabel{display:block;width:max-content;max-width:100%;margin:0 auto;font-weight:700;border-color:#a4b298;color:#52664b}
+.selected.commercialBuilding .buildingLabel{border-color:#b692a3;color:#765469}
+
+@media(max-width:700px){.commercialBuilding .buildingLabel{padding:2px 5px}}

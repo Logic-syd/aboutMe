@@ -41,7 +41,7 @@ Mountain Chess is an independently published game, documented as the eighth case
 
 The header links to About Me, My Projects, My Work, Growth Map and Let’s Talk. My Work summarizes confirmed responsibilities from `lib/experience.ts`; Growth Map explores the same experience by place. Contact copy welcomes frontend and full-stack engineering opportunities and new challenges. The professional title remains grounded in the supplied Senior Frontend Engineer experience.
 
-Commercial work receives visual emphasis within the existing composition: The Studio building is larger than the other town buildings, and commercial project spheres are about 40% larger in diameter than independent project spheres. The nine commercial and four independent cases use the explicit `kind` field in `lib/projects.ts` for sphere sizing, including compact satellite mode. The original homepage order and complete 13-project explorer remain; there are no additional commercial highlight cards or independent-product sections.
+Commercial work receives visual emphasis within the existing composition: The Studio building is approximately 1.88 times the normal desktop width (1.58 times on phones), with a rooftop pixel briefcase and WORK sign plus a Commercial work label. Floating project labels identify WORK or PERSONAL, and commercial project spheres are about 40% larger in diameter than independent project spheres. The nine commercial and four independent cases use the explicit `kind` field in `lib/projects.ts` for sphere sizing, including compact satellite mode. The original homepage order and complete 13-project explorer remain; there are no additional commercial highlight cards or independent-product sections.
 
 ## Graph and career map
 
