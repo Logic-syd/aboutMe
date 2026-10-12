@@ -76,12 +76,13 @@ export function DataExportDemo() {
   };
   const progress = status === 'draft' ? verification === 'request' ? 1 : 0 : busy ? 2 : 3;
 
-  return <div className={styles.demo}>
+  return <div className={styles.demo} data-case-demo="export">
     <div className={styles.bar}><span>MY DATA <i>/</i> EXPORT WORKSPACE</span><span className={styles.sample}>LOCAL DEMO</span><button type="button" onClick={() => { clear(); setConfig(initial); }}>Reset demo</button></div>
     <ol className={styles.steps} aria-label="Export workflow">{['Choose scope', 'Confirm identity', 'Prepare data', 'Verify & download'].map((step, index) => <li key={step} data-current={index === progress} data-complete={index < progress}><span aria-hidden="true">{index < progress ? '✓' : `0${index + 1}`}</span>{step}</li>)}</ol>
     <div className={styles.workspace}>
       <form className={styles.controls} onSubmit={event => { event.preventDefault(); if (!invalid && status === 'draft') { setVerification('request'); reveal(); } }}>
         <p className={styles.kicker}>01 / SELECT A SCOPE</p>
+        <div className={styles.scopeFields}>
         <fieldset><legend>Your devices</legend>{devices.map(device => <label key={device.id} className={styles.checkbox}><input type="checkbox" checked={config.devices.includes(device.id)} onChange={() => toggle('devices', device.id)} /><span>{device.name}<small>{device.type} · Sample device</small></span></label>)}<label className={`${styles.checkbox} ${styles.restricted}`}><input type="checkbox" disabled /><span>Shared site inverter<small>Not owned by this sample account</small></span></label></fieldset>
         <fieldset><legend>Data categories</legend><div className={styles.categories}>{fields.map(field => <label key={field.id}><input type="checkbox" checked={config.fields.includes(field.id)} onChange={() => toggle('fields', field.id)} />{field.name}</label>)}</div></fieldset>
         <div className={styles.selects}>
@@ -90,6 +91,7 @@ export function DataExportDemo() {
         </div>
         <div className={styles.scenario}><label htmlFor={`${id}-outcome`}>Try an outcome</label><select id={`${id}-outcome`} value={config.scenario} onChange={event => update({ ...config, scenario: event.target.value as Config['scenario'] })}><option value="success">All data available</option><option value="partial">Some data missing</option><option value="failure">Data source unavailable</option></select></div>
         <div className={styles.estimate}><span>Illustrative file estimate</span><strong>{estimate.toFixed(1)} <small>MB</small></strong><p>Demo limit: 12 MB. These are sample figures, not production limits.</p></div>
+        </div>
         <p id={`${id}-validation`} className={styles.validation} aria-live="polite">{invalid || 'Read-only data. Change any selection to start a new demo request.'}</p>
         <button className={styles.primary} type="submit" disabled={!!invalid || status !== 'draft' || verification !== 'none'} aria-describedby={`${id}-validation`}>Request sample export <span aria-hidden="true">↗</span></button>
       </form>

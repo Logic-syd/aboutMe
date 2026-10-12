@@ -2,6 +2,8 @@ import Link from 'next/link';
 import type { Project } from '@/lib/projects';
 import { Header, Footer } from '@/components/site';
 import { ApiPlatformDemo } from '@/components/api-platform-demo';
+import { CaseChapter, CaseIntro } from '@/components/case-chapter';
+import { CaseNotes } from '@/components/case-notes';
 import styles from './api-case-study.module.css';
 
 const engineeringNotes = [
@@ -32,11 +34,12 @@ const engineeringNotes = [
 ];
 
 export function ApiCaseStudy({ project, next }: { project: Project; next: Project }) {
-  return <div id="top" className={styles.page}>
+  return <div id="top" className={`project-case ${styles.page}`}>
     <Header detail />
     <main id="main" className={styles.main}>
+      <CaseIntro>
       <Link className={styles.back} href="/#work">← All projects</Link>
-      <header className={styles.hero}>
+      <header className={styles.hero} data-case-hero>
         <div>
           <p className={styles.kicker}>CASE 01 / SUNGROW · DEVELOPER EXPERIENCE</p>
           <h1>Energy APIs.<br /><em>From docs to working calls.</em></h1>
@@ -51,25 +54,16 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
         </aside>
       </header>
 
-      <div className={styles.overview} aria-label="Platform at a glance">
+      <div data-case-overview className={styles.overview} aria-label="Platform at a glance">
         <div><span className={styles.overviewNumber}>05</span><p>Configured sites<span>China · International · Europe · Australia · India</span></p></div>
         <div><span className={styles.overviewNumber}>02</span><p>Authorization paths<span>User-level V1 · OAuth2 V2</span></p></div>
         <div className={styles.stack}><span className={styles.kicker}>TOOLS & FOCUS</span><p>React · TypeScript<br /> API integration · Developer experience</p></div>
       </div>
 
-      <section id="api-playground" className={styles.section} aria-labelledby="api-playground-title">
-        <div className={styles.sectionHeading}>
-          <div><p className={styles.kicker}>01 / THE INTERACTIVE CONSOLE</p><h2 id="api-playground-title">Follow a request.</h2></div>
-          <p>Choose a site, check application access and run a sample call. Then try a missing permission or a timeout.</p>
-        </div>
-        <ApiPlatformDemo />
-      </section>
+      </CaseIntro>
+      <CaseChapter id="api-playground" kicker="01 / THE INTERACTIVE CONSOLE" title="Follow a request." description="Choose a site, check application access and run a sample call. Then try a missing permission or a timeout." layout="demo"><ApiPlatformDemo /></CaseChapter>
 
-      <section className={styles.productSection} aria-labelledby="api-product-title">
-        <div className={styles.sectionHeading}>
-          <div><p className={styles.kicker}>02 / THE PRODUCT BEHIND THE API</p><h2 id="api-product-title">Two sides of one platform.</h2></div>
-          <p>Developers need a path to integration. Operators need the tools to manage access and keep that path working.</p>
-        </div>
+      <CaseChapter id="api-product" kicker="02 / THE PRODUCT BEHIND THE API" title="Two sides of one platform." description="Developers need a path to integration. Operators need tools to manage access and keep that path working."><div className="case-centered-content">
         <div className={styles.workspaces}>
           <article className={styles.workspace}>
             <span className={styles.workspaceIcon} aria-hidden="true">{'{ }'}</span>
@@ -83,29 +77,20 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
           </article>
         </div>
         <p className={styles.productNote}>Applications connect API access with plans, allowlists, Webhook and MQTT settings. The frontend makes these relationships navigable.</p>
-      </section>
+      </div></CaseChapter>
 
-      <section id="api-engineering" className={styles.section} aria-labelledby="api-engineering-title">
-        <div className={styles.sectionHeading}>
-          <div><p className={styles.kicker}>03 / ENGINEERING IN CONTEXT</p><h2 id="api-engineering-title">Where the complexity lives.</h2></div>
-          <p>Explore the platform’s request, regional and access boundaries—and what they mean for frontend implementation.</p>
-        </div>
-        <div className={styles.notes}>
-          {engineeringNotes.map(note => <details key={note.number} className={styles.note}>
-            <summary><span className={styles.noteNumber}>{note.number}</span><div><span className={styles.kicker}>{note.label}</span><h3>{note.title}</h3><p>{note.summary}</p></div><span className={styles.expand} aria-hidden="true">+</span><span className={styles.expandLabel}>Explore</span></summary>
-            <div className={styles.noteBody}><p>{note.detail}</p><p className={styles.takeaway}>{note.takeaway}</p></div>
-          </details>)}
-        </div>
-      </section>
+      <CaseChapter id="api-engineering" kicker="03 / ENGINEERING IN CONTEXT" title="Where the complexity lives." description="Explore the platform’s request, regional and access boundaries—and their implications for frontend implementation.">
+        <CaseNotes label="API engineering topics" notes={engineeringNotes.map(note => ({ label: note.label, title: note.title, summary: note.summary, body: <><p>{note.detail}</p><p className="case-takeaway">{note.takeaway}</p></> }))} />
+      </CaseChapter>
 
-      <section id="api-delivery" className={styles.delivery} aria-labelledby="api-delivery-title">
-        <div><p className={styles.kicker}>04 / PLATFORM LEADERSHIP & DELIVERY</p><h2 id="api-delivery-title">Where I contribute.</h2><p>Platform leadership alongside hands-on React frontend work, European delivery, online debugging and application-management interfaces.</p></div>
+      <CaseChapter id="api-delivery" kicker="04 / PLATFORM LEADERSHIP & DELIVERY" title="Where I contribute."><div className="case-two-column">
+        <div className="case-lead"><p>Platform leadership alongside hands-on React frontend work, European delivery, online debugging and application-management interfaces.</p></div>
         <ol className={styles.deliverySteps}>
           <li><span>01</span><div><h3>European delivery</h3><p>Led the platform’s frontend delivery for the European site, connecting product requirements with the developer-facing workflows.</p></div></li>
           <li><span>02</span><div><h3>Online debugging</h3><p>Work on the developer-facing flow for making API calls and inspecting their responses.</p></div></li>
           <li><span>03</span><div><h3>Application management</h3><p>Work on the application interfaces that developers use to manage their API integrations.</p></div></li>
         </ol>
-      </section>
+      </div></CaseChapter>
 
       <div className={styles.contact}><div><p className={styles.kicker}>BUILDING A DEVELOPER PRODUCT?</p><h2>Let’s make the complex parts usable.</h2></div><a href="https://linkedin.com/in/yidanshao/">Let’s talk <span aria-hidden="true">↗</span></a></div>
       <nav className={styles.next} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>

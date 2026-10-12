@@ -2,7 +2,7 @@
 
 Public portfolio: https://about-me-henna-alpha.vercel.app/
 
-English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project knowledge graph, ten expandable case cards, a Leaflet career map and contact links. Each project has a statically generated detail route.
+English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project explorer, thirteen project case studies, a Leaflet growth map and contact links. Each project has a statically generated detail route.
 
 ## Local development
 
@@ -21,6 +21,22 @@ npm run typecheck
 npm run build
 npm start
 ```
+
+## Project layout contract
+
+Every project detail page uses complete desktop chapters: the introduction fits beside the site header, and each following module fits one viewport. Long technical notes use topic tabs; product images are shown in full with captions and original-image links. Interactive consoles retain a complete frame with bounded tool panes. Mobile pages stack and scroll naturally.
+
+This is an ongoing owner requirement for new and edited projects. Read [AGENTS.md](./AGENTS.md) before changing project content or layout. Shared components are `CaseIntro`, `CaseChapter` and `CaseNotes`; layout rules are in `app/project-case.css`.
+
+The browser layout checks automatically include every entry in `lib/projects.ts`, at 1440×900, 1280×720, 1024×600 and 390×844. They also exercise topic/image selections and expanded interactive results.
+
+```sh
+npx playwright install chromium # once
+npm run build
+npm run test:layout
+```
+
+A system Chromium can be used by setting `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/path/to/chromium`. The tests start the production server on port 3090 and save traces for failures.
 
 ## Deploy to Vercel
 

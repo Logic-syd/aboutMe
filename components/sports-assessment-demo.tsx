@@ -152,9 +152,9 @@ export function SportsAssessmentDemo() {
   const total = view.reps.slice(0, participants).reduce((a, b) => a + b, 0);
 
   return (
-    <div className={styles.demo} data-testid="sports-demo">
+    <div className={styles.demo} data-testid="sports-demo" data-case-demo="sports">
       <div className={styles.caption}><span>Interactive recreation · Sample data</span><span>01 / MOVEMENT → FEEDBACK</span></div>
-      <div className={styles.console}>
+      <div className={styles.stageLayout}><div className={styles.console}>
         <div className={styles.toolbar}>
           <div><span className={styles.statusDot} data-running={view.phase === "running"} /><span role="status">{status}</span></div>
           <span className={styles.timer} aria-label={`${Math.floor(view.time)} of 12 seconds`}>{String(Math.floor(view.time)).padStart(2, "0")} <span>/ 12 SEC</span></span>
@@ -170,7 +170,7 @@ export function SportsAssessmentDemo() {
           <span><i /> Movement</span><b aria-hidden="true">→</b><span>AI result simulation</span><b aria-hidden="true">→</b><span className={view.pending ? styles.waiting : ""}>{view.pending ? `${view.pending} in transit` : total > 0 ? "Results received" : "Waiting for movement"}</span>
         </div>
       </div>
-      <div className={styles.controls}>
+      <div className={styles.sidePanel}><div className={styles.controls}>
         <div className={styles.transport}><button className={styles.primary} onClick={startPause}>{view.phase === "running" ? "Pause session" : view.phase === "paused" ? "Resume session" : view.phase === "complete" ? "Play again" : "Start session"}<span aria-hidden="true">{view.phase === "running" ? "Ⅱ" : "↗"}</span></button><button className={styles.reset} onClick={() => reset()} aria-label="Reset session">↺ Reset</button></div>
         <fieldset className={styles.participants}><legend>Participants <span>· changing resets</span></legend><div>{[1, 3].map(count => <button key={count} aria-pressed={participants === count} onClick={() => { if (count !== participants) reset(count); }}>{count === 1 ? "One student" : "Three students"}</button>)}</div></fieldset>
         <div className={styles.delay}><label htmlFor="sports-result-delay">Result delay <output htmlFor="sports-result-delay">{delay} ms</output></label><input id="sports-result-delay" type="range" min={0} max={1200} step={100} value={delay} onChange={event => setDelay(Number(event.target.value))} /><span>Increase it to see results arrive later.</span></div>
@@ -185,6 +185,7 @@ export function SportsAssessmentDemo() {
         {PEOPLE.slice(0, participants).map((person, index) => <div className={styles.result} key={person.name} style={{ "--student-color": person.color } as React.CSSProperties}><div className={styles.student}><i /><span>{person.name}<small>Identity tracked separately</small></span></div><div className={styles.numbers}><span><strong data-testid={`reps-${index}`}>{view.reps[index]}</strong> reps received</span><span><strong>{view.phase === "complete" ? person.score : "—"}</strong> / 100<span className={styles.scoreLabel}>sample score</span></span></div></div>)}
       </div>
       {speechNote && <p className={styles.speechNote} role="status">{speechNote}</p>}
+      </div></div>
       <p className={styles.footnote}>Try three students, then raise the delay. Movement continues while each student’s results arrive independently. Scores illustrate the interface; they are not official exam criteria.</p>
     </div>
   );

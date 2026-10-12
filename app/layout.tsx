@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import './project-case.css';
 import { RouteScroll } from '@/components/route-scroll';
 
 export const metadata: Metadata = {
