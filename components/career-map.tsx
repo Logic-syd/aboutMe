@@ -14,7 +14,7 @@ import { PhotoViewer } from '@/components/photo-viewer';
 // Personal chapters belong on the growth map, alongside the employment history.
 type MapStop = { id: string; label: string; area: string; project: string; relatedProjects?: string[] };
 const workStops: MapStop[] = experiences.map(experience => ({ id: experience.id, label: experience.company, area: experience.area, project: experience.project, relatedProjects: experience.relatedProjects }));
-const mapStops: MapStop[] = [{ id: 'berlin', label: 'Independent projects · Job search', area: 'Wedding · Berlin, Germany', project: 'discovery-map' }, workStops[0], ...workStops.slice(1)];
+const mapStops: MapStop[] = [workStops[0], { id: 'berlin', label: 'Independent projects · Job search', area: 'Wedding · Berlin, Germany', project: 'discovery-map' }, ...workStops.slice(1)];
 const stopLabels: Record<string, { name: string; region: string }> = {
   berlin: { name: 'Berlin', region: 'Wedding · Germany' },
   sungrow: { name: 'Munich', region: 'Current base · Germany' },
@@ -102,7 +102,7 @@ export function CareerMap() {
     if (map.current) map.current.fitBounds(artworkBounds, { padding: [10, 10], animate: false });
   }
   return <div className="career-explorer place-story-explorer">
-    <div className="career-location-picker" aria-label="Choose a city or neighbourhood">{mapStops.map(experience => <button key={experience.id} className={experience.id === 'sungrow' ? 'current-base-location' : ''} onClick={() => selectExperience(experience.id)} aria-pressed={selectedId === experience.id}><span><strong>{stopLabels[experience.id].name}</strong><small>{stopLabels[experience.id].region}</small></span></button>)}</div>
+    <div className="career-location-picker" aria-label="Choose a city or neighbourhood, most recent chapter first">{mapStops.map(experience => <button key={experience.id} className={experience.id === 'sungrow' ? 'current-base-location' : ''} onClick={() => selectExperience(experience.id)} aria-pressed={selectedId === experience.id}><span><strong>{stopLabels[experience.id].name}</strong><small>{stopLabels[experience.id].region}</small></span></button>)}</div>
     <div className="career-map-panel">
       <div className="career-map-visual">
       <div className="map-toolbar"><span className="eyebrow">{areaView ? 'LOCAL MAP / REAL GEOGRAPHY' : 'GROWTH MAP / NOT TO SCALE'}</span><button type="button" onClick={() => {

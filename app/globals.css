@@ -599,7 +599,7 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 
 /* A personal atlas: generous maps, uneven city chapters and visible regional context. */
 .place-story-explorer{border:0;--growth-map-height:clamp(300px,calc(100svh - 295px),510px)}
-.place-story-explorer .career-location-picker{grid-template-columns:1fr 1.3fr repeat(4,1fr);gap:7px;background:transparent;border:0;margin-bottom:14px}
+.place-story-explorer .career-location-picker{grid-template-columns:1.3fr repeat(5,1fr);gap:7px;background:transparent;border:0;margin-bottom:14px}
 .place-story-explorer .career-location-picker button{min-height:62px;border:1px solid var(--line);padding:10px 12px;background:#eeede5;box-shadow:none}
 .place-story-explorer .career-location-picker button:last-child{border-right:1px solid var(--line)}
 .place-story-explorer .career-location-picker button>span{display:block!important;flex:1}
