@@ -4,9 +4,9 @@ export type PersonalPhoto = { src: string; alt: string; caption: string; width: 
 // Education and photo contexts are owner-confirmed. Display framing preserves the original files.
 export const education: Education = { school: 'Jilin University', degree: 'Bachelor’s degree', college: 'School of Software', context: 'A leading research university in China, part of the national Project 985 initiative.' };
 export const personalPhotos: PersonalPhoto[] = [
-  { src: '/images/personal/current-office.jpg', alt: 'Yidan outside her current office', caption: 'Outside my current office', width: 960, height: 1280, position: '50% 34%' },
-  { src: '/images/personal/graduation-portrait.jpg', alt: 'Graduation portrait at Jilin University', caption: 'Graduation day · Jilin University', width: 1280, height: 960, position: '65% 50%' },
-  { src: '/images/personal/graduation-classmates.jpg', alt: 'Graduation celebration with classmates', caption: 'Caps, classmates & a new beginning', width: 1280, height: 960, fit: 'contain' },
+  { src: '/images/personal/graduation-portrait.jpg', alt: 'Graduation portrait at Jilin University', caption: 'Graduation day · Jilin University', shortCaption: 'Jilin University', width: 1280, height: 960, position: '65% 50%' },
+  { src: '/images/personal/graduation-classmates.jpg', alt: 'Graduation celebration with classmates', caption: 'Caps, classmates & a new beginning', shortCaption: 'With classmates', width: 1280, height: 960, position: '40% 60%' },
+  { src: '/images/personal/current-office.jpg', alt: 'Yidan outside her current office in Munich', caption: 'Outside my current office · Munich', shortCaption: 'Working in Munich', width: 960, height: 1280, position: '50% 34%' },
 ];
 export const workPhotos: Record<string, PersonalPhoto> = {
   fingard: { src: '/images/personal/fingard-team.jpg', alt: 'Fingard colleagues in an outdoor group photo', caption: 'With the Fingard team', width: 1280, height: 960, fit: 'contain' },
