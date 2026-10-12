@@ -225,7 +225,7 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 
 /* One orbit contains the whole catalog. Labels sit below the visible spheres. */
 .three-explorer{container:constellation / inline-size}
-.three-stage{height:max(720px,calc(var(--project-count) * 50px + 240px))}
+
 .space-node-label.is-project{width:152px;display:grid;grid-template-columns:minmax(0,1fr) 30px;align-items:center;border:1px solid transparent;border-radius:14px;background:#faf9f6c4;transition:background .2s,border-color .2s,box-shadow .2s}
 .space-node-label.is-project:hover,.space-node-label.is-project:focus-within{background:#fffafc;border-color:#d5a9b9;box-shadow:0 5px 22px #8b436b12}
 .space-node-label.is-project:has(.active){background:#f9e8ef;border-color:#cc86a1}
@@ -245,7 +245,6 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .space-label.label-technology.active{background:#f5dfe9;border-color:#bc527b}
 .three-stage-hint{bottom:28px;right:24px;left:auto;font-size:10px}
 @container constellation (width < 900px){
- .three-stage{height:max(740px,calc(var(--project-count) * 70px + 170px))}
  .space-node-label.is-project{width:110px}
  .space-node-label.is-project .label-project strong{font-size:11px}
  .space-label.label-leaf{width:108px}
@@ -254,7 +253,6 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
  .three-stage-hint{left:20px;right:auto;bottom:69px}
 }
 @container constellation (width < 650px){
- .three-stage{height:max(780px,calc(var(--project-count) * 82px + 150px))}
  .space-node-label.is-project{width:98px;grid-template-columns:minmax(0,1fr) 26px;border-radius:10px}
  .space-node-label.is-project .label-project{padding:6px 0 6px 7px}
  .space-node-label.is-project .label-project strong{font-size:10px}
@@ -336,3 +334,37 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 @media(max-width:650px){.graph-project-entry:nth-child(3n){border-right:1px solid var(--line)}.graph-project-entry:nth-child(2n){border-right:0}.graph-project-case-link{padding:8px 7px;font-size:9px;gap:3px}}
 @media(max-width:380px){.graph-project-picker{grid-template-columns:minmax(0,1fr)}.graph-project-entry:nth-child(n){border-right:0}.graph-project-case-link{font-size:11px;padding:8px 12px;gap:6px}}
 .town-project-card .small-project-top{justify-content:flex-end}
+
+/* Keep the constellation beside its controls, rather than above the catalog. */
+.project-explorer-workspace{--scene-height:clamp(360px,calc(100svh - 180px),520px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start;border-bottom:1px solid var(--line)}
+.project-explorer-workspace .three-stage{height:var(--scene-height);position:sticky;top:20px}
+.graph-project-navigation{min-width:0;max-height:var(--scene-height);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;border-left:1px solid var(--line)}
+.graph-project-navigation .graph-project-picker{grid-template-columns:repeat(2,minmax(0,1fr))}
+.graph-project-navigation .project-group-heading{padding:12px 16px}
+.graph-project-navigation .graph-project-entry:nth-child(n){border-right:1px solid var(--line)}
+.graph-project-navigation .graph-project-entry:nth-child(2n){border-right:0}
+.graph-project-navigation .graph-project-entry>button{padding:10px 12px;min-height:58px;font-size:11px;line-height:1.4}
+.graph-project-navigation .graph-project-case-link{padding:8px 7px;font-size:9px;gap:3px}
+.graph-project-navigation .technology-picker{padding:16px}
+.graph-project-navigation .technology-picker button{min-height:44px}
+.project-explorer-workspace .three-corner-label{top:16px;left:16px;font-size:8px;gap:3px}
+.project-explorer-workspace .three-stage-hint{left:16px;right:16px;bottom:64px;font-size:9px}
+.project-explorer-workspace .three-controls{left:16px;bottom:16px}
+@media(max-width:950px){
+ .project-explorer-workspace{--scene-height:clamp(260px,42svh,340px);display:block}
+ .project-explorer-workspace .three-stage{top:0;z-index:40;border-bottom:1px solid var(--line)}
+ .graph-project-navigation{max-height:none;overflow:visible;border-left:0}
+ .graph-project-navigation .graph-project-picker{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .graph-project-navigation .graph-project-entry:nth-child(n){border-right:1px solid var(--line)}
+ .graph-project-navigation .graph-project-entry:nth-child(3n){border-right:0}
+}
+@media(max-width:650px){
+ .three-explorer .explorer-toolbar{padding:14px 16px;gap:6px}
+ .three-explorer .explorer-toolbar p{font-size:14px}
+ .three-explorer .graph-key{font-size:9px}
+ .graph-project-navigation .graph-project-picker{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .graph-project-navigation .graph-project-entry:nth-child(n){border-right:1px solid var(--line)}
+ .graph-project-navigation .graph-project-entry:nth-child(2n){border-right:0}
+ .graph-project-navigation .graph-project-entry>button{padding:10px;min-height:64px}
+}
+@media(max-width:380px){.graph-project-navigation .graph-project-picker{grid-template-columns:minmax(0,1fr)}.graph-project-navigation .graph-project-entry:nth-child(n){border-right:0}.graph-project-navigation .graph-project-entry>button{min-height:48px}}
