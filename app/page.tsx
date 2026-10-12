@@ -36,7 +36,7 @@ export default function Home() {
         <div className="section-heading"><div><p className="eyebrow">03 / CAREER EXPERIENCE</p><h2 id="career-history-title">Across teams and products.</h2></div><p>Selected responsibilities across my career.<br />From frontend delivery to platform decisions.</p></div>
         <CareerExperience />
       </section>
-      <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><p className="eyebrow">04 / GROWTH MAP</p><h2 id="experience-title">Places that shaped my work.</h2></div><p>From Shanghai and Hangzhou to Berlin and Munich.<br />Explore the places, people and memories along the way.</p></div><CareerMap /></section>
+      <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><p className="eyebrow">04 / GROWTH MAP</p><h2 id="experience-title">Places that shaped my work.</h2></div><p>Shanghai & Hangzhou, Zhejiang → Berlin & Munich.<br />Work, everyday life, and a few favourite places.</p></div><CareerMap /></section>
       <Contact />
     </main>
     <Footer pixel />

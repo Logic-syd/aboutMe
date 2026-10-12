@@ -596,3 +596,57 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
  .personal-photo-dialog{padding:46px 10px 14px;width:calc(100vw - 20px)}
  .personal-photo-close{width:40px;height:40px}
 }
+
+/* A personal atlas: generous maps, uneven city chapters and visible regional context. */
+.place-story-explorer{border:0;--growth-map-height:clamp(300px,calc(100svh - 295px),510px)}
+.place-story-explorer .career-location-picker{grid-template-columns:1fr 1.3fr repeat(4,1fr);gap:7px;background:transparent;border:0;margin-bottom:14px}
+.place-story-explorer .career-location-picker button{min-height:62px;border:1px solid var(--line);padding:10px 12px;background:#eeede5;box-shadow:none}
+.place-story-explorer .career-location-picker button:last-child{border-right:1px solid var(--line)}
+.place-story-explorer .career-location-picker button>span{display:block!important;flex:1}
+.place-story-explorer .career-location-picker small{display:block;font-size:10px;line-height:1.4;margin-top:4px}
+.place-story-explorer .career-location-picker strong{font-size:14px}
+.place-story-explorer .career-location-picker .current-base-location{background:#f0dfe5}
+.place-story-explorer .career-location-picker button[aria-pressed=true]{background:#84354f;color:#fff;border-color:#84354f}
+.place-story-explorer .career-location-picker button[aria-pressed=true] small{color:#f2dfe5}
+.place-story-explorer .career-location-picker button:hover:not([aria-pressed=true]){background:#e4e8db}
+.place-story-explorer .career-map-panel{grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:26px;align-items:center}
+.place-story-explorer .career-map-visual{border:1px solid var(--line)}
+.place-story-explorer .place-story{padding:8px 0}
+.place-story-explorer .place-story h3{font-size:26px}
+.place-story-explorer .place-story-links{margin-top:12px}
+.place-story-explorer .map-note{border:0;padding:8px 0 0}
+.atlas-pin>span{width:100%;height:100%;border-width:4px;transform:none}
+.atlas-pin.current-base-pin>span{width:100%;height:100%;background:#934461;border-width:5px}
+.atlas-pin.is-selected>span{background:#84354f;outline:3px solid #b97790;outline-offset:3px;box-shadow:0 2px 7px #2224}
+.atlas-pin.is-selected::after{content:none}
+.place-story-explorer .place-map-badge{top:16px;left:16px;padding:9px 12px}
+.place-story-explorer .place-map-badge strong{font-size:21px}
+@media(min-width:801px) and (max-width:1100px){
+ .place-story-explorer .career-map-panel{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px}
+ .place-story-explorer .career-location-picker button{padding:8px}
+ .place-story-explorer .career-location-picker strong{font-size:12px}
+ .place-story-explorer .career-location-picker small{font-size:9px}
+ .place-story-explorer .place-story h3{font-size:22px}
+}
+@media(min-width:801px) and (max-height:650px){
+ .place-story-explorer{--growth-map-height:calc(100svh - 245px)}
+ .place-story-explorer .career-location-picker{margin-bottom:10px}
+ .place-story-explorer .career-location-picker button{min-height:53px;padding-top:7px;padding-bottom:7px}
+ .place-story-explorer .place-story h3{font-size:21px}
+ .place-story-explorer .place-story>p:not(.eyebrow),.place-story-explorer .place-reflection>p:last-child{font-size:12px;line-height:1.5}
+ .place-story-explorer .place-memory{font-size:13px;line-height:1.5;margin:10px 0}
+ .place-story-explorer .place-story-tabs{margin-top:8px}
+ .place-story-explorer .place-story-links{margin-top:6px;padding-top:0}
+ .place-story-explorer .map-toolbar{min-height:35px;padding:6px 10px}
+}
+@media(max-width:800px){
+ .place-story-explorer .career-location-picker{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ .place-story-explorer .career-location-picker button{min-height:65px;padding:8px}
+ .place-story-explorer .career-location-picker button:nth-child(3n){border-right:1px solid var(--line)}
+ .place-story-explorer .career-location-picker strong{font-size:12px}
+ .place-story-explorer .career-location-picker small{font-size:9px}
+ .place-story-explorer .career-map-panel{grid-template-columns:minmax(0,1fr);gap:20px}
+ .place-story-explorer .career-map-canvas.schematic-map,.place-story-explorer .career-map-canvas.geographic-map{height:clamp(300px,65vw,420px)}
+ .place-story-explorer .place-story{padding:0}
+ .place-story-explorer .place-story h3{font-size:25px}
+}

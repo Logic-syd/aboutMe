@@ -72,7 +72,7 @@ export function PlaceMap({ place }: { place: PlaceStory }) {
 
   return <div className={`place-map-frame ${state === 'unavailable' ? 'is-unavailable' : ''}`}>
     <div ref={container} className="career-map-canvas geographic-map" role="region" aria-label={`Geographic map of ${place.name}, ${place.region}`} />
-    {state === 'ready' && <><div className="place-map-badge"><span className="eyebrow">AREA VIEW</span><strong>{place.name}</strong><small>{place.region}</small></div><span className="place-map-north" aria-hidden="true">N ↑</span></>}
+    {state === 'ready' && <><div className="place-map-badge"><span className="eyebrow">{place.neighbourhood ? 'MY NEIGHBOURHOOD' : 'AREA VIEW'}</span><strong>{place.neighbourhood ?? place.name}</strong><small>{place.neighbourhood ? `${place.name} · ${place.region}` : place.region}</small></div><span className="place-map-north" aria-hidden="true">N ↑</span></>}
     {state === 'loading' && <p className="place-map-status" role="status">Opening {place.name}…</p>}
     {state === 'unavailable' && <p className="place-map-status" role="status">The area map could not load. You can still read the place story below or return to the growth map.</p>}
     {state === 'ready' && <button className="place-map-reset" type="button" onClick={() => map.current?.fitBounds(areaBounds.current, { padding: [8, 8], animate: false })}>Reset area view ↗</button>}
