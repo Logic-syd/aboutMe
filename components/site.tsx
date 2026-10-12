@@ -7,7 +7,7 @@ export function Header({ detail = false }: { detail?: boolean }) {
       <div className="nav-sections">
         <a href={detail ? '/#about' : '#about'}>About Me</a>
         <a href={detail ? '/#work' : '#work'}>My Projects</a>
-        <a href={detail ? '/#professional-work' : '#professional-work'}>My Work</a>
+        <a href={detail ? '/#work-projects' : '#work-projects'}>My Work</a>
         <a href={detail ? '/#experience' : '#experience'}>Growth Map</a>
       </div>
       <a className="nav-contact" href={detail ? '/#contact' : '#contact'}>Let’s talk <span aria-hidden="true">↗</span></a>

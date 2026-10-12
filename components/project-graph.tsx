@@ -29,6 +29,11 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
   const [ready, setReady] = useState(false);
   const sceneReady = useCallback(() => { setReady(true); onSlow(false); }, [onSlow]);
   const region = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (window.location.hash !== '#work-projects') return;
+    const frame = requestAnimationFrame(() => document.getElementById('work-projects')?.scrollIntoView({ block: 'start', behavior: 'instant' }));
+    return () => cancelAnimationFrame(frame);
+  }, []);
   const reducedMotion = useSyncExternalStore(subscribeMotion, getMotion, getServerMotion);
   useEffect(() => {
     const element = region.current;
@@ -67,8 +72,11 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
       { kind: 'commercial', id: 'professional-work', title: 'Work projects' },
       { kind: 'independent', id: 'personal-projects', title: 'Personal projects' },
     ].map(group => <section id={group.id} className={`project-picker-group project-group-${group.kind}`} aria-labelledby={`${group.id}-title`} key={group.kind}>
-      <div className="project-group-heading"><h3 id={`${group.id}-title`}>{group.title}</h3><span>{projects.filter(item => item.kind === group.kind).length} projects</span></div>
-      <div className="graph-project-picker" aria-label={`Select from ${group.title.toLowerCase()}`}>{projects.map((item,index) => item.kind === group.kind && <button key={item.slug} aria-pressed={selection.project === index} onClick={() => selectProject(index)}><span>{item.number}</span>{graphTitles[index]}</button>)}</div>
+      <div id={group.kind === 'commercial' ? 'work-projects' : undefined} className="project-group-heading"><h3 id={`${group.id}-title`}>{group.title}</h3><span>{projects.filter(item => item.kind === group.kind).length} projects</span></div>
+      <div className="graph-project-picker" aria-label={`Select from ${group.title.toLowerCase()}`}>{projects.map((item,index) => item.kind === group.kind && <div className="graph-project-entry" data-selected={selection.project === index} key={item.slug}>
+        <button aria-pressed={selection.project === index} onClick={() => selectProject(index)}><span>{item.number}</span>{graphTitles[index]}</button>
+        <Link className="graph-project-case-link" href={`/projects/${item.slug}`} aria-label={`Read ${item.title} case study`} title={`Read ${item.title} case study`}>Details<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>
+      </div>)}</div>
     </section>)}</div>
     {project && <div className="technology-picker"><span className="eyebrow">02 / SELECT A TECHNOLOGY</span><div>{project.tags.map((tag,index) => <button key={tag} aria-pressed={selection.technology === index} onClick={() => selectTechnology(index)}>{tag}<span aria-hidden="true">{selection.technology === index ? '−' : '+'}</span></button>)}</div>{selection.technology !== null && <ul className="graph-contributions" aria-label="Selected technology contributions">{graphLeaves(selection.project!, selection.technology).map(leaf => <li key={leaf}>{leaf}</li>)}</ul>}</div>}
     <div className="graph-detail" aria-live="polite">{project ? <><div>{project.status && <span className={`status ${project.inDevelopment ? 'status-progress' : ''}`}><i />{project.status}</span>}<h3>{project.title}</h3><p>{project.description}</p></div><div className="graph-detail-meta"><p className="eyebrow">MY ROLE</p><p>{project.role}</p><ul className="tags">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><Link className="button graph-case-button" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link><ProjectLinks project={project} /></div></> : <><div><p className="eyebrow">START EXPLORING</p><h3>Projects, technologies, decisions.</h3><p>{projects.length} projects across enterprise products, personal tools and games. Select a project to unfold its technologies, then follow a connection to the work behind it.</p></div><div className="graph-detail-meta"><p className="eyebrow">THREE LEVELS OF DETAIL</p><ol className="graph-levels"><li>Projects</li><li>Technologies & approaches</li><li>Specific contributions</li></ol><p>One branch opens at a time, keeping the connections clear.</p></div></>}</div>
