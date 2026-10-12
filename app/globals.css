@@ -495,3 +495,58 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
  .place-story-explorer .place-story h3{font-size:21px;margin-bottom:8px}
  .place-story-tabs{margin-top:10px}
 }
+
+/* Desktop sections read as complete chapters with a shared viewport rhythm. */
+@media(min-width:801px){
+ html:has(.pixel-portfolio #about){scroll-padding-top:0}
+ .pixel-portfolio main>section:not(:first-child){min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(24px,4svh,48px);padding-bottom:clamp(24px,4svh,48px);scroll-margin-top:0}
+ .pixel-portfolio .about-section>.shell,.pixel-portfolio .contact-section>.shell{width:100%}
+ .pixel-portfolio .section-heading{flex-shrink:0}
+ .pixel-portfolio .career-history-browser,.pixel-portfolio .project-explorer,.pixel-portfolio .place-story-explorer{flex-shrink:0}
+}
+.about-introduction{min-width:0}
+.about-motivation{max-width:380px;margin-top:22px;font-size:16px;line-height:1.75;color:var(--muted)}
+.about-technical-note{font:11px/1.6 monospace;color:var(--muted);margin-top:22px}
+.about-story-list{list-style:none;margin:8px 0 0;padding:0}
+.about-story-list li{padding:17px 0;border-top:1px solid var(--line)}
+.about-story-list li:last-child{padding-bottom:0}
+.about-story-list h3{font-size:19px;line-height:1.4;letter-spacing:-.3px;margin-bottom:7px}
+.pixel-portfolio .about-story-list p{font-size:14px;line-height:1.65;margin-bottom:8px}
+.pixel-portfolio .about-story-list .about-school{font-weight:500;color:var(--ink)}
+.about-story-list .text-link{font-size:12px;gap:16px;margin-top:6px}
+.about-photo-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}
+.about-photo-gallery figure:first-child{grid-column:1/-1}
+.about-photo-gallery img{display:block;width:100%;height:clamp(80px,14svh,140px);object-fit:cover;border:1px solid var(--line)}
+.about-photo-gallery figure:first-child img{height:clamp(140px,24svh,210px)}
+.about-photo-gallery figcaption{font:10px/1.6 monospace;color:var(--muted);margin-top:5px}
+@media(min-width:801px) and (max-height:650px){
+ .about-motivation{font-size:14px;margin-top:16px}
+ .about-story-list li{padding:12px 0}
+ .about-story-list h3{font-size:17px}
+ .pixel-portfolio .about-story-list p{font-size:13px}
+ .about-photo-gallery{margin-top:16px}
+ .about-photo-gallery figure:first-child img{height:150px}
+ .about-photo-gallery img{height:95px}
+}
+@media(max-width:800px){
+ .pixel-portfolio .about-grid{grid-template-columns:minmax(0,1fr);gap:28px}
+ .about-motivation{max-width:none}
+ .about-story-list h3{font-size:18px}
+}
+
+.pixel-portfolio .about-story-list .about-education-context,.pixel-portfolio .about-story-list .about-prior-school{font-size:12px;line-height:1.5;margin-bottom:4px}
+
+.pixel-portfolio .about-story-list .about-coursework{font-size:12px;line-height:1.6;margin:8px 0;color:var(--muted)}
+.about-coursework strong{font-weight:500;color:var(--ink)}
+
+.about-photo-gallery[data-count="2"] figure:first-child{grid-column:auto}
+.about-photo-gallery[data-count="2"] img{height:clamp(140px,24svh,210px)}
+@media(min-width:801px) and (max-width:1100px){
+ .about-motivation{font-size:14px}
+ .about-story-list li{padding:10px 0}
+ .about-story-list h3{font-size:17px}
+ .pixel-portfolio .about-story-list p{font-size:13px}
+ .about-photo-gallery figure:first-child img{height:140px}
+ .about-photo-gallery img{height:80px}
+ .about-photo-gallery[data-count="2"] img{height:140px}
+}

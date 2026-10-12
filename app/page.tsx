@@ -6,6 +6,7 @@ import { PixelTown } from '@/components/pixel-town';
 import { CareerMap } from '@/components/career-map';
 import { projects } from '@/lib/projects';
 import { CareerExperience } from '@/components/career-experience';
+import { AboutMe } from '@/components/about-me';
 import { Contact, Footer, Header } from '@/components/site';
 
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
         </article>)}</div></section>)}
         </ProjectShowcase>
       </section>
-      <section id="about" className="about-section"><div className="shell about-grid"><div><p className="eyebrow">02 / A LITTLE ABOUT ME</p><h2>Frontend craft.<br /><em>End-to-end care.</em></h2></div><div className="about-copy"><p className="large-copy">I’m Yidan, a Senior Frontend Engineer based in Munich. I enjoy the work between a complex problem and an interface that makes sense.</p><p>Over 7+ years, I’ve worked on energy platforms, operational dashboards, financial workflows and web and mobile training products. My experience includes frontend migration, reusable component libraries, real-time interfaces and European platform delivery.</p><p>React, TypeScript and Vue are my core tools. I also work with Next.js and React Native, and explore Node.js, Express and PostgreSQL through personal product development.</p><div className="about-facts"><div><strong>7+ years</strong><span>Frontend experience</span></div><div><strong>Web + mobile</strong><span>Across product domains</span></div></div></div></div></section>
+      <AboutMe />
       <section id="career-history" className="shell experience-section professional-work-section" aria-labelledby="career-history-title">
         <div className="section-heading"><div><p className="eyebrow">03 / CAREER EXPERIENCE</p><h2 id="career-history-title">Across teams and products.</h2></div><p>Selected responsibilities across my career.<br />From frontend delivery to platform decisions.</p></div>
         <CareerExperience />

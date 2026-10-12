@@ -46,3 +46,4 @@
  .windowBar{padding-top:7px;padding-bottom:7px}
  .locationNav button{padding-top:8px;padding-bottom:8px}
 }
+@media(min-width:801px){.townSection{min-height:calc(100svh - 64px)}}
