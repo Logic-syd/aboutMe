@@ -1,20 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
-<title>Illustrative career map with Munich emphasized, Shanghai and Hangzhou on the right</title>
-<desc>Schematic layout, not to scale. Munich is the current base. Shanghai includes Caohejing and Zhangjiang; Hangzhou includes Xixi Wetland and West Lake.</desc>
+<title>Illustrative growth map with Munich, Berlin, Shanghai and Hangzhou</title>
+<desc>Schematic layout, not to scale. Munich is the current base. Berlin was Yidan's first home in Germany and a chapter of independent projects. Shanghai includes Caohejing and Zhangjiang; Hangzhou includes Xixi Wetland and West Lake.</desc>
 <defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#d4d5ca"/></pattern></defs>
 <rect width="1000" height="600" fill="#eeefe8"/><rect width="1000" height="600" fill="url(#dots)"/>
-<path d="M500 305C560 305 556 165 606 165M500 305C560 305 556 438 606 438" fill="none" stroke="#ba8c9b" stroke-width="2" stroke-dasharray="5 8"/>
+<path d="M520 170C560 170 558 165 606 165M520 438C560 438 558 438 606 438M265 315L265 337" fill="none" stroke="#ba8c9b" stroke-width="2" stroke-dasharray="5 8"/>
 <!-- Stylized areas are arranged for reading, not geographic scale. -->
-<path d="M49 49L438 35L519 105L505 227L542 331L502 532L372 559L78 540L31 445L53 285L28 152Z" fill="#f0dfe5" stroke="#d3b9c2" stroke-width="1.5"/>
-<path d="M388 48C455 169 369 208 420 300S362 442 398 551" fill="none" stroke="#c5d9d8" stroke-width="18"/>
-<path d="M54 196L493 207M61 369L519 372M152 53L147 542M309 45L296 550M34 458L399 120" fill="none" stroke="#fff8f9" stroke-width="7" opacity=".9"/>
-<path d="M58 445L125 440L122 506L74 512Z M330 228L383 225L389 295L337 303Z M180 407L253 410L251 465L175 459Z" fill="#d4dfc9"/>
+<path d="M49 49L438 35L519 90L508 270L460 313L78 305L31 240L28 152Z" fill="#f0dfe5" stroke="#d3b9c2" stroke-width="1.5"/>
+<path d="M400 42C450 115 366 188 424 310" fill="none" stroke="#c5d9d8" stroke-width="14"/>
+<path d="M48 180L510 184M151 45L149 304M310 41L300 310" fill="none" stroke="#fff8f9" stroke-width="6"/>
+<path d="M58 244L125 240L122 286L74 292Z M339 210L384 205L389 260L337 273Z" fill="#d4dfc9"/>
 <g font-family="Arial,Helvetica,sans-serif" fill="#282a28">
-<text x="80" y="100" font-size="14" letter-spacing="2" fill="#934461">CURRENT BASE / GERMANY</text>
-<text x="76" y="159" font-size="56" font-weight="700" letter-spacing="-2">Munich<tspan fill="#ab4364">.</tspan></text>
-<text x="80" y="191" font-size="18" fill="#65555c">Senior Frontend Engineer</text>
-<text x="257" y="352" text-anchor="middle" font-size="19">NeuVerge-Tron / Sungrow</text>
-<text x="80" y="503" font-size="14" fill="#934461" letter-spacing="1.3">OPEN TO RELOCATE ↗</text>
+<text x="76" y="88" font-size="12" letter-spacing="2" fill="#934461">CURRENT BASE / GERMANY</text>
+<text x="76" y="145" font-size="50" font-weight="700" letter-spacing="-2">Munich<tspan fill="#ab4364">.</tspan></text>
+<text x="76" y="174" font-size="17" fill="#65555c">Senior Frontend Engineer</text>
+<text x="260" y="255" text-anchor="middle" font-size="17">NeuVerge-Tron / Sungrow</text>
+<text x="76" y="290" font-size="12" fill="#934461" letter-spacing="1.3">OPEN TO RELOCATE ↗</text>
+</g>
+<path d="M51 348L449 334L516 370L522 512L458 563L73 551L32 471Z" fill="#e0e8e4" stroke="#bacbc5" stroke-width="1.5"/>
+<path d="M45 463C157 395 216 485 307 439S443 403 519 468" fill="none" stroke="#b6d2d7" stroke-width="15"/>
+<path d="M57 416L497 413M156 344L150 552M369 340L375 556" fill="none" stroke="#f8faf4" stroke-width="5"/>
+<path d="M70 477L119 469L130 526L75 534Z M404 470L469 482L460 528L395 523Z" fill="#c6d8bc"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#282a28">
+<text x="76" y="377" font-size="12" letter-spacing="1.5" fill="#557467">MY FIRST HOME IN GERMANY</text>
+<text x="76" y="417" font-size="37" font-weight="700" letter-spacing="-1">Berlin<tspan fill="#ab4364">.</tspan></text>
+<text x="265" y="480" text-anchor="middle" font-size="16">Independent projects · Job search</text>
+<text x="76" y="535" font-size="12" letter-spacing="1" fill="#557467">COFFEE, CULTURE &amp; NEW BEGINNINGS</text>
 </g>
 <path d="M607 48L918 46L969 92L955 249L897 276L607 256L580 189Z" fill="#e4e9dc" stroke="#c6cdbd" stroke-width="1.5"/>
 <path d="M782 48C745 106 795 160 766 272" fill="none" stroke="#c6d9d8" stroke-width="15"/>

@@ -40,7 +40,7 @@ export default function Home() {
           <div><p className="experience-domain">{experience.domain}</p><p className="experience-description">{experience.description}</p><div className="experience-case-links">{[experience.project, ...(experience.relatedProjects ?? [])].filter(Boolean).map(slug => <Link key={slug} className="text-link experience-case-link" href={`/projects/${slug}`}>{experience.relatedProjects?.length ? projects.find(project => project.slug === slug)?.title : 'Read case study'} <span aria-hidden="true">↗</span></Link>)}</div></div>
         </article>)}</div>
       </section>
-      <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><p className="eyebrow">04 / GROWTH MAP</p><h2 id="experience-title">Places that shaped my work.</h2></div><p>From Shanghai and Hangzhou to Munich.<br />Explore the places, people and memories along the way.</p></div><CareerMap /></section>
+      <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><p className="eyebrow">04 / GROWTH MAP</p><h2 id="experience-title">Places that shaped my work.</h2></div><p>From Shanghai and Hangzhou to Berlin and Munich.<br />Explore the places, people and memories along the way.</p></div><CareerMap /></section>
       <Contact />
     </main>
     <Footer pixel />
