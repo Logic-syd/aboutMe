@@ -739,3 +739,46 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
  .graph-project-navigation .graph-project-entry[data-selected=true]{grid-column:1/-1}
  .graph-project-navigation .project-technology-panel button{min-height:44px}
 }
+
+/* Clear profile destinations at the top; a brief thank-you at the end. */
+.header-connect{flex-shrink:0;font-family:var(--sans)}
+.header-connect>p{font-size:11px;line-height:1.4;color:var(--muted);margin-bottom:6px}
+.header-profile-links{display:flex;gap:14px}
+.header-profile-links a{display:inline-flex;align-items:center;gap:5px;font-size:11px;line-height:1.4}
+.header-profile-links a:hover{color:var(--pink)}
+.header-profile-links svg{width:13px;height:13px;color:var(--pink)}
+.pixel-portfolio main>section.contact-section{min-height:0;display:block;padding:36px 0}
+.pixel-portfolio .contact-inner{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:36px}
+.pixel-portfolio .contact-inner h2{font-size:28px;line-height:1.2;margin:0}
+.pixel-portfolio .contact-inner>div>p:last-child{font-size:13px;line-height:1.7;margin-top:10px;max-width:480px}
+.pixel-portfolio .contact-inner .email-link{font-size:15px;line-height:1.5;letter-spacing:0;align-items:center;padding-bottom:10px}
+.contact-inner .email-link svg{width:19px;height:19px;flex-shrink:0}
+.pixel-portfolio .footer{padding-top:22px;padding-bottom:22px}
+@media(min-width:801px){
+ .sidebar-header .header-connect{padding:0 10px}
+ .sidebar-header .header-connect>p{font-size:10px;line-height:1.5;margin-bottom:10px}
+ .sidebar-header .header-profile-links{display:flex;flex-direction:column;gap:6px}
+ .sidebar-header .header-profile-links a{min-height:28px;font-size:11px;justify-content:space-between}
+ .sidebar-header nav{justify-content:flex-start}
+ .sidebar-header .nav-sections{margin:24px 0 auto}
+}
+@media(min-width:801px) and (max-width:1100px){
+ .sidebar-header .header-connect{padding:0 5px}
+ .sidebar-header .header-connect>p{font-size:9px}
+ .sidebar-header .header-profile-links a{font-size:9px;gap:2px}
+ .sidebar-header .header-profile-links svg{width:11px;height:11px}
+ .pixel-portfolio .contact-inner{gap:24px}
+ .pixel-portfolio .contact-inner .email-link{font-size:13px}
+}
+@media(max-width:800px){
+ .pixel-portfolio main>section.contact-section{padding:28px 0}
+ .pixel-portfolio .contact-inner{grid-template-columns:minmax(0,1fr);gap:22px}
+ .pixel-portfolio .contact-inner h2{font-size:26px}
+ .pixel-portfolio .contact-inner .email-link{font-size:15px}
+}
+@media(max-width:760px){
+ .craft-header .header-connect{grid-column:2;grid-row:1;justify-self:end;padding:8px 0}
+ .header-connect>p{font-size:10px;margin-bottom:3px}
+ .header-profile-links{gap:12px}
+ .header-profile-links a{min-height:28px;font-size:10px}
+}
