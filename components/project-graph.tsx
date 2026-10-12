@@ -74,7 +74,7 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     ].map(group => <section id={group.id} className={`project-picker-group project-group-${group.kind}`} aria-labelledby={`${group.id}-title`} key={group.kind}>
       <div id={group.kind === 'commercial' ? 'work-projects' : undefined} className="project-group-heading"><h3 id={`${group.id}-title`}>{group.title}</h3><span>{projects.filter(item => item.kind === group.kind).length} projects</span></div>
       <div className="graph-project-picker" aria-label={`Select from ${group.title.toLowerCase()}`}>{projects.map((item,index) => item.kind === group.kind && <div className="graph-project-entry" data-selected={selection.project === index} key={item.slug}>
-        <button aria-pressed={selection.project === index} onClick={() => selectProject(index)}><span>{item.number}</span>{graphTitles[index]}</button>
+        <button aria-pressed={selection.project === index} onClick={() => selectProject(index)}>{graphTitles[index]}</button>
         <Link className="graph-project-case-link" href={`/projects/${item.slug}`} aria-label={`Read ${item.title} case study`} title={`Read ${item.title} case study`}>Details<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>
       </div>)}</div>
     </section>)}</div>

@@ -335,3 +335,4 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .graph-project-case-link:hover{color:var(--ink);background:#e8e4db}
 @media(max-width:650px){.graph-project-entry:nth-child(3n){border-right:1px solid var(--line)}.graph-project-entry:nth-child(2n){border-right:0}.graph-project-case-link{padding:8px 7px;font-size:9px;gap:3px}}
 @media(max-width:380px){.graph-project-picker{grid-template-columns:minmax(0,1fr)}.graph-project-entry:nth-child(n){border-right:0}.graph-project-case-link{font-size:11px;padding:8px 12px;gap:6px}}
+.town-project-card .small-project-top{justify-content:flex-end}
