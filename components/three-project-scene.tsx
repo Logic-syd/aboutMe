@@ -282,7 +282,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
       project.tags.forEach((tag, index) => {
         if (compactLeaves && selection.technology !== index) return;
         const position = point(branchX, branchTop - (compactLeaves ? 0 : index * branchStep), .1);
-        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position,
+        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, quiet: width < 500 && selection.technology !== index,
           kickDirection: [focusSide, 0, 0], radius: (compact ? 11 : 15) * worldPerPixel,
           spawn: selectedPosition, spawnFrom: project.slug, delay: .18 + index * .075,
           gradient: satelliteGradient(gradients[selection.project! % gradients.length]), color: colors[selection.project! % colors.length],

@@ -29,6 +29,21 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
   const [ready, setReady] = useState(false);
   const sceneReady = useCallback(() => { setReady(true); onSlow(false); }, [onSlow]);
   const region = useRef<HTMLDivElement>(null);
+  const navigation = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const list = navigation.current;
+    if (!list || selection.project === null) return;
+    const frame = requestAnimationFrame(() => {
+      const row = list.querySelector<HTMLElement>('[data-selected="true"]');
+      if (!row || getComputedStyle(list).overflowY === 'visible') return;
+      const bounds = list.getBoundingClientRect(), selectedBounds = row.getBoundingClientRect();
+      const rowTop = list.scrollTop + selectedBounds.top - bounds.top;
+      if (selectedBounds.top < bounds.top || selectedBounds.bottom > bounds.bottom) {
+        list.scrollTo({ top: Math.max(0, Math.min(rowTop, rowTop + selectedBounds.height - list.clientHeight)), behavior: 'instant' });
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [selection.project, selection.technology]);
   useEffect(() => {
     if (window.location.hash !== '#work-projects') return;
     const frame = requestAnimationFrame(() => document.getElementById('work-projects')?.scrollIntoView({ block: 'start', behavior: 'instant' }));
@@ -68,18 +83,18 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
       <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
       <p className="three-stage-hint">Drag a sphere · Choose a project to see its connections</p>
     </div>
-    <div className="graph-project-navigation">
+    <div ref={navigation} className="graph-project-navigation">
     <div className="graph-project-groups">{[
       { kind: 'commercial', id: 'professional-work', title: 'Work projects' },
       { kind: 'independent', id: 'personal-projects', title: 'Personal projects' },
     ].map(group => <section id={group.id} className={`project-picker-group project-group-${group.kind}`} aria-labelledby={`${group.id}-title`} key={group.kind}>
       <div className="project-group-heading"><h3 id={`${group.id}-title`}>{group.title}</h3><span>{projects.filter(item => item.kind === group.kind).length} projects</span></div>
       <div className="graph-project-picker" aria-label={`Select from ${group.title.toLowerCase()}`}>{projects.map((item,index) => item.kind === group.kind && <div className="graph-project-entry" data-selected={selection.project === index} key={item.slug}>
-        <button aria-pressed={selection.project === index} onClick={() => selectProject(index)}>{graphTitles[index]}</button>
+        <button aria-pressed={selection.project === index} aria-expanded={selection.project === index} aria-controls={`project-${item.slug}-technologies`} onClick={() => selectProject(index)}>{graphTitles[index]}</button>
         <Link className="graph-project-case-link" href={`/projects/${item.slug}`} aria-label={`Read ${item.title} case study`} title={`Read ${item.title} case study`}>Details<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>
+        {selection.project === index && <div id={`project-${item.slug}-technologies`} className="technology-picker project-technology-panel"><span className="eyebrow">Technologies & contributions</span><div>{item.tags.map((tag,technologyIndex) => <button key={tag} aria-pressed={selection.technology === technologyIndex} onClick={() => selectTechnology(technologyIndex)}>{tag}<span aria-hidden="true">{selection.technology === technologyIndex ? '−' : '+'}</span></button>)}</div>{selection.technology !== null && <ul className="graph-contributions" aria-label="Selected technology contributions">{graphLeaves(index, selection.technology).map(leaf => <li key={leaf}>{leaf}</li>)}</ul>}</div>}
       </div>)}</div>
     </section>)}</div>
-    {project && <div className="technology-picker"><span className="eyebrow">02 / SELECT A TECHNOLOGY</span><div>{project.tags.map((tag,index) => <button key={tag} aria-pressed={selection.technology === index} onClick={() => selectTechnology(index)}>{tag}<span aria-hidden="true">{selection.technology === index ? '−' : '+'}</span></button>)}</div>{selection.technology !== null && <ul className="graph-contributions" aria-label="Selected technology contributions">{graphLeaves(selection.project!, selection.technology).map(leaf => <li key={leaf}>{leaf}</li>)}</ul>}</div>}
     </div>
     </div>
     <div className="graph-selection-summary" aria-live="polite">{project ? <><div><h3>{project.title}</h3><p>{project.role}</p></div><Link className="text-link graph-case-button" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link></> : <p>Select a project to explore its technologies. Details opens the full case study.</p>}</div>
