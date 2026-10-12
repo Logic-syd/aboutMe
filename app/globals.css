@@ -675,3 +675,25 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
  .career-history-detail .experience-case-links{margin-top:18px}
 }
 @media(max-width:800px){.about-photo-timeline{margin-top:24px;gap:8px}.about-timeline-photo>figcaption{font-size:9px}}
+
+/* Each city chapter keeps its own context and links in a single reading column. */
+.place-story-explorer .place-story-tabs{margin-top:4px}
+.place-life-description{font-size:13px;line-height:1.65;color:var(--muted);margin-top:16px}
+.place-story-explorer .place-story-links.is-life{display:block;margin-top:14px;padding-top:0}
+.place-story-explorer .place-source-link{display:inline-flex;align-items:center;gap:18px;min-height:40px;font-size:12px;text-decoration:none;border-bottom:1px solid var(--line)}
+.place-story-explorer .place-source-link:hover{border-color:var(--pink)}
+.place-source-link svg,.place-project-links svg{width:17px;height:17px;flex-shrink:0}
+.place-project-links{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--line)}
+.place-project-links li{margin:0;border-bottom:1px solid var(--line)}
+.place-project-links a{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:44px;padding:10px 2px;font-size:13px;line-height:1.4;font-weight:500}
+.place-project-links a:hover{color:var(--pink);background:#f0ece5}
+.place-project-links svg{color:var(--pink)}
+@media(min-width:801px) and (max-height:650px){
+ .place-life-description{font-size:12px;line-height:1.5;margin-top:12px}
+ .place-story-explorer .place-story-tabs{margin-top:4px}
+ .place-project-links{margin-top:12px}
+ .place-project-links a{min-height:38px;padding:8px 2px;font-size:12px}
+ .place-story-explorer .place-story-links.is-life{margin-top:10px}
+ .place-story-explorer .place-source-link{min-height:34px;font-size:11px}
+}
+@media(max-width:800px){.place-life-description{font-size:14px;line-height:1.7}.place-project-links a{min-height:48px;font-size:14px}}

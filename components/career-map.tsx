@@ -38,6 +38,7 @@ export function CareerMap() {
   const [mapState, setMapState] = useState<'loading' | 'ready' | 'unavailable'>('loading');
   const selected = mapStops.find(e => e.id === selectedId)!;
   const place = placeStories[selectedId];
+  const relatedProjects = [selected.project, ...(selected.relatedProjects ?? [])].map(slug => projects.find(project => project.slug === slug)).filter(project => project !== undefined);
 
   useEffect(() => {
     const element = container.current;
@@ -116,10 +117,16 @@ export function CareerMap() {
       {areaView && <PlaceMap key={selectedId} place={place} />}
       </div>
       <div className="career-selected place-story" aria-live="polite">
-        <p className="eyebrow">{place.neighbourhood ? `${place.neighbourhood} · ` : ''}{place.name} / {place.region}</p><h3>{place.headline}</h3>{storyTab === 'life' && <p>{place.description}</p>}
+        <p className="eyebrow">{place.neighbourhood ? `${place.neighbourhood} · ` : ''}{place.name} / {place.region}</p><h3>{storyTab === 'life' ? place.headline : selected.label}</h3>
         <div className="place-story-tabs" aria-label="Choose a city story"><button aria-pressed={storyTab === 'life'} aria-controls="place-story-chapter" onClick={() => setStoryTab('life')}>Life here</button><button aria-pressed={storyTab === 'work'} aria-controls="place-story-chapter" onClick={() => setStoryTab('work')}>Work & projects</button></div>
-        <div id="place-story-chapter">{storyTab === 'life' ? <div className={`place-memory-chapter ${cityPhotos[selectedId] ? 'has-photo' : ''}`}><blockquote className="place-memory"><p>{place.memory}</p></blockquote>{cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" />}</div> : <div className="place-reflection"><h4>{selected.label}</h4><p>{place.reflection}</p></div>}</div>
-        <div className="place-story-links"><a className="place-source-link" href={place.source.url}>About this place <span aria-hidden="true">↗</span></a>{[selected.project, ...(selected.relatedProjects ?? [])].filter(Boolean).map(slug => <Link key={slug} className="text-link" href={`/projects/${slug}`}>{selected.relatedProjects?.length ? projects.find(project => project.slug === slug)?.title : selectedId === 'berlin' ? 'Coffee & beer discovery map' : 'Related project'} <span aria-hidden="true">↗</span></Link>)}</div>
+        <div id="place-story-chapter">{storyTab === 'life' ? <>
+          <p className="place-life-description">{place.description}</p>
+          <div className={`place-memory-chapter ${cityPhotos[selectedId] ? 'has-photo' : ''}`}><blockquote className="place-memory"><p>{place.memory}</p></blockquote>{cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" />}</div>
+          <div className="place-story-links is-life"><a className="place-source-link" href={place.source.url}>About this place <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a></div>
+        </> : <>
+          <div className="place-reflection"><p>{place.reflection}</p></div>
+          <ul className="place-project-links" aria-label={`Projects from ${place.name}`}>{relatedProjects.map(project => <li key={project.slug}><Link href={`/projects/${project.slug}`} aria-label={`Read ${project.title} case study`}><span>{project.graphTitle ?? project.title}</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link></li>)}</ul>
+        </>}</div>
       </div>
     </div>
     <p className="map-note">{areaView ? 'OpenStreetMap geography · The circle marks a city area, not an office.' : 'Places I’ve lived and worked · Overview not to scale · Munich is my current base.'}</p>
