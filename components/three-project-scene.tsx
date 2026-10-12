@@ -167,7 +167,7 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     {item.kind === 'technology' && <mesh><sphereGeometry args={[size * .35, 20, 16]} /><meshBasicMaterial color={item.color} transparent opacity={.24} depthWrite={false} /></mesh>}
     {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#d7bc94" metalness={.12} roughness={.65} /></mesh>}
     {item.active && (item.kind === 'project' || item.kind === 'technology') && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, pixelScale * .8, 8, 64]} /><meshStandardMaterial color={item.color} roughness={.65} emissive={item.color} emissiveIntensity={.08} /></mesh>}
-    {!item.quiet && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
+    {(!item.quiet || hovered) && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
       <div data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].kind === 'commercial' ? 'WORK' : 'PERSONAL'}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
         {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} title="Read case study" style={{ pointerEvents: 'auto' }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>}
       </div>
@@ -199,7 +199,8 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
   const { camera, size, invalidate } = useThree();
   const destination = useRef<THREE.Vector3 | null>(null);
   const lookAt = useRef(new THREE.Vector3());
-  const compact = size.width < 650;
+  const dense = size.height < 600;
+  const compact = size.width < 650 || dense;
   const { selection, onProject, onTechnology, onReset } = props;
   const expanded = selection.project !== null;
   const compactLeaves = compact && selection.technology !== null;
@@ -212,17 +213,18 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     const width = size.width, height = size.height;
     const point = (x: number, y: number, z = 0): Point => [x * worldPerPixel, y * worldPerPixel, z];
     const labelWidth = compact ? width < 300 ? 84 : 98 : width < 900 ? 110 : 152;
-    const radiusY = (height - 280) / 2;
+    // The adjacent catalog carries names; a short scene reserves labels for focus and hover.
+    const radiusY = dense ? Math.max(45, (height - 190) / 2) : (height - 280) / 2;
     const rootX = expanded ? width * (compact ? .21 : .17) : 0;
-    const rootY = expanded && compact ? 0 : 40;
+    const rootY = dense ? 15 : expanded && compact ? 0 : 40;
     const radiusX = Math.min(width * (expanded && !compact ? .245 : .34), width / 2 - rootX - labelWidth / 2 - (compact ? 10 : 18));
     // Larger planets need more vertical clearance from the next project's label.
-    const verticalSpacing = compact ? 78 : expanded ? 130 : 150;
-    const overview = orbitPoints(projects.length, radiusX, radiusY, Math.PI / 2, labelWidth + 18, verticalSpacing);
-    const focused = orbitPoints(projects.length, radiusX, radiusY, Math.PI, labelWidth + 18, verticalSpacing);
-    const satellites = orbitPoints(projects.length - 1, width * .19, height * .21);
+    const verticalSpacing = dense ? 1 : compact ? 78 : expanded ? 130 : 150;
+    const overview = orbitPoints(projects.length, radiusX, radiusY, Math.PI / 2, dense ? 1 : labelWidth + 18, verticalSpacing);
+    const focused = orbitPoints(projects.length, radiusX, radiusY, Math.PI, dense ? 1 : labelWidth + 18, verticalSpacing);
+    const satellites = orbitPoints(projects.length - 1, width * .17, radiusY);
     const rootPosition = point(rootX, rootY);
-    const selectedPosition = compact ? point(-width * .03, height * .29, .2) : point(rootX - radiusX, rootY, .2);
+    const selectedPosition = compact ? point(width * (dense ? width < 400 ? .14 : .06 : -.03), height * .29, .2) : point(rootX - radiusX, rootY, .2);
     const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 28 : 39) * worldPerPixel, gradient: rootGradient, color: '#d7bc94', active: false, index: 0, onSelect: onReset }];
     let sibling = 0;
     projects.forEach((project, index) => {
@@ -235,26 +237,28 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
       const satellite = satellites[rank];
       const position = expanded && active ? selectedPosition : expanded && compact
         ? point(rootX + satellite.x, satellite.y, -.2)
-        : point((expanded ? rootX : 0) + anglePoint.x, anglePoint.y + 40, Math.sin(index * 1.3) * .18);
-      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position, radius: expanded && compact && !active ? satelliteRadius : projectRadius, quiet: compact && expanded && !active, muted: expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
+        : point((expanded ? rootX : 0) + anglePoint.x, anglePoint.y + (dense ? 15 : 40), Math.sin(index * 1.3) * .18);
+      result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position, radius: expanded && compact && !active ? satelliteRadius : projectRadius, quiet: (dense || compact && expanded) && !active, muted: expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
     });
     if (selection.project !== null) {
       const project = projects[selection.project];
       project.tags.forEach((tag, index) => {
         if (compactLeaves && selection.technology !== index) return;
-        const position = compact ? point(-width * .25, height * .12 - (compactLeaves ? 0 : index * 82), .1)
+        const position = dense && height < 400 && !compactLeaves
+          ? point(-width * (index % 2 === 0 ? .32 : .16), height / 2 - 85 - Math.floor(index / 2) * 45, .1)
+          : compact ? point(-width * .25, (dense ? height / 2 - 85 : height * .12) - (compactLeaves ? 0 : index * (dense ? Math.min(62, Math.max(30, (height - 200) / Math.max(1, project.tags.length - 1))) : 82)), .1)
           : point(-width * .245, 40 + (project.tags.length - 1) * 47 - index * 94, .15);
-        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, radius: (compact ? 11 : 15) * worldPerPixel, spawn: selectedPosition, spawnFrom: project.slug, delay: index * .075, gradient: satelliteGradient(gradients[selection.project! % gradients.length]), color: colors[selection.project! % colors.length], active: selection.technology === index, index, onSelect: () => onTechnology(index) });
+        result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, quiet: dense && height < 400 && selection.technology !== index, radius: (compact ? 11 : 15) * worldPerPixel, spawn: selectedPosition, spawnFrom: project.slug, delay: index * .075, gradient: satelliteGradient(gradients[selection.project! % gradients.length]), color: colors[selection.project! % colors.length], active: selection.technology === index, index, onSelect: () => onTechnology(index) });
       });
       if (selection.technology !== null) {
         const technology = result.find(node => node.id === `${project.slug}-tech-${selection.technology}`)!;
-        graphLeaves(selection.project, selection.technology).forEach((label, index, all) => result.push({ id: `${technology.id}-leaf-${index}`, kind: 'leaf', label,
-          position: compact ? point(-width * .25, -height * .04 - index * 90, .1) : point(-width * .414, technology.position[1] / worldPerPixel + (all.length - 1) * 44 - index * 88, .1),
+        graphLeaves(selection.project, selection.technology).forEach((label, index, all) => result.push({ id: `${technology.id}-leaf-${index}`, kind: 'leaf', label, quiet: dense && height < 400,
+          position: compact ? point(-width * .25, dense ? height / 2 - 145 - index * Math.min(70, Math.max(30, (height - 235) / Math.max(1, all.length - 1))) : -height * .04 - index * 90, .1) : point(-width * .414, technology.position[1] / worldPerPixel + (all.length - 1) * 44 - index * 88, .1),
           radius: 8 * worldPerPixel, spawn: technology.position, spawnFrom: technology.id, delay: index * .09, gradient: leafGradient, color: '#c5bcb2', active: true, index }));
       }
     }
     return result;
-  }, [expanded, compact, compactLeaves, selection, onReset, onProject, onTechnology, size.width, size.height, worldPerPixel]);
+  }, [expanded, dense, compact, compactLeaves, selection, onReset, onProject, onTechnology, size.width, size.height, worldPerPixel]);
   useEffect(() => {
     destination.current = new THREE.Vector3(0, 0, distance);
     lookAt.current.set(0, 0, 0);
