@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { projects } from '@/lib/projects';
 import { classifySceneError, type SceneFailure } from '@/lib/scene-status';
-import { graphLeaves, graphTitles, type GraphSelection } from '@/lib/graph';
+import { graphLeaves, graphTitles, type FocusSide, type GraphSelection } from '@/lib/graph';
 
 const ThreeGraph = dynamic(() => import('@/components/three-project-scene'), { ssr: false, loading: () => <div className="three-loading">Preparing the 3D constellation…</div> });
 function subscribeMotion(callback: () => void) { const query = window.matchMedia('(prefers-reduced-motion: reduce)'); query.addEventListener('change', callback); return () => query.removeEventListener('change', callback); }
@@ -21,6 +21,7 @@ class SceneBoundary extends Component<{ children: ReactNode; onUnavailable: (rea
 export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason: SceneFailure) => void; onSlow: (slow: boolean) => void }) {
   const [selection, setSelection] = useState<GraphSelection>({ project: null, technology: null });
   const [interaction, setInteraction] = useState({ nodeId: '', revision: 0 });
+  const projectDirections = useRef(new Map<number, FocusSide>());
   const [motion, setMotion] = useState(true);
   const [view, setView] = useState({ reset: 0, zoom: 0 });
   const [visible, setVisible] = useState(false);
@@ -55,7 +56,7 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     return () => window.clearTimeout(timeout);
   }, [loaded, ready, onSlow]);
   const project = selection.project === null ? null : projects[selection.project];
-  const selectProject = useCallback((index: number) => { setInteraction(current => ({ nodeId: projects[index].slug, revision: current.revision + 1 })); setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null }); }, []);
+  const selectProject = useCallback((index: number) => { setInteraction(current => ({ nodeId: projects[index].slug, revision: current.revision + 1 })); setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null, focusSide: projectDirections.current.get(index) ?? 1 }); }, []);
   const selectTechnology = useCallback((index: number) => { if (selection.project !== null) setInteraction(current => ({ nodeId: `${projects[selection.project!].slug}-tech-${index}`, revision: current.revision + 1 })); setSelection(current => ({ ...current, technology: current.technology === index ? null : index })); }, [selection.project]);
   const reset = useCallback(() => { setInteraction(current => ({ nodeId: 'root', revision: current.revision + 1 })); setSelection({ project: null, technology: null }); setView(current => ({ reset: current.reset + 1, zoom: 0 })); }, []);
   return <div className="project-explorer three-explorer">
@@ -63,7 +64,7 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     <div id="work-projects" className="project-explorer-workspace">
     <div ref={region} className="three-stage" aria-label="Interactive three-dimensional project knowledge graph">
       <div className="three-corner-label" aria-hidden="true"><span>PROJECT CONNECTIONS / THREE.JS</span><span>{selection.technology !== null ? 'CONTRIBUTIONS' : project ? 'TECHNOLOGIES' : 'SELECT A PROJECT'}</span></div>
-      <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
+      <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph projectDirections={projectDirections} onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
       <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
       <p className="three-stage-hint">Drag a sphere · Choose a project to see its connections</p>
     </div>

@@ -3,8 +3,9 @@ import { coursework, education, personalPhotos } from '@/lib/about';
 
 export function AboutMe() {
   return <section id="about" className="about-section"><div className="shell about-grid">
-    <div className="about-introduction"><p className="eyebrow">02 / A LITTLE ABOUT ME</p><h2>The person<br /><em>behind the projects.</em></h2><p className="about-motivation">From China to Berlin to Munich — curious about the places, people and everyday stories along the way.</p>
+    <div className="about-introduction"><p className="eyebrow">02 / A LITTLE ABOUT ME</p><h2>The person<br /><em>behind the projects.</em></h2>
       <PhotoAlbum photos={personalPhotos} />
+      <p className="about-motivation">From graduating at Jilin University to building products in Munich — growing in confidence, staying curious.</p>
       <p className="about-technical-note">Frontend engineer · React, TypeScript & Vue</p>
     </div>
     <div className="about-copy"><p className="eyebrow">MY PATH, SO FAR</p><ul className="about-story-list">
