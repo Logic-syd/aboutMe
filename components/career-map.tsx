@@ -24,6 +24,7 @@ export function CareerMap() {
   const markers = useRef<Marker[]>([]);
   const [selectedId, setSelectedId] = useState(mapStops[0].id);
   const [areaView, setAreaView] = useState(false);
+  const [storyTab, setStoryTab] = useState<'life' | 'work'>('life');
   const [mapState, setMapState] = useState<'loading' | 'ready' | 'unavailable'>('loading');
   const selected = mapStops.find(e => e.id === selectedId)!;
   const place = placeStories[selectedId];
@@ -92,6 +93,7 @@ export function CareerMap() {
   return <div className="career-explorer place-story-explorer">
     <div className="career-location-picker" aria-label="Select a place, most recent chapter first">{mapStops.map((experience,index) => <button key={experience.id} onClick={() => selectExperience(experience.id)} aria-pressed={selectedId === experience.id}><span className="location-number">0{index+1}</span><span><strong>{placeStories[experience.id].name}</strong><small>{placeStories[experience.id].region}</small><span className="place-company-label">{experience.label}</span></span><span aria-hidden="true">↗</span></button>)}</div>
     <div className="career-map-panel">
+      <div className="career-map-visual">
       <div className="map-toolbar"><span className="eyebrow">{areaView ? 'LOCAL MAP / REAL GEOGRAPHY' : 'GROWTH MAP / NOT TO SCALE'}</span><button type="button" onClick={() => {
         if (areaView) { setAreaView(false); requestAnimationFrame(() => { map.current?.invalidateSize(); map.current?.fitBounds(artworkBounds, { padding: [10, 10], animate: false }); }); }
         else setAreaView(true);
@@ -101,13 +103,14 @@ export function CareerMap() {
         {mapState === 'unavailable' && <p className="map-fallback" role="status">The overview map could not load. Select a place to open its area map and story.</p>}
       </div>
       {areaView && <PlaceMap key={selectedId} place={place} />}
+      </div>
       <div className="career-selected place-story" aria-live="polite">
-        <p className="eyebrow">{place.name} / {place.region}</p><h3>{place.headline}</h3><p>{place.description}</p>
-        {place.memory && <blockquote className="place-memory"><p>{place.memory}</p></blockquote>}
-        <div className="place-reflection"><p className="eyebrow">WHAT I TAKE WITH ME</p><h4>{selected.label}</h4><p>{place.reflection}</p></div>
+        <p className="eyebrow">{place.name} / {place.region}</p><h3>{place.headline}</h3>{storyTab === 'life' && <p>{place.description}</p>}
+        <div className="place-story-tabs" aria-label="Choose a city story"><button aria-pressed={storyTab === 'life'} aria-controls="place-story-chapter" onClick={() => setStoryTab('life')}>Life here</button><button aria-pressed={storyTab === 'work'} aria-controls="place-story-chapter" onClick={() => setStoryTab('work')}>Work & projects</button></div>
+        <div id="place-story-chapter">{storyTab === 'life' ? <blockquote className="place-memory"><p>{place.memory}</p></blockquote> : <div className="place-reflection"><h4>{selected.label}</h4><p>{place.reflection}</p></div>}</div>
         <div className="place-story-links"><a className="place-source-link" href={place.source.url}>About this place <span aria-hidden="true">↗</span></a>{[selected.project, ...(selected.relatedProjects ?? [])].filter(Boolean).map(slug => <Link key={slug} className="text-link" href={`/projects/${slug}`}>{selected.relatedProjects?.length ? projects.find(project => project.slug === slug)?.title : selectedId === 'berlin' ? 'Coffee & beer discovery map' : 'Related project'} <span aria-hidden="true">↗</span></Link>)}</div>
       </div>
     </div>
-    <p className="map-note">{areaView ? 'Local maps use real OpenStreetMap geography, with a simplified visual style. The dashed circle locates a city or nearby landmark, not an office address.' : 'A personal growth map, not to scale. Munich is my current base. Select a place to explore its geography and the memories I take from it.'} Work and personal chapters are listed most recent first.</p>
+    <p className="map-note">{areaView ? 'OpenStreetMap geography · The circle marks a city area, not an office.' : 'Places I’ve lived and worked · Overview not to scale · Munich is my current base.'}</p>
   </div>;
 }
