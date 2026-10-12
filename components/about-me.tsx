@@ -1,10 +1,10 @@
-import Image from 'next/image';
+import { PhotoAlbum } from '@/components/photo-album';
 import { coursework, education, personalPhotos } from '@/lib/about';
 
 export function AboutMe() {
   return <section id="about" className="about-section"><div className="shell about-grid">
     <div className="about-introduction"><p className="eyebrow">02 / A LITTLE ABOUT ME</p><h2>The person<br /><em>behind the projects.</em></h2><p className="about-motivation">From China to Berlin to Munich — curious about the places, people and everyday stories along the way.</p>
-      {personalPhotos.length > 0 && <div className="about-photo-gallery" data-count={personalPhotos.length}>{personalPhotos.map(photo => <figure key={photo.src}><Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(max-width: 800px) 90vw, 420px" /><figcaption>{photo.caption}</figcaption></figure>)}</div>}
+      <PhotoAlbum photos={personalPhotos} />
       <p className="about-technical-note">Frontend engineer · React, TypeScript & Vue</p>
     </div>
     <div className="about-copy"><p className="eyebrow">MY PATH, SO FAR</p><ul className="about-story-list">

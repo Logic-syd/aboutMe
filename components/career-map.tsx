@@ -8,6 +8,8 @@ import { experiences } from '@/lib/experience';
 import { projects } from '@/lib/projects';
 import { placeStories } from '@/lib/place-stories';
 import { PlaceMap } from '@/components/place-map';
+import { cityPhotos } from '@/lib/about';
+import { PhotoViewer } from '@/components/photo-viewer';
 
 // Personal chapters belong on the growth map, alongside the employment history.
 type MapStop = { id: string; label: string; area: string; project: string; relatedProjects?: string[] };
@@ -107,7 +109,7 @@ export function CareerMap() {
       <div className="career-selected place-story" aria-live="polite">
         <p className="eyebrow">{place.name} / {place.region}</p><h3>{place.headline}</h3>{storyTab === 'life' && <p>{place.description}</p>}
         <div className="place-story-tabs" aria-label="Choose a city story"><button aria-pressed={storyTab === 'life'} aria-controls="place-story-chapter" onClick={() => setStoryTab('life')}>Life here</button><button aria-pressed={storyTab === 'work'} aria-controls="place-story-chapter" onClick={() => setStoryTab('work')}>Work & projects</button></div>
-        <div id="place-story-chapter">{storyTab === 'life' ? <blockquote className="place-memory"><p>{place.memory}</p></blockquote> : <div className="place-reflection"><h4>{selected.label}</h4><p>{place.reflection}</p></div>}</div>
+        <div id="place-story-chapter">{storyTab === 'life' ? <div className={`place-memory-chapter ${cityPhotos[selectedId] ? 'has-photo' : ''}`}><blockquote className="place-memory"><p>{place.memory}</p></blockquote>{cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" />}</div> : <div className="place-reflection"><h4>{selected.label}</h4><p>{place.reflection}</p></div>}</div>
         <div className="place-story-links"><a className="place-source-link" href={place.source.url}>About this place <span aria-hidden="true">↗</span></a>{[selected.project, ...(selected.relatedProjects ?? [])].filter(Boolean).map(slug => <Link key={slug} className="text-link" href={`/projects/${slug}`}>{selected.relatedProjects?.length ? projects.find(project => project.slug === slug)?.title : selectedId === 'berlin' ? 'Coffee & beer discovery map' : 'Related project'} <span aria-hidden="true">↗</span></Link>)}</div>
       </div>
     </div>
