@@ -154,7 +154,7 @@ export function ApiPlatformDemo() {
     : [{ label: t.online, value: result?.result_data.online_devices, unit: '' }, { label: t.offline, value: result?.result_data.offline_devices, unit: '' }, { label: t.availability, value: result?.result_data.availability_percent, unit: '%' }];
 
   return (
-    <div className={styles.demo}>
+    <div className={styles.demo} data-case-demo="api">
       <div className={styles.console} lang={language === 'en' ? 'en' : 'zh-CN'}>
         <div className={styles.toolbar}>
           <div className={styles.identity}><span className={styles.logo} aria-hidden="true">↗</span><span>{t.title}</span><span className={styles.sample}>{t.sample}</span></div>
