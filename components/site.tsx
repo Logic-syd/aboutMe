@@ -1,15 +1,11 @@
 import Link from 'next/link';
+import { SectionNavigation } from '@/components/section-navigation';
 
-export function Header({ detail = false }: { detail?: boolean }) {
-  return <header className="site-header shell craft-header">
+export function Header({ detail = false, sidebar = false }: { detail?: boolean; sidebar?: boolean }) {
+  return <header className={`site-header shell craft-header ${sidebar ? 'sidebar-header' : ''}`}>
     <Link className="wordmark" href="/" aria-label="Yidan Shao home">ys<span>.</span></Link>
     <nav aria-label="Main navigation">
-      <div className="nav-sections">
-        <a href={detail ? '/#about' : '#about'}>About Me</a>
-        <a href={detail ? '/#work' : '#work'}>My Projects</a>
-        <a href={detail ? '/#work-projects' : '#work-projects'}>My Work</a>
-        <a href={detail ? '/#experience' : '#experience'}>Growth Map</a>
-      </div>
+      <SectionNavigation detail={detail} sidebar={sidebar} />
       <a className="nav-contact" href={detail ? '/#contact' : '#contact'}>Let’s talk <span aria-hidden="true">↗</span></a>
     </nav>
   </header>;

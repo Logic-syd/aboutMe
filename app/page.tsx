@@ -11,7 +11,7 @@ import { Contact, Footer, Header } from '@/components/site';
 
 export default function Home() {
   return <div id="top" className="pixel-portfolio">
-    <Header />
+    <Header sidebar />
     <main id="main">
       <PixelTown />
       <section id="work" className="shell work-section" aria-labelledby="work-title">
