@@ -3,7 +3,6 @@
 import { Component, useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { ProjectLinks } from '@/components/project-links';
 import { projects } from '@/lib/projects';
 import { classifySceneError, type SceneFailure } from '@/lib/scene-status';
 import { graphLeaves, graphTitles, type GraphSelection } from '@/lib/graph';
@@ -60,10 +59,10 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
   const selectTechnology = useCallback((index: number) => { if (selection.project !== null) setInteraction(current => ({ nodeId: `${projects[selection.project!].slug}-tech-${index}`, revision: current.revision + 1 })); setSelection(current => ({ ...current, technology: current.technology === index ? null : index })); }, [selection.project]);
   const reset = useCallback(() => { setInteraction(current => ({ nodeId: 'root', revision: current.revision + 1 })); setSelection({ project: null, technology: null }); setView(current => ({ reset: current.reset + 1, zoom: 0 })); }, []);
   return <div className="project-explorer three-explorer">
-    <div className="explorer-toolbar"><div><span className="eyebrow">PROJECT CONSTELLATION / THREE.JS</span><p>One idea. Many connections.</p></div><span className="graph-key"><i />{selection.technology !== null ? 'Level 03 / Contributions' : project ? 'Level 02 / Technologies' : 'Level 01 / Projects'}</span></div>
+
     <div id="work-projects" className="project-explorer-workspace">
     <div ref={region} className="three-stage" aria-label="Interactive three-dimensional project knowledge graph">
-      <div className="three-corner-label" aria-hidden="true"><span>{String(projects.length).padStart(2, '0')} PROJECTS</span><span>EXPLORE IN THREE DIMENSIONS</span></div>
+      <div className="three-corner-label" aria-hidden="true"><span>PROJECT CONNECTIONS / THREE.JS</span><span>{selection.technology !== null ? 'CONTRIBUTIONS' : project ? 'TECHNOLOGIES' : 'SELECT A PROJECT'}</span></div>
       <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
       <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
       <p className="three-stage-hint">Drag a sphere · Choose a project to see its connections</p>
@@ -82,7 +81,6 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     {project && <div className="technology-picker"><span className="eyebrow">02 / SELECT A TECHNOLOGY</span><div>{project.tags.map((tag,index) => <button key={tag} aria-pressed={selection.technology === index} onClick={() => selectTechnology(index)}>{tag}<span aria-hidden="true">{selection.technology === index ? '−' : '+'}</span></button>)}</div>{selection.technology !== null && <ul className="graph-contributions" aria-label="Selected technology contributions">{graphLeaves(selection.project!, selection.technology).map(leaf => <li key={leaf}>{leaf}</li>)}</ul>}</div>}
     </div>
     </div>
-    <div className="graph-detail" aria-live="polite">{project ? <><div>{project.status && <span className={`status ${project.inDevelopment ? 'status-progress' : ''}`}><i />{project.status}</span>}<h3>{project.title}</h3><p>{project.description}</p></div><div className="graph-detail-meta"><p className="eyebrow">MY ROLE</p><p>{project.role}</p><ul className="tags">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><Link className="button graph-case-button" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link><ProjectLinks project={project} /></div></> : <><div><p className="eyebrow">START EXPLORING</p><h3>Projects, technologies, decisions.</h3><p>{projects.length} projects across enterprise products, personal tools and games. Select a project to unfold its technologies, then follow a connection to the work behind it.</p></div><div className="graph-detail-meta"><p className="eyebrow">THREE LEVELS OF DETAIL</p><ol className="graph-levels"><li>Projects</li><li>Technologies & approaches</li><li>Specific contributions</li></ol><p>One branch opens at a time, keeping the connections clear.</p></div></>}</div>
-    <p className="explorer-help">The project and technology buttons provide the same navigation with a keyboard or on mobile. Release status and full case studies appear below the scene.</p>
+    <div className="graph-selection-summary" aria-live="polite">{project ? <><div><h3>{project.title}</h3><p>{project.role}</p></div><Link className="text-link graph-case-button" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link></> : <p>Select a project to explore its technologies. Details opens the full case study.</p>}</div>
   </div>;
 }
