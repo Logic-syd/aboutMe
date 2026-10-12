@@ -39,14 +39,14 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
       <header className={styles.hero}>
         <div>
           <p className={styles.kicker}>CASE 01 / SUNGROW · DEVELOPER EXPERIENCE</p>
-          <h1>Energy APIs.<br /><em>Data access, made clear.</em></h1>
-          <p className={styles.intro}>Frontend work connecting a renewable-energy developer platform with EU Data Act data-access requirements: API debugging, application management and understandable user workflows.</p>
-          <div className={styles.heroActions}><a href="#api-playground" className={styles.tryLink}>Try API debugging <span aria-hidden="true">↓</span></a><Link href="/projects/data-export-center#export-lab" className={styles.secondaryLink}>Explore data export <span aria-hidden="true">↗</span></Link></div>
+          <h1>Energy APIs.<br /><em>From docs to working calls.</em></h1>
+          <p className={styles.intro}>I lead a standalone renewable-energy API platform, with responsibility for the React frontend, European delivery, online API debugging and application management.</p>
+          <div className={styles.heroActions}><a href="#api-playground" className={styles.tryLink}>Try API debugging <span aria-hidden="true">↓</span></a><a href="#api-delivery" className={styles.secondaryLink}>My platform role ↓</a></div>
         </div>
         <aside className={styles.ownership} aria-label="My role and delivery">
           <p className={styles.kicker}>MY PART IN THE PRODUCT</p>
-          <h2>European delivery.<br />Developer workflows.</h2>
-          <p>My scope covers European delivery, online API debugging and application management, with a focus on EU Data Act data access.</p>
+          <h2>Platform ownership.<br /> Developer workflows.</h2>
+          <p>As the API platform lead, I work on the React frontend and its European delivery, including the online debugger and application-management workflows.</p>
           <span className={styles.role}>{project.role}</span>
         </aside>
       </header>
@@ -54,7 +54,7 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
       <div className={styles.overview} aria-label="Platform at a glance">
         <div><span className={styles.overviewNumber}>05</span><p>Configured sites<span>China · International · Europe · Australia · India</span></p></div>
         <div><span className={styles.overviewNumber}>02</span><p>Authorization paths<span>User-level V1 · OAuth2 V2</span></p></div>
-        <div className={styles.stack}><span className={styles.kicker}>TOOLS & FOCUS</span><p>React · TypeScript<br />API integration · Developer experience</p></div>
+        <div className={styles.stack}><span className={styles.kicker}>TOOLS & FOCUS</span><p>React · TypeScript<br /> API integration · Developer experience</p></div>
       </div>
 
       <section id="api-playground" className={styles.section} aria-labelledby="api-playground-title">
@@ -98,15 +98,10 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
         </div>
       </section>
 
-      <section className={styles.dataFocus} aria-labelledby="api-data-title">
-        <div><p className={styles.kicker}>04 / EU DATA ACT · FRONTEND FOCUS</p><h2 id="api-data-title">Access is a user journey.</h2><p>Device owners need to understand what data they can obtain, how it is prepared and how to recover when a task or download fails. The frontend connects those decisions to the platform’s access rules.</p></div>
-        <div className={styles.focusSteps}><div><span>01</span><p><strong>Choose & verify</strong>Ownership-aware scope selection and identity confirmation before an export request.</p></div><div><span>02</span><p><strong>Follow & recover</strong>Asynchronous tasks, partial results and retries that retain the selected scope.</p></div><div><span>03</span><p><strong>Download & control</strong>Fresh download verification, expiration handling and user-managed sharing.</p></div><Link href="/projects/data-export-center#export-lab">Walk through the export experience <span aria-hidden="true">↗</span></Link></div>
-      </section>
-
-      <section className={styles.delivery} aria-labelledby="api-delivery-title">
-        <div><p className={styles.kicker}>05 / MY DELIVERY SCOPE</p><h2 id="api-delivery-title">Where I contribute.</h2><p>European frontend delivery, online debugging and application management, with EU Data Act requirements shaping the data-access experience.</p></div>
+      <section id="api-delivery" className={styles.delivery} aria-labelledby="api-delivery-title">
+        <div><p className={styles.kicker}>04 / PLATFORM LEADERSHIP & DELIVERY</p><h2 id="api-delivery-title">Where I contribute.</h2><p>Platform leadership alongside hands-on React frontend work, European delivery, online debugging and application-management interfaces.</p></div>
         <ol className={styles.deliverySteps}>
-          <li><span>01</span><div><h3>European delivery</h3><p>Frontend work for the European platform, centered on EU Data Act data-access requirements.</p></div></li>
+          <li><span>01</span><div><h3>European delivery</h3><p>Led the platform’s frontend delivery for the European site, connecting product requirements with the developer-facing workflows.</p></div></li>
           <li><span>02</span><div><h3>Online debugging</h3><p>Work on the developer-facing flow for making API calls and inspecting their responses.</p></div></li>
           <li><span>03</span><div><h3>Application management</h3><p>Work on the application interfaces that developers use to manage their API integrations.</p></div></li>
         </ol>
