@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SectionNavigation } from '@/components/section-navigation';
 
 export function Header({ detail = false, sidebar = false }: { detail?: boolean; sidebar?: boolean }) {
-  return <header className={`site-header shell craft-header ${sidebar ? 'sidebar-header' : ''}`}>
+  return <header className={`site-header shell craft-header ${sidebar ? 'floating-navigation-header' : ''}`}>
     <Link className="wordmark" href="/" aria-label="Yidan Shao home">ys<span>.</span></Link>
     <div className="header-connect"><p>Happy to connect.</p><div className="header-profile-links"><a href="https://linkedin.com/in/yidanshao/">LinkedIn <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a><a href="https://github.com/Logic-syd">GitHub <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a></div></div>
     <nav aria-label="Main navigation">
