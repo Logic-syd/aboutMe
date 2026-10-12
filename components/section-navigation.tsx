@@ -18,9 +18,12 @@ export function SectionNavigation({ detail, sidebar }: { detail: boolean; sideba
       const chapter = elements.find(element => { const bounds = element.getBoundingClientRect(); return bounds.top <= innerHeight * .45 && bounds.bottom > innerHeight * .45; });
       setActive(chapter?.id ?? null);
     };
-    const observer = new IntersectionObserver(update, { threshold: [0, .25, .5, .75, 1] });
-    elements.forEach(element => observer.observe(element));
-    return () => observer.disconnect();
+    let frame = 0;
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(() => { frame = 0; update(); }); };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    schedule();
+    return () => { window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); cancelAnimationFrame(frame); };
   }, [detail, sidebar]);
-  return <div className="nav-sections">{sections.map(section => <a key={section.id} href={`${detail ? '/' : ''}#${section.id}`} aria-label={section.label} aria-current={active === section.id ? 'location' : undefined}><span className="nav-full-label">{section.label}</span><span className="nav-short-label" aria-hidden="true">{section.short}</span></a>)}</div>;
+  return <div className="nav-sections">{sections.map(section => <a key={section.id} href={`${detail ? '/' : ''}#${section.id}`} aria-label={section.label} aria-current={active === section.id ? 'location' : undefined} onClick={() => { if (sidebar) setActive(section.id); }}><span className="nav-full-label">{section.label}</span><span className="nav-short-label" aria-hidden="true">{section.short}</span></a>)}</div>;
 }
