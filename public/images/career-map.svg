@@ -1,46 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
-<title>Illustrative growth map with Munich, Berlin, Shanghai and Hangzhou</title>
-<desc>Schematic layout, not to scale. Munich is the current base. Berlin was Yidan's first home in Germany and a chapter of independent projects. Shanghai includes Caohejing and Zhangjiang; Hangzhou includes Xixi Wetland and West Lake.</desc>
-<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#d4d5ca"/></pattern></defs>
+<title>Berlin, Munich, Shanghai and Hangzhou: a personal atlas</title>
+<desc>Not to scale. Berlin and Wedding are north of Munich. Munich is the larger current-base chapter. Shanghai includes Caohejing and Zhangjiang. Hangzhou is in Zhejiang, with Xixi Wetland and West Lake.</desc>
+<defs><pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#d4d5ca"/></pattern></defs>
 <rect width="1000" height="600" fill="#eeefe8"/><rect width="1000" height="600" fill="url(#dots)"/>
-<path d="M520 170C560 170 558 165 606 165M520 438C560 438 558 438 606 438M265 315L265 337" fill="none" stroke="#ba8c9b" stroke-width="2" stroke-dasharray="5 8"/>
-<!-- Stylized areas are arranged for reading, not geographic scale. -->
-<path d="M49 49L438 35L519 90L508 270L460 313L78 305L31 240L28 152Z" fill="#f0dfe5" stroke="#d3b9c2" stroke-width="1.5"/>
-<path d="M400 42C450 115 366 188 424 310" fill="none" stroke="#c5d9d8" stroke-width="14"/>
-<path d="M48 180L510 184M151 45L149 304M310 41L300 310" fill="none" stroke="#fff8f9" stroke-width="6"/>
-<path d="M58 244L125 240L122 286L74 292Z M339 210L384 205L389 260L337 273Z" fill="#d4dfc9"/>
-<g font-family="Arial,Helvetica,sans-serif" fill="#282a28">
-<text x="76" y="88" font-size="12" letter-spacing="2" fill="#934461">CURRENT BASE / GERMANY</text>
-<text x="76" y="145" font-size="50" font-weight="700" letter-spacing="-2">Munich<tspan fill="#ab4364">.</tspan></text>
-<text x="76" y="174" font-size="17" fill="#65555c">Senior Frontend Engineer</text>
-<text x="260" y="255" text-anchor="middle" font-size="17">NeuVerge-Tron / Sungrow</text>
-<text x="76" y="290" font-size="12" fill="#934461" letter-spacing="1.3">OPEN TO RELOCATE ↗</text>
+<g fill="none" stroke="#ba8c9b" stroke-width="2" stroke-dasharray="5 8"><path d="M247 261Q223 291 257 333M480 171Q540 126 598 155M538 431Q564 432 611 442"/></g>
+<!-- Uneven city chapters, arranged north to south within each country. -->
+<path d="M66 53L362 35L475 86L448 252L339 274L43 247L31 140Z" fill="#e0e8e4" stroke="#bacbc5" stroke-width="1.5"/>
+<path d="M47 207Q159 155 273 191T450 194" fill="none" stroke="#bdd6d8" stroke-width="12"/>
+<path d="M68 136L435 132M171 53L158 254M352 51L347 260" fill="none" stroke="#fafcf6" stroke-width="5"/>
+<path d="M331 176L390 181L379 228L324 218Z" fill="#c8d8bd"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#3f4741">
+<text x="70" y="83" font-size="13" letter-spacing="2" fill="#557467">GERMANY / MY FIRST HOME</text>
+<text x="69" y="136" font-size="47" font-weight="700" letter-spacing="-1.5">Berlin<tspan fill="#ab4364">.</tspan></text>
+<text x="245" y="239" text-anchor="middle" font-size="20">Wedding</text>
+<text x="70" y="259" font-size="11" letter-spacing="1" fill="#557467">INDEPENDENT PROJECTS &amp; NEW BEGINNINGS</text>
 </g>
-<path d="M51 348L449 334L516 370L522 512L458 563L73 551L32 471Z" fill="#e0e8e4" stroke="#bacbc5" stroke-width="1.5"/>
-<path d="M45 463C157 395 216 485 307 439S443 403 519 468" fill="none" stroke="#b6d2d7" stroke-width="15"/>
-<path d="M57 416L497 413M156 344L150 552M369 340L375 556" fill="none" stroke="#f8faf4" stroke-width="5"/>
-<path d="M70 477L119 469L130 526L75 534Z M404 470L469 482L460 528L395 523Z" fill="#c6d8bc"/>
-<g font-family="Arial,Helvetica,sans-serif" fill="#282a28">
-<text x="76" y="377" font-size="12" letter-spacing="1.5" fill="#557467">MY FIRST HOME IN GERMANY</text>
-<text x="76" y="417" font-size="37" font-weight="700" letter-spacing="-1">Berlin<tspan fill="#ab4364">.</tspan></text>
-<text x="265" y="480" text-anchor="middle" font-size="16">Independent projects · Job search</text>
-<text x="76" y="535" font-size="12" letter-spacing="1" fill="#557467">COFFEE, CULTURE &amp; NEW BEGINNINGS</text>
+<path d="M39 339L364 304L525 352L548 522L462 568L91 574L28 480Z" fill="#f0dfe5" stroke="#d3b9c2" stroke-width="1.5"/>
+<path d="M410 326Q361 397 421 451T460 563" fill="none" stroke="#bfd7d8" stroke-width="16"/>
+<path d="M49 425L524 406M70 512L522 504M194 324L184 568M352 316L338 567" fill="none" stroke="#fff8f9" stroke-width="6"/>
+<path d="M433 466L483 480L471 541L421 526Z M74 461L126 451L137 493L84 505Z" fill="#d0ddc5"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#3f4741">
+<text x="67" y="365" font-size="13" letter-spacing="2" fill="#934461">GERMANY / CURRENT BASE</text>
+<text x="65" y="429" font-size="64" font-weight="700" letter-spacing="-2">Munich<tspan fill="#ab4364">.</tspan></text>
+<text x="310" y="490" text-anchor="middle" font-size="18">NeuVerge-Tron / Sungrow</text>
+<text x="69" y="552" font-size="12" letter-spacing="1.2" fill="#934461">ENERGY, FOOTBALL &amp; LIFE NEAR THE ALPS</text>
 </g>
-<path d="M607 48L918 46L969 92L955 249L897 276L607 256L580 189Z" fill="#e4e9dc" stroke="#c6cdbd" stroke-width="1.5"/>
-<path d="M782 48C745 106 795 160 766 272" fill="none" stroke="#c6d9d8" stroke-width="15"/>
-<path d="M605 130L944 124M608 211L939 214M673 66L669 254M863 60L868 266" fill="none" stroke="#fafcf6" stroke-width="5"/>
-<g font-family="Arial,Helvetica,sans-serif" fill="#282a28">
-<text x="611" y="91" font-size="28" letter-spacing="-.7">Shanghai</text><text x="909" y="89" text-anchor="end" font-size="11" letter-spacing="1.3" fill="#686b66">02 ROLES</text>
-<text x="677" y="225" text-anchor="middle" font-size="14">Caohejing</text><text x="863" y="225" text-anchor="middle" font-size="14">Zhangjiang</text>
-<text x="677" y="246" text-anchor="middle" font-size="11" fill="#686b66">DANZHU</text><text x="863" y="246" text-anchor="middle" font-size="11" fill="#686b66">GLP · PUDONG</text>
+<path d="M608 80L886 57L960 102L975 263L881 303L601 276L581 178Z" fill="#e4e9dc" stroke="#c6cdbd" stroke-width="1.5"/>
+<path d="M787 77Q740 137 787 192T784 292" fill="none" stroke="#c6d9d8" stroke-width="14"/>
+<path d="M603 172L959 153M605 253L949 246M679 82L670 279M869 78L863 288" fill="none" stroke="#fafcf6" stroke-width="5"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#3f4741">
+<text x="611" y="117" font-size="12" letter-spacing="2" fill="#65735b">CHINA / TWO WORK CHAPTERS</text>
+<text x="608" y="162" font-size="39" font-weight="700" letter-spacing="-1">Shanghai</text>
+<text x="665" y="252" text-anchor="middle" font-size="16">Caohejing</text><text x="855" y="252" text-anchor="middle" font-size="16">Zhangjiang</text>
+<text x="665" y="277" text-anchor="middle" font-size="12" fill="#686b66">DANZHU</text><text x="855" y="277" text-anchor="middle" font-size="12" fill="#686b66">GLP · PUDONG</text>
 </g>
-<path d="M605 325L904 319L965 365L966 525L911 565L612 552L583 477Z" fill="#ece5d7" stroke="#d1c5b3" stroke-width="1.5"/>
-<path d="M607 403L945 399M611 491L946 490M751 330L743 554" fill="none" stroke="#fffbf3" stroke-width="5"/>
-<path d="M622 433Q631 405 657 428Q678 398 702 424L702 469Q673 485 657 461Q635 480 622 454Z" fill="#cbdcce"/>
-<path d="M832 423Q861 409 884 431Q905 454 884 479Q856 496 837 471Q826 451 832 423Z" fill="#c4d8d7"/>
-<g font-family="Arial,Helvetica,sans-serif" fill="#282a28">
-<text x="611" y="367" font-size="28" letter-spacing="-.7">Hangzhou</text><text x="909" y="365" text-anchor="end" font-size="11" letter-spacing="1.3" fill="#686b66">02 ROLES</text>
-<text x="677" y="510" text-anchor="middle" font-size="14">Near Xixi Wetland</text><text x="863" y="510" text-anchor="middle" font-size="14">Near West Lake</text>
-<text x="677" y="531" text-anchor="middle" font-size="11" fill="#686b66">FINGARD</text><text x="863" y="531" text-anchor="middle" font-size="11" fill="#686b66">LONGSHINE</text>
+<path d="M631 363L904 336L963 385L948 549L830 578L601 552L581 451Z" fill="#ece5d7" stroke="#d1c5b3" stroke-width="1.5"/>
+<path d="M608 438L943 421M620 531L935 520M774 353L759 563" fill="none" stroke="#fffbf3" stroke-width="5"/>
+<path d="M627 479Q635 444 660 466Q683 439 707 468L705 501Q670 527 655 500Q633 519 627 479Z" fill="#cbdcce"/>
+<path d="M822 475Q851 451 879 470Q910 491 880 520Q849 542 830 516Q817 492 822 475Z" fill="#c4d8d7"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#3f4741">
+<text x="618" y="386" font-size="13" letter-spacing="2" fill="#89785f">ZHEJIANG / CHINA</text>
+<text x="617" y="432" font-size="39" font-weight="700" letter-spacing="-1">Hangzhou</text>
+<text x="675" y="518" text-anchor="middle" font-size="16">Xixi Wetland</text><text x="855" y="518" text-anchor="middle" font-size="16">West Lake</text>
+<text x="675" y="544" text-anchor="middle" font-size="12" fill="#686b66">FINGARD</text><text x="855" y="544" text-anchor="middle" font-size="12" fill="#686b66">LONGSHINE</text>
 </g>
 </svg>

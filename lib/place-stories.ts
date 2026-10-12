@@ -6,6 +6,7 @@ export type PlaceStory = {
   description: string;
   reflection: string;
   memory?: string;
+  neighbourhood?: string;
   bounds: [[number, number], [number, number]];
   reference: [number, number];
   source: { title: string; url: string };
@@ -22,12 +23,12 @@ export const placeStories: Record<string, PlaceStory> = {
     source: { title: 'The English Garden in Munich', url: 'https://www.muenchen.de/en/sights/attractions/english-garden' },
   },
   berlin: {
-    slug: 'berlin', name: 'Berlin', region: 'Germany',
+    slug: 'berlin', name: 'Berlin', region: 'Germany', neighbourhood: 'Wedding',
     headline: 'My first chapter in Germany.',
-    description: 'Berlin was the first city I called home in Germany. I lived here for over a year, looking for my next role and building my own projects. It is a wonderfully interesting, open and welcoming place, with room for people from everywhere.',
+    description: 'Berlin was my first home in Germany. I lived in Wedding for over a year, looking for my next role and building my own projects. Interesting, open and welcoming, it made room for people from everywhere—including me.',
     memory: 'Summer afternoons lying by the river, talking with friends. Winter walks through parks, watching people ice-skate. Film festivals, theatre, exhibitions, and food from all over the world. Even the odd late-night encounter after a film in Neukölln has not changed my love for Berlin.',
     reflection: 'Alongside my job search, I kept building independent products, including my coffee and craft beer discovery map. I would love to move back to Berlin for the right work opportunity.',
-    bounds: [[52.48, 13.36], [52.535, 13.455]], reference: [52.52, 13.405],
+    bounds: [[52.525, 13.315], [52.58, 13.425]], reference: [52.55, 13.36],
     source: { title: 'Explore Berlin', url: 'https://www.visitberlin.de/en' },
   },
   danzhu: {
@@ -49,7 +50,7 @@ export const placeStories: Record<string, PlaceStory> = {
     source: { title: 'Zhangjiang High-tech Zone', url: 'https://english.shanghai.gov.cn/en-NationalDevelopmentZone/20231209/e6616881e28647d1a1472156cf8d9d1b.html' },
   },
   longshine: {
-    slug: 'west-lake', name: 'West Lake', region: 'Hangzhou, China',
+    slug: 'west-lake', name: 'West Lake', region: 'Hangzhou · Zhejiang, China',
     headline: 'Water, gardens and a wider view.',
     description: 'West Lake is one of Hangzhou’s best-known attractions and a UNESCO World Heritage cultural landscape. Its lake, causeways, gardens and surrounding hills have inspired artists and poets for centuries.',
     memory: 'Beautiful, busy, and unmistakably Hangzhou. There were always plenty of visitors, and Friday traffic became part of my memory of working nearby.',
@@ -58,7 +59,7 @@ export const placeStories: Record<string, PlaceStory> = {
     source: { title: 'West Lake Cultural Landscape', url: 'https://whc.unesco.org/en/list/1334/' },
   },
   fingard: {
-    slug: 'xixi', name: 'Xixi Wetland', region: 'Hangzhou, China',
+    slug: 'xixi', name: 'Xixi Wetland', region: 'Hangzhou · Zhejiang, China',
     headline: 'A green setting. A first beginning.',
     description: 'Xixi National Wetland Park is a green retreat in western Hangzhou, with interconnected waterways, wetland habitats and a long local cultural history. Its scenery offers a gentler side of city life.',
     memory: 'Xixi felt especially comfortable. We often went running in the park after work, then returned to the office to continue our evening work.',

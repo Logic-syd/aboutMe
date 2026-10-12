@@ -1,4 +1,4 @@
-"""Export central Berlin streets from EqualStreetNames' published OSM GeoJSON.
+"""Export Berlin's Wedding area from EqualStreetNames' published OSM GeoJSON.
 
 Download the source once, then pass its local path to this script:
   curl -L https://raw.githubusercontent.com/EqualStreetNames/equalstreetnames-berlin/master/data/ways.geojson -o /tmp/berlin-ways.geojson
@@ -11,7 +11,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-BBOX = [13.36, 52.48, 13.455, 52.535]
+BBOX = [13.315, 52.525, 13.425, 52.58]
 SOURCE = 'https://raw.githubusercontent.com/EqualStreetNames/equalstreetnames-berlin/master/data/ways.geojson'
 
 def clip_segment(a, b):
