@@ -11,27 +11,52 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    graphTitle: "Energy API platform", contributions: [["React frontend development", "European delivery"], ["Typed frontend implementation"], ["Online API debugging", "Request and response integration"], ["Application management", "Developer workflows"]],
+    graphTitle: "Energy API platform", contributions: [["API platform ownership", "React frontend delivery"], ["Typed frontend implementation"], ["Online API debugging", "Request and response integration"], ["Application management", "Developer workflows"]],
     featured: true,
     heroTitle: "Energy APIs", heroDetail: "Developer platform",
     kind: 'commercial', slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
     category: 'Energy · Developer experience', organization: 'NeuVerge-Tron / Sungrow',
-    description: 'Frontend work on a renewable-energy developer platform, covering European delivery, online API debugging and application management, with a focus on EU Data Act data-access workflows.',
-    tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'Frontend development · European delivery',
+    description: 'Led a standalone renewable-energy API platform, with responsibility for the React frontend, European delivery, online API debugging and application-management workflows.',
+    tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'API platform lead · React frontend',
     problem: 'Developers need to move from API documentation to application authorization and working calls across regional sites. The platform brings these workflows together with application management and operational tooling.',
-    responsibilities: ['Contribute to European frontend delivery and EU Data Act data-access workflows.', 'Develop online API debugging workflows.', 'Implement application-management interfaces for developers.'],
+    responsibilities: ['Lead the API platform and its React frontend delivery, including the European site.', 'Develop online API debugging workflows.', 'Implement application-management interfaces for developers.'],
     decisions: [
       { title: 'Regional context reaches the request layer', text: 'The platform separates build environments from business sites. Site selection determines the default gateway, while individual requests can override it for flows such as registration.' },
       { title: 'A debugger needs a different response contract', text: 'Online debugging checks application permissions and uses application-level credentials. It preserves the raw API response instead of applying the ordinary portal result wrapper.' }
     ],
-    delivery: 'My scope covers European delivery, online debugging and application management, alongside EU Data Act frontend requirements. The interactive case uses illustrative data and makes no live API requests.',
+    delivery: 'My scope covers API platform leadership, European frontend delivery, online debugging and application management. The interactive case uses illustrative data and makes no live API requests.',
     flow: ['Application access', 'Regional gateway', 'API response']
+  },
+  {
+    graphTitle: "iSolarCloud", contributions: [["Plant and device interfaces", "European product adaptation"], ["Typed business interfaces", "Data-access workflows"], ["China-to-Europe frontend migration", "Regional routing and country rules", "Numbers, time zones and service dependencies"], ["Plant feature configuration", "Device parameter settings", "Country, firmware and protocol capabilities"]],
+    featured: true,
+    heroTitle: "iSolarCloud", heroDetail: "China → Europe",
+    kind: 'commercial', slug: 'isolarcloud', number: '02', title: 'iSolarCloud — Solar & Energy Storage Platform', shortTitle: 'From China to Europe. From plants to devices.',
+    category: 'Energy · Regional migration · Device operations', organization: 'NeuVerge-Tron (NVT) / Sungrow',
+    description: 'Frontend work on iSolarCloud (阳光云), Sungrow’s solar and energy-storage management platform: migrating the China-based experience to Europe, developing plant and device feature settings, and adding EU Data Act data-access workflows.',
+    tags: ['Vue 3', 'TypeScript', 'Multi-region delivery', 'Plant & device workflows'], role: 'Frontend development · China-to-Europe migration · Plant & device features',
+    problem: 'Bringing an established energy platform from China to Europe involves more than translation. Cloud routing, product behavior, country eligibility, number and time interpretation, asynchronous services and device capabilities all need to agree while existing regional workflows continue to work.',
+    responsibilities: ['Worked on the frontend migration of iSolarCloud from China to Europe.', 'Developed feature settings and business interfaces for individual plants and devices.', 'Worked with regional product behavior, service routing and country-specific rules.', 'Contributed to EU Data Act data-access workflows as part of the wider platform.'],
+    decisions: [
+      { title: 'Keep product, cloud and language distinct', text: 'European product behavior, the target cloud environment and the display language are separate contexts. Shared routing must resolve the intended environment, including requests that explicitly override the default service.' },
+      { title: 'Country rules are business rules', text: 'The localized European product uses a configured set of allowed countries, while the original platform’s European-country path excludes countries assigned to that rollout. Reusing one filter would change eligibility.' },
+      { title: 'Device settings depend on capabilities', text: 'Parameter-setting interfaces account for device country, grid type, firmware and protocol capabilities. A common device type alone does not determine whether a batch can use the same settings.' },
+      { title: 'Trace a workflow through every service', text: 'Report exports involve an HTTP task, an MQTT connection and a download destination. Regional delivery has to consider the complete chain, including email entry points with their own cloud context.' }
+    ],
+    delivery: 'Frontend contributions spanning China-to-Europe migration, plant and device feature settings, and EU Data Act data access. Public visitor-demo screenshots illustrate the platform; workflow examples use local sample data.',
+    flow: ['Regional context', 'Plant & device workflows', 'Data access'],
+    screenshots: [
+      { src: '/images/isolarcloud-plant-overview.png', width: 1800, height: 776, alt: 'The iSolarCloud public European visitor demo showing a residential solar and energy-storage plant overview and energy flow.', caption: 'Plant overview · Public European visitor demo.' },
+      { src: '/images/isolarcloud-plant-devices.png', width: 1800, height: 776, alt: 'Battery, hybrid inverter, communication module and EV charger cards in the iSolarCloud public visitor demo.', caption: 'Plant devices · Public European visitor demo.' },
+      { src: '/images/isolarcloud-energy-analysis.png', width: 1800, height: 776, alt: 'Energy statistics and power and battery state-of-charge curves in the iSolarCloud public visitor demo.', caption: 'Energy analysis · Public European visitor demo.' }
+    ],
+    screenshotCredit: { label: 'iSolarCloud public European visitor demo', href: 'https://web3.isolarcloud.eu/' }
   },
   {
     graphTitle: "Coffee & beer map", contributions: [["React map experience", "Server-side rendering"], ["Backend development", "Data import workflows"], ["500+ curated venues", "Data access policies"], ["Server-rendered web experience"]],
     featured: true,
     heroTitle: "Discovery map", heroDetail: "Independent product",
-    kind: 'independent', slug: 'discovery-map', number: '02', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
+    kind: 'independent', slug: 'discovery-map', number: '03', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
     category: 'Independent product · Full stack', organization: 'Personal project', status: 'In development · Not released', inDevelopment: true,
     description: 'An independently built discovery product with 500+ curated places, connecting a React / Next.js map experience to a structured location dataset.',
     tags: ['Next.js', 'Node.js / Express', 'Supabase / PostgreSQL', 'SSR'], role: 'Independent developer · Frontend and backend',
@@ -43,24 +68,6 @@ export const projects: Project[] = [
     ],
     delivery: 'In active development and not publicly released. The 500+ figure describes the curated venue dataset, not users or adoption. No live demo or source-code link is offered until a public version is available.',
     flow: ['Curated places', 'PostgreSQL', 'Map discovery']
-  },
-  {
-    graphTitle: "Data export center", contributions: [["Data-access frontend implementation", "Shared browser-based export experience"], ["Typed request and task states"], ["Partial results and retry", "Separate task and link lifecycles"], ["Scope selection and validation", "Request and download verification"]],
-    featured: true,
-    heroTitle: "Data exports", heroDetail: "Async workflows",
-    kind: 'commercial', slug: 'data-export-center', number: '03', title: 'EU Data Act Data Export Center', shortTitle: 'Clarity through a complex export.',
-    category: 'Data access · Async workflows', organization: 'NeuVerge-Tron / Sungrow',
-    description: 'A data-access frontend for EU Data Act requirements, turning scope selection, identity verification, asynchronous exports, partial results and download recovery into an understandable user journey.',
-    tags: ['React', 'TypeScript', 'Async tasks', 'Permissions'], role: 'Frontend implementation · EU data access',
-    problem: 'Exporting energy-device data spans ownership, scope limits, identity checks, asynchronous preparation and time-limited delivery. Users need to understand what they can request and recover without losing their original selection.',
-    responsibilities: ['Frontend work on data-access and export workflows for EU Data Act requirements.', 'Represent scope validation, identity confirmation and asynchronous task states in the interface.', 'Account for partial results, failure recovery and download verification.'],
-    decisions: [
-      { title: 'Keep three lifecycles distinct', text: 'An export task, an identity confirmation and a short-lived download link represent different states. Renewing a link does not recreate the task; an expired task requires a new request.' },
-      { title: 'Recover without losing the scope', text: 'Failure recovery retains the original selection. Partial exports preserve useful records, identify missing data and keep metadata alongside the machine-readable output.' },
-      { title: 'One browser-based flow across entry points', text: 'The system design uses a shared browser-based export journey for Web and embedded App entry points, with file delivery handled by the browser.' }
-    ],
-    delivery: 'The case explores frontend implementation for data access, export lifecycles and recovery. The interactive reconstruction uses synthetic records and local CSV/JSON downloads.',
-    flow: ['Scope + identity', 'Async preparation', 'Verified download']
   },
   {
     graphTitle: "AI sports assessment", contributions: [
