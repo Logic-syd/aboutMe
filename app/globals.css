@@ -471,15 +471,15 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
  .place-story-explorer .place-story-links{flex-direction:row;align-items:center;justify-content:space-between}
 }
 @media(min-width:801px){
- .pixel-portfolio .project-explorer-workspace{--scene-height:clamp(394px,calc(100svh - 265px),440px);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+ .pixel-portfolio .project-explorer-workspace{--scene-height:clamp(394px,calc(100svh - 265px),440px);display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr)}
  .pixel-portfolio .project-explorer-workspace .three-stage{top:20px;border-bottom:0}
- .pixel-portfolio .graph-project-navigation{max-height:var(--scene-height);overflow:auto;border-left:1px solid var(--line)}
- .pixel-portfolio .graph-project-navigation .graph-project-picker{grid-template-columns:repeat(2,minmax(0,1fr))}
- .pixel-portfolio .graph-project-navigation .graph-project-entry:nth-child(n){border-right:1px solid var(--line)}
+ .pixel-portfolio .graph-project-navigation{max-height:var(--scene-height);overflow-x:hidden;overflow-y:scroll;scrollbar-gutter:stable;scrollbar-color:#a5ad98 #eceee5;border-left:1px solid var(--line)}
+ .pixel-portfolio .graph-project-navigation .graph-project-picker{grid-template-columns:minmax(0,1fr)}
+ .pixel-portfolio .graph-project-navigation .graph-project-entry:nth-child(n){border-right:0}
  .pixel-portfolio .graph-project-navigation .graph-project-entry:nth-child(2n){border-right:0}
  .pixel-portfolio .graph-project-navigation .project-group-heading{padding:9px 12px}
  .pixel-portfolio .graph-project-navigation .project-group-heading h3{font-size:14px}
- .pixel-portfolio .graph-project-navigation .graph-project-entry>button{padding:6px 10px;min-height:44px;font-size:12px}
+ .pixel-portfolio .graph-project-navigation .graph-project-entry>button{padding:10px 14px;min-height:48px;font-size:13px}
  .pixel-portfolio .graph-project-navigation .graph-project-case-link{font-size:10px}
  .pixel-portfolio .work-section,.pixel-portfolio .experience-section{padding-top:22px;padding-bottom:22px}
  .place-story-explorer{--growth-map-height:clamp(240px,calc(100svh - 310px),370px)}
