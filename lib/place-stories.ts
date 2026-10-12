@@ -21,6 +21,15 @@ export const placeStories: Record<string, PlaceStory> = {
     bounds: [[48.11, 11.53], [48.18, 11.64]], reference: [48.142, 11.582],
     source: { title: 'The English Garden in Munich', url: 'https://www.muenchen.de/en/sights/attractions/english-garden' },
   },
+  berlin: {
+    slug: 'berlin', name: 'Berlin', region: 'Germany',
+    headline: 'My first chapter in Germany.',
+    description: 'Berlin was the first city I called home in Germany. I lived here for over a year, looking for my next role and building my own projects. It is a wonderfully interesting, open and welcoming place, with room for people from everywhere.',
+    memory: 'Summer afternoons lying by the river, talking with friends. Winter walks through parks, watching people ice-skate. Film festivals, theatre, exhibitions, and food from all over the world. Even the odd late-night encounter after a film in Neukölln has not changed my love for Berlin.',
+    reflection: 'Alongside my job search, I kept building independent products, including my coffee and craft beer discovery map. I would love to move back to Berlin for the right work opportunity.',
+    bounds: [[52.48, 13.36], [52.535, 13.455]], reference: [52.52, 13.405],
+    source: { title: 'Explore Berlin', url: 'https://www.visitberlin.de/en' },
+  },
   danzhu: {
     slug: 'caohejing', name: 'Caohejing Hi-Tech Park', region: 'Shanghai, China',
     headline: 'Ideas in the middle of a city.',

@@ -9,18 +9,23 @@ import { projects } from '@/lib/projects';
 import { placeStories } from '@/lib/place-stories';
 import { PlaceMap } from '@/components/place-map';
 
+// Personal chapters belong on the growth map, alongside the employment history.
+type MapStop = { id: string; label: string; area: string; project: string; relatedProjects?: string[] };
+const workStops: MapStop[] = experiences.map(experience => ({ id: experience.id, label: experience.company, area: experience.area, project: experience.project, relatedProjects: experience.relatedProjects }));
+const mapStops: MapStop[] = [workStops[0], { id: 'berlin', label: 'Independent projects · Job search', area: 'Berlin, Germany', project: 'discovery-map' }, ...workStops.slice(1)];
+
 // Positions in our original schematic artwork, intentionally not GPS coordinates.
-const schematicPoints: Record<string, [number, number]> = { sungrow: [305, 257], danzhu: [429, 677], longshine: [151, 863], glp: [429, 863], fingard: [151, 677] };
+const schematicPoints: Record<string, [number, number]> = { sungrow: [385, 260], berlin: [160, 265], danzhu: [429, 677], longshine: [151, 863], glp: [429, 863], fingard: [151, 677] };
 const artworkBounds: [[number, number], [number, number]] = [[0, 0], [600, 1000]];
 
 export function CareerMap() {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<LeafletMap | null>(null);
   const markers = useRef<Marker[]>([]);
-  const [selectedId, setSelectedId] = useState(experiences[0].id);
+  const [selectedId, setSelectedId] = useState(mapStops[0].id);
   const [areaView, setAreaView] = useState(false);
   const [mapState, setMapState] = useState<'loading' | 'ready' | 'unavailable'>('loading');
-  const selected = experiences.find(e => e.id === selectedId)!;
+  const selected = mapStops.find(e => e.id === selectedId)!;
   const place = placeStories[selectedId];
 
   useEffect(() => {
@@ -36,17 +41,17 @@ export function CareerMap() {
         const instance = L.map(element, { crs: L.CRS.Simple, scrollWheelZoom: false, minZoom: -3, maxZoom: 1.5, zoomSnap: .1, zoomDelta: .5, zoomControl: false, attributionControl: false, maxBounds: [[-200, -200], [800, 1200]], maxBoundsViscosity: .9 });
         map.current = instance;
         L.control.zoom({ position: 'bottomleft' }).addTo(instance);
-        L.imageOverlay('/images/career-map.svg', artworkBounds, { alt: 'Illustrative career map: Munich enlarged on the left, Shanghai upper right, Hangzhou lower right. Not to scale.', interactive: false }).on('error', () => { if (!disposed) setMapState('unavailable'); }).addTo(instance);
-        markers.current = experiences.map((experience, index) => {
-          const marker = L.marker(schematicPoints[experience.id], { icon: L.divIcon({ className: `career-pin ${index === 0 ? 'current-base-pin' : ''}`, html: `<span>${index + 1}</span>`, iconSize: [36, 36], iconAnchor: [18, 18] }), title: `${experience.company} — ${experience.area}`, alt: `${experience.company} — ${experience.area}`, keyboard: true });
-          marker.bindTooltip(`${experience.company}<br>${experience.area}`, { direction: 'top', offset: [0, -18] });
+        L.imageOverlay('/images/career-map.svg', artworkBounds, { alt: 'Illustrative growth map: Munich and Berlin on the left, Shanghai upper right, Hangzhou lower right. Not to scale.', interactive: false }).on('error', () => { if (!disposed) setMapState('unavailable'); }).addTo(instance);
+        markers.current = mapStops.map((experience, index) => {
+          const marker = L.marker(schematicPoints[experience.id], { icon: L.divIcon({ className: `career-pin ${index === 0 ? 'current-base-pin' : ''}`, html: `<span>${index + 1}</span>`, iconSize: [36, 36], iconAnchor: [18, 18] }), title: `${experience.label} — ${experience.area}`, alt: `${experience.label} — ${experience.area}`, keyboard: true });
+          marker.bindTooltip(`${experience.label}<br>${experience.area}`, { direction: 'top', offset: [0, -18] });
           marker.on('click', () => { setSelectedId(experience.id); setAreaView(true); });
           marker.on('add', () => {
             const icon = marker.getElement();
             if (!icon) return;
             icon.tabIndex = 0;
             icon.setAttribute('role', 'button');
-            icon.setAttribute('aria-label', `${experience.company} — ${experience.area}`);
+            icon.setAttribute('aria-label', `${experience.label} — ${experience.area}`);
             icon.addEventListener('keydown', event => {
               if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
@@ -71,7 +76,7 @@ export function CareerMap() {
 
   useEffect(() => {
     markers.current.forEach((marker, index) => {
-      const active = experiences[index].id === selectedId;
+      const active = mapStops[index].id === selectedId;
       const icon = marker.getElement();
       icon?.classList.toggle('is-selected', active);
       icon?.setAttribute('aria-pressed', String(active));
@@ -85,24 +90,24 @@ export function CareerMap() {
     if (map.current) map.current.fitBounds(artworkBounds, { padding: [10, 10], animate: false });
   }
   return <div className="career-explorer place-story-explorer">
-    <div className="career-location-picker" aria-label="Select a place, most recent experience first">{experiences.map((experience,index) => <button key={experience.id} onClick={() => selectExperience(experience.id)} aria-pressed={selectedId === experience.id}><span className="location-number">0{index+1}</span><span><strong>{placeStories[experience.id].name}</strong><small>{placeStories[experience.id].region}</small><span className="place-company-label">{experience.company}</span></span><span aria-hidden="true">↗</span></button>)}</div>
+    <div className="career-location-picker" aria-label="Select a place, most recent chapter first">{mapStops.map((experience,index) => <button key={experience.id} onClick={() => selectExperience(experience.id)} aria-pressed={selectedId === experience.id}><span className="location-number">0{index+1}</span><span><strong>{placeStories[experience.id].name}</strong><small>{placeStories[experience.id].region}</small><span className="place-company-label">{experience.label}</span></span><span aria-hidden="true">↗</span></button>)}</div>
     <div className="career-map-panel">
       <div className="map-toolbar"><span className="eyebrow">{areaView ? 'LOCAL MAP / REAL GEOGRAPHY' : 'GROWTH MAP / NOT TO SCALE'}</span><button type="button" onClick={() => {
         if (areaView) { setAreaView(false); requestAnimationFrame(() => { map.current?.invalidateSize(); map.current?.fitBounds(artworkBounds, { padding: [10, 10], animate: false }); }); }
         else setAreaView(true);
       }}>{areaView ? 'Back to growth map ↗' : `Explore ${place.name} ↗`}</button></div>
       <div className="career-overview-map" hidden={areaView}>
-        <div ref={container} className="career-map-canvas schematic-map" role="region" aria-label="Interactive illustrated map of Yidan’s work locations" />
+        <div ref={container} className="career-map-canvas schematic-map" role="region" aria-label="Interactive illustrated map of places Yidan has lived and worked" />
         {mapState === 'unavailable' && <p className="map-fallback" role="status">The overview map could not load. Select a place to open its area map and story.</p>}
       </div>
       {areaView && <PlaceMap key={selectedId} place={place} />}
       <div className="career-selected place-story" aria-live="polite">
         <p className="eyebrow">{place.name} / {place.region}</p><h3>{place.headline}</h3><p>{place.description}</p>
         {place.memory && <blockquote className="place-memory"><p>{place.memory}</p></blockquote>}
-        <div className="place-reflection"><p className="eyebrow">WHAT I TAKE WITH ME</p><h4>{selected.company}</h4><p>{place.reflection}</p></div>
-        <div className="place-story-links"><a className="place-source-link" href={place.source.url}>About this place <span aria-hidden="true">↗</span></a>{[selected.project, ...(selected.relatedProjects ?? [])].filter(Boolean).map(slug => <Link key={slug} className="text-link" href={`/projects/${slug}`}>{selected.relatedProjects?.length ? projects.find(project => project.slug === slug)?.title : 'Related project'} <span aria-hidden="true">↗</span></Link>)}</div>
+        <div className="place-reflection"><p className="eyebrow">WHAT I TAKE WITH ME</p><h4>{selected.label}</h4><p>{place.reflection}</p></div>
+        <div className="place-story-links"><a className="place-source-link" href={place.source.url}>About this place <span aria-hidden="true">↗</span></a>{[selected.project, ...(selected.relatedProjects ?? [])].filter(Boolean).map(slug => <Link key={slug} className="text-link" href={`/projects/${slug}`}>{selected.relatedProjects?.length ? projects.find(project => project.slug === slug)?.title : selectedId === 'berlin' ? 'Coffee & beer discovery map' : 'Related project'} <span aria-hidden="true">↗</span></Link>)}</div>
       </div>
     </div>
-    <p className="map-note">{areaView ? 'Local maps use real OpenStreetMap geography, with a simplified visual style. The dashed circle locates a city or nearby landmark, not an office address.' : 'A personal growth map, not to scale. Munich is my current base. Select a place to explore its geography and the memories I take from it.'} Experiences are listed most recent first.</p>
+    <p className="map-note">{areaView ? 'Local maps use real OpenStreetMap geography, with a simplified visual style. The dashed circle locates a city or nearby landmark, not an office address.' : 'A personal growth map, not to scale. Munich is my current base. Select a place to explore its geography and the memories I take from it.'} Work and personal chapters are listed most recent first.</p>
   </div>;
 }
