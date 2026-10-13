@@ -348,31 +348,36 @@ export const projects: Project[] = [
     links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/weibo-deleter' }]
   },
   {
-    kind: 'commercial', slug: 'medical-curriculum', number: '14', title: 'Medical Curriculum & Knowledge Explorer', shortTitle: 'Majors, shared courses and the knowledge between them.',
-    graphTitle: 'Medical curriculum', category: 'Medical education · 3D curriculum exploration', organization: 'Peking University medical education project · Via a partner company', status: 'Contract engagement · Aug–Sep 2024',
-    description: 'An independent contract collaboration for a Peking University medical education-system redesign, delivered through a partner company in August–September 2024. My frontend work combined React course interfaces with a Three.js sphere-based explorer of majors, overlapping courses, shared courses and course-specific knowledge points.',
-    tags: ['React', 'Three.js', 'Curriculum relationships', 'Course-selection workflows'], role: 'Independent contract frontend developer',
+    kind: 'commercial', slug: 'medical-curriculum', number: '14', title: '北大医学院 — Curriculum & Knowledge Explorer', shortTitle: 'Majors, shared courses and the knowledge between them.',
+    graphTitle: '北大医学院 curriculum', category: 'Medical education · 3D curriculum exploration', organization: '北大医学院 · Curriculum project via a partner company', status: 'Contract engagement · Aug–Sep 2024',
+    description: 'An independent contract collaboration for the education-system redesign at 北大医学院, delivered through a partner company in August–September 2024. My frontend work combined React course interfaces with a Three.js sphere-based curriculum explorer for a dedicated demonstration setting, with clickable, freely draggable nodes, customized labels and high-fidelity UI reproduction.',
+    tags: ['React', 'Three.js', 'Curriculum relationships', 'Demonstration UI & performance', 'Course-selection workflows'], role: 'Independent contract frontend developer',
     contributions: [
       ['Education-system redesign interfaces', 'Basic course-selection operations'],
-      ['Sphere-based 3D curriculum explorer', 'Visual presentation of educational relationships'],
+      ['Sphere-based 3D curriculum explorer', 'Clickable and freely draggable nodes'],
       ['Majors and overlapping courses', 'Shared courses', 'Course-specific knowledge points'],
+      ['High-fidelity UI reproduction', 'Customized node labels', 'Demonstration performance requirements'],
       ['Course browsing and selection interfaces']
     ],
-    problem: 'The education system needed to present several majors, their overlapping and shared courses, and the knowledge points within each course. A simple hierarchy could not fully express those relationships. The redesign combined a 3D view of the curriculum with practical interfaces for browsing and selecting courses.',
+    problem: 'The education system needed to present several majors, their overlapping and shared courses, and the knowledge points within each course. A simple hierarchy could not fully express those relationships. The redesign combined a 3D view of the curriculum with practical course-selection interfaces. The visualization was intended for a dedicated demonstration setting, with high UI-reproduction standards, customized labels, freely clickable and draggable nodes, and performance requirements.',
     responsibilities: [
       'Contributed frontend development as an independent contractor through a partner company during August–September 2024.',
       'Built React interfaces for the medical education-system redesign.',
-      'Developed a Three.js sphere-based view of majors, courses and course-specific knowledge points.',
+      'Developed a Three.js sphere-based view of majors, courses and course-specific knowledge points, with node clicking and free dragging.',
       'Presented course overlap and shared courses across different majors.',
+      'Worked on high-fidelity UI reproduction and customized node labels for the demonstration screen.',
+      'Worked to the demonstration’s interaction and rendering performance requirements.',
       'Implemented basic course-selection operations alongside the curriculum explorer.'
     ],
     decisions: [
       { title: 'A curriculum is more than a tree', text: 'Different majors can share the same course, including common courses taken across programmes. The relationship model needs to distinguish a course from its membership in several majors, while retaining the knowledge points belonging to that course.' },
       { title: 'Shared courses create visual complexity', text: 'A shared course can connect to many majors. Showing every relationship with the same emphasis can make a 3D view difficult to read. The design challenge is to preserve the overall structure while making an individual major, course and its knowledge points understandable.' },
       { title: 'Exploration and course operations need a common context', text: 'The 3D presentation and the React course interfaces describe the same educational content. A course’s identity and its major relationships need to remain consistent across these views; the curriculum structure and a student’s course selection represent different kinds of state.' },
-      { title: 'A visual overview still needs practical interfaces', text: 'The Three.js view explains connections within the curriculum, while basic course-selection operations let users act on the course information. Both belong to the education-system redesign: an engaging overview and the everyday work it supports.' }
+      { title: 'Clicking and dragging have different intentions', text: 'The demonstration required nodes to be freely clicked and dragged. Selection and continuous movement need distinct interaction feedback, with the node, its label and its relationships remaining understandable as a user manipulates the scene.' },
+      { title: 'Precise UI reproduction includes the labels', text: 'The demonstration screen had high UI-reproduction requirements, including customized labels. The appearance of the sphere nodes, connections and labels needed to follow the requested design consistently throughout the interactive view.' },
+      { title: 'Keep the demonstration responsive', text: 'Performance requirements accompanied the highly customized presentation. The Three.js scene needed to remain responsive during node dragging and selection while preserving the intended visual result.' }
     ],
-    delivery: 'A short-term independent frontend engagement in August–September 2024, delivered through a partner company for a Peking University medical education-system redesign. My scope covered React interfaces, Three.js curriculum visualization and basic course-selection operations. The workflow illustration summarizes the project context.',
+    delivery: 'A short-term independent frontend engagement in August–September 2024, delivered through a partner company for the education-system redesign at 北大医学院. My scope covered React interfaces, an interactive Three.js curriculum visualization with freely draggable nodes, high-fidelity UI reproduction, customized labels, demonstration performance requirements and basic course-selection operations. The workflow illustration summarizes the project context.',
     flow: ['Majors + shared courses', '3D knowledge exploration', 'Course selection']
   }
 ];
