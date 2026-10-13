@@ -2,7 +2,7 @@
 
 Public portfolio: https://about-me-henna-alpha.vercel.app/
 
-English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project explorer, thirteen project case studies, a Leaflet growth map and contact links. Each project has a statically generated detail route.
+English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project explorer, fourteen project case studies, a Leaflet growth map and contact links. Each project has a statically generated detail route.
 
 ## Local development
 
@@ -48,7 +48,7 @@ Import `Logic-syd/aboutMe` at https://vercel.com/new, keep the detected Next.js 
 
 Project content is in `lib/projects.ts`; graph labels and contribution details are in `lib/graph.ts`; homepage biography is in `app/page.tsx`, confirmed work areas are in `lib/experience.ts`, and place descriptions and personal reflections are in `lib/place-stories.ts`. Contact links are in `components/site.tsx`. Update verified facts at their source before publication. API and Data Act cases omit release-status labels at the owner's request and make no launch or verified-compliance claims. Other projects retain their existing status information.
 
-All thirteen projects include written case studies. Mountain Chess also includes two genuine product screenshots and verified Live Demo and Source Code links. Pfand Pause includes two screenshots of its local production build, a public source link and the owner's confirmed Game Jolt release link. The separate Danzhu sports mini-program case includes one user-provided screenshot of a Vue / uni-app running mini-program, with privacy redactions, and a verified link to the company website. Other commercial interfaces are not publicly shown. Original workflow illustrations are explicitly labeled and do not represent product screenshots. There are no proprietary code samples, fabricated employment dates, unverified outcome metrics, phone numbers, empty actions, or unverified demo/source links. The sports-education case distinguishes frontend camera and feedback integration from model training.
+All fourteen projects include written case studies. Mountain Chess also includes two genuine product screenshots and verified Live Demo and Source Code links. Pfand Pause includes two screenshots of its local production build, a public source link and the owner's confirmed Game Jolt release link. The separate Danzhu sports mini-program case includes one user-provided screenshot of a Vue / uni-app running mini-program, with privacy redactions, and a verified link to the company website. Other commercial interfaces are not publicly shown. Original workflow illustrations are explicitly labeled and do not represent product screenshots. There are no proprietary code samples, fabricated employment dates, unverified outcome metrics, phone numbers, empty actions, or unverified demo/source links. The sports-education case distinguishes frontend camera and feedback integration from model training.
 
 Mountain Chess is an independently published game, documented as the eighth case with its own live and source links. The site uses system fonts, CSS diagrams, an original local SVG career map and a local SVG favicon, with no third-party tracking or external asset dependencies.
 
@@ -57,7 +57,7 @@ Mountain Chess is an independently published game, documented as the eighth case
 
 The header links to About Me, My Projects, My Work, Growth Map and Let’s Talk. My Work summarizes confirmed responsibilities from `lib/experience.ts`; Growth Map explores the same experience by place. Contact copy welcomes frontend and full-stack engineering opportunities and new challenges. The professional title remains grounded in the supplied Senior Frontend Engineer experience.
 
-Commercial work receives visual emphasis within the existing composition: The Studio building is approximately 1.88 times the normal desktop width (1.58 times on phones), with a rooftop pixel briefcase and WORK sign plus a Commercial work label. Floating project labels identify WORK or PERSONAL, and commercial project spheres are about 40% larger in diameter than independent project spheres. The nine commercial and four independent cases use the explicit `kind` field in `lib/projects.ts` for sphere sizing, including compact satellite mode. The original homepage order and complete 13-project explorer remain; there are no additional commercial highlight cards or independent-product sections.
+Commercial work receives visual emphasis within the existing composition: The Studio building is approximately 1.88 times the normal desktop width (1.58 times on phones), with a rooftop pixel briefcase and WORK sign plus a Commercial work label. Floating project labels identify WORK or PERSONAL, and commercial project spheres are about 40% larger in diameter than independent project spheres. The ten commercial and four independent cases use the explicit `kind` field in `lib/projects.ts` for sphere sizing, including compact satellite mode. The original homepage order and complete 14-project explorer remain; there are no additional commercial highlight cards or independent-product sections.
 
 ## Graph and career map
 
@@ -129,3 +129,9 @@ The sports case also records the user-confirmed expansion from two to eight came
 ## API and Data Act interactive cases
 
 The API case combines the owner's European delivery, online debugging and application-management work with a local API console. The associated Data Act case offers a complete export simulation, including scope limits, two confirmation points, asynchronous tasks, partial data, recovery and real sample CSV/JSON downloads. The three lifecycles—task, identity and download link—remain distinct. See `API_CASE_STUDY.md` for content boundaries and reconstruction details.
+
+## Medical curriculum contract project
+
+`/projects/medical-curriculum` is a work project delivered as an independent frontend collaboration via a partner company, during August–September 2024. The educational context was a Peking University medical education-system redesign; the case describes a subcontracted engagement, not university employment or a direct university contract.
+
+The owner confirmed React, a Three.js sphere-based curriculum explorer, multiple majors with overlapping/shared courses, course-specific knowledge points and basic course-selection operations. The case explains the relationship and interaction challenges from that scope. Specific graph-layout algorithms, rendering optimizations, prerequisites, seat limits, timetable conflict checks, release status and adoption figures remain unconfirmed; do not present them as completed contributions without further information. There are no supplied screenshots, live-product links or source links. The project uses the shared desktop chapters and fixed home navigation; catalog counts, graph nodes, cards, detail routes and layout checks derive from the source data.
