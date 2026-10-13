@@ -30,4 +30,6 @@ The browser tests iterate `lib/projects.ts`, so newly added projects automatical
 
 ## Content integrity
 
+Keep public portfolio prose, project titles and graph labels in English. Retain the specific medical-school identity using the English naming recorded in README.md; do not introduce Chinese-only labels when updating this project.
+
 Update project facts at their existing sources. Preserve distinctions between the standalone React API platform and the Vue/TypeScript iSolarCloud platform. Do not invent employment dates, release status, quantified outcomes, compliance guarantees, or historical bug causes. Label illustrative workflows and synthetic interactive data clearly. Retain personal photos and original screenshots unchanged unless the owner specifically requests an image edit.
