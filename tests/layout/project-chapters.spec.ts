@@ -111,7 +111,7 @@ for (const project of projects) {
         }
       }
     }
-    for (const image of await page.locator('.case-gallery-view img, figure[class*="productFigure"] img').all()) {
+    for (const image of await page.locator('.case-gallery-view img, .case-mobile-screen img, figure[class*="productFigure"] img').all()) {
       await expect(image).toBeVisible();
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
@@ -128,6 +128,34 @@ for (const project of projects) {
     expect(errors).toEqual([]);
   });
 }
+
+test('Pfand Pause presents the 2.0 release with separate desktop and mobile captures', async ({ page }) => {
+  await page.goto('/projects/pfand-pause');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Pfand Pause 2.0');
+  const desktop = page.locator('#product-screens');
+  const mobile = page.locator('#mobile-screens');
+  await expect(desktop.locator('img')).toHaveCount(1);
+  await expect(mobile.locator('img')).toHaveCount(1);
+  await desktop.getByRole('button', { name: 'Packaging guide', exact: true }).click();
+  await mobile.getByRole('button', { name: 'Touch puzzle', exact: true }).click();
+  for (const [chapter, orientation] of [[desktop, 'landscape'], [mobile, 'portrait']] as const) {
+    const image = chapter.locator('img');
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
+    expect(await image.evaluate((element: HTMLImageElement) => element.naturalWidth > element.naturalHeight ? 'landscape' : 'portrait')).toBe(orientation);
+    const bounds = await chapter.locator('figure').evaluate(figure => {
+      const image = figure.querySelector('img')!.getBoundingClientRect();
+      const caption = figure.querySelector('figcaption')!.getBoundingClientRect();
+      const frame = figure.getBoundingClientRect();
+      return { captionBelow: caption.top >= image.bottom - 1, captionFits: caption.bottom <= frame.bottom + 1 };
+    });
+    expect(bounds).toEqual({ captionBelow: true, captionFits: true });
+  }
+  await expect(desktop.locator('img')).toHaveAttribute('src', /pfand-pause-v2-desktop-recycling/);
+  await expect(mobile.locator('img')).toHaveAttribute('src', /pfand-pause-v2-mobile-game/);
+  await expect(mobile).toContainText('English, German and Chinese');
+  await expectCompleteScreens(page);
+});
 
 test('interactive consoles keep a complete frame when results expand', async ({ page }) => {
   await page.goto('/projects/renewable-energy-api');

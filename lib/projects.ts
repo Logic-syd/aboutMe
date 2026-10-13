@@ -1,3 +1,5 @@
+export type ProjectScreenshot = { src: string; width: number; height: number; alt: string; caption: string; label?: string };
+
 export type Project = {
   kind: 'commercial' | 'independent'; slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
   affiliation?: string; status?: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
@@ -5,7 +7,8 @@ export type Project = {
   delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
   featured?: boolean; heroTitle?: string; heroDetail?: string;
   links?: { label: 'Live Demo' | 'Play on Game Jolt' | 'Source Code'; href: string }[];
-  screenshots?: { src: string; width: number; height: number; alt: string; caption: string }[];
+  screenshots?: ProjectScreenshot[]; mobileScreenshots?: ProjectScreenshot[];
+  mobileDescription?: string; mobileHighlights?: string[];
   screenshotCredit?: { label: string; href: string };
 };
 
@@ -198,43 +201,50 @@ export const projects: Project[] = [
     screenshotCredit: { label: 'Chess-piece artwork credits', href: 'https://github.com/Logic-syd/chessOffline/blob/main/dist/pieces/NOTICE.txt' }
   },
   {
-    kind: 'independent', slug: 'pfand-pause', number: '09', title: 'Pfand Pause — A Bottle-Sorting Puzzle', shortTitle: 'A little order in a new country.',
-    graphTitle: 'Pfand Pause', category: 'Personal product · Puzzle game', organization: 'Independent project', status: 'Published on Game Jolt',
-    description: 'Newly arrived students rarely seek out information about unfamiliar bottles, and find it hard to remember. Inspired by their feedback and my own move to Germany, I designed, built and published a bottle-sorting puzzle on Game Jolt.',
-    tags: ['React / TypeScript', 'Game state / Solver', 'SVG / CSS', 'LocalStorage / i18n'], role: 'Independent developer · Game design, development and publishing',
+    kind: 'independent', slug: 'pfand-pause', number: '09', title: 'Pfand Pause 2.0 — A Bottle-Return Puzzle', shortTitle: 'A new country. A familiar everyday puzzle.',
+    graphTitle: 'Pfand Pause', category: 'Independent product · Puzzle game · Version 2.0', organization: 'Independent project', status: 'Published · Version 2.0',
+    description: 'Inspired by my move to Germany and informal research with newly arrived students, I designed, built and published Pfand Pause. Version 2.0 turns a supermarket bottle-return machine into a layered matching puzzle: twenty untimed rounds, a seven-slot counter, glass sorting and a packaging quiz, with English, German and Chinese interfaces.',
+    tags: ['React / TypeScript', 'Game rules / Verification', 'Responsive SVG / CSS', 'LocalStorage / i18n'], role: 'Independent developer · Research, game design, development and publishing',
     contributions: [
-      ['Responsive game and interactive tutorial', 'Independent development and Game Jolt release'],
-      ['Pure rules and complete undo', 'Ten levels checked with the same engine'],
-      ['Six distinct bottle designs', 'Touch, keyboard and reduced motion'],
-      ['Saved progress and preferences', 'English and German interfaces']
+      ['Independent product ownership', 'Responsive desktop and mobile interfaces', 'Version 2.0 release'],
+      ['Seven-slot matching rules', 'Twenty rounds with verified solution paths', 'Separate glass-sorting rules'],
+      ['Original bottle and shop artwork', 'Touch and keyboard interaction', 'Animation-safe input queues'],
+      ['English, German and Chinese', 'Saved completed rounds and preferences', 'Reduced motion and sound controls']
     ],
-    problem: 'When I moved to Germany, I struggled to tell the different drinks bottles apart. Informal research with newly arrived students revealed a similar friction: they rarely set out to learn about bottle types, and the information is easy to forget. That suggested a small game where recognition happens through repeated play. I built Pfand Pause around a neighbourhood bottle-return counter: players sort six bottle types into matching crates while keeping a small waiting area clear.',
+    problem: 'When I moved to Germany, unfamiliar drinks bottles were difficult to recognize. Informal research with newly arrived students suggested that people rarely seek out bottle information and find it hard to remember. I wanted to turn that everyday friction into an approachable product. Version 2.0 combines a fictional bottle-return puzzle with a separate packaging quiz that explains real return and recycling clues.',
     responsibilities: [
-      'Used informal research with newly arrived students and my own experience in Germany to shape the game concept and visual recognition mechanics.',
-      'Built the React / TypeScript game with Vite, including a phone-first board, level selection, settings and an interactive practice round.',
-      'Implemented the rules, automatic bottle transfers, crate replacement, win/loss states and full-state undo.',
-      'Created ten levels and a development solver that checks solutions using the same rules as the playable game.',
-      'Created SVG / CSS bottle and shop visuals, English and German interfaces, keyboard controls and reduced-motion support.',
-      'Saved completed levels and preferences locally, and integrated Web Audio feedback and an English completion voice clip with mute and cancellation handling.',
-      'Owned the complete game lifecycle, from concept and game design through development, level verification and public publishing on Game Jolt.'
+      'Owned the product from informal research and game design through React / TypeScript development, verification and publishing.',
+      'Redesigned the 2.0 game around layered bottle cards, three-of-a-kind returns, a shared seven-slot counter and twenty untimed rounds.',
+      'Added non-deposit glass sorting from round eleven and a separate eight-question packaging guide.',
+      'Handled overlapping cards, queued taps, duplicate-click prevention and cancellation when restarting or leaving a round.',
+      'Built original SVG / CSS visuals and layouts that fit desktop, mobile and embedded browser containers.',
+      'Implemented English, German and Chinese interfaces, keyboard and touch controls, reduced motion, sound effects and local progress storage.',
+      'Verified legal solution paths and boundary rules, including a seventh bottle that completes a triple before a full-counter loss is evaluated.'
     ],
     decisions: [
-      { title: 'Build familiarity through play', text: 'The student feedback pointed to both low motivation to read bottle information and difficulty remembering it. I chose repeated visual matching over a long explanation: players encounter the same six bottle designs in different arrangements, supported by a short interactive tutorial. The aim is to make an unfamiliar everyday routine more approachable.' },
-      { title: 'One rules engine for play and verification', text: 'A pure TypeScript transition function takes a board state and a selected column, then returns the resulting state and animation frames. A memoized depth-first solver uses that same function to find winning paths for all ten levels. The solver stays out of the player bundle.' },
-      { title: 'Treat a move as one complete action', text: 'Picking a bottle can trigger a full crate, a replacement order and transfers from the waiting area. The game settles that chain before checking whether the waiting area is full. A snapshot taken before the click makes Undo restore the entire action, while a synchronous input lock prevents repeated taps during animation.' },
-      { title: 'Make the bottles recognizable in more than one way', text: 'Six bottle types have distinct shapes, colours and label patterns drawn in SVG. The interface supports tapping and keyboard activation, with an isolated interactive tutorial and optional reduced motion. There is no timer, leaving room to look at the bottles and plan a move.' },
-      { title: 'Keep progress simple and resilient', text: 'Versioned LocalStorage saves completed levels, tutorial state, language and sound/motion preferences. The game remains playable if storage is blocked or damaged. English and German interfaces share the same game state; unfinished rounds are not persisted across a refresh.' },
-      { title: 'Let audio follow the interaction', text: 'Web Audio provides short feedback sounds. An English completion clip is loaded locally and follows the victory sound; muting, changing language or leaving the screen cancels pending playback. Loading or decoding failures leave the game playable.' }
+      { title: 'Separate the puzzle from real recycling guidance', text: 'Three matching bottles and seven slots are fictional puzzle rules. The packaging quiz separately explains return and recycling clues, using feedback after each answer. Refunds are simulated, and real return eligibility depends on packaging and shop rules.' },
+      { title: 'Verify the same rules that players use', text: 'Pure TypeScript transitions handle exposed cards, matching, glass sorting and end states. Layered boards are constructed with legal verification paths, then checked through those transitions for availability, capacity and bottle conservation across all twenty rounds.' },
+      { title: 'Keep repeated taps consistent during animation', text: 'Input is queued in order, with pending bottles marked immediately and duplicate picks rejected. Restarting or leaving a round clears pending work. This lets animation follow the game state without losing rapid taps on other exposed bottles.' },
+      { title: 'Fit the entire interaction, not just the board', text: 'The layout responds to the actual container, including embedded frames. The board, counter and primary controls fit together; desktop and touch layouts are checked separately. Original SVG artwork keeps bottle shapes and packaging cues readable at different sizes.' },
+      { title: 'Save completed progress with clear boundaries', text: 'Completed rounds and preferences are stored locally, with a migration for the revised campaign. Settings include English, German and Chinese, sound and reduced motion. Progress belongs to the current browser and does not synchronize across devices or hosting sites.' },
+      { title: 'Create atmosphere without a countdown', text: 'The supermarket queue grows more impatient during inactivity, with optional visual and sound effects. Activity resets the pressure, and pausing or leaving the page stops it. There is no time penalty or timeout; the player can keep planning their next move.' }
     ],
-    delivery: 'Published Pfand Pause on Game Jolt, with ten playable levels and a public source repository. Taking the project from an everyday observation and student research through design, implementation, verification and release gave me practical experience with the complete game publishing process. The screenshots show the actual game captured from a local production build.',
-    flow: ['Recognize a bottle', 'Match a crate', 'Make room for the next'],
+    delivery: 'Published Pfand Pause and released version 2.0 with twenty rounds, a packaging quiz and later-round glass sorting. I owned research, product and game design, implementation, verification and publishing. The release brings the same game to desktop and mobile browsers, with language, sound and motion preferences and locally saved completed rounds.',
+    flow: ['Read packaging clues', 'Match or sort bottles', 'Return the whole bag'],
     links: [
       { label: 'Play on Game Jolt', href: 'https://gamejolt.com/games/pfand-pause/1106213' },
       { label: 'Source Code', href: 'https://github.com/Logic-syd/PfandPause' }
     ],
     screenshots: [
-      { src: '/images/pfand-pause-start.png', width: 780, height: 1902, alt: 'Pfand Pause in English, with its illustrated neighbourhood drinks shop and the invitation to start sorting bottles.', caption: 'The bottle-return shop · Captured from the local production build.' },
-      { src: '/images/pfand-pause-game.png', width: 780, height: 2314, alt: 'Level three of Pfand Pause, showing bottle stacks, three waiting spaces, matching crates, the order queue and undo controls.', caption: 'Level 03 · Actual gameplay after completing the first two puzzles.' }
+      { src: '/images/pfand-pause-v2-desktop-start.png', width: 1440, height: 810, label: 'Start screen', alt: 'Pfand Pause 2.0 in English on a desktop browser, with its supermarket bottle-return illustration and game and recycling-guide entries.', caption: 'Version 2.0 · Desktop start screen · 1440 × 810.' },
+      { src: '/images/pfand-pause-v2-desktop-game.png', width: 1440, height: 810, label: 'Layered puzzle', alt: 'The desktop Pfand Pause 2.0 puzzle showing layered bottle cards, the seven-slot counter and round controls after two real bottle selections.', caption: 'Version 2.0 · First round after two bottle selections · Desktop browser.' },
+      { src: '/images/pfand-pause-v2-desktop-recycling.png', width: 1440, height: 810, label: 'Packaging guide', alt: 'The Pfand Pause 2.0 packaging quiz in English, presenting a bottle and return or recycling destinations on desktop.', caption: 'Version 2.0 · The separate packaging and recycling guide · Desktop browser.' }
+    ],
+    mobileDescription: 'On desktop, the bottle bag and counter sit side by side. On a phone, they stack vertically so the layered cards, all seven slots and round controls stay together. These are captures of the same 2.0 web release, in a mobile browser viewport.',
+    mobileHighlights: ['Touch controls with queued bottle selections.', 'English, German and Chinese interfaces.', 'Completed rounds and preferences saved in the current browser.'],
+    mobileScreenshots: [
+      { src: '/images/pfand-pause-v2-mobile-start.png', width: 390, height: 844, label: 'Start screen', alt: 'Pfand Pause 2.0 start screen in a 390 by 844 mobile browser viewport, with its bottle-return illustration and touch controls.', caption: 'Version 2.0 · Mobile start screen · 390 × 844.' },
+      { src: '/images/pfand-pause-v2-mobile-game.png', width: 390, height: 844, label: 'Touch puzzle', alt: 'The Pfand Pause 2.0 first round in a mobile browser viewport, showing the layered cards and seven-slot counter after two real selections.', caption: 'Version 2.0 · Mobile puzzle · 390 × 844.' }
     ]
   },
   {
