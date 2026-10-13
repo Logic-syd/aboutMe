@@ -175,6 +175,13 @@ test('interactive consoles keep a complete frame when results expand', async ({ 
 
 test('homepage keeps text navigation, compact side dots and top contact links', async ({ page }) => {
   await page.goto('/');
+  const hero = page.locator('section[aria-labelledby="town-title"]');
+  await expect(hero.getByLabel('Technologies I work with')).toBeVisible();
+  await expect(hero.getByText('Three.js', { exact: true })).toBeVisible();
+  await expect(hero.getByRole('link', { name: 'insurance payments', exact: true })).toHaveAttribute('href', '/projects/ronghe-pay');
+  if (page.viewportSize()!.width > 800) {
+    expect(await hero.evaluate(element => element.getBoundingClientRect().bottom), 'Complete skills overview and town fit the first screen').toBeLessThanOrEqual(page.viewportSize()!.height + 1);
+  }
   const top = page.getByRole('navigation', { name: 'Main navigation', exact: true });
   const sidebar = page.locator('.floating-sections');
   const expected = ['My Projects', 'About Me', 'My Work', 'Growth Map'];
