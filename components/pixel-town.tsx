@@ -4,14 +4,10 @@ import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { projects } from '@/lib/projects';
+import { technologyGroups } from '@/lib/profile';
 import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
-const technologyGroups = [
-  { label: 'Web & mobile', skills: ['React', 'TypeScript', 'Vue', 'Next.js', 'React Native', 'uni-app'] },
-  { label: '3D & real-time', skills: ['Three.js', 'Canvas', 'WebSocket', 'Map APIs'] },
-  { label: 'Personal product backend', skills: ['Node.js', 'Express', 'Supabase', 'PostgreSQL'] },
-];
 const places: { id: PlaceId; name: string; x: number; y: number; color: string; roof: string; title: string; slugs: string[]; href: string; action: string }[] = [
   { id: 'studio', name: 'The studio', x: 21, y: 11, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api'], href: '#work-projects', action: 'More projects' },
   { id: 'cafe', name: 'Coffee corner', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'View project' },
@@ -148,7 +144,7 @@ export function PixelTown() {
       <h1 id="town-title">Yidan Shao<span>.</span></h1>
       <p className={styles.role}>Senior Frontend Engineer</p>
       <p className={styles.bio}>I build web and mobile interfaces across energy, <Link href="/projects/ronghe-pay">insurance payments</Link> and education — alongside independent maps and games.</p>
-      <div className={styles.technologyGroups} aria-label="Technologies I work with">{technologyGroups.map(group => <div className={styles.technologyGroup} key={group.label}><p>{group.label}</p><ul className={styles.skills} aria-label={group.label}>{group.skills.map(skill => <li key={skill} data-emphasis={skill === 'Three.js' ? 'true' : undefined}>{skill}</li>)}</ul></div>)}</div>
+      <div className={styles.technologyGroups} aria-label="Technologies I work with">{technologyGroups.map(group => <div className={styles.technologyGroup} key={group.label}><p>{group.label}</p><ul className={styles.skills} aria-label={group.label}>{group.skills.map(skill => <li key={skill}>{skill}</li>)}</ul></div>)}</div>
       <div className={styles.facts}><div><strong>7+</strong><span>years in frontend</span></div><div><strong>{projects.length}</strong><span>project case studies</span></div></div>
       <div className={styles.quickProjects}><p className={styles.kicker}>A FEW THINGS I’VE BUILT</p><Link href="/projects/renewable-energy-api">Energy API platform<span>Platform lead ↗</span></Link><Link href="/projects/isolarcloud">iSolarCloud<span>China → Europe ↗</span></Link><Link href="/projects/ronghe-pay">Insurance payments<span>Collections, payouts & reconciliation ↗</span></Link><Link href="/projects/sports-education">AI sports assessment<span>React migration · Live scores ↗</span></Link></div>
       <div className={styles.actions}><a href="#work">View my projects <span>↗</span></a></div>

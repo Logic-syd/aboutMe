@@ -5,12 +5,33 @@ import { ProjectLinks } from '@/components/project-links';
 import { PixelTown } from '@/components/pixel-town';
 import { CareerMap } from '@/components/career-map';
 import { projects } from '@/lib/projects';
+import { profileDescription, siteUrl, technologyGroups } from '@/lib/profile';
 import { CareerExperience } from '@/components/career-experience';
 import { AboutMe } from '@/components/about-me';
 import { Contact, Footer, Header } from '@/components/site';
 
+const profileSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  url: siteUrl,
+  name: 'Yidan Shao — Senior Frontend Engineer',
+  mainEntity: {
+    '@type': 'Person',
+    '@id': `${siteUrl}/#yidan-shao`,
+    name: 'Yidan Shao',
+    url: siteUrl,
+    jobTitle: 'Senior Frontend Engineer',
+    description: profileDescription,
+    homeLocation: { '@type': 'City', name: 'Munich, Germany' },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Jilin University' },
+    sameAs: ['https://linkedin.com/in/yidanshao/', 'https://github.com/Logic-syd'],
+    knowsAbout: [...technologyGroups.flatMap(group => group.skills), 'Energy platforms', 'Insurance payments', 'Premium collections', 'Claim payouts', 'Payment reconciliation', 'Education platforms'],
+  },
+};
+
 export default function Home() {
   return <div id="top" className="pixel-portfolio">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema).replace(/</g, '\\u003c') }} />
     <Header sidebar />
     <main id="main">
       <PixelTown />

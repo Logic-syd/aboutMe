@@ -1,5 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { projects } from '../../lib/projects';
+import { siteUrl } from '../../lib/profile';
 
 async function expectCompleteScreens(page: Page) {
   const issues = await page.evaluate(() => {
@@ -63,6 +64,8 @@ for (const project of projects) {
     const errors: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(`/projects/${project.slug}`);
+    await expect(page.locator('head link[rel=canonical]')).toHaveAttribute('href', `${siteUrl}/projects/${project.slug}`);
+    await expect(page.locator('head meta[property="og:url"]')).toHaveAttribute('content', `${siteUrl}/projects/${project.slug}`);
     await expect(page.locator('[data-case-screen="intro"]')).toHaveCount(1);
     expect(await page.locator('[data-case-screen="chapter"]').count()).toBeGreaterThan(0);
     await expectCompleteScreens(page);

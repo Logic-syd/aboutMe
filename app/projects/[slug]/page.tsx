@@ -18,7 +18,16 @@ export function generateStaticParams() { return projects.map(({ slug }) => ({ sl
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find(p => p.slug === slug);
-  return project ? { title: project.title, description: project.description, openGraph: { title: `${project.title} | Yidan Shao`, description: project.description } } : {};
+  if (!project) return {};
+  const url = `/projects/${project.slug}`;
+  const title = `${project.title} | Yidan Shao`;
+  return {
+    title: project.title,
+    description: project.description,
+    alternates: { canonical: url },
+    openGraph: { url, title, description: project.description, type: 'website' },
+    twitter: { card: 'summary', title, description: project.description },
+  };
 }
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

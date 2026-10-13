@@ -144,3 +144,12 @@ The owner confirmed separate operations for left-click, right-click and double-c
 
 
 Desktop case chapters use the viewport as a maximum reading budget, not a compulsory height. Introductions and prose chapters follow their content with compact spacing; media and tools have bounded frames so their headings, captions and controls fit together. Topic panels share their intrinsic maximum height to avoid jumping when selected. Keep flow between chapters continuous, without empty full-screen spacers.
+
+
+## Search visibility
+
+The production URL is `https://yidan-builds.vercel.app`, configured in `lib/profile.ts`. The shared profile keeps visible technology keywords and the homepage's structured data aligned with the owner's experience. Describe backend tools as personal-project work; keep insurance collections, payouts and reconciliation connected to the Ronghe Pay case. Use natural, accurate copy rather than unrelated trending keywords.
+
+The homepage and every project route have their own canonical URL. `app/sitemap.ts` derives the sitemap from the project catalog so additions are included automatically; `robots.txt` permits crawling and points to it. The homepage includes a Schema.org ProfilePage with its Person entity, public profile links and known skills. No invented ratings, achievements, modification dates or search-ranking guarantees are included.
+
+These are crawl and discovery signals, not proof of indexing. To check Google's actual indexing status, verify the URL-prefix property in Google Search Console, inspect the homepage URL and submit `https://yidan-builds.vercel.app/sitemap.xml`. Verification requires the owner's account and a provider-issued verification token; do not fabricate one. If the public domain changes, update `siteUrl` and re-submit the sitemap. Search results and `site:` queries may be incomplete; use the owner's webmaster-console reports for confirmation.
