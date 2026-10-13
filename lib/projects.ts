@@ -1,6 +1,6 @@
 export type Project = {
   kind: 'commercial' | 'independent'; slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
-  status?: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
+  affiliation?: string; status?: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
   delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
   featured?: boolean; heroTitle?: string; heroDetail?: string;
@@ -348,9 +348,9 @@ export const projects: Project[] = [
     links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/weibo-deleter' }]
   },
   {
-    kind: 'commercial', slug: 'medical-curriculum', number: '14', title: 'Medical Curriculum & Knowledge Explorer', shortTitle: 'Majors, shared courses and the knowledge between them.',
-    graphTitle: 'PKU Medical School curriculum', category: 'Medical education · Existing-system redesign', organization: 'Peking University Medical School · Via a partner company', status: 'Launched · Around 6 weeks of development',
-    description: 'Sole frontend developer for an existing education-system redesign at Peking University Medical School, delivered through a partner company in August–September 2024. Working with one backend developer, we completed and launched the redesign in around six weeks. My React and Three.js work covered the 3D curriculum explorer, complex mouse events, free node dragging, customized labels, course selection and repeated-interaction stability.',
+    kind: 'commercial', slug: 'medical-curriculum', number: '14', title: 'Public Health Curriculum & Knowledge Explorer', shortTitle: 'Majors, shared courses and the knowledge between them.',
+    graphTitle: 'PKU Public Health curriculum', category: 'Public health education · Existing-system redesign', organization: 'School of Public Health, Peking University', affiliation: 'Peking University Health Science Center', status: 'Launched · Around 6 weeks of development',
+    description: 'Redesigned an existing curriculum system for the School of Public Health, Peking University, as an independent collaborator through a partner company. As the sole frontend developer, I worked with one backend developer to launch the React and Three.js experience in around six weeks, during August–September 2024.',
     tags: ['React', 'Three.js', 'Curriculum relationships', 'Demonstration UI & performance', 'Course-selection workflows'], role: 'Sole frontend developer · One backend collaborator',
     contributions: [
       ['Sole frontend ownership', 'Existing-system redesign', 'Basic course-selection operations'],
@@ -378,7 +378,7 @@ export const projects: Project[] = [
       { title: 'Exploration and course operations need a common context', text: 'The 3D presentation and the React course interfaces describe the same educational content. A course’s identity and its major relationships need to remain consistent across these views; the curriculum structure and a student’s course selection represent different kinds of state.' },
       { title: 'Precise UI reproduction includes the labels', text: 'The demonstration screen had high UI-reproduction requirements, including customized labels. The appearance of the sphere nodes, connections and labels needed to follow the requested design consistently throughout the interactive view.' }
     ],
-    delivery: 'Completed and launched in around six weeks during August–September 2024. I was the sole frontend developer, working with one backend developer through a partner company on the redesign of an existing education system at Peking University Medical School. My scope covered React course interfaces, interactive Three.js curriculum visualization, distinct mouse events and free node dragging, customized labels, high-fidelity UI reproduction and stability under repeated 3D interaction. The workflow illustration summarizes the project context.',
+    delivery: 'Completed and launched in around six weeks during August–September 2024. I was the sole frontend developer, working with one backend developer through a partner company on the redesign of an existing education system at the School of Public Health, Peking University. My scope covered React course interfaces, interactive Three.js curriculum visualization, distinct mouse events and free node dragging, customized labels, high-fidelity UI reproduction and stability under repeated 3D interaction. The workflow illustration summarizes the project context.',
     flow: ['Majors + shared courses', '3D knowledge exploration', 'Course selection']
   }
 ];

@@ -10,7 +10,17 @@ async function expectCompleteScreens(page: Page) {
     for (const screen of screens) {
       const bounds = screen.getBoundingClientRect();
       const expected = screen.dataset.caseScreen === 'intro' ? innerHeight - 64 : innerHeight;
-      if (Math.abs(bounds.height - expected) > 2) issues.push(`${screen.id || 'intro'}: not one viewport`);
+      if (bounds.height > expected + 2) issues.push(`${screen.id || 'intro'}: exceeds the desktop reading budget (${Math.round(bounds.height)} > ${expected})`);
+      const heading = screen.querySelector('.case-screen-heading');
+      const body = screen.querySelector('.case-screen-body');
+      const first = body?.firstElementChild;
+      if (heading && first && first.getBoundingClientRect().top - heading.getBoundingClientRect().bottom > 32) issues.push(`${screen.id}: empty gap between heading and content`);
+      if (screen.dataset.caseScreen === 'intro') {
+        const style = getComputedStyle(screen);
+        const children = [...screen.children];
+        const used = children.reduce((sum, child) => sum + child.getBoundingClientRect().height, 0) + Math.max(0, children.length - 1) * parseFloat(style.rowGap || '0') + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+        if (bounds.height - used > 8) issues.push('Intro contains artificial empty space');
+      }
       // Headings, full media frames and tool panels must fit together, including after a selection.
       for (const child of [...screen.children, ...screen.querySelectorAll('.case-screen-body > *')]) {
         const rect = child.getBoundingClientRect();
@@ -73,10 +83,13 @@ for (const project of projects) {
 
     for (const notes of await page.locator('.case-notes').all()) {
       const tabs = notes.getByRole('tab');
+      const initialHeight = await notes.evaluate(element => element.getBoundingClientRect().height);
       for (const tab of await tabs.all()) {
         await tab.click();
         await expect(tab).toHaveAttribute('aria-selected', 'true');
         await expect(notes.getByRole('tabpanel')).toBeVisible();
+        expect(Math.abs(await notes.evaluate(element => element.getBoundingClientRect().height) - initialHeight), 'Topic selections keep the chapter stable').toBeLessThan(2);
+        if (await tabs.count() > 1) await expect(notes.locator('.case-note-panel[aria-hidden=true]').first()).toHaveAttribute('inert', '');
         await expectCompleteScreens(page);
       }
       await tabs.first().focus();
@@ -158,4 +171,29 @@ test('interactive consoles keep a complete frame when results expand', async ({ 
   await expect(exporter.getByRole('status')).toHaveText('Export no longer available');
   await expectDemoFits(exporter);
   await expectCompleteScreens(page);
+});
+
+test('homepage keeps text navigation, compact side dots and top contact links', async ({ page }) => {
+  await page.goto('/');
+  const top = page.getByRole('navigation', { name: 'Main navigation', exact: true });
+  const sidebar = page.locator('.floating-sections');
+  const expected = ['My Projects', 'About Me', 'My Work', 'Growth Map'];
+  expect(await top.getByRole('link').evaluateAll(links => links.map(link => link.getAttribute('aria-label')))).toEqual(expected);
+  for (const label of await top.locator('.nav-full-label').all()) await expect(label).toBeVisible();
+  for (const name of expected) await expect(top.getByRole('link', { name, exact: true })).toBeVisible();
+  await expect(page.locator('.header-connect').getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://linkedin.com/in/yidanshao/');
+  await expect(page.locator('.header-connect').getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Logic-syd');
+  if (page.viewportSize()!.width > 800) {
+    await expect(sidebar).toBeVisible();
+    expect(await sidebar.evaluate(element => element.getBoundingClientRect().width)).toBeLessThanOrEqual(28);
+    await sidebar.getByRole('link', { name: 'About Me', exact: true }).click();
+    await expect(page).toHaveURL(/#about$/);
+    await expect(sidebar.getByRole('link', { name: 'About Me', exact: true })).toHaveAttribute('aria-current', 'location');
+    await expect(top.getByRole('link', { name: 'About Me', exact: true })).toHaveAttribute('aria-current', 'location');
+  } else {
+    await expect(sidebar).toBeHidden();
+    await top.getByRole('link', { name: 'My Projects', exact: true }).click();
+    await expect(page).toHaveURL(/#work$/);
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
 });

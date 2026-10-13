@@ -5,7 +5,7 @@
 Every project detail page must present complete, readable modules on a desktop screen. This applies to every new project and every edit, including bespoke case studies. Keep the same principle on the homepage; its short contact/footer area is intentionally compact.
 
 - Use `CaseIntro` and `CaseChapter` from `components/case-chapter.tsx`. Shared layout is in `app/project-case.css`. Mark custom interactive tools with `data-case-demo`.
-- At desktop widths above 800px, the opening module fits with the 64px site header; subsequent chapters each fit one viewport. A chapter's heading, description, media, captions and controls must fit together. Check 1440×900, 1280×720 and 1024×600.
+- At desktop widths above 800px, the opening module fits with the 64px site header; subsequent chapters fit within one viewport. This is a maximum size, not a mandatory full-screen height. Let prose follow its content; do not create empty space to stretch a short chapter. Keep adjacent chapters connected with compact spacing. A chapter's heading, description, media, captions and controls must fit together. Check 1440×900, 1280×720 and 1024×600.
 - Arrange content to fit instead of hiding it. Split long material into coherent chapters or use `CaseNotes` with keyboard-accessible topic tabs. Do not make long prose scroll inside a chapter, crop product screenshots to fake a fit, hide overflow, or shrink all text until it is unreadable.
 - Show one full product screenshot at a time with `object-fit: contain`, visible caption and a link to the original image. Preserve source attribution. Any intentional privacy/detail crop must be labeled and retain access to the source image.
 - Dense interactive consoles may scroll within explicitly bounded configuration/results panes. The complete tool frame must stay within its chapter; keep the primary action visible. Expanded responses and error states must not stretch the chapter or overlap other content.
@@ -30,6 +30,6 @@ The browser tests iterate `lib/projects.ts`, so newly added projects automatical
 
 ## Content integrity
 
-Keep public portfolio prose, project titles and graph labels in English. Retain the specific medical-school identity using the English naming recorded in README.md; do not introduce Chinese-only labels when updating this project.
+Keep public portfolio prose, project titles and graph labels in English. Retain the specific public-health-school identity using the English naming recorded in README.md; do not introduce Chinese-only labels when updating this project.
 
 Update project facts at their existing sources. Preserve distinctions between the standalone React API platform and the Vue/TypeScript iSolarCloud platform. Do not invent employment dates, release status, quantified outcomes, compliance guarantees, or historical bug causes. Label illustrative workflows and synthetic interactive data clearly. Retain personal photos and original screenshots unchanged unless the owner specifically requests an image edit.
