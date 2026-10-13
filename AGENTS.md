@@ -10,6 +10,7 @@ Every project detail page must present complete, readable modules on a desktop s
 - Show one full product screenshot at a time with `object-fit: contain`, visible caption and a link to the original image. Preserve source attribution. Any intentional privacy/detail crop must be labeled and retain access to the source image.
 - Dense interactive consoles may scroll within explicitly bounded configuration/results panes. The complete tool frame must stay within its chapter; keep the primary action visible. Expanded responses and error states must not stretch the chapter or overlap other content.
 - Phones and narrow windows use natural page scrolling and stacked content. Do not force a one-screen height on mobile or add scroll snapping. No horizontal page overflow.
+- Keep the fixed `Back to home` link from `Header detail` available at every scroll position, including on mobile. Keep its narrow side gutter clear of chapter content and interactive controls. It must navigate to `/` without requiring a scroll back to the title.
 - Keep related project navigation and contact endings concise; they do not need artificial full-screen spacing.
 
 ## Required checks

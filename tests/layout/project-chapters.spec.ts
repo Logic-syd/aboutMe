@@ -56,6 +56,20 @@ for (const project of projects) {
     await expect(page.locator('[data-case-screen="intro"]')).toHaveCount(1);
     expect(await page.locator('[data-case-screen="chapter"]').count()).toBeGreaterThan(0);
     await expectCompleteScreens(page);
+    const home = page.getByRole('link', { name: 'Back to home', exact: true });
+    await expect(home).toHaveAttribute('href', '/');
+    expect(await home.evaluate(element => getComputedStyle(element).position)).toBe('fixed');
+    for (const screen of await page.locator('[data-case-screen]').all()) {
+      await screen.evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
+      const accessible = await home.evaluate(element => {
+        const bounds = element.getBoundingClientRect();
+        const hit = document.elementFromPoint(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
+        const main = document.querySelector('main')!;
+        const contentLeft = main.getBoundingClientRect().left + parseFloat(getComputedStyle(main).paddingLeft);
+        return bounds.top >= 0 && bounds.bottom <= innerHeight && bounds.right <= contentLeft && element.contains(hit);
+      });
+      expect(accessible, 'Home remains clickable in the clear side gutter at each chapter').toBe(true);
+    }
 
     for (const notes of await page.locator('.case-notes').all()) {
       const tabs = notes.getByRole('tab');
@@ -88,6 +102,13 @@ for (const project of projects) {
       expect(await image.evaluate(element => getComputedStyle(element).objectFit)).toBe('contain');
       await expect(image.locator('..')).toHaveAttribute('target', '_blank');
     }
+    await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+    await home.focus();
+    await expect(home).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL('/');
+    await expect(page.locator('.case-home-link')).toHaveCount(0);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     expect(errors).toEqual([]);
   });
 }
