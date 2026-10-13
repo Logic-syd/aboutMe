@@ -24,7 +24,7 @@ npm start
 
 ## Project layout contract
 
-Every project detail page uses complete desktop chapters: the introduction fits beside the site header, and each following module fits one viewport. Long technical notes use topic tabs; product images are shown in full with captions and original-image links. Interactive consoles retain a complete frame with bounded tool panes. Mobile pages stack and scroll naturally.
+Every project detail page uses complete desktop chapters: the introduction fits beside the site header, and each following module fits within one viewport. This sets a maximum size rather than a compulsory height; short chapters follow their content with continuous, compact spacing. Long technical notes use topic tabs; product images are shown in full with captions and original-image links. Interactive consoles retain a complete frame with bounded tool panes. Mobile pages stack and scroll naturally.
 
 This is an ongoing owner requirement for new and edited projects. Read [AGENTS.md](./AGENTS.md) before changing project content or layout. Shared components are `CaseIntro`, `CaseChapter` and `CaseNotes`; layout rules are in `app/project-case.css`.
 
@@ -132,12 +132,15 @@ The API case combines the owner's European delivery, online debugging and applic
 
 ## Medical curriculum contract project
 
-`/projects/medical-curriculum` is a work project delivered as an independent frontend collaboration via a partner company, during August–September 2024. The educational context was the education-system redesign at Peking University Medical School; the case describes a subcontracted engagement, not university employment or a direct university contract.
+`/projects/medical-curriculum` is a work project delivered as an independent frontend collaboration via a partner company, during August–September 2024. The educational context was the education-system redesign at School of Public Health, Peking University; the case describes a subcontracted engagement, not university employment or a direct university contract.
 
 The owner confirmed React, a Three.js sphere-based curriculum explorer, multiple majors with overlapping/shared courses, course-specific knowledge points and basic course-selection operations. The owner further confirmed that this was a redesign of an existing system, with Yidan as the sole frontend developer alongside one backend developer, completed and launched in around one and a half months (approximately six weeks). Further confirmed requirements include freely clickable and draggable nodes, customized labels, high-fidelity UI reproduction and performance requirements for a dedicated demonstration screen. The case explains the relationship and interaction challenges from that scope. Specific graph-layout algorithms, rendering optimization methods or measured gains, prerequisites, seat limits, timetable conflict checks, exact launch date and adoption figures remain unconfirmed; do not present them as completed contributions without further information. There are no supplied screenshots, live-product links or source links. The project uses the shared desktop chapters and fixed home navigation; catalog counts, graph nodes, cards, detail routes and layout checks derive from the source data.
 
-Institution naming for this case: the owner specified 北大医学院. Public portfolio copy stays in English: use `Peking University Medical School` in the organization and narrative, and `PKU Medical School` in the compact graph label. Keep the medical-school qualifier; do not shorten the institution to the broader university name or infer its administrative status.
+Institution naming follows the official names in the owner-supplied school logos: `School of Public Health, Peking University` is the project school, and `Peking University Health Science Center` is the medical affiliation. Public copy and labels stay in English; use `PKU Public Health curriculum` for the compact graph label. Do not invent an English institution name or blur the specific school into a generic university project.
 
 The owner specifically confirmed work on stability under repeated operation. Emphasize this as a frontend contribution and the first technical topic, including continued dragging, selection and exploration. Concrete cleanup APIs, memory-leak diagnoses, optimization techniques, stress-test duration and measured gains remain unconfirmed.
 
 The owner confirmed separate operations for left-click, right-click and double-click, alongside dragging, and that event-binding volume affected performance. Present complex mouse-event coordination as an actual frontend contribution, next to repeated-interaction stability. The action assigned to each gesture, listener organization, double-click timing and specific event-binding optimizations remain unspecified.
+
+
+Desktop case chapters use the viewport as a maximum reading budget, not a compulsory height. Introductions and prose chapters follow their content with compact spacing; media and tools have bounded frames so their headings, captions and controls fit together. Topic panels share their intrinsic maximum height to avoid jumping when selected. Keep flow between chapters continuous, without empty full-screen spacers.

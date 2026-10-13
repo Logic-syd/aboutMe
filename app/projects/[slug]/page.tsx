@@ -32,8 +32,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <CaseIntro>
       <Link className="back-link" href="/#work">← All projects</Link>
       <div className="case-intro-layout"><div className="case-header"><p className="eyebrow">CASE STUDY {project.number} / {project.category}</p><h1>{project.title}</h1><p className="case-intro">{project.description}</p>{project.status && <span className={`status ${project.inDevelopment ? 'status-progress' : ''}`}><i />{project.status}</span>}<ProjectLinks project={project} /></div>
-        <div className="case-facts"><div><span>CONTEXT</span><p>{project.organization}</p></div><div><span>MY ROLE</span><p>{project.role}</p></div><div><span>TOOLS & FOCUS</span><p>{project.tags.join(' · ')}</p></div></div>
+        <div className="case-facts"><div><span>CONTEXT</span><p>{project.organization}</p>{project.affiliation && <p className="case-affiliation">{project.affiliation}</p>}</div><div><span>MY ROLE</span><p>{project.role}</p></div><div><span>TOOLS & FOCUS</span><p>{project.tags.join(' · ')}</p></div></div>
       </div>
+      <nav className="case-outline" aria-label="In this case study"><a href="#problem">The problem ↗</a><a href="#contribution">My contribution ↗</a><a href="#approach">Technical approach ↗</a><a href="#delivery">Delivery ↗</a></nav>
     </CaseIntro>
     {project.slug === 'running-mini-program' && <RunningShowcase />}
     <ProjectGallery project={project} />
