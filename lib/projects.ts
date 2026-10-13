@@ -349,25 +349,26 @@ export const projects: Project[] = [
   },
   {
     kind: 'commercial', slug: 'medical-curriculum', number: '14', title: '北大医学院 — Curriculum & Knowledge Explorer', shortTitle: 'Majors, shared courses and the knowledge between them.',
-    graphTitle: '北大医学院 curriculum', category: 'Medical education · 3D curriculum exploration', organization: '北大医学院 · Curriculum project via a partner company', status: 'Contract engagement · Aug–Sep 2024',
-    description: 'An independent contract collaboration for the education-system redesign at 北大医学院, delivered through a partner company in August–September 2024. My frontend work combined React course interfaces with a Three.js sphere-based curriculum explorer for a dedicated demonstration setting, with clickable, freely draggable nodes, customized labels and high-fidelity UI reproduction.',
-    tags: ['React', 'Three.js', 'Curriculum relationships', 'Demonstration UI & performance', 'Course-selection workflows'], role: 'Independent contract frontend developer',
+    graphTitle: '北大医学院 curriculum', category: 'Medical education · Existing-system redesign', organization: '北大医学院 · Curriculum project via a partner company', status: 'Launched · Around 6 weeks of development',
+    description: 'Sole frontend developer for the redesign of an existing education system at 北大医学院, collaborating independently through a partner company in August–September 2024. Working with one backend developer, I delivered the React and Three.js frontend in around six weeks through to launch: a polished curriculum explorer with freely draggable nodes, customized labels and basic course-selection interfaces.',
+    tags: ['React', 'Three.js', 'Curriculum relationships', 'Demonstration UI & performance', 'Course-selection workflows'], role: 'Sole frontend developer · One backend collaborator',
     contributions: [
-      ['Education-system redesign interfaces', 'Basic course-selection operations'],
+      ['Sole frontend ownership', 'Existing-system redesign', 'Basic course-selection operations'],
       ['Sphere-based 3D curriculum explorer', 'Clickable and freely draggable nodes'],
       ['Majors and overlapping courses', 'Shared courses', 'Course-specific knowledge points'],
       ['High-fidelity UI reproduction', 'Customized node labels', 'Demonstration performance requirements'],
       ['Course browsing and selection interfaces']
     ],
-    problem: 'The education system needed to present several majors, their overlapping and shared courses, and the knowledge points within each course. A simple hierarchy could not fully express those relationships. The redesign combined a 3D view of the curriculum with practical course-selection interfaces. The visualization was intended for a dedicated demonstration setting, with high UI-reproduction standards, customized labels, freely clickable and draggable nodes, and performance requirements.',
+    problem: 'An existing medical education system needed a more polished visual experience. Its majors, overlapping and shared courses, and course-specific knowledge points also called for a 3D presentation. The redesign paired that demonstration experience with practical course-selection interfaces, under high UI-reproduction, label-customization and performance requirements. One frontend developer and one backend developer completed the work through to launch in around six weeks.',
     responsibilities: [
-      'Contributed frontend development as an independent contractor through a partner company during August–September 2024.',
-      'Built React interfaces for the medical education-system redesign.',
+      'Owned frontend development as the sole frontend developer, collaborating independently through a partner company during August–September 2024.',
+      'Built React interfaces to redesign the existing medical education system.',
       'Developed a Three.js sphere-based view of majors, courses and course-specific knowledge points, with node clicking and free dragging.',
       'Presented course overlap and shared courses across different majors.',
       'Worked on high-fidelity UI reproduction and customized node labels for the demonstration screen.',
       'Worked to the demonstration’s interaction and rendering performance requirements.',
-      'Implemented basic course-selection operations alongside the curriculum explorer.'
+      'Implemented basic course-selection operations alongside the curriculum explorer.',
+      'Worked with one backend developer to complete the redesign and launch in around six weeks.'
     ],
     decisions: [
       { title: 'A curriculum is more than a tree', text: 'Different majors can share the same course, including common courses taken across programmes. The relationship model needs to distinguish a course from its membership in several majors, while retaining the knowledge points belonging to that course.' },
@@ -377,7 +378,7 @@ export const projects: Project[] = [
       { title: 'Precise UI reproduction includes the labels', text: 'The demonstration screen had high UI-reproduction requirements, including customized labels. The appearance of the sphere nodes, connections and labels needed to follow the requested design consistently throughout the interactive view.' },
       { title: 'Keep the demonstration responsive', text: 'Performance requirements accompanied the highly customized presentation. The Three.js scene needed to remain responsive during node dragging and selection while preserving the intended visual result.' }
     ],
-    delivery: 'A short-term independent frontend engagement in August–September 2024, delivered through a partner company for the education-system redesign at 北大医学院. My scope covered React interfaces, an interactive Three.js curriculum visualization with freely draggable nodes, high-fidelity UI reproduction, customized labels, demonstration performance requirements and basic course-selection operations. The workflow illustration summarizes the project context.',
+    delivery: 'Completed and launched in around six weeks during August–September 2024. I was the sole frontend developer, working with one backend developer through a partner company on the redesign of an existing education system at 北大医学院. My scope covered React course interfaces, interactive Three.js curriculum visualization, free node dragging, customized labels, high-fidelity UI reproduction and demonstration performance requirements. The workflow illustration summarizes the project context.',
     flow: ['Majors + shared courses', '3D knowledge exploration', 'Course selection']
   }
 ];
