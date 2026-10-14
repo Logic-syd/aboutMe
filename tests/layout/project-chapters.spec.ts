@@ -210,6 +210,22 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   await expect(hero.getByLabel('Technologies I work with')).toBeVisible();
   await expect(hero.getByText('Three.js', { exact: true })).toBeVisible();
   await expect(hero.getByRole('link', { name: 'insurance payments', exact: true })).toHaveAttribute('href', '/projects/ronghe-pay');
+  const workBuilding = hero.getByRole('button', { name: 'Explore Commercial work', exact: true });
+  await workBuilding.click();
+  const preview = page.getByRole('region', { name: 'Commercial projects.', exact: true });
+  await expect(preview).toBeVisible();
+  await expect(preview.locator('a[href^="/projects/"]')).toHaveCount(4);
+  await expect(preview.getByRole('link').last()).toHaveText('More projects↗');
+  await expect(preview.getByRole('link').last()).toHaveAttribute('href', '#work-projects');
+  for (const link of await preview.getByRole('link').all()) {
+    expect(await link.evaluate(element => {
+      const bounds = element.getBoundingClientRect();
+      return bounds.left >= 0 && bounds.right <= innerWidth && bounds.top >= 0 && bounds.bottom <= innerHeight;
+    }), 'All four cases and the More projects action remain inside the viewport').toBe(true);
+  }
+  await page.keyboard.press('Escape');
+  await expect(preview).toHaveCount(0);
+  await expect(workBuilding).toBeFocused();
   if (page.viewportSize()!.width > 800) {
     expect(await hero.evaluate(element => element.getBoundingClientRect().bottom), 'Complete skills overview and town fit the first screen').toBeLessThanOrEqual(page.viewportSize()!.height + 1);
   }

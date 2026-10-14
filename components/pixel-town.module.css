@@ -23,6 +23,13 @@
 .previewLinks a:hover{color:#9c6983}
 .previewLinks .previewPrimary{background:#677b5f;color:#fffdf0;padding:6px 10px;border:1px solid #677b5f}
 .previewLinks .previewPrimary:hover{background:#526b4b;color:#fffdf0}
+.commercialPreview{width:min(380px,calc(100vw - 24px));padding:4px 20px 18px}
+.commercialPreview .previewBar{min-height:42px;margin-bottom:6px}
+.commercialPreview h2{font-size:22px;margin-bottom:12px}
+.commercialPreview .previewLinks{gap:0}
+.commercialPreview .previewLinks a{font-size:14px;min-height:48px;padding:10px 0}
+.commercialPreview .previewLinks a:not(.previewPrimary){border-bottom:1px solid #d8decd}
+.commercialPreview .previewLinks .previewPrimary{margin-top:16px;padding:12px 14px;min-height:48px}
 .preview a:focus-visible,.previewClose:focus-visible{outline:3px solid #a5768b;outline-offset:2px}
 @media(max-width:700px){.mapBadge{font-size:7px;padding:4px 6px;left:7px;bottom:6px}.previewClose{width:40px;height:40px}.previewLinks a{min-height:44px}}
 
