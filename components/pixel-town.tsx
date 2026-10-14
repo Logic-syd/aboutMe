@@ -9,7 +9,7 @@ import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
 const places: { id: PlaceId; name: string; x: number; y: number; color: string; roof: string; title: string; slugs: string[]; href: string; action: string }[] = [
-  { id: 'studio', name: 'The studio', x: 21, y: 11, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api'], href: '#work-projects', action: 'More projects' },
+  { id: 'studio', name: 'The studio', x: 21, y: 11, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api', 'isolarcloud', 'ronghe-pay', 'sports-education'], href: '#work-projects', action: 'More projects' },
   { id: 'cafe', name: 'Coffee corner', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'View project' },
   { id: 'cabin', name: 'Mountain hut', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'View project' },
   { id: 'station', name: 'The station', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'Where I’ve lived & worked.', slugs: [], href: '#experience', action: 'Explore my cities' },
@@ -174,7 +174,7 @@ export function PixelTown() {
       </div>
       <div className={styles.locationNav} aria-label="Choose a place">{places.map((item,index) => <button key={item.id} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}><span>{item.id === 'studio' ? 'WORK' : `0${index+1}`}</span>{item.name}</button>)}</div>
     </div>
-    {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} tabIndex={-1} className={styles.preview}>
+    {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} tabIndex={-1} className={`${styles.preview} ${place.id === 'studio' ? styles.commercialPreview : ''}`}>
       <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>
       <h2 id={`${previewId}-title`}>{place.title}</h2>
       <div className={styles.previewLinks}>
