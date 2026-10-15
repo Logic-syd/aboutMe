@@ -8,6 +8,7 @@ export type Project = {
   featured?: boolean; heroTitle?: string; heroDetail?: string;
   links?: { label: 'Live Demo' | 'Play on Game Jolt' | 'Source Code'; href: string }[];
   screenshots?: ProjectScreenshot[]; mobileScreenshots?: ProjectScreenshot[];
+  screenshotLayout?: 'portrait-grid';
   mobileDescription?: string; mobileHighlights?: string[];
   screenshotCredit?: { label: string; href: string };
 };
@@ -141,12 +142,15 @@ export const projects: Project[] = [
       'Implemented work-order system interfaces, applying shared components to business-facing screens.',
       'Built familiarity with business-system workflows through work-order development, connecting process requirements with frontend implementation.',
       'Collaborated within an approximately 1,000-person development team at Longshine.',
-      'Investigated browser networking, API requests, Cookies and permissions in State Grid’s restricted intranet environment.'
+      'Investigated browser networking, API requests, Cookies and permissions in State Grid’s restricted intranet environment.',
+      'Implemented session-error handling, state cleanup and login redirects, plus notifications and sign-out on login elsewhere as the system moved to single-session access.'
     ],
     decisions: [
       { title: 'Build for reuse across business interfaces', text: 'Component-library development was a core part of my contribution. I worked on reusable UI building blocks that could support the management system’s interfaces, gaining practical experience with the shared frontend foundations used in enterprise products.' },
       { title: 'Understand the workflow behind the screen', text: 'Working on the work-order system deepened my understanding of how business processes translate into interfaces. This experience helps me approach a screen in the context of the wider workflow and the task it needs to support.' },
-      { title: 'Debug integration inside a restricted intranet', text: 'Investigated browser networking, API request, Cookie and permission issues in State Grid’s intranet. This meant looking beyond the component itself to the request and access context in the deployed environment.' }
+      { title: 'Debug integration inside a restricted intranet', text: 'Investigated browser networking, API request, Cookie and permission issues in State Grid’s intranet. This meant looking beyond the component itself to the request and access context in the deployed environment.' },
+      { title: 'Recover when a session is no longer valid', text: 'Implemented frontend session-error handling in the State Grid system, including state cleanup and redirects to login. The interface needed to leave the expired session and guide the user back through authentication.' },
+      { title: 'Handle login elsewhere under single-session access', text: 'As the State Grid system moved to single-session access, I implemented notifications and sign-out when a user logged in elsewhere. The frontend needed to explain the interruption and end the previous session consistently.' }
     ],
     delivery: 'Commercial component-library and work-order frontend development at Longshine, within a 1,000-person project team. The experience strengthened both my ability to build reusable enterprise interfaces and my understanding of business workflows—foundations for SaaS frontend development. My work also included intranet integration debugging across browser requests, Cookies and permissions.',
     flow: ['Shared component library', 'Work-order interfaces', 'Business workflows']
@@ -406,7 +410,7 @@ export const projects: Project[] = [
   {
     kind: 'independent', slug: 'catch-that-train', number: '15', title: 'Catch That Train! — A Journey Under Pressure', shortTitle: 'Small decisions. One departing train.',
     graphTitle: 'Catch That Train!', category: 'Independent product · Browser strategy game', organization: 'Personal project', status: 'Playable browser game · English & Chinese',
-    description: 'A browser strategy game about catching a high-speed train in China. Four travelers navigate six stations, balancing time, energy, directions and everyday interruptions. I built the React and TypeScript experience, including touch and keyboard controls, bilingual presentation, local achievements and shareable results.',
+    description: 'A portrait mobile browser strategy game about catching a high-speed train in China. Four travelers navigate six stations, balancing time, energy, directions and everyday interruptions. I built the React and TypeScript experience, including touch and keyboard controls, bilingual presentation, local achievements and shareable results.',
     tags: ['React / TypeScript', 'Game state / Shared clock', 'Touch / Spatial interaction', 'i18n / Verification'], role: 'Independent developer',
     contributions: [
       ['React game interfaces', 'SVG and CSS scenes', 'Local achievements and result sharing'],
@@ -436,17 +440,11 @@ export const projects: Project[] = [
       { label: 'Live Demo', href: 'https://logic-syd.github.io/catchThatTrain-/' },
       { label: 'Source Code', href: 'https://github.com/Logic-syd/catchThatTrain-' }
     ],
+    screenshotLayout: 'portrait-grid',
     screenshots: [
-      { src: '/images/catch-that-train-desktop-station.png', width: 1024, height: 960, label: 'Station run', alt: 'Catch That Train in English in a desktop browser, with the student navigating the Hongqiao station passage, a boarding deadline, stamina and movement controls.', caption: 'Hongqiao station · Walking and changing lanes · Desktop browser, 1024 × 960.' },
-      { src: '/images/catch-that-train-desktop-start.png', width: 1024, height: 960, label: 'Choose a journey', alt: 'The English Catch That Train start screen with traveler selection, two candidate stations, a station map and the start button.', caption: 'Choose a traveler and station · The game keeps a compact playfield on desktop.' },
-      { src: '/images/catch-that-train-desktop-direction.png', width: 1024, height: 960, label: 'Metro direction', alt: 'The English metro platform screen in Catch That Train, asking the player to choose a train direction while the boarding countdown continues.', caption: 'Read the platform signs · A direction choice during an actual student journey.' }
-    ],
-    mobileDescription: 'Built around a compact playfield, the game keeps route choices, the boarding deadline and movement controls close together. On a phone, players can swipe through travelers, choose directions and change lanes with touch controls. These captures show the same English game in a mobile browser.',
-    mobileHighlights: ['Touch controls for movement, sprinting and station tasks.', 'English and Chinese switching preserves the active journey.', 'Achievements and recent runs stay in the current browser.'],
-    mobileScreenshots: [
-      { src: '/images/catch-that-train-mobile-station.png', width: 390, height: 1000, label: 'Station', alt: 'The English Catch That Train station interface on a phone, with the student walking through Hongqiao, stamina, lane controls and a sprint button.', caption: 'Station navigation · Mobile browser, 390 × 1000.' },
-      { src: '/images/catch-that-train-mobile-start.png', width: 390, height: 844, label: 'Travelers', alt: 'The English Catch That Train mobile start screen with swipeable traveler cards, station choices and a fixed start action.', caption: 'Traveler and station selection · Mobile browser.' },
-      { src: '/images/catch-that-train-mobile-direction.png', width: 390, height: 844, label: 'Direction', alt: 'Two English metro direction choices in the phone layout of Catch That Train, beneath a live boarding countdown.', caption: 'Choose the metro direction · Mobile browser.' }
+      { src: '/images/catch-that-train-mobile-start.png', width: 390, height: 844, label: 'Choose a journey', alt: 'The English Catch That Train mobile start screen with swipeable traveler cards, station choices and a fixed start action.', caption: 'Choose your traveler and station.' },
+      { src: '/images/catch-that-train-mobile-direction.png', width: 390, height: 844, label: 'Find your direction', alt: 'Two English metro direction choices in the phone layout of Catch That Train, beneath a live boarding countdown.', caption: 'Read the signs and catch the right metro.' },
+      { src: '/images/catch-that-train-mobile-station.png', width: 390, height: 1000, label: 'Make the train', alt: 'The English Catch That Train station interface on a phone, with the student walking through Hongqiao, stamina, lane controls and a sprint button.', caption: 'Change lanes, manage stamina and keep moving.' }
     ]
   }
 ];
