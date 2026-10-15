@@ -66,12 +66,12 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
       <CaseChapter id="api-product" kicker="02 / THE PRODUCT BEHIND THE API" title="Two sides of one platform." description="Developers need a path to integration. Operators need tools to manage access and keep that path working."><div className="case-centered-content">
         <div className={styles.workspaces}>
           <article className={styles.workspace}>
-            <span className={styles.workspaceIcon} aria-hidden="true">{'{ }'}</span>
+            <span className={styles.workspaceIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H6a2 2 0 0 0-2 2v4a3 3 0 0 1-2 3 3 3 0 0 1 2 3v4a2 2 0 0 0 2 2h2M16 3h2a2 2 0 0 1 2 2v4a3 3 0 0 0 2 3 3 3 0 0 0-2 3v4a2 2 0 0 1-2 2h-2" /></svg></span>
             <div><p className={styles.kicker}>FOR DEVELOPERS</p><h3>From the docs to a working call.</h3><p>Browse API documentation, create an application, obtain authorization, debug a request and inspect usage.</p></div>
             <ul><li>Documentation & quick start</li><li>Applications & credentials</li><li>Online debugging & usage</li></ul>
           </article>
           <article className={`${styles.workspace} ${styles.operations}`}>
-            <span className={styles.workspaceIcon} aria-hidden="true">≡</span>
+            <span className={styles.workspaceIcon} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M5 6h14M5 12h14M5 18h14" /></svg></span>
             <div><p className={styles.kicker}>FOR OPERATORS</p><h3>The workflows behind access.</h3><p>Review applications and manage API versions, plans, call logs and help content within the same frontend.</p></div>
             <ul><li>Application review</li><li>Versions, plans & call logs</li><li>Documentation & FAQ maintenance</li></ul>
           </article>
