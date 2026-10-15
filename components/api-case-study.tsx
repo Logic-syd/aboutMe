@@ -38,7 +38,6 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
     <Header detail />
     <main id="main" className={styles.main}>
       <CaseIntro>
-      <Link className={styles.back} href="/#work">← All projects</Link>
       <header className={styles.hero} data-case-hero>
         <div>
           <p className={styles.kicker}>CASE 01 / SUNGROW · DEVELOPER EXPERIENCE</p>

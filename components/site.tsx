@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { DetailBackLink } from '@/components/detail-back-link';
 import { SectionNavigation } from '@/components/section-navigation';
 
 export function Header({ detail = false, sidebar = false }: { detail?: boolean; sidebar?: boolean }) {
@@ -8,9 +9,7 @@ export function Header({ detail = false, sidebar = false }: { detail?: boolean; 
     <div className="header-connect"><p>Happy to connect.</p><div className="header-profile-links"><a href="https://linkedin.com/in/yidanshao/">LinkedIn <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a><a href="https://github.com/Logic-syd">GitHub <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a></div></div>
     {sidebar && <nav className="floating-sections" aria-label="Section navigation"><SectionNavigation detail={detail} sidebar /></nav>}
   </header>
-    {detail && <Link className="case-home-link" href="/" aria-label="Back to home">
-      <span className="case-back-mark" aria-hidden="true" />
-    </Link>}
+    {detail && <DetailBackLink />}
   </>;
 }
 export function Footer({ pixel = false }: { pixel?: boolean } = {}) {

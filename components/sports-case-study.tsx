@@ -20,7 +20,7 @@ const pipeline = [
 
 export function SportsCaseStudy({ project, next }: { project: Project; next: Project }) {
   return <div id="top" className={`project-case ${styles.page}`}><Header detail /><main id="main" className={styles.main}>
-    <CaseIntro><Link className={styles.back} href="/#work">← All projects</Link>
+    <CaseIntro>
       <header className={styles.hero} data-case-hero><div><p className={styles.kicker}>CASE {project.number} / DANZHU · AI SPORTS ASSESSMENT</p><h1>Real movement.<br /><em>Real-time feedback.</em></h1><p className={styles.intro}>A TV-based sports examination and training system. I migrated its frontend from jQuery to React and connected live video, AI scoring and synchronized feedback.</p></div>
         <div className={styles.context}><span className={styles.contextLabel}><i /> IN REGIONAL USE</span><h2>China’s high-school entrance PE exams.</h2><p>The system has been used in high-school entrance PE examinations in parts of China, as well as sports-school training and middle-school PE classes.</p><a href="#sports-demo" className={styles.tryLink}>Explore the interactive demo <span aria-hidden="true">↓</span></a></div>
       </header>

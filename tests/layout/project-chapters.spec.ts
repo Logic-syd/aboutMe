@@ -70,10 +70,13 @@ for (const project of projects) {
     expect(await page.locator('[data-case-screen="chapter"]').count()).toBeGreaterThan(0);
     await expectCompleteScreens(page);
     const home = page.getByRole('link', { name: 'Back to home', exact: true });
-    await expect(home).toHaveAttribute('href', '/');
-    expect(await home.evaluate(element => getComputedStyle(element).position)).toBe('fixed');
+    await expect(home).toBeHidden();
+    await expect(page.locator('[data-case-screen="intro"]').getByRole('link', { name: 'All projects' })).toHaveCount(0);
     for (const screen of await page.locator('[data-case-screen]').all()) {
-      await screen.evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
+      await screen.evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY + 1, behavior: 'instant' }));
+      await expect(home).toBeVisible();
+      await expect(home).toHaveAttribute('href', '/');
+      expect(await home.evaluate(element => getComputedStyle(element).position)).toBe('fixed');
       const accessible = await home.evaluate(element => {
         const bounds = element.getBoundingClientRect();
         const hit = document.elementFromPoint(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
@@ -84,6 +87,8 @@ for (const project of projects) {
       });
       expect(accessible, 'Back arrow stays clickable in the upper-left corner, clear of each chapter').toBe(true);
     }
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await expect(home).toBeHidden();
 
     for (const notes of await page.locator('.case-notes').all()) {
       const tabs = notes.getByRole('tab');
@@ -120,6 +125,7 @@ for (const project of projects) {
       await expect(image.locator('..')).toHaveAttribute('target', '_blank');
     }
     await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+    await expect(home).toBeVisible();
     await home.focus();
     await expect(home).toBeFocused();
     await page.keyboard.press('Enter');
