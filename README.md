@@ -156,6 +156,12 @@ The homepage and every project route have their own canonical URL. `app/sitemap.
 
 These are crawl and discovery signals, not proof of indexing. To check Google's actual indexing status, verify the URL-prefix property in Google Search Console, inspect the homepage URL and submit `https://yidan-builds.vercel.app/sitemap.xml`. Verification requires the owner's account and a provider-issued verification token; do not fabricate one. If the public domain changes, update `siteUrl` and re-submit the sitemap. Search results and `site:` queries may be incomplete; use the owner's webmaster-console reports for confirmation.
 
+## Owner-supplied CV additions
+
+The owner supplied an updated CV and requested its additional engineering experience be incorporated into the portfolio. The project catalog records API gateway, permission and raw-response handling; iSolarCloud authorization, privacy consent and feature-availability recovery; State Grid intranet request, Cookie and permission debugging; smart-city iframe integration, local cross-origin debugging within same-origin policy constraints and Chrome 54 compatibility in 2021; GLP accessibility improvements; student-training frontend performance optimization during peak running periods and deferred uploads; and an initial Coffee Map web SDK for third-party embedding. Bespoke iSolarCloud chapters also describe consent and unavailable-feature behavior, while the API case already explains network versus business errors.
+
+The CV confirms session-error handling, state cleanup, login redirects and notification/sign-out on login elsewhere at Longshine, but does not name the specific project. Keep these in the company experience until a project attribution is confirmed. Reviewed cross-repository merges, conflict resolution, testing and release ownership belong to the NVT / Sungrow experience. Treasury SaaS and bank-enterprise connectivity remain separate from Ronghe Pay in the Fingard experience. The Coffee Map SDK is an initial implementation in an unreleased project, not a public SDK launch. Do not infer specific optimization techniques, Cookie settings, compatibility libraries, accessibility certification or measured performance gains from these statements. The CV itself and its private contact details are not published with this update.
+
 
 ## Catch That Train!
 

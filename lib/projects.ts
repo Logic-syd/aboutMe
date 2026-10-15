@@ -22,29 +22,32 @@ export const projects: Project[] = [
     description: 'Led a standalone renewable-energy API platform, with responsibility for the React frontend, European delivery, online API debugging and application-management workflows.',
     tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'API platform lead · React frontend',
     problem: 'Developers need to move from API documentation to application authorization and working calls across regional sites. The platform brings these workflows together with application management and operational tooling.',
-    responsibilities: ['Lead the API platform and its React frontend delivery, including the European site.', 'Develop online API debugging workflows.', 'Implement application-management interfaces for developers.'],
+    responsibilities: ['Lead the API platform and its React frontend delivery, including the European site.', 'Develop online API debugging with regional gateways, application credentials and permission checks.', 'Preserve raw debugger responses and distinguish network failures from business errors.', 'Implement application-management interfaces for developers.'],
     decisions: [
       { title: 'Regional context reaches the request layer', text: 'The platform separates build environments from business sites. Site selection determines the default gateway, while individual requests can override it for flows such as registration.' },
-      { title: 'A debugger needs a different response contract', text: 'Online debugging checks application permissions and uses application-level credentials. It preserves the raw API response instead of applying the ordinary portal result wrapper.' }
+      { title: 'A debugger needs a different response contract', text: 'Online debugging checks application permissions and uses application-level credentials. It preserves the raw API response instead of applying the ordinary portal result wrapper.' },
+      { title: 'Separate network failures from business errors', text: 'A completed HTTP request can still report a business failure. The debugger preserves the response for inspection, while the interface distinguishes transport failures from application-level errors so developers can understand where a call failed.' }
     ],
     delivery: 'My scope covers API platform leadership, European frontend delivery, online debugging and application management. The interactive case uses illustrative data and makes no live API requests.',
     flow: ['Application access', 'Regional gateway', 'API response']
   },
   {
-    graphTitle: "iSolarCloud", contributions: [["Plant and device interfaces", "European product adaptation"], ["Typed business interfaces", "Data-access workflows"], ["China-to-Europe frontend migration", "Regional routing and country rules", "Numbers, time zones and service dependencies"], ["Plant feature configuration", "Device parameter settings", "Country, firmware and protocol capabilities"]],
+    graphTitle: "iSolarCloud", contributions: [["Plant and device interfaces", "European product adaptation"], ["Typed business interfaces", "Data-access workflows"], ["China-to-Europe frontend migration", "Regional routing and country rules", "Numbers, time zones and service dependencies"], ["Plant feature configuration", "Device parameter settings", "Country, firmware and protocol capabilities"], ["CSS-in-JS business interfaces"]],
     featured: true,
     heroTitle: "iSolarCloud", heroDetail: "China → Europe",
     kind: 'commercial', slug: 'isolarcloud', number: '02', title: 'iSolarCloud — Solar & Energy Storage Platform', shortTitle: 'From China to Europe. From plants to devices.',
     category: 'Energy · Regional migration · Device operations', organization: 'NeuVerge-Tron (NVT) / Sungrow',
     description: 'Frontend work on iSolarCloud (阳光云), Sungrow’s solar and energy-storage management platform: migrating the China-based experience to Europe, developing plant and device feature settings, and adding EU Data Act data-access workflows.',
-    tags: ['Vue 3', 'TypeScript', 'Multi-region delivery', 'Plant & device workflows'], role: 'Frontend development · China-to-Europe migration · Plant & device features',
+    tags: ['Vue 3', 'TypeScript', 'Multi-region delivery', 'Plant & device workflows', 'CSS-in-JS'], role: 'Frontend development · China-to-Europe migration · Plant & device features',
     problem: 'Bringing an established energy platform from China to Europe involves more than translation. Cloud routing, product behavior, country eligibility, number and time interpretation, asynchronous services and device capabilities all need to agree while existing regional workflows continue to work.',
-    responsibilities: ['Worked on the frontend migration of iSolarCloud from China to Europe.', 'Developed feature settings and business interfaces for individual plants and devices.', 'Worked with regional product behavior, service routing and country-specific rules.', 'Contributed to EU Data Act data-access workflows as part of the wider platform.'],
+    responsibilities: ['Worked on the frontend migration of iSolarCloud from China to Europe.', 'Developed feature settings and business interfaces for individual plants and devices.', 'Worked with regional product behavior, service routing and country-specific rules.', 'Implemented EU Data Act data-access and privacy-consent interfaces, including authorization, scope selection, asynchronous export states and downloads.', 'Coordinated country rules with plant and device states: explained disabled features, hid unavailable functions and provided fallback actions for abnormal states.'],
     decisions: [
       { title: 'Keep product, cloud and language distinct', text: 'European product behavior, the target cloud environment and the display language are separate contexts. Shared routing must resolve the intended environment, including requests that explicitly override the default service.' },
       { title: 'Country rules are business rules', text: 'The localized European product uses a configured set of allowed countries, while the original platform’s European-country path excludes countries assigned to that rollout. Reusing one filter would change eligibility.' },
       { title: 'Device settings depend on capabilities', text: 'Parameter-setting interfaces account for device country, grid type, firmware and protocol capabilities. A common device type alone does not determine whether a batch can use the same settings.' },
-      { title: 'Trace a workflow through every service', text: 'Report exports involve an HTTP task, an MQTT connection and a download destination. Regional delivery has to consider the complete chain, including email entry points with their own cloud context.' }
+      { title: 'Trace a workflow through every service', text: 'Report exports involve an HTTP task, an MQTT connection and a download destination. Regional delivery has to consider the complete chain, including email entry points with their own cloud context.' },
+      { title: 'Make consent and data scope explicit', text: 'EU Data Act data-access work included authorization and privacy-consent workflows. Scope selection, asynchronous preparation and download handling need to remain connected so the interface makes the requested data and current task state clear.' },
+      { title: 'Make unavailable features understandable', text: 'I coordinated plant and device states with country-specific rules, explaining disabled features, hiding unavailable functions and providing fallback actions for abnormal states. Feature availability is part of the workflow, not just a visual toggle.' }
     ],
     delivery: 'Frontend contributions spanning China-to-Europe migration, plant and device feature settings, and EU Data Act data access. Public visitor-demo screenshots illustrate the platform; workflow examples use local sample data.',
     flow: ['Regional context', 'Plant & device workflows', 'Data access'],
@@ -56,18 +59,19 @@ export const projects: Project[] = [
     screenshotCredit: { label: 'iSolarCloud public European visitor demo', href: 'https://web3.isolarcloud.eu/' }
   },
   {
-    graphTitle: "Coffee & beer map", contributions: [["React map experience", "Server-side rendering"], ["Backend development", "Data import workflows"], ["500+ curated venues", "Data access policies"], ["Server-rendered web experience"]],
+    graphTitle: "Coffee & beer map", contributions: [["React map experience", "Server-side rendering"], ["Backend development", "Data import workflows"], ["500+ curated venues", "Data access policies"], ["Server-rendered web experience"], ["Initial web SDK", "Third-party website embedding"]],
     featured: true,
     heroTitle: "Discovery map", heroDetail: "Independent product",
     kind: 'independent', slug: 'discovery-map', number: '03', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
     category: 'Independent product · Full stack', organization: 'Personal project', status: 'In development · Not released', inDevelopment: true,
     description: 'An independently built discovery product with 500+ curated places, connecting a React / Next.js map experience to a structured location dataset.',
-    tags: ['Next.js', 'Node.js / Express', 'Supabase / PostgreSQL', 'SSR'], role: 'Independent developer · Frontend and backend',
+    tags: ['Next.js', 'Node.js / Express', 'Supabase / PostgreSQL', 'SSR', 'Web SDK'], role: 'Independent developer · Frontend and backend',
     problem: 'Place discovery needs both a useful browsing experience and organized location data. I am building a coffee and craft beer map around a curated dataset of more than 500 venues.',
-    responsibilities: ['Developing the React / Next.js map product independently.', 'Organizing and importing a dataset of 500+ places.', 'Building with Node.js / Express and Supabase / PostgreSQL, including data access policies and server-side rendering.'],
+    responsibilities: ['Developing the React / Next.js map product independently.', 'Organizing and importing a dataset of 500+ places.', 'Building with Node.js / Express and Supabase / PostgreSQL, including data access policies and server-side rendering.', 'Built an initial web SDK for embedding Coffee Map functionality in third-party websites.'],
     decisions: [
       { title: 'A structured foundation for discovery', text: 'Using PostgreSQL through Supabase for the venue dataset, with data imports and access policies treated as part of the product work.' },
-      { title: 'Server rendering alongside an interactive map', text: 'Using Next.js and SSR in the web experience, while React supports the interactive discovery interface.' }
+      { title: 'Server rendering alongside an interactive map', text: 'Using Next.js and SSR in the web experience, while React supports the interactive discovery interface.' },
+      { title: 'Bring discovery into another website', text: 'Built an initial web SDK for embedding Coffee Map functionality in third-party websites. This adds an integration surface alongside the standalone discovery product; the SDK remains an initial implementation within the project’s ongoing development.' }
     ],
     delivery: 'In active development and not publicly released. The 500+ figure describes the curated venue dataset, not users or adoption. No live demo or source-code link is offered until a public version is available.',
     flow: ['Curated places', 'PostgreSQL', 'Map discovery']
@@ -125,25 +129,26 @@ export const projects: Project[] = [
     flow: ['Page configuration', 'Reusable components', 'Field applications']
   },
   {
-    graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"]],
+    graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"], ["Restricted intranet debugging", "API requests, Cookies and permissions"]],
     heroTitle: "Operations", heroDetail: "Component library + workflows",
     kind: 'commercial', slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Reusable components. Workflow-aware interfaces.',
     category: 'Enterprise systems · Component library & workflows', organization: 'Longshine (朗新) · State Grid project', status: 'Commercial work · Written case study',
     description: 'Developed a shared frontend component library and work-order interfaces for a State Grid management system at Longshine. This combined hands-on experience building reusable UI with a deeper understanding of business workflows—skills I bring to SaaS frontend development.',
-    tags: ['React', 'TypeScript', 'Component library', 'Business workflows'], role: 'Frontend development · Component library & work-order system',
+    tags: ['React', 'TypeScript', 'Component library', 'Business workflows', 'Browser networking'], role: 'Frontend development · Component library & work-order system',
     problem: 'Enterprise software needs reusable interface building blocks as well as screens that reflect how the business operates. Within a 1,000-person State Grid development programme, my work connected component-library development with the practical workflows of a work-order system.',
     responsibilities: [
       'Developed reusable frontend components as part of the management system’s shared component library.',
       'Implemented work-order system interfaces, applying shared components to business-facing screens.',
       'Built familiarity with business-system workflows through work-order development, connecting process requirements with frontend implementation.',
-      'Collaborated within a 1,000-person development team at Longshine.'
+      'Collaborated within an approximately 1,000-person development team at Longshine.',
+      'Investigated browser networking, API requests, Cookies and permissions in State Grid’s restricted intranet environment.'
     ],
     decisions: [
       { title: 'Build for reuse across business interfaces', text: 'Component-library development was a core part of my contribution. I worked on reusable UI building blocks that could support the management system’s interfaces, gaining practical experience with the shared frontend foundations used in enterprise products.' },
       { title: 'Understand the workflow behind the screen', text: 'Working on the work-order system deepened my understanding of how business processes translate into interfaces. This experience helps me approach a screen in the context of the wider workflow and the task it needs to support.' },
-      { title: 'Bring both perspectives to SaaS development', text: 'This project combined component-library experience with business-system implementation. I bring both to SaaS frontend work: developing reusable UI and understanding the operational processes that the product needs to make usable.' }
+      { title: 'Debug integration inside a restricted intranet', text: 'Investigated browser networking, API request, Cookie and permission issues in State Grid’s intranet. This meant looking beyond the component itself to the request and access context in the deployed environment.' }
     ],
-    delivery: 'Commercial component-library and work-order frontend development at Longshine, within a 1,000-person project team. The experience strengthened both my ability to build reusable enterprise interfaces and my understanding of business workflows—foundations for SaaS frontend development.',
+    delivery: 'Commercial component-library and work-order frontend development at Longshine, within a 1,000-person project team. The experience strengthened both my ability to build reusable enterprise interfaces and my understanding of business workflows—foundations for SaaS frontend development. My work also included intranet integration debugging across browser requests, Cookies and permissions.',
     flow: ['Shared component library', 'Work-order interfaces', 'Business workflows']
   },
   {
@@ -251,12 +256,13 @@ export const projects: Project[] = [
     kind: 'commercial', slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
     graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine (朗新)', status: 'Commercial work · Written case study',
     description: 'Built multiple large-screen dashboards as part of smart-city projects at Longshine, integrating map APIs and route tracking for Wuxi, Hainan and Taiyuan, with customizations for each location.',
-    tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization'], role: 'Sole frontend developer for the initial dashboard · Regional delivery',
+    tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization', 'Browser compatibility'], role: 'Sole frontend developer for the initial dashboard · Regional delivery',
     contributions: [
       ['Map API integration', 'Geographic views within the dashboards'],
       ['Route tracking on maps'],
       ['Sole frontend ownership of the initial dashboard', 'Multiple regional dashboards'],
-      ['Wuxi, Hainan and Taiyuan', 'Location-specific customizations']
+      ['Wuxi, Hainan and Taiyuan', 'Location-specific customizations'],
+      ['Chrome 54 compatibility', 'iframe integration', 'Local cross-origin debugging']
     ],
     problem: 'Smart-city projects in different locations needed large-screen dashboards with map views and route tracking. The dashboards shared the same foundation, but Wuxi, Hainan and Taiyuan each had specific requirements that called for a customized version.',
     responsibilities: [
@@ -264,13 +270,16 @@ export const projects: Project[] = [
       'Built multiple large-screen dashboard interfaces for regional smart-city projects.',
       'Integrated map APIs into the dashboard experience.',
       'Implemented map-based route tracking.',
-      'Worked from a shared foundation while adapting the dashboards to the specific requirements of Wuxi, Hainan and Taiyuan.'
+      'Adapted the shared foundation for Wuxi, Hainan and Taiyuan, including Chrome 54 compatibility and fallback behavior.',
+      'Integrated a dashboard into an existing system through an iframe and resolved local cross-origin issues within same-origin policy constraints.'
     ],
     decisions: [
       { title: 'Own the initial frontend', text: 'Was the sole frontend developer for the initial smart-city dashboard, then worked on regional dashboard versions built around a shared foundation.' },
       { title: 'Keep a common foundation across versions', text: 'The dashboards were based on the same foundation. My work covered multiple versions, carrying that common base into the implementation for each location.' },
       { title: 'Connect maps with route tracking', text: 'Map API integration and route tracking formed part of the large-screen interfaces, bringing geographic context and routes into the dashboard experience.' },
-      { title: 'Adapt to local requirements', text: 'Wuxi, Hainan and Taiyuan each required specific customizations. The work combined the shared dashboard foundation with those differences rather than delivering an identical interface for every location.' }
+      { title: 'Adapt to local requirements', text: 'Wuxi, Hainan and Taiyuan each required specific customizations. The work combined the shared dashboard foundation with those differences rather than delivering an identical interface for every location.' },
+      { title: 'Integrate through an iframe', text: 'Embedded a dashboard in an existing system through an iframe and resolved cross-origin issues during local development. The integration had to work within browser same-origin policy constraints, alongside the host system.' },
+      { title: 'Support the browser actually in use', text: 'The required browser environment included Chrome 54 in 2021. I adapted frontend behavior and added compatibility fallbacks so the dashboard could work in that environment.' }
     ],
     delivery: 'A written case study of commercial frontend work at Longshine across multiple regional dashboards. The workflow illustration summarizes the shared foundation and local customization work.',
     flow: ['Shared dashboard foundation', 'Maps + route tracking', 'Regional customizations']
@@ -279,24 +288,27 @@ export const projects: Project[] = [
     kind: 'commercial', slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'React interfaces for cross-region finance.',
     graphTitle: 'SME financing', category: 'Fintech · React business interfaces', organization: 'GLP (普洛斯)', status: 'Commercial frontend work',
     description: 'React frontend development for an SME financing system spanning domestic and overseas markets, with a focus on business interfaces and requirements around time zones, currencies and exchange rates.',
-    tags: ['React', 'Business interfaces', 'Time zones', 'Currencies & exchange rates'], role: 'React frontend development',
+    tags: ['React', 'Business interfaces', 'Time zones', 'Currencies & exchange rates', 'Accessibility'], role: 'React frontend development',
     contributions: [
       ['React business interfaces', 'Business requirements to UI'],
       ['SME financing workflows'],
       ['Cross-region date and time context'],
-      ['Currency-aware financial presentation', 'Exchange-rate context']
+      ['Currency-aware financial presentation', 'Exchange-rate context'],
+      ['Accessibility improvements', 'Product, backend and QA collaboration']
     ],
     problem: 'An SME financing system needed business interfaces for domestic and overseas markets, where dates, currencies and exchange rates required careful handling.',
     responsibilities: [
       'Developed React frontend interfaces for the financing system.',
       'Worked on business screens supporting SME financing workflows.',
-      'Handled frontend requirements involving time zones, currencies and exchange rates.'
+      'Handled frontend requirements involving time zones, currencies and exchange rates.',
+      'Implemented accessibility improvements and collaborated with product, backend and QA on business rules, API integration and testing.'
     ],
     decisions: [
       { title: 'React for business interfaces', text: 'Worked on React interfaces for the financing system, translating business requirements into frontend screens.' },
       { title: 'Date and time interpretation across regions', text: 'Time-zone requirements make the distinction between a timestamp and its local display important. Dates and times need an unambiguous regional context when a financing workflow spans domestic and overseas markets.' },
       { title: 'Currency-aware amounts and exchange rates', text: 'Financial interfaces need to keep an amount’s currency clear and distinguish monetary values from the exchange rates used to interpret them. Relevant frontend concerns include decimal precision, rounding and number formatting across markets.' },
-      { title: 'Separate business values from display formatting', text: 'Cross-region financial requirements call for a clear distinction between underlying business data and how a screen presents it. Date, amount and currency formatting need to preserve the meaning of the data throughout the interface.' }
+      { title: 'Separate business values from display formatting', text: 'Cross-region financial requirements call for a clear distinction between underlying business data and how a screen presents it. Date, amount and currency formatting need to preserve the meaning of the data throughout the interface.' },
+      { title: 'Improve accessibility within business workflows', text: 'Implemented accessibility improvements in the financing interfaces. I also worked with product, backend and QA on business rules, API integration and testing, connecting interface changes to the financing workflows they supported.' }
     ],
     delivery: 'React frontend contributions to an SME financing system at GLP, with experience in business interfaces and cross-region financial requirements.',
     flow: ['React interfaces', 'Financing workflows', 'Time + currency context']
@@ -310,7 +322,7 @@ export const projects: Project[] = [
       ['Student running and free-training interfaces'],
       ['Phone-camera capture', 'Sit-ups, jumping jacks and squats', 'Exercise statistics presentation'],
       ['Save training data under weak connectivity', 'Deferred data uploads'],
-      ['High-concurrency running periods', 'Student training frontend'],
+      ['Peak running-period performance', 'Frontend optimization'],
       ['Student result management', 'Teacher score-report exports'],
       ['University and primary-school versions', 'Different AI movement criteria', 'Adapted visual and spoken feedback']
     ],
@@ -319,18 +331,18 @@ export const projects: Project[] = [
       'Developed Vue / uni-app student interfaces for running and free training, including running metrics, route maps and checkpoints.',
       'Integrated phone-camera capture for exercise statistics across sit-ups, jumping jacks, squats and other activities.',
       'Worked on weak-network data saving and deferred uploads for student training sessions.',
-      'Developed frontend interfaces for a product with high concurrent usage during peak running periods.',
+      'Optimized frontend performance for high concurrent usage during peak student running periods.',
       'Worked on teacher management interfaces for reviewing student results and exporting score reports.',
       'Adapted interface presentation and voice feedback for university and primary-school versions with different AI movement-assessment criteria.'
     ],
     decisions: [
       { title: 'Keep training data through weak connectivity', text: 'The mini-program saved training data under weak-network conditions and deferred uploads. This allowed recording and transmission to happen at different times, addressing the connectivity constraints of student training.' },
       { title: 'Combine running with camera-based exercise tracking', text: 'Running and free training belonged to one mini-program. Free-training activities included sit-ups, jumping jacks and squats, with phone-camera input supporting exercise statistics.' },
-      { title: 'Work within peak running usage', text: 'Running periods created high-concurrency demand across the product. My contribution was on the frontend for this student training environment, including its weak-network data handling.' },
+      { title: 'Optimize for peak running periods', text: 'Optimized frontend performance for high concurrent usage during peak student running periods. Alongside this work, weak-network saving retained training records until they could be transmitted through deferred uploads.' },
       { title: 'Connect student activity to teacher reporting', text: 'The teacher management system let teachers view student results and export score reports, connecting student training with school assessment and administration.' },
       { title: 'Adapt the experience for different age groups', text: 'University and primary-school versions used different AI movement-assessment standards. Visual presentation and voice feedback were also adjusted for the respective student groups.' }
     ],
-    delivery: 'The mini-program served multiple universities and multiple primary schools in Shanghai. My frontend work covered student training, weak-network data handling, teacher result management and report exports, with separate university and primary-school experiences. The gallery shows an original, privacy-redacted running-session screenshot.',
+    delivery: 'The mini-program served multiple universities and multiple primary schools in Shanghai. My frontend work covered student training, peak-period performance optimization, weak-network data handling, teacher result management and report exports, with separate university and primary-school experiences. The gallery shows an original, privacy-redacted running-session screenshot.',
     flow: ['Student training', 'Save + upload results', 'Teacher review + export']
   },
   {
