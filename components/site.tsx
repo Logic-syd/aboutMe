@@ -9,8 +9,7 @@ export function Header({ detail = false, sidebar = false }: { detail?: boolean; 
     {sidebar && <nav className="floating-sections" aria-label="Section navigation"><SectionNavigation detail={detail} sidebar /></nav>}
   </header>
     {detail && <Link className="case-home-link" href="/" aria-label="Back to home">
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m12 5-7 7 7 7M5 12h14" /></svg>
-      <span aria-hidden="true">Back home</span>
+      <span className="case-back-mark" aria-hidden="true" />
     </Link>}
   </>;
 }
