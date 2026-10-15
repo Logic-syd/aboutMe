@@ -44,6 +44,14 @@ async function expectDemoFits(demo: Locator) {
     const chapter = element.closest('[data-case-screen]')!.getBoundingClientRect();
     const bounds = element.getBoundingClientRect();
     if (bounds.bottom > chapter.bottom + 2) issues.push('Tool crosses chapter boundary');
+    if (element.getAttribute('data-case-demo') === 'sports') {
+      const panel = element.querySelector<HTMLElement>('[class*="sidePanel"]')!;
+      if (panel.scrollHeight > panel.clientHeight + 1) issues.push('Sports controls and three results need internal scrolling');
+      if (panel.scrollWidth > panel.clientWidth + 1) issues.push('Sports controls and results overflow horizontally');
+      for (const child of panel.children) {
+        if (child.getBoundingClientRect().bottom > panel.getBoundingClientRect().bottom + 1) issues.push('Sports results cross the panel boundary');
+      }
+    }
     for (const child of element.children) {
       if (child.getBoundingClientRect().bottom > bounds.bottom + 2) issues.push('Tool panel crosses frame boundary');
     }
@@ -208,6 +216,7 @@ test('interactive consoles keep a complete frame when results expand', async ({ 
 
   await page.goto('/projects/sports-education');
   const sports = page.locator('[data-case-demo="sports"]');
+  await expectDemoFits(sports);
   await page.clock.install();
   await sports.getByRole('button', { name: 'Start session', exact: true }).click();
   await page.clock.runFor(13_500);
