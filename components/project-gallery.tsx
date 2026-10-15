@@ -8,6 +8,7 @@ import { CaseChapter } from '@/components/case-chapter';
 export function ProjectGallery({ project }: { project: Project }) {
   const [selected, setSelected] = useState(0);
   if (!project.screenshots?.length) return null;
+  if (project.screenshotLayout === 'portrait-grid') return <PortraitGallery screens={project.screenshots} />;
   const active = Math.min(selected, project.screenshots.length - 1);
   const screen = project.screenshots[active];
   return <>
@@ -23,6 +24,17 @@ export function ProjectGallery({ project }: { project: Project }) {
   </CaseChapter>
   {!!project.mobileScreenshots?.length && <MobileGallery screens={project.mobileScreenshots} description={project.mobileDescription} highlights={project.mobileHighlights} />}
   </>;
+}
+
+function PortraitGallery({ screens }: { screens: ProjectScreenshot[] }) {
+  return <CaseChapter id="product-screens" kicker="THE GAME IN PLAY" title="One journey. Three moments." description="A portrait game made for phones. Choose a traveler, find your direction and make it to the train." layout="media">
+    <div className="case-portrait-grid">
+      {screens.map((screen, index) => <figure key={screen.src}>
+        <a href={screen.src} target="_blank" rel="noopener noreferrer" aria-label={`Open full screenshot: ${screen.caption}`}><Image src={screen.src} alt={screen.alt} width={screen.width} height={screen.height} sizes="(max-width: 800px) 350px, 320px" /></a>
+        <figcaption><h3><span>{String(index + 1).padStart(2, '0')}</span>{screen.label}</h3><p>{screen.caption}</p><a href={screen.src} target="_blank" rel="noopener noreferrer">Open full image ↗</a></figcaption>
+      </figure>)}
+    </div>
+  </CaseChapter>;
 }
 
 function MobileGallery({ screens, description, highlights }: { screens: ProjectScreenshot[]; description?: string; highlights?: string[] }) {

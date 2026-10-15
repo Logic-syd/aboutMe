@@ -117,7 +117,7 @@ for (const project of projects) {
         }
       }
     }
-    for (const image of await page.locator('.case-gallery-view img, .case-mobile-screen img, figure[class*="productFigure"] img').all()) {
+    for (const image of await page.locator('.case-gallery-view img, .case-mobile-screen img, .case-portrait-grid img, figure[class*="productFigure"] img').all()) {
       await expect(image).toBeVisible();
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
@@ -135,6 +135,34 @@ for (const project of projects) {
     expect(errors).toEqual([]);
   });
 }
+
+test('Catch That Train shows all portrait screenshots without switching', async ({ page }) => {
+  await page.goto('/projects/catch-that-train');
+  const gallery = page.locator('#product-screens');
+  await expect(gallery.locator('img')).toHaveCount(3);
+  await expect(gallery.getByRole('button')).toHaveCount(0);
+  await expect(page.locator('#mobile-screens')).toHaveCount(0);
+  const frames = await gallery.locator('figure').evaluateAll(figures => figures.map(figure => {
+    const bounds = figure.getBoundingClientRect();
+    const image = figure.querySelector('img')!;
+    const caption = figure.querySelector('figcaption')!.getBoundingClientRect();
+    return { x: bounds.x, y: bounds.y, right: bounds.right, bottom: bounds.bottom,
+      portrait: image.width < image.height, captionBelow: caption.top >= image.getBoundingClientRect().bottom,
+      captionFits: caption.bottom <= bounds.bottom + 1 };
+  }));
+  for (const frame of frames) {
+    expect(frame.portrait && frame.captionBelow && frame.captionFits).toBe(true);
+  }
+  for (let i = 1; i < frames.length; i++) {
+    if (page.viewportSize()!.width > 800) {
+      expect(Math.abs(frames[i].y - frames[0].y)).toBeLessThan(1);
+      expect(frames[i].x).toBeGreaterThan(frames[i - 1].right);
+    } else {
+      expect(frames[i].y).toBeGreaterThan(frames[i - 1].bottom);
+    }
+  }
+  await expectCompleteScreens(page);
+});
 
 test('Pfand Pause presents the 2.0 release with separate desktop and mobile captures', async ({ page }) => {
   await page.goto('/projects/pfand-pause');
