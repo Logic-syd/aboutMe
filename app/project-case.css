@@ -98,6 +98,7 @@
  .project-case .case-intro-screen{display:flex;flex-direction:column;gap:20px;padding:clamp(24px,3.5svh,36px) 0;border-bottom:1px solid var(--line)}
  .project-case .case-screen{padding:clamp(24px,3.5svh,36px) 0}
  .project-case .case-screen[data-case-layout=demo]{height:min(100svh,780px);display:flex;flex-direction:column}
+ .project-case #sports-demo{height:min(100svh,900px)}
  .case-screen-heading{flex-shrink:0}
  .case-screen[data-case-layout=demo] .case-screen-body{flex:1;min-height:0;display:flex;flex-direction:column}
  .case-screen[data-case-layout=demo] .case-data-access{height:100%;min-height:0}
