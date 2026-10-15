@@ -11,7 +11,7 @@ Every project detail page must present complete, readable modules on a desktop s
 - When desktop and mobile screenshots are available, put landscape desktop captures in `screenshots` and portrait phone captures in `mobileScreenshots`. Use the shared gallery's separate mobile chapter, with optional `mobileDescription` and `mobileHighlights`; do not stretch a phone screenshot across the desktop showcase. Capture the current confirmed release and record its source and viewport sizes in README.md.
 - Dense interactive consoles may scroll within explicitly bounded configuration/results panes. The complete tool frame must stay within its chapter; keep the primary action visible. Expanded responses and error states must not stretch the chapter or overlap other content.
 - Phones and narrow windows use natural page scrolling and stacked content. Do not force a one-screen height on mobile or add scroll snapping. No horizontal page overflow.
-- Keep the fixed `Back to home` link from `Header detail` available at every scroll position, including on mobile. Keep its narrow side gutter clear of chapter content and interactive controls. It must navigate to `/` without requiring a scroll back to the title.
+- Keep the fixed `Back to home` arrow from `Header detail` in the upper-left corner at every scroll position, including on mobile. Reserve space so it does not overlap the header, chapter content or interactive controls. It must navigate to `/` without requiring a scroll back to the title; do not restore the mid-screen home icon.
 - Keep related project navigation and contact endings concise; they do not need artificial full-screen spacing.
 
 ## Required checks

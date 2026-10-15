@@ -79,9 +79,10 @@ for (const project of projects) {
         const hit = document.elementFromPoint(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
         const main = document.querySelector('main')!;
         const contentLeft = main.getBoundingClientRect().left + parseFloat(getComputedStyle(main).paddingLeft);
-        return bounds.top >= 0 && bounds.bottom <= innerHeight && bounds.right <= contentLeft && element.contains(hit);
+        return bounds.top >= 0 && bounds.top <= 16 && bounds.left >= 0 && bounds.left <= 16
+          && bounds.width >= 44 && bounds.height >= 44 && bounds.right <= contentLeft && element.contains(hit);
       });
-      expect(accessible, 'Home remains clickable in the clear side gutter at each chapter').toBe(true);
+      expect(accessible, 'Back arrow stays clickable in the upper-left corner, clear of each chapter').toBe(true);
     }
 
     for (const notes of await page.locator('.case-notes').all()) {
