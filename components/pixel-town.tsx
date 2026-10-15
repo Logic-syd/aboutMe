@@ -12,7 +12,7 @@ const places: { id: PlaceId; name: string; x: number; y: number; color: string; 
   { id: 'studio', name: 'The studio', x: 21, y: 11, color: '#e7d7c4', roof: '#978fa6', title: 'Commercial projects.', slugs: ['renewable-energy-api', 'isolarcloud', 'ronghe-pay', 'sports-education'], href: '#work-projects', action: 'More projects' },
   { id: 'cafe', name: 'Coffee corner', x: 49, y: 19, color: '#eedbd6', roof: '#ae8390', title: 'Coffee & craft beer map.', slugs: ['discovery-map'], href: '/projects/discovery-map', action: 'View project' },
   { id: 'cabin', name: 'Mountain hut', x: 77, y: 25, color: '#dcc9b0', roof: '#8b9c94', title: 'Mountain Chess.', slugs: ['mountain-chess'], href: '/projects/mountain-chess', action: 'View project' },
-  { id: 'station', name: 'The station', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'Where I’ve lived & worked.', slugs: [], href: '#experience', action: 'Explore my cities' },
+  { id: 'station', name: 'The station', x: 21, y: 62, color: '#e0ddd0', roof: '#9aabb1', title: 'Catch That Train!', slugs: ['catch-that-train'], href: '/projects/catch-that-train', action: 'View project' },
   { id: 'bottles', name: 'Bottle shop', x: 49, y: 67, color: '#d8e4d9', roof: '#8baaa2', title: 'Pfand Pause.', slugs: ['pfand-pause'], href: '/projects/pfand-pause', action: 'View project' },
   { id: 'post', name: 'The post office', x: 77, y: 62, color: '#ead9ce', roof: '#bb9991', title: 'Up for a coffee chat?', slugs: [], href: 'https://linkedin.com/in/yidanshao/', action: 'Let’s connect on LinkedIn' },
 ];

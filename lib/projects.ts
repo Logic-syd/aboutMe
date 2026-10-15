@@ -390,5 +390,51 @@ export const projects: Project[] = [
     ],
     delivery: 'Completed and launched in around six weeks during August–September 2024. I was the sole frontend developer, working with one backend developer through a partner company on the redesign of an existing education system at the School of Public Health, Peking University. My scope covered React course interfaces, interactive Three.js curriculum visualization, distinct mouse events and free node dragging, customized labels, high-fidelity UI reproduction and stability under repeated 3D interaction. The workflow illustration summarizes the project context.',
     flow: ['Majors + shared courses', '3D knowledge exploration', 'Course selection']
+  },
+  {
+    kind: 'independent', slug: 'catch-that-train', number: '15', title: 'Catch That Train! — A Journey Under Pressure', shortTitle: 'Small decisions. One departing train.',
+    graphTitle: 'Catch That Train!', category: 'Independent product · Browser strategy game', organization: 'Personal project', status: 'Playable browser game · English & Chinese',
+    description: 'A browser strategy game about catching a high-speed train in China. Four travelers navigate six stations, balancing time, energy, directions and everyday interruptions. I built the React and TypeScript experience, including touch and keyboard controls, bilingual presentation, local achievements and shareable results.',
+    tags: ['React / TypeScript', 'Game state / Shared clock', 'Touch / Spatial interaction', 'i18n / Verification'], role: 'Independent developer',
+    contributions: [
+      ['React game interfaces', 'SVG and CSS scenes', 'Local achievements and result sharing'],
+      ['Journey state transitions', 'Time and resource accounting', 'Route forecasts'],
+      ['Touch and keyboard controls', 'Hongqiao student entrance scenes', 'Interrupted-input cleanup'],
+      ['English and Chinese presentation', 'State-preserving language switching', 'Reproducible engine tests and simulations']
+    ],
+    problem: 'Make rushing for a train feel tense but understandable. A route, a queue, a distraction or a burst of sprinting can change the outcome. Players need clear choices and feedback, while the game needs consistent time, movement and resource rules across different travelers and stations.',
+    responsibilities: [
+      'Built preparation, metro and station interfaces for four playable travelers across six station scenarios, with Normal and Extreme modes.',
+      'Implemented a shared game-state engine for deadlines, route costs, stamina, interruptions and result attribution.',
+      'Developed touch and keyboard controls, lane obstacles and collision-aware entrance scenes for the student at Shanghai Hongqiao.',
+      'Added English and Chinese display, local achievements and character unlocks, same-station challenge links and result-image exports.',
+      'Used automated tests and seeded simulations to verify transitions, resource boundaries and different journey strategies.'
+    ],
+    decisions: [
+      { title: 'One clock, several kinds of time', text: 'Movement, handling, waiting and metro travel have different time rules. The engine separates actual input time from fixed task costs, then derives recovery from time already charged. Route forecasts and journey budgets reuse these rules to keep the interface and outcomes consistent.' },
+      { title: 'Make visible space affect the choice', text: 'Six entrance scenes in the Hongqiao student chapter require the player to reach a destination while avoiding crowds and railings. Small motion steps prevent crossing obstacles. Forecasts and simulations use the same collision geometry; other travelers and stations retain their existing event interactions.' },
+      { title: 'Stop input when the interaction stops', text: 'Held movement ends on pointer cancellation, lost capture, keyboard release, blur or a hidden page. Completed entrance actions are guarded against repetition, and event revisions reject stale choices. These boundaries keep interrupted gestures from continuing into the next task.' },
+      { title: 'Translate the display, preserve the run', text: 'English and Chinese presentation share canonical event data and action payloads. Language state is separate from game state, so switching preserves the active task and progress. Dynamic costs, results, challenge text and exported images follow the selected language.' },
+      { title: 'Keep earned progress consistent', text: 'Run IDs prevent duplicate achievement awards. Stored profiles are parsed, migrated and merged so an older browser tab cannot remove earned unlocks. Records stay in the current browser; shared links contain the station, title and outcome without uploading the player’s saved history.' },
+      { title: 'Make verification reproducible', text: 'An injectable random source supports seeded tests and journey simulations. Reports record the character, station, mode, input model and decisions, making rule changes easier to compare. Simulation results describe the tested strategies and assumptions, rather than measured human win rates.' }
+    ],
+    delivery: 'A playable English and Chinese browser game with four traveler chapters, six station scenarios, local achievements and shareable results. The student’s Hongqiao chapter adds walkable entrance scenes. Station layouts are gameplay abstractions; progress stays in the current browser, and family mode remains planned.',
+    flow: ['Prepare + choose a route', 'Navigate + manage resources', 'Board + review the journey'],
+    links: [
+      { label: 'Live Demo', href: 'https://logic-syd.github.io/catchThatTrain-/' },
+      { label: 'Source Code', href: 'https://github.com/Logic-syd/catchThatTrain-' }
+    ],
+    screenshots: [
+      { src: '/images/catch-that-train-desktop-station.png', width: 1024, height: 960, label: 'Station run', alt: 'Catch That Train in English in a desktop browser, with the student navigating the Hongqiao station passage, a boarding deadline, stamina and movement controls.', caption: 'Hongqiao station · Walking and changing lanes · Desktop browser, 1024 × 960.' },
+      { src: '/images/catch-that-train-desktop-start.png', width: 1024, height: 960, label: 'Choose a journey', alt: 'The English Catch That Train start screen with traveler selection, two candidate stations, a station map and the start button.', caption: 'Choose a traveler and station · The game keeps a compact playfield on desktop.' },
+      { src: '/images/catch-that-train-desktop-direction.png', width: 1024, height: 960, label: 'Metro direction', alt: 'The English metro platform screen in Catch That Train, asking the player to choose a train direction while the boarding countdown continues.', caption: 'Read the platform signs · A direction choice during an actual student journey.' }
+    ],
+    mobileDescription: 'Built around a compact playfield, the game keeps route choices, the boarding deadline and movement controls close together. On a phone, players can swipe through travelers, choose directions and change lanes with touch controls. These captures show the same English game in a mobile browser.',
+    mobileHighlights: ['Touch controls for movement, sprinting and station tasks.', 'English and Chinese switching preserves the active journey.', 'Achievements and recent runs stay in the current browser.'],
+    mobileScreenshots: [
+      { src: '/images/catch-that-train-mobile-station.png', width: 390, height: 1000, label: 'Station', alt: 'The English Catch That Train station interface on a phone, with the student walking through Hongqiao, stamina, lane controls and a sprint button.', caption: 'Station navigation · Mobile browser, 390 × 1000.' },
+      { src: '/images/catch-that-train-mobile-start.png', width: 390, height: 844, label: 'Travelers', alt: 'The English Catch That Train mobile start screen with swipeable traveler cards, station choices and a fixed start action.', caption: 'Traveler and station selection · Mobile browser.' },
+      { src: '/images/catch-that-train-mobile-direction.png', width: 390, height: 844, label: 'Direction', alt: 'Two English metro direction choices in the phone layout of Catch That Train, beneath a live boarding countdown.', caption: 'Choose the metro direction · Mobile browser.' }
+    ]
   }
 ];
