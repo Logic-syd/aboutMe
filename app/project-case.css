@@ -170,8 +170,7 @@
  .case-export-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 }
 
-/* Keep the back arrow in the upper-left corner, clear of the header and text. */
-.project-case .site-header{padding-left:72px}
+/* The back arrow appears after the header leaves view; keep it clear of text. */
 .project-case>main{padding-left:64px}
 .case-home-link{position:fixed;left:12px;top:10px;z-index:80;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--ink);border:0;box-shadow:none;border-radius:50%}
 .case-back-mark{position:relative;display:block;width:36px;height:32px;flex:none;transform:rotate(-5deg);transition:transform .2s ease,color .2s ease}

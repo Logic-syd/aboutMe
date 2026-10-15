@@ -20,7 +20,6 @@ export function IsolarCloudCaseStudy({ project, next }: { project: Project; next
     <Header detail />
     <main id="main" className={styles.main}>
       <CaseIntro>
-      <Link className={styles.back} href="/#work">← All projects</Link>
       <header className={styles.hero} data-case-hero>
         <div><p className={styles.kicker}>CASE {project.number} / NVT · SUNGROW · SOLAR & ENERGY STORAGE</p><h1>iSolarCloud.<br /><em>From China to Europe.</em></h1><p className={styles.intro}>My frontend work on Sungrow’s solar and energy-storage platform spans the China-to-Europe migration, plant and device feature settings, and more recent EU Data Act data-access requirements.</p><div className={styles.heroActions}><a href="#product" className={styles.tryLink}>Explore the platform <span aria-hidden="true">↓</span></a><a href="#migration" className={styles.secondaryLink}>Inside the migration ↓</a></div></div>
         <aside className={styles.ownership} aria-label="My frontend contribution"><p className={styles.kicker}>MY PART IN THE PRODUCT</p><h2>Regional delivery.<br /> Real device workflows.</h2><p>I worked on adapting the China-based frontend for Europe and on features for individual plants and devices. Data-access requirements are one additional part of that wider work.</p><span className={styles.role}>{project.organization}</span></aside>
