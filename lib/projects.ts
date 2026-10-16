@@ -118,9 +118,9 @@ export const projects: Project[] = [
     heroTitle: "Low-code tools", heroDetail: "Configurable interfaces",
     kind: 'commercial', slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Compose the interface. Keep the data connected.',
     category: 'Developer tools · Internal platform', organization: 'Longshine', status: 'Commercial work · Interactive reconstruction',
-    description: 'Worked on composite components, component data flow, drag-and-drop hierarchy and theme switching for an internal low-code platform. Initially developed in Vue 3, the platform later moved to Vue 2 to join the company’s wider micro-frontend system.',
+    description: 'Built composite components and theme switching for a low-code platform that helped internal marketing and construction teams assemble simple apps. The platform began in Vue 3 and later moved to Vue 2 to join the company’s wider micro-frontend system.',
     tags: ['Vue 3 → Vue 2', 'Composite components', 'Drag-and-drop', 'Theming'], role: 'Frontend development · Composite components & theming',
-    problem: 'Field-service work orders and marketing applications needed configurable pages assembled from reusable components. The challenge was keeping component data and nested drag-and-drop relationships coherent as users changed the page, while supporting themes and integration into the company’s wider system.',
+    problem: 'As low-code development gained momentum, we built an internal platform for the marketing and construction departments to assemble simple apps from reusable components. My technical challenges centered on composite-component data flow, drag-and-drop parent-child relationships and consistent theme switching.',
     responsibilities: ['Participated in technical selection and developed composite components for the internal low-code platform.', 'Worked on data-flow design between composite components and their nested fields.', 'Handled drag-and-drop hierarchy so component placement and parent-child relationships stayed consistent.', 'Implemented theme switching across the assembled application.'],
     decisions: [
       { title: 'Design the data flow of a composite component', text: 'My work included composite components made from smaller interface elements. Designing how their data flowed between the component and its children was a central difficulty: the assembled page needed coherent values and configuration as it was edited.' },
@@ -129,7 +129,7 @@ export const projects: Project[] = [
       { title: 'Fit the company’s existing platform', text: 'The project began as an internal Vue 3 application. It later moved to Vue 2 to integrate with the company’s overall micro-frontend system. The company-system integration requirements drove this change in framework version.' }
     ],
     delivery: 'Commercial frontend work on composite components, component data flow, drag-and-drop hierarchy and theming. The interactive builder is a new portfolio reconstruction using sample components and local data; it does not reproduce proprietary source code or the original product UI.',
-    flow: ['Reusable components', 'Page hierarchy + data flow', 'Themed applications']
+    flow: ['Reusable components', 'Page hierarchy + data flow', 'Marketing + construction apps']
   },
   {
     graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"], ["Restricted intranet debugging", "API requests, Cookies and permissions"]],
