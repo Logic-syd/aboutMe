@@ -114,20 +114,22 @@ export const projects: Project[] = [
     flow: ['Camera video', 'Backend AI analysis', 'Live scores + reports']
   },
   {
-    graphTitle: "Low-code platform", contributions: [["Configurable pages", "Field-team applications"], ["Reusable components"], ["Theme switching"]],
+    graphTitle: "Low-code platform", contributions: [["Vue 3 internal platform", "Vue 2 integration into the company system"], ["Composite components", "Component data flow"], ["Drag-and-drop hierarchy", "Nested page configuration"], ["One-click theme switching"]],
     heroTitle: "Low-code tools", heroDetail: "Configurable interfaces",
-    kind: 'commercial', slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Reusable tools for field teams.',
-    category: 'Developer tools · Internal platform', organization: 'Longshine', status: 'Internal platform · Written case study',
-    description: 'Leading an internal low-code platform for field-service work orders and marketing applications, with configurable pages and reusable components.',
-    tags: ['Low-code', 'Component architecture', 'Theming'], role: 'Frontend lead · Technical selection contributor',
-    problem: 'Field teams needed work-order and marketing applications. An internal low-code platform brought configurable pages, reusable components and theme switching to this work.',
-    responsibilities: ['Participated in technical selection and led the internal low-code platform.', 'Built configurable pages and reusable components for field-team applications.', 'Implemented theme switching for different application needs.'],
+    kind: 'commercial', slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Compose the interface. Keep the data connected.',
+    category: 'Developer tools · Internal platform', organization: 'Longshine', status: 'Commercial work · Interactive reconstruction',
+    description: 'Worked on composite components, component data flow, drag-and-drop hierarchy and theme switching for an internal low-code platform. Initially developed in Vue 3, the platform later moved to Vue 2 to join the company’s wider micro-frontend system.',
+    tags: ['Vue 3 → Vue 2', 'Composite components', 'Drag-and-drop', 'Theming'], role: 'Frontend development · Composite components & theming',
+    problem: 'Field-service work orders and marketing applications needed configurable pages assembled from reusable components. The challenge was keeping component data and nested drag-and-drop relationships coherent as users changed the page, while supporting themes and integration into the company’s wider system.',
+    responsibilities: ['Participated in technical selection and developed composite components for the internal low-code platform.', 'Worked on data-flow design between composite components and their nested fields.', 'Handled drag-and-drop hierarchy so component placement and parent-child relationships stayed consistent.', 'Implemented theme switching across the assembled application.'],
     decisions: [
-      { title: 'Configuration and reuse', text: 'Centered the platform on configurable pages and reusable components to support work-order and marketing use cases.' },
-      { title: 'Theme switching within the platform', text: 'Included theme switching as a platform capability so application presentation could change alongside page configuration.' }
+      { title: 'Design the data flow of a composite component', text: 'My work included composite components made from smaller interface elements. Designing how their data flowed between the component and its children was a central difficulty: the assembled page needed coherent values and configuration as it was edited.' },
+      { title: 'Dragging changes structure as well as position', text: 'Drag-and-drop interactions affected component hierarchy, including which container a component belonged to. I worked on these parent-child relationships so moving a component made sense within the assembled page.' },
+      { title: 'Switch the theme across the application', text: 'I implemented theme switching for the platform. The selected appearance needed to apply consistently to the composed interface and its reusable components.' },
+      { title: 'Fit the company’s existing platform', text: 'The project began as an internal Vue 3 application. It later moved to Vue 2 to integrate with the company’s overall micro-frontend system. The company-system integration requirements drove this change in framework version.' }
     ],
-    delivery: 'An internal commercial platform, documented here through a written case study. No public demo, internal source code or unverified delivery metrics are presented.',
-    flow: ['Page configuration', 'Reusable components', 'Field applications']
+    delivery: 'Commercial frontend work on composite components, component data flow, drag-and-drop hierarchy and theming. The interactive builder is a new portfolio reconstruction using sample components and local data; it does not reproduce proprietary source code or the original product UI.',
+    flow: ['Reusable components', 'Page hierarchy + data flow', 'Themed applications']
   },
   {
     graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"], ["Restricted intranet debugging", "API requests, Cookies and permissions"]],
