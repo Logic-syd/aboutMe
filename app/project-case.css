@@ -1,6 +1,9 @@
 /* Shared case-study chapters. Keep content readable; dense tools scroll in their own panes. */
 .project-case>main{padding-top:0}
-.case-intro-screen{padding:28px 0 36px}
+.case-intro-screen{padding:28px 0 36px;border-bottom:1px solid var(--line)}
+/* Chapter wrappers own separators; overview rows keep only their top rule. */
+.project-case .case-intro-screen [data-case-overview]{border-bottom:0}
+.project-case .case-screen+.case-next{border-top:0}
 .case-intro-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(240px,1fr);gap:40px;align-items:start}
 .project-case .case-intro-screen>.back-link,.case-intro-screen>a{align-self:flex-start;margin:0}
 .project-case .case-header{padding:0;max-width:none}
@@ -95,7 +98,7 @@
 .case-export-steps li>span{display:block;font:10px/1.5 monospace;color:var(--pink);margin-bottom:12px}
 @media(min-width:801px){
  html:has(.project-case){scroll-padding-top:0}
- .project-case .case-intro-screen{display:flex;flex-direction:column;gap:20px;padding:clamp(24px,3.5svh,36px) 0;border-bottom:1px solid var(--line)}
+ .project-case .case-intro-screen{display:flex;flex-direction:column;gap:20px;padding:clamp(24px,3.5svh,36px) 0}
  .project-case .case-screen{padding:clamp(24px,3.5svh,36px) 0}
  .project-case .case-screen[data-case-layout=demo]{height:min(100svh,780px);display:flex;flex-direction:column}
  .project-case #sports-demo{height:min(100svh,900px)}
@@ -202,4 +205,5 @@
 .case-outline a:hover{color:var(--pink)}
 .project-case .case-facts .case-affiliation{font-size:11px;color:var(--muted);margin-top:6px}
 
-@media(max-width:800px){.case-outline{margin-top:20px}}
+/* On stacked intros, the facts card already separates the outline above it. */
+@media(max-width:800px){.case-outline{margin-top:20px;border-top:0}}
