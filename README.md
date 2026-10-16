@@ -162,6 +162,12 @@ The owner supplied an updated CV and requested its additional engineering experi
 
 The owner confirmed that session-error handling, state cleanup, login redirects and notification/sign-out on login elsewhere belonged to the State Grid Operations & Monitoring Platform at Longshine. These are documented in that project’s responsibilities and technical topics, and identified explicitly in the company experience. Reviewed cross-repository merges, conflict resolution, testing and release ownership belong to the NVT / Sungrow experience. Treasury SaaS and bank-enterprise connectivity remain separate from Ronghe Pay in the Fingard experience. The Coffee Map SDK is an initial implementation in an unreleased project, not a public SDK launch. Do not infer specific optimization techniques, Cookie settings, compatibility libraries, accessibility certification or measured performance gains from these statements. The CV itself and its private contact details are not published with this update.
 
+## Low-code platform and interactive builder
+
+The owner clarified that Longshine’s internal low-code platform began in Vue 3, then moved to Vue 2 for integration into the company’s broader micro-frontend system. Her primary contributions were composite components, their data-flow design, drag-and-drop parent/child relationships, and theme switching. Technical-selection participation was previously confirmed. Do not infer a specific micro-frontend framework, migration strategy, component library or performance result.
+
+`/projects/low-code-platform#app-builder` contains a new React portfolio reconstruction, not original Vue product code or an original UI capture. Its sample builder lets visitors add headings, text/select fields and nested field groups, change labels and required settings, reorder/reparent components, switch three themes and try a local form. Browser drag-and-drop and click/property controls share the same tree operations. The reconstruction limits pages to ten components and two group levels, rejects cyclic/deeper nesting, and keeps entered values keyed by component ID across moves and theme changes. These are demonstration choices, not claims about the historical implementation. Reset restores the sample; nothing is published or sent to a server.
+
 
 ## Catch That Train!
 

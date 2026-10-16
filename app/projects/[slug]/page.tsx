@@ -8,6 +8,7 @@ import { SportsCaseStudy } from '@/components/sports-case-study';
 import { IsolarCloudCaseStudy } from '@/components/isolarcloud-case-study';
 import { ApiCaseStudy } from '@/components/api-case-study';
 import { RunningShowcase } from '@/components/running-showcase';
+import { LowCodeDemo } from '@/components/low-code-demo';
 import { CaseIntro, CaseChapter } from '@/components/case-chapter';
 import { CaseNotes } from '@/components/case-notes';
 import { Diagram } from '@/components/diagram';
@@ -42,9 +43,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <div className="case-intro-layout"><div className="case-header"><p className="eyebrow">CASE STUDY {project.number} / {project.category}</p><h1>{project.title}</h1><p className="case-intro">{project.description}</p>{project.status && <span className={`status ${project.inDevelopment ? 'status-progress' : ''}`}><i />{project.status}</span>}<ProjectLinks project={project} /></div>
         <div className="case-facts"><div><span>CONTEXT</span><p>{project.organization}</p>{project.affiliation && <p className="case-affiliation">{project.affiliation}</p>}</div><div><span>MY ROLE</span><p>{project.role}</p></div><div><span>TOOLS & FOCUS</span><p>{project.tags.join(' · ')}</p></div></div>
       </div>
-      <nav className="case-outline" aria-label="In this case study">{!!project.screenshots?.length && <a href="#product-screens">Product screens ↗</a>}{!!project.mobileScreenshots?.length && <a href="#mobile-screens">Mobile experience ↗</a>}<a href="#problem">The problem ↗</a><a href="#contribution">My contribution ↗</a><a href="#approach">Technical approach ↗</a><a href="#delivery">Delivery ↗</a></nav>
+      <nav className="case-outline" aria-label="In this case study">{project.slug === 'low-code-platform' && <a href="#app-builder">Build your own app ↗</a>}{!!project.screenshots?.length && <a href="#product-screens">Product screens ↗</a>}{!!project.mobileScreenshots?.length && <a href="#mobile-screens">Mobile experience ↗</a>}<a href="#problem">The problem ↗</a><a href="#contribution">My contribution ↗</a><a href="#approach">Technical approach ↗</a><a href="#delivery">Delivery ↗</a></nav>
     </CaseIntro>
     {project.slug === 'running-mini-program' && <RunningShowcase />}
+    {project.slug === 'low-code-platform' && <CaseChapter id="app-builder" kicker="INTERACTIVE BUILDER" title="Build your own app." description="Compose a page, arrange its fields and change the theme. Then try the app you made." layout="demo"><LowCodeDemo /></CaseChapter>}
     <ProjectGallery project={project} />
     <CaseChapter id="problem" kicker="01 / THE PROBLEM" title="What needed to work.">
       <div className="case-two-column"><p className="case-lead">{project.problem}</p><div className="case-diagram"><Diagram project={project} compact /><p className="case-illustration-note">A summary of my responsibilities and technical approach. This workflow illustration does not reproduce the product UI.</p></div></div>
