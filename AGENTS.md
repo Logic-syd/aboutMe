@@ -12,6 +12,7 @@ Every project detail page must present complete, readable modules on a desktop s
 - Dense interactive consoles may scroll within explicitly bounded configuration/results panes. The complete tool frame must stay within its chapter; keep the primary action visible. Expanded responses and error states must not stretch the chapter or overlap other content.
 - Phones and narrow windows use natural page scrolling and stacked content. Do not force a one-screen height on mobile or add scroll snapping. No horizontal page overflow.
 - Show the fixed `Back to home` arrow from `Header detail` in the upper-left corner only after the site header scrolls out of view, including on mobile; hide it again when returning to the top. Use the expressive curved CSS arrow without a visible button frame, background or shadow; retain its 44px click target and keyboard focus indicator. Reserve space so it does not overlap chapter content or interactive controls. It must navigate to `/` without requiring a scroll back to the title; do not restore the mid-screen home icon or the introductory `All projects` link.
+- Let the shared chapter wrappers own section dividers. Overview rows inside `CaseIntro` keep only their top rule, and navigation immediately after a chapter must not add a second border at that boundary. On mobile, do not repeat the facts card’s bottom rule above the case outline.
 - Keep related project navigation and contact endings concise; they do not need artificial full-screen spacing.
 
 ## Required checks
