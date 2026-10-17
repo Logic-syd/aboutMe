@@ -2,7 +2,7 @@ export type ProjectScreenshot = { src: string; width: number; height: number; al
 
 export type Project = {
   kind: 'commercial' | 'independent'; slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
-  affiliation?: string; status?: string; inDevelopment?: boolean; description: string; tags: string[]; role: string;
+  affiliation?: string; status?: string; inDevelopment?: boolean; archived?: boolean; description: string; tags: string[]; role: string;
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
   delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
   featured?: boolean; heroTitle?: string; heroDetail?: string;
@@ -452,5 +452,35 @@ export const projects: Project[] = [
       { src: '/images/catch-that-train-mobile-direction.png', width: 390, height: 844, label: 'Find your direction', alt: 'Two English metro direction choices in the phone layout of Catch That Train, beneath a live boarding countdown.', caption: 'Read the signs and catch the right metro.' },
       { src: '/images/catch-that-train-mobile-station.png', width: 390, height: 1000, label: 'Make the train', alt: 'The English Catch That Train station interface on a phone, with the student walking through Hongqiao, stamina, lane controls and a sprint button.', caption: 'Change lanes, manage stamina and keep moving.' }
     ]
+  },
+  {
+    kind: 'independent', slug: 'love-story-theater', number: '16', title: 'Love Story Theater', shortTitle: 'A little comfort, written as a story.',
+    graphTitle: 'Love Story Theater', category: 'Personal project · Full-stack AI storytelling', organization: 'Personal project',
+    status: 'Offline · No longer maintained', archived: true,
+    description: 'I made this for a friend going through a breakup: a conversational app that turned shared memories and relationship details into hopeful fictional stories. I built a Next.js frontend and a separate Kotlin / Ktor backend connected to DeepSeek. The service is now offline and the project is no longer maintained.',
+    tags: ['Next.js / React', 'TypeScript / MUI', 'Kotlin / Ktor', 'DeepSeek API', 'i18n'], role: 'Independent full-stack developer',
+    contributions: [
+      ['Conversational React interface', 'Separate frontend application'],
+      ['Typed UI state', 'Material UI components'],
+      ['JSON API routes', 'Backend model integration'],
+      ['Contextual follow-up questions', 'Story-generation prompts'],
+      ['English, Chinese and German', 'Localized question pools']
+    ],
+    problem: 'The idea began with a friend’s breakup. I wanted to make something personal and comforting: a conversation that gathered details gradually, then used them to write an imaginative, hopeful story. The engineering task was to connect that guided chat experience to an AI service through a separate backend.',
+    responsibilities: [
+      'Built the Next.js, React and TypeScript chat interface with Material UI, message history, typing feedback and a story-generation loading state.',
+      'Implemented a separate Kotlin / Ktor backend with JSON endpoints for contextual follow-up questions and final story generation.',
+      'Connected the backend to DeepSeek and wrote prompts for the conversational tone, supplied context and requested story language.',
+      'Organized English, Chinese and German interface copy and question pools separately from the chat rendering.'
+    ],
+    decisions: [
+      { title: 'Separate the interface from model calls', text: 'The Next.js client handled the conversation and called a configurable backend URL through Axios. The Kotlin / Ktor service accepted JSON requests, built prompts and called DeepSeek. This kept the browser interface and model integration in separate applications.' },
+      { title: 'Guide a conversation in stages', text: 'The frontend tracked the conversation phase, accumulated answers and remaining questions. It combined randomized question pools with a contextual AI follow-up before asking about the current relationship problem and requesting a final story.' },
+      { title: 'Two API paths, two different tasks', text: 'A dynamic-interaction endpoint generated a follow-up question from the previous answer and a chosen topic. A separate story endpoint used the collected relationship details to generate a longer narrative. Backend request models and a shared response shape connected these tasks to the chat interface.' },
+      { title: 'Carry language through the full flow', text: 'English, Chinese and German copy lived in a separate content module, including question pools and interface messages. Requests included the selected language so backend prompts could ask for a question or story in that language too.' }
+    ],
+    delivery: 'A personal full-stack experiment, originally made for a friend after a breakup. The service has stopped running and the project is no longer maintained. The source repository remains available to show the separate frontend and backend implementation.',
+    flow: ['Guided Next.js conversation', 'Kotlin / Ktor JSON API', 'DeepSeek-generated story'],
+    links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/Love-Story-Theater' }]
   }
 ];

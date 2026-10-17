@@ -207,3 +207,6 @@
 
 /* On stacked intros, the facts card already separates the outline above it. */
 @media(max-width:800px){.case-outline{margin-top:20px;border-top:0}}
+
+.project-case .status-archived{color:var(--muted)}
+.project-case .status-archived i{background:#8a8d84}
