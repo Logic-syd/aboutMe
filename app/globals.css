@@ -772,3 +772,6 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 @media(min-width:761px){.craft-header .header-sections{flex:1;justify-content:flex-start;font-size:11px;letter-spacing:1.2px}.craft-header .header-sections .nav-sections{gap:clamp(14px,2vw,28px)}.craft-header .header-connect{margin-left:auto}.floating-navigation-header .floating-sections{flex:none}}
 @media(min-width:761px) and (max-width:1050px){.floating-navigation-header .header-connect>p{display:none}.craft-header{gap:22px}.craft-header .header-sections .nav-sections a{font-size:10px;letter-spacing:1px}}
 @media(max-width:800px){.craft-header .floating-sections{display:none}}
+
+.orbit-card-state.is-archived{color:var(--muted)}
+.orbit-card-state.is-archived i{background:#8a8d84}
