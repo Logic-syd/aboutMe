@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   twitter: { card: 'summary', title: 'Yidan Shao — Senior Frontend Engineer in Munich', description: profileDescription },
   robots: { index: true, follow: true },
 };
-export const viewport: Viewport = { themeColor: '#faf9f6' };
+export const viewport: Viewport = { themeColor: '#fff9fc' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en"><body><RouteScroll /><a className="skip-link" href="#main">Skip to content</a>{children}</body></html>;
 }
