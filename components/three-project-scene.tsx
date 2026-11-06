@@ -17,10 +17,10 @@ type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; labe
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { projectDirections: React.RefObject<Map<number, FocusSide>>; onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
 const colors = ['#d9a2b5', '#8fbbd9', '#94c5b6', '#b7a1d1', '#dbb395', '#a0afdc', '#d9a09b', '#8abfc3', '#d3c296', '#bc9fc2', '#a1bdb0', '#b3b4cf', '#c6ae96'];
-// The warm core, colored planets, pale glass satellites and ivory pearls
+// The pink pearl core, colored planets and pale glass satellites
 // distinguish roles without depending only on their radius.
-const rootGradient: Gradient = ['#fff0c9', '#efd3ad', '#e9b3a2'];
-const leafGradient: Gradient = ['#f6f0e5', '#e9e4df', '#dedbd8'];
+const rootGradient: Gradient = ['#fff0f6', '#f6bfd6', '#e691b5'];
+const leafGradient: Gradient = ['#fff9fc', '#f6e5ee', '#edd8e3'];
 const gradients: Gradient[] = [
   ['#f3d9e3', '#e5b6cd', '#d8a7ba'],
   ['#c9e6f1', '#a9cce6', '#99b6d8'],
@@ -201,7 +201,7 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
         sheen={item.kind === 'root' ? .2 : item.kind === 'project' && !item.muted ? .15 : 0} sheenColor="#f0e1de" sheenRoughness={.65} />
     </mesh>
     {item.kind === 'technology' && <mesh><sphereGeometry args={[size * .35, 20, 16]} /><meshBasicMaterial color={item.color} transparent opacity={.24} depthWrite={false} /></mesh>}
-    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#d7bc94" metalness={.12} roughness={.65} /></mesh>}
+    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color="#d985a5" metalness={.12} roughness={.65} /></mesh>}
     {item.active && (item.kind === 'project' || item.kind === 'technology') && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, pixelScale * .8, 8, 64]} /><meshStandardMaterial color={item.color} roughness={.65} emissive={item.color} emissiveIntensity={.08} /></mesh>}
     {(!item.quiet || hovered) && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
       <div data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].kind === 'commercial' ? 'WORK' : 'PERSONAL'}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
@@ -261,7 +261,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     const rotation = selection.project === null ? 0 : (focusSide > 0 ? 0 : Math.PI) - angles[selection.project];
     const rootPosition = point(rootX, rootY);
     const selectedPosition = point(rootX + focusSide * radiusX, rootY, .2);
-    const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 28 : 39) * worldPerPixel, gradient: rootGradient, color: '#d7bc94', active: false, index: 0, onSelect: onReset }];
+    const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 28 : 39) * worldPerPixel, gradient: rootGradient, color: '#d985a5', active: false, index: 0, onSelect: onReset }];
     projects.forEach((project, index) => {
       const active = selection.project === index;
       const commercial = project.kind === 'commercial';
@@ -326,9 +326,9 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
   });
   const root = items[0];
   return <>
-    <color attach="background" args={['#f0efeb']} /><fog attach="fog" args={['#f0efeb', distance + 8, distance + 50]} />
-    <ambientLight intensity={.9} /><hemisphereLight args={['#faf5f1', '#ccc5d5', 1.5]} /><directionalLight position={[-6, 8, 6]} intensity={2.3} color="#fff5eb" /><directionalLight position={[4, -3, 3]} intensity={.7} color="#f4d7cf" />
-    <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -Math.max(6.2, size.height * worldPerPixel / 2 + 1), 0]}><mesh receiveShadow><circleGeometry args={[16, 80]} /><meshStandardMaterial color="#e8e8e1" roughness={1} transparent opacity={.6} /></mesh>{[3, 6, 9, 12].map(radius => <Line key={radius} points={Array.from({length:97},(_,i)=>[Math.cos(i/96*Math.PI*2)*radius,Math.sin(i/96*Math.PI*2)*radius,.01] as Point)} color="#c7c8c0" lineWidth={.5} />)}</group>
+    <color attach="background" args={['#fff9fc']} /><fog attach="fog" args={['#fff9fc', distance + 8, distance + 50]} />
+    <ambientLight intensity={.9} /><hemisphereLight args={['#fff9fc', '#d9c4d2', 1.5]} /><directionalLight position={[-6, 8, 6]} intensity={2.3} color="#ffffff" /><directionalLight position={[4, -3, 3]} intensity={.7} color="#ffdce9" />
+    <group rotation={[-Math.PI / 2, 0, 0]} position={[0, -Math.max(6.2, size.height * worldPerPixel / 2 + 1), 0]}><mesh receiveShadow><circleGeometry args={[16, 80]} /><meshStandardMaterial color="#fff0f6" roughness={1} transparent opacity={.6} /></mesh>{[3, 6, 9, 12].map(radius => <Line key={radius} points={Array.from({length:97},(_,i)=>[Math.cos(i/96*Math.PI*2)*radius,Math.sin(i/96*Math.PI*2)*radius,.01] as Point)} color="#edc9da" lineWidth={.5} />)}</group>
     {items.filter(item => item.kind === 'project').map(item => <Connection key={`root-${item.id}`} start={root} end={item} active={item.active || !expanded} positions={positions} animate={props.animate} />)}
     {expanded && items.filter(item => item.kind === 'technology').map(item => <Connection key={`tech-${item.id}`} start={items.find(node => node.id === projects[props.selection.project!].slug)!} end={item} active={props.selection.technology === null || item.active} positions={positions} animate={props.animate} />)}
     {props.selection.technology !== null && items.filter(item => item.kind === 'leaf').map(item => <Connection key={`leaf-${item.id}`} start={items.find(node => node.id === `${projects[props.selection.project!].slug}-tech-${props.selection.technology}`)!} end={item} active positions={positions} animate={props.animate} />)}

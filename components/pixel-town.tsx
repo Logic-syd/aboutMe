@@ -147,7 +147,7 @@ export function PixelTown() {
       <p className={styles.experience}>7+ years in frontend</p>
       <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
       <a className={styles.skillsLink} href="#skills">All skills ↓</a>
-      <div className={styles.quickProjects}><Link href="/projects/renewable-energy-api">Energy API platform<span>Platform lead ↗</span></Link><Link href="/projects/isolarcloud">iSolarCloud<span>China → Europe ↗</span></Link><Link href="/projects/ronghe-pay">Insurance payments<span>Collections, payouts & reconciliation ↗</span></Link><Link href="/projects/sports-education">AI sports assessment<span>React migration · Live scores ↗</span></Link></div>
+      <div className={styles.quickProjects}><Link href="/projects/renewable-energy-api">Energy API platform<span>Platform lead</span></Link><Link href="/projects/isolarcloud">iSolarCloud<span>China → Europe</span></Link><Link href="/projects/ronghe-pay">Insurance payments<span>Collections, payouts & reconciliation</span></Link><Link href="/projects/sports-education">AI sports assessment<span>React migration · Live scores</span></Link></div>
       <div className={styles.actions}><a href="#work">View my projects <span>↗</span></a></div>
     </div>
     <div className={styles.gameWindow}>
