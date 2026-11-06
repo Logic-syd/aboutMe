@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { projects } from '../../lib/projects';
-import { siteUrl, technologyGroups } from '../../lib/profile';
+import { coreTechnologies, siteUrl, technologyGroups } from '../../lib/profile';
 
 test('initial HTML exposes the public profile without running page scripts', async ({ request, page }) => {
   const response = await request.get('/');
@@ -12,7 +12,9 @@ test('initial HTML exposes the public profile without running page scripts', asy
       canonical: document.querySelector('link[rel=canonical]')?.getAttribute('href'),
       robots: document.querySelector('meta[name=robots]')?.getAttribute('content'),
       description: document.querySelector('meta[name=description]')?.getAttribute('content'),
-      skills: [...document.querySelectorAll('section[aria-labelledby="town-title"] ul li')].map(item => item.textContent),
+      coreSkills: [...document.querySelectorAll('section[aria-labelledby="town-title"] ul li')].map(item => item.textContent),
+      skills: [...document.querySelectorAll('#skills li')].map(item => item.textContent),
+      projectLinks: [...new Set([...document.querySelectorAll('a[href^="/projects/"]')].map(link => link.getAttribute('href')))],
       profile: JSON.parse(document.querySelector('script[type="application/ld+json"]')?.textContent ?? '{}'),
     };
   }, await response.text());
@@ -21,11 +23,17 @@ test('initial HTML exposes the public profile without running page scripts', asy
   expect(profile.robots).toMatch(/\bindex\b/);
   expect(profile.robots).not.toMatch(/noindex/);
   expect(profile.description).toContain('insurance payments');
+  expect(profile.coreSkills).toEqual(coreTechnologies);
   expect(profile.skills).toEqual(technologyGroups.flatMap(group => group.skills));
   expect(profile.profile['@type']).toBe('ProfilePage');
   expect(profile.profile.mainEntity['@type']).toBe('Person');
+  expect(profile.profile.mainEntity.name).toBe('Yidan Shao');
+  expect(profile.profile.mainEntity.jobTitle).toBe('Senior Frontend Engineer');
+  expect(profile.profile.mainEntity.homeLocation.name).toBe('Munich, Germany');
   expect(profile.profile.mainEntity.knowsAbout).toContain('Payment reconciliation');
   expect(profile.profile.mainEntity.sameAs).toContain('https://github.com/Logic-syd');
+  expect(profile.profile.mainEntity.sameAs).toContain('https://linkedin.com/in/yidanshao/');
+  expect(profile.projectLinks).toEqual(expect.arrayContaining(projects.map(project => `/projects/${project.slug}`)));
 });
 
 test('robots and sitemap expose every canonical project URL', async ({ request, page }) => {

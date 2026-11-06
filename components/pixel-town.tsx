@@ -4,7 +4,7 @@ import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { projects } from '@/lib/projects';
-import { technologyGroups } from '@/lib/profile';
+import { coreTechnologies } from '@/lib/profile';
 import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
@@ -143,12 +143,12 @@ export function PixelTown() {
       <p className={styles.kicker}>MUNICH, GERMANY · OPEN TO RELOCATE</p>
       <h1 id="town-title">Yidan Shao<span>.</span></h1>
       <p className={styles.role}>Senior Frontend Engineer</p>
-      <p className={styles.bio}>I build web and mobile interfaces across energy, <Link href="/projects/ronghe-pay">insurance payments</Link> and education — alongside independent maps and games.</p>
-      <div className={styles.technologyGroups} aria-label="Technologies I work with">{technologyGroups.map(group => <div className={styles.technologyGroup} key={group.label}><p>{group.label}</p><ul className={styles.skills} aria-label={group.label}>{group.skills.map(skill => <li key={skill}>{skill}</li>)}</ul></div>)}</div>
-      <div className={styles.facts}><div><strong>7+</strong><span>years in frontend</span></div><div><strong>{projects.length}</strong><span>project case studies</span></div></div>
-      <div className={styles.quickProjects}><p className={styles.kicker}>A FEW THINGS I’VE BUILT</p><Link href="/projects/renewable-energy-api">Energy API platform<span>Platform lead ↗</span></Link><Link href="/projects/isolarcloud">iSolarCloud<span>China → Europe ↗</span></Link><Link href="/projects/ronghe-pay">Insurance payments<span>Collections, payouts & reconciliation ↗</span></Link><Link href="/projects/sports-education">AI sports assessment<span>React migration · Live scores ↗</span></Link></div>
+      <p className={styles.bio}>I work on energy platforms at NVT / Sungrow. My frontend experience also includes <Link href="/projects/ronghe-pay">insurance payments</Link> and education. Outside work, I make small games and maps.</p>
+      <p className={styles.experience}>7+ years in frontend</p>
+      <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
+      <a className={styles.skillsLink} href="#skills">All skills ↓</a>
+      <div className={styles.quickProjects}><Link href="/projects/renewable-energy-api">Energy API platform<span>Platform lead ↗</span></Link><Link href="/projects/isolarcloud">iSolarCloud<span>China → Europe ↗</span></Link><Link href="/projects/ronghe-pay">Insurance payments<span>Collections, payouts & reconciliation ↗</span></Link><Link href="/projects/sports-education">AI sports assessment<span>React migration · Live scores ↗</span></Link></div>
       <div className={styles.actions}><a href="#work">View my projects <span>↗</span></a></div>
-      <div className={styles.identity}><span className={styles.dot} /> OPEN TO OPPORTUNITIES</div>
     </div>
     <div className={styles.gameWindow}>
       <div className={styles.windowBar}><span><i /> EXPLORE MY LITTLE TOWN</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion}>{motion ? 'Pause motion' : 'Resume motion'}</button></div>

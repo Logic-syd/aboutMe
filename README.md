@@ -156,6 +156,12 @@ The homepage and every project route have their own canonical URL. `app/sitemap.
 
 These are crawl and discovery signals, not proof of indexing. To check Google's actual indexing status, verify the URL-prefix property in Google Search Console, inspect the homepage URL and submit `https://yidan-builds.vercel.app/sitemap.xml`. Verification requires the owner's account and a provider-issued verification token; do not fabricate one. If the public domain changes, update `siteUrl` and re-submit the sitemap. Search results and `site:` queries may be incomplete; use the owner's webmaster-console reports for confirmation.
 
+## Homepage presentation
+
+The homepage keeps React, TypeScript, Vue, Next.js and Three.js in a short introduction, with the complete technology groups in a visible Skills section. Keep that section and the server-rendered profile/structured data aligned so simplifying the presentation does not remove relevant HR or search keywords. Backend technologies remain identified as personal-project experience. Use plain English, confirmed work and personal details; remove repeated slogans and decorative frames while retaining the town, photos, places and boundaries needed to operate interactive tools.
+
+The five proposed case-page structures are recorded in [the portfolio refresh plan](docs/portfolio-refresh-plan.md). They are **proposals only**; this homepage cleanup does not implement those detail-page changes.
+
 ## Owner-supplied CV additions
 
 The owner supplied an updated CV and requested its additional engineering experience be incorporated into the portfolio. The project catalog records API gateway, permission and raw-response handling; iSolarCloud authorization, privacy consent and feature-availability recovery; State Grid intranet request, Cookie and permission debugging; smart-city iframe integration, local cross-origin debugging within same-origin policy constraints and Chrome 54 compatibility in 2021; GLP accessibility improvements; student-training frontend performance optimization during peak running periods and deferred uploads; and an initial Coffee Map web SDK for third-party embedding. Bespoke iSolarCloud chapters also describe consent and unavailable-feature behavior, while the API case already explains network versus business errors.
