@@ -160,6 +160,8 @@ These are crawl and discovery signals, not proof of indexing. To check Google's 
 
 The owner prefers a Japanese sweet pink aesthetic. Use the shared sakura-white, strawberry-pink and cocoa-text tokens in `app/globals.css` across homepage and case-study chrome. Keep body copy dark enough to read, preserve semantic success/error colors and the low-code demo's distinct skins, and leave original photos, product screenshots and natural landscape colors intact. Do not reintroduce a cream-and-sage page palette or decorative frames around ordinary text sections.
 
+About me includes the owner's confirmed Kilimanjaro summit and subsequent donation of notebooks, ballpoint pens and sanitary pads to a school, followed by her wish to do useful work and contribute to a better world. Keep this as a personal Outside work entry. The school, trip date and donation quantities have not been specified; the existing graduation and Munich photos retain their original context.
+
 The homepage keeps React, TypeScript, Vue, Next.js and Three.js in a short introduction, with the complete technology groups in a visible Skills section. Keep that section and the server-rendered profile/structured data aligned so simplifying the presentation does not remove relevant HR or search keywords. Backend technologies remain identified as personal-project experience. Use plain English, confirmed work and personal details; remove repeated slogans and decorative frames while retaining the town, photos, places and boundaries needed to operate interactive tools.
 
 The five proposed case-page structures are recorded in [the portfolio refresh plan](docs/portfolio-refresh-plan.md). They are **proposals only**; this homepage cleanup does not implement those detail-page changes.
