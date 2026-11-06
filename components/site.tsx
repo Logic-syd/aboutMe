@@ -13,12 +13,12 @@ export function Header({ detail = false, sidebar = false }: { detail?: boolean; 
   </>;
 }
 export function Footer({ pixel = false }: { pixel?: boolean } = {}) {
-  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link><p>{pixel ? 'A little world by Yidan Shao.' : 'Built with Next.js, Three.js & Leaflet.'}</p><a href="#top">Back to top ↑</a></footer>;
+  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link><p>{pixel ? 'Yidan Shao' : 'Built with Next.js, Three.js & Leaflet.'}</p><a href="#top">Back to top ↑</a></footer>;
 }
 export function Contact() {
   return <section id="contact" className="contact-section">
     <div className="shell contact-inner">
-      <div><h2>Thanks for stopping by.</h2><p>Get in touch — let’s build things that make the world a little better.</p></div>
+      <div><h2>Thanks for visiting.</h2></div>
       <a className="email-link" href="mailto:yidanshao622@gmail.com">yidanshao622@gmail.com <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a>
     </div>
   </section>;

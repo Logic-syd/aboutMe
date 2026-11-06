@@ -496,10 +496,10 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
  .place-story-tabs{margin-top:10px}
 }
 
-/* Desktop sections read as complete chapters with a shared viewport rhythm. */
+/* Desktop sections follow their content without forcing empty full screens. */
 @media(min-width:801px){
  html:has(.pixel-portfolio #about){scroll-padding-top:0}
- .pixel-portfolio main>section:not(:first-child){min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(24px,4svh,48px);padding-bottom:clamp(24px,4svh,48px);scroll-margin-top:0}
+ .pixel-portfolio main>section:not(:first-child){min-height:0;display:flex;flex-direction:column;justify-content:center;padding-top:clamp(24px,4svh,48px);padding-bottom:clamp(24px,4svh,48px);scroll-margin-top:0}
  .pixel-portfolio .about-section>.shell,.pixel-portfolio .contact-section>.shell{width:100%}
  .pixel-portfolio .section-heading{flex-shrink:0}
  .pixel-portfolio .career-history-browser,.pixel-portfolio .project-explorer,.pixel-portfolio .place-story-explorer{flex-shrink:0}
@@ -775,3 +775,32 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 
 .orbit-card-state.is-archived{color:var(--muted)}
 .orbit-card-state.is-archived i{background:#8a8d84}
+
+/* Homepage: plain section titles, open text layouts, one complete skills list. */
+.pixel-portfolio .section-heading h2,.pixel-portfolio .about-grid h2,.pixel-portfolio .skills-section h2{font-family:var(--sans);font-size:clamp(28px,3vw,36px);font-weight:500;line-height:1.2;letter-spacing:-1px;margin:0}
+.pixel-portfolio .about-section{background:transparent;border:0}
+.pixel-portfolio .about-grid{align-items:start}
+.pixel-portfolio .project-explorer{border:0}
+.pixel-portfolio .about-story-list{margin:0}
+.pixel-portfolio .about-story-list li{border:0;padding:12px 0}
+.pixel-portfolio .about-story-list li:first-child{padding-top:0}
+.pixel-portfolio .career-history-browser{border:0;min-height:0}
+.pixel-portfolio .career-history-picker{background:transparent;border:0}
+.pixel-portfolio .career-history-picker button{border:0;background:transparent;min-height:64px}
+.pixel-portfolio .career-history-picker button[aria-pressed=true]{background:transparent;box-shadow:inset 3px 0 #718565;color:#536b50}
+.pixel-portfolio .career-history-picker button:hover{background:#eceee480}
+.pixel-portfolio .career-history-detail{border:0;padding-top:12px;padding-bottom:12px}
+.pixel-portfolio .contact-section{background:transparent;border-top:1px solid var(--line)}
+.pixel-portfolio .contact-inner h2{font-family:var(--sans);font-size:25px;letter-spacing:-.6px;margin:0}
+.pixel-portfolio .town-project-card{border:0;border-top:1px solid var(--line);box-shadow:none;background:transparent;padding:22px 0}
+.pixel-portfolio .town-project-card .tags li{border:0;padding:0;background:transparent}
+.pixel-portfolio .town-project-card .tags li:not(:last-child)::after{content:'·';margin-left:9px}
+.pixel-portfolio .skills-section{padding-top:36px;padding-bottom:36px}
+.skills-overview{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:36px;margin-top:24px}
+.skills-group h3{font-size:14px;font-weight:500;letter-spacing:0;line-height:1.5;margin:0 0 10px}
+.skills-group ul{list-style:none;display:flex;flex-wrap:wrap;gap:5px 12px;margin:0;padding:0}
+.skills-group li{font-size:13px;line-height:1.7;color:var(--muted)}
+.skills-group li:not(:last-child)::after{content:'·';margin-left:12px;color:#a1a795}
+.skills-context{font-size:13px;line-height:1.7;max-width:760px;color:var(--muted);margin-top:24px}
+.skills-context a{text-decoration:underline;text-underline-offset:3px;color:var(--ink)}
+@media(max-width:800px){.skills-overview{grid-template-columns:minmax(0,1fr);gap:22px}.pixel-portfolio .skills-section{padding-top:28px;padding-bottom:28px}.pixel-portfolio .career-history-detail{padding:22px 0}.pixel-portfolio .career-history-picker button{min-height:72px}.pixel-portfolio .section-heading{flex-wrap:wrap}}

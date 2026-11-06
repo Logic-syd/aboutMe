@@ -62,22 +62,14 @@
 @media(max-width:700px){.quickProjects{display:none}}
 @media(min-width:801px) and (max-height:650px){.quickProjects>a{padding:7px 0;font-size:12px}}
 
-/* A visible skills overview, with commercial payment work linked beside it. */
-.technologyGroups{display:grid;gap:10px;margin-top:17px;max-width:440px}
-.technologyGroup>p{font:9px/1.4 monospace;letter-spacing:.65px;text-transform:uppercase;color:#777d70;margin-bottom:5px}
-.technologyGroup .skills{margin:0;gap:5px}
-.technologyGroup .skills li{font-size:11px;line-height:1.35;padding:4px 7px;color:#52624c;background:#eef0e4;border-color:#d0d8c4}
-@media(min-width:801px) and (max-height:760px){
- .technologyGroups{gap:6px;margin-top:6px}
- .technologyGroup>p{margin-bottom:4px}
- .technologyGroup .skills li{font-size:10px;padding:3px 6px}
- .facts{gap:22px;margin:10px 0}
- .facts>div{display:flex;align-items:baseline;gap:6px}
- .facts strong{font-size:20px}
- .facts span{font-size:9px}
- .quickProjects>a{padding:5px 0}
- .quickProjects>.kicker,.quickProjects>a>span{display:none}
-}
-@media(max-width:800px){.technologyGroups{margin-top:14px;gap:10px}.technologyGroup .skills li{font-size:11px}}
+/* Keep core skills readable without a second wall of boxed labels. */
+.experience{font-size:12px;color:#70736d;margin-top:12px}
+.intro .skills{gap:5px 12px;margin:16px 0 6px;max-width:380px}
+.intro .skills li{font:12px/1.6 Arial,sans-serif;padding:0;border:0;background:none;color:#414541}
+.intro .skills li:not(:last-child)::after{content:'·';margin-left:12px;color:#9a9f91}
+.skillsLink{display:inline-block;font-size:11px;color:#626d5d;text-decoration:underline;text-underline-offset:3px;margin-bottom:18px}
+.quickProjects>a{border:0;padding:8px 0}
+.actions>a:first-child{box-shadow:none}
+@media(min-width:801px) and (max-height:650px){.experience{margin-top:8px}.intro .skills{margin-top:10px}.skillsLink{margin-bottom:10px}.quickProjects>a{padding:5px 0}}
 
 .bio a{color:#52664c;text-decoration:underline;text-decoration-color:#a5b49b;text-underline-offset:3px}.bio a:hover{color:#9c6983;text-decoration-color:currentColor}
