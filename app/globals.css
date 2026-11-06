@@ -779,6 +779,9 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .pixel-portfolio .section-heading h2,.pixel-portfolio .about-grid h2,.pixel-portfolio .skills-section h2{font-family:var(--sans);font-size:clamp(28px,3vw,36px);font-weight:500;line-height:1.2;letter-spacing:-1px;margin:0}
 .pixel-portfolio .about-section{background:transparent;border:0}
 .pixel-portfolio .about-grid{align-items:start}
+.about-outside-work{max-width:470px;margin-top:26px}
+.about-outside-work h3{font-size:19px;line-height:1.4;letter-spacing:-.3px;margin-bottom:10px}
+.about-outside-work p{font-size:14px;line-height:1.7;color:var(--muted)}
 .pixel-portfolio .project-explorer{border:0}
 .pixel-portfolio .about-story-list{margin:0}
 .pixel-portfolio .about-story-list li{border:0;padding:12px 0}
