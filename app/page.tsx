@@ -10,6 +10,13 @@ import { CareerExperience } from '@/components/career-experience';
 import { AboutMe } from '@/components/about-me';
 import { Contact, Footer, Header } from '@/components/site';
 
+const featuredWork = [
+  { slug: 'renewable-energy-api', company: 'NVT / Sungrow', title: 'Energy API platform', focus: 'React · TypeScript · Developer tools' },
+  { slug: 'isolarcloud', company: 'NVT / Sungrow', title: 'iSolarCloud', focus: 'Vue · TypeScript · European delivery' },
+  { slug: 'ronghe-pay', company: 'Fingard', title: 'Insurance payments', focus: 'React · Bank integrations · Payment workflows' },
+  { slug: 'sports-education', company: 'Danzhu', title: 'AI sports assessment', focus: 'React · Canvas · WebSocket' },
+];
+
 const profileSchema = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
@@ -36,7 +43,9 @@ export default function Home() {
     <main id="main">
       <PixelTown />
       <section id="work" className="shell work-section" aria-labelledby="work-title">
-        <div className="section-heading"><div><h2 id="work-title">Projects</h2></div><p className="project-section-counts"><span>{projects.filter(project => project.kind === 'commercial').length} work projects</span><span>{projects.filter(project => project.kind === 'independent').length} personal projects</span></p></div>
+        <div className="section-heading"><div><h2 id="work-title">Selected work</h2></div><div className="work-heading-links"><p className="project-section-counts"><span>{projects.filter(project => project.kind === 'commercial').length} work projects</span><span>{projects.filter(project => project.kind === 'independent').length} personal projects</span></p><a href="#project-explorer" className="all-projects-link">All projects <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 18 18 6M6 6h12v12" /></svg></a></div></div>
+        <ul className="featured-work-list" aria-label="Selected commercial projects">{featuredWork.map(project => <li key={project.slug}><Link href={`/projects/${project.slug}`} className="featured-work-link"><div><p className="featured-work-company">{project.company}</p><h3>{project.title}</h3><p className="featured-work-focus">{project.focus}</p></div><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></Link></li>)}</ul>
+        <div id="project-explorer" className="all-work-heading"><h3>Explore all projects</h3></div>
         <ProjectShowcase>
         {[
           { kind: 'commercial', title: 'Work projects', id: 'work-notebooks' },

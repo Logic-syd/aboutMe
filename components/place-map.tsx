@@ -55,7 +55,7 @@ export function PlaceMap({ place }: { place: PlaceStory }) {
           },
         }).addTo(instance);
         instance.setMinZoom(Math.floor(instance.getBoundsZoom(bounds)) - 1);
-        L.circle(place.reference, { radius: 450, color: '#b33f66', weight: 1.5, dashArray: '5 5', fillColor: '#d76f91', fillOpacity: .12, interactive: false }).addTo(instance);
+        L.circle(place.reference, { radius: 450, color: '#426754', weight: 1.5, dashArray: '5 5', fillColor: '#8da262', fillOpacity: .12, interactive: false }).addTo(instance);
         instance.fitBounds(bounds, { padding: [8, 8], animate: false });
         resize = new ResizeObserver(() => { instance.invalidateSize(); instance.fitBounds(bounds, { padding: [8, 8], animate: false }); });
         resize.observe(element!);

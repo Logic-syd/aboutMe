@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 
 const sections = [
-  { id: 'work', label: 'My Projects', short: 'Projects' },
-  { id: 'about', label: 'About Me', short: 'About' },
-  { id: 'career-history', label: 'My Work', short: 'Work' },
-  { id: 'experience', label: 'Growth Map', short: 'Map' },
+  { id: 'work', label: 'My Projects', text: 'My projects', short: 'Projects' },
+  { id: 'about', label: 'About Me', text: 'About me', short: 'About' },
+  { id: 'career-history', label: 'My Work', text: 'My work', short: 'Work' },
+  { id: 'experience', label: 'Growth Map', text: 'Growth map', short: 'Map' },
 ];
 
 export function SectionNavigation({ detail, sidebar }: { detail: boolean; sidebar: boolean }) {
@@ -25,5 +25,5 @@ export function SectionNavigation({ detail, sidebar }: { detail: boolean; sideba
     schedule();
     return () => { window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); cancelAnimationFrame(frame); };
   }, [detail, sidebar]);
-  return <div className="nav-sections">{sections.map(section => <a key={section.id} href={`${detail ? '/' : ''}#${section.id}`} aria-label={section.label} aria-current={active === section.id ? 'location' : undefined} onClick={() => { if (!detail) setActive(section.id); }}><span className="nav-full-label">{section.label}</span><span className="nav-short-label" aria-hidden="true">{section.short}</span></a>)}</div>;
+  return <div className="nav-sections">{sections.map(section => <a key={section.id} href={`${detail ? '/' : ''}#${section.id}`} aria-label={section.label} aria-current={active === section.id ? 'location' : undefined} onClick={() => { if (!detail) setActive(section.id); }}><span className="nav-full-label">{section.text}</span><span className="nav-short-label" aria-hidden="true">{section.short}</span></a>)}</div>;
 }
