@@ -259,7 +259,7 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   const preview = page.getByRole('region', { name: 'Commercial projects.', exact: true });
   await expect(preview).toBeVisible();
   await expect(preview.locator('a[href^="/projects/"]')).toHaveCount(4);
-  await expect(preview.getByRole('link').last()).toHaveText('More projects↗');
+  await expect(preview.getByRole('link').last()).toHaveText('More projects');
   await expect(preview.getByRole('link').last()).toHaveAttribute('href', '#work-projects');
   for (const link of await preview.getByRole('link').all()) {
     expect(await link.evaluate(element => {
