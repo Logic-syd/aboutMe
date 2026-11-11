@@ -13,7 +13,7 @@ import { Contact, Footer, Header } from '@/components/site';
 const featuredWork = [
   { slug: 'renewable-energy-api', company: 'NVT / Sungrow', title: 'Energy API platform', focus: 'React · TypeScript · Developer tools' },
   { slug: 'isolarcloud', company: 'NVT / Sungrow', title: 'iSolarCloud', focus: 'Vue · TypeScript · European delivery' },
-  { slug: 'ronghe-pay', company: 'Fingard', title: 'Insurance payments', focus: 'React · Bank integrations · Payment workflows' },
+  { slug: 'ronghe-pay', company: 'Fingard', title: 'Insurance payments', focus: 'Vue 2 · Bank integrations · Payment workflows' },
   { slug: 'sports-education', company: 'Danzhu', title: 'AI sports assessment', focus: 'React · Canvas · WebSocket' },
 ];
 
