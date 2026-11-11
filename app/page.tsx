@@ -32,7 +32,7 @@ const profileSchema = {
     homeLocation: { '@type': 'City', name: 'Munich, Germany' },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Jilin University' },
     sameAs: ['https://linkedin.com/in/yidanshao/', 'https://github.com/Logic-syd'],
-    knowsAbout: [...technologyGroups.flatMap(group => group.skills), 'Energy platforms', 'Insurance payments', 'Premium collections', 'Claim payouts', 'Payment reconciliation', 'Education platforms'],
+    knowsAbout: [...technologyGroups.flatMap(group => group.skills), 'Energy platforms', 'Insurance payments', 'Premium collections', 'Claim payouts', 'Payment reconciliation', 'Education platforms', 'Full-stack development', 'AI applications', 'LLM API integration'],
   },
 };
 

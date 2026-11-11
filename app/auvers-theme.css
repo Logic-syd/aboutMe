@@ -179,18 +179,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .all-work-heading { padding-top: 42px; margin-bottom: 16px; scroll-margin-top: 24px; }
 .all-work-heading h3 { font-size: 23px; letter-spacing: -.55px; }
 
-/* An open sky gives the constellation room; its catalog is a separate surface. */
+/* A deep ocean-blue sky gives the constellation depth within the light page. */
 .pixel-portfolio .project-explorer { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .pixel-portfolio .project-explorer-workspace { gap: 18px; border: 0; }
 .pixel-portfolio .project-explorer .three-stage {
+  --ink: #ecf4fa;
+  --muted: #b9cfdf;
+  --pink: #d0e6f9;
+  --pink-hover: #ffffff;
+  --line: #a8cbe42e;
+  --surface: #16364c;
+  --surface-selected: #294d68;
   position: relative;
   top: 0;
   z-index: 0;
   border: 0;
   border-radius: 26px;
   background:
-    radial-gradient(ellipse at 35% 24%, #f9fff988, #f9fff900 60%),
-    linear-gradient(145deg, #bddbe647, #d4e6dd26 58%, #edf3df00);
+    radial-gradient(ellipse 85% 75% at 9% 96%, #42798559, #42798500 72%),
+    radial-gradient(ellipse 70% 65% at 90% 6%, #586da65c, #586da600 76%),
+    radial-gradient(ellipse 55% 35% at 55% 54%, #426d8433, #426d8400 80%),
+    linear-gradient(155deg, #101f36, #19364e 55%, #183e50);
+  box-shadow: 0 14px 40px #15354b1a, inset 0 1px 0 #d6eeff14;
 }
 .pixel-portfolio .graph-project-navigation {
   border: 1px solid var(--glass-border);
@@ -210,21 +220,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .graph-project-navigation .project-technology-panel button { border-radius: 12px; background: #fbfdf7b0; font-family: var(--sans); }
 .graph-project-navigation .project-technology-panel button[aria-pressed=true] { color: #fffef7; background: var(--primary); }
 .project-explorer .graph-selection-summary { border: 0; border-radius: 0; padding: 14px 4px 0; background: transparent; }
-.project-explorer .three-controls button { border-radius: 999px; background: #fbfdf498; border-color: var(--glass-border); color: #41665b; font-family: var(--sans); box-shadow: none; }
-.project-explorer .three-controls button:hover { background: #f9fcf3e6; border-color: #bbd0c1; }
-.project-explorer .three-controls button:disabled { opacity: .65; }
+.project-explorer .three-controls button { border-radius: 999px; background: #42627d38; border-color: #b2d1e52e; color: #e3eef7; font-family: var(--sans); box-shadow: none; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.project-explorer .three-controls button:hover { background: #557b9766; border-color: #b2d1e563; }
+.project-explorer .three-controls button:disabled { color: #bdcedb; opacity: 1; }
+.project-explorer .three-stage :focus-visible { outline-color: #c3e4ff; }
 .three-corner-label, .three-stage-hint, .three-loading { font-family: var(--sans); }
-.project-explorer .three-corner-label { color: #5f7c78; letter-spacing: .12em; }
-.project-explorer .three-corner-label>span:first-child { color: #476b64; }
-.project-explorer .three-stage-hint { color: #5d786d; }
+.project-explorer .three-corner-label { color: #afc8db; letter-spacing: .12em; }
+.project-explorer .three-corner-label>span:first-child { color: #ccdfed; }
+.project-explorer .three-stage-hint { color: #bed2df; }
 .space-label, .space-label strong, .space-label span { font-family: var(--sans); font-style: normal; }
 .space-label.label-root strong { font-family: var(--sans); font-style: normal; font-size: 22px; font-weight: 500; color: var(--ink); letter-spacing: -.5px; }
-.project-explorer .space-label.label-root { padding: 4px 10px; background: transparent; border: 0; box-shadow: none; text-shadow: 0 1px 12px #f7fcf1; }
-.space-node-label.is-project { background: #f8fcf3a6; border-color: var(--glass-border); }
-.space-node-label.is-project:has(.active) { background: #f4faedf0; border-color: #adc5b687; box-shadow: 0 4px 18px #395e4910; }
+.project-explorer .space-label.label-root { padding: 4px 10px; background: transparent; border: 0; box-shadow: none; text-shadow: 0 2px 9px #0b203a80; }
+.project-explorer .three-stage .space-node-label.is-project { background: #18364ee6; border-color: #a8cbe42e; }
+.project-explorer .three-stage .space-node-label.is-project:has(.active) { background: #244661f2; border-color: #abcfe36b; box-shadow: 0 5px 18px #06142633; }
+.project-explorer .three-stage .space-node-label.is-project:hover, .project-explorer .three-stage .space-node-label.is-project:focus-within { background: #2a4c67; border-color: #b9d9ee80; }
+.project-explorer .three-stage .space-label.label-project span { color: #b6d0e3; }
 .space-label.label-project { background: transparent; border-color: transparent; }
 .space-label.label-project.active { background: transparent; border-color: transparent; }
-.space-label.label-technology, .space-label.label-leaf { background: #fafdf7c9; border-color: var(--glass-border); }
+.project-explorer .three-stage .space-label.label-technology, .project-explorer .three-stage .space-label.label-leaf { background: #17354cf2; border-color: #a8cbe440; }
+.project-explorer .three-stage .space-label.label-technology.active { background: #2d506b; border-color: #c4e4fa80; }
 .pixel-portfolio .career-history-browser {
   border: 1px solid var(--glass-border);
   border-radius: 28px;
