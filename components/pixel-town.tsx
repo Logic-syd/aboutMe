@@ -147,10 +147,10 @@ export function PixelTown() {
       <p className={styles.kicker}><span aria-hidden="true" />Munich, Germany <span className={styles.relocation}>· Open to relocate</span></p>
       <h1 id="town-title">Yidan Shao<span>.</span></h1>
       <p className={styles.role}>Senior Frontend Engineer</p>
-      <p className={styles.bio}>I’ve built web and mobile interfaces across finance, insurance, energy and education.</p>
+      <p className={styles.bio}>I work on complex workflows, live data and interactive 3D interfaces.</p>
       <div className={styles.facts} aria-label="Experience at a glance"><div><strong>7+</strong><span>years in frontend</span></div><div><strong>{projects.length}</strong><span>project case studies</span></div></div>
       <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
-      <div className={styles.skillContext}><p>Energy platforms · Payments · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
+      <div className={styles.skillContext}><p>Finance · Insurance · Energy · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
       <div className={styles.actions}><a href="#work">View projects <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></a></div>
     </div>
     <div className={styles.gameWindow}>
