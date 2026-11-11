@@ -43,14 +43,14 @@
 }
 
 /* Shared light glass around the export workflow; result states keep their colors. */
-.demo{font-family:var(--sans);border-color:var(--glass-border);border-radius:22px;box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.demo{font-family:var(--sans);background:var(--glass-surface);border-color:var(--glass-border);border-radius:22px;box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2)}
 .bar{border-radius:21px 21px 0 0;letter-spacing:.5px}
 .bar button,.sample{border-radius:999px}
 .selects select,.scenario select{border-radius:10px}
 .estimate,.empty,.preparing,.verify,.failure,.partial,.contents{border-radius:14px}
 .estimate strong{font-weight:550;font-variant-numeric:tabular-nums}
 .result h3{font-weight:550;letter-spacing:-.6px}
-.primary{border-radius:999px;border-color:#ffffff45;color:#f8fbf5;background:linear-gradient(180deg,#59755f 0%,var(--primary) 100%);box-shadow:inset 0 1px #ffffff35,0 4px 12px #294c3612;font-weight:600}
+.primary{border-radius:999px;border-color:var(--glass-border);color:#f8fbf5;background:linear-gradient(180deg,#59755f 0%,var(--primary) 100%);box-shadow:0 4px 12px #294c3612;font-weight:600}
 .primary:hover:not(:disabled){background:linear-gradient(180deg,#4f7058 0%,var(--primary-hover) 100%)}
 .primary:disabled{background:var(--accent-border);box-shadow:none}
 .verify .primary{background:#58704f;color:#f8fbf5}

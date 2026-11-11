@@ -32,19 +32,19 @@
 
 /* The editor shell follows the portfolio; the canvas keeps its three own skins. */
 .demo{font-family:var(--sans)}
-.toolbar{border-radius:20px 20px 0 0;border-color:var(--glass-border);background:var(--surface);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.toolbar{border-radius:20px 20px 0 0;border-color:var(--glass-border);background:var(--glass-surface);-webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2)}
 .toolbar button{border-radius:999px}
 .mode{border-radius:999px;background:var(--surface-soft)}
-.mode button[aria-pressed=true]{background:var(--primary);color:#f8fbf5;box-shadow:inset 0 1px #ffffff35}
+.mode button[aria-pressed=true]{background:var(--primary);color:#f8fbf5;box-shadow:none}
 .themes button[aria-pressed=true]{border-color:var(--accent-border);background:var(--surface-selected)}
-.workspace{background:var(--surface);border-color:var(--glass-border)}
+.workspace{background:var(--glass-surface);border-color:var(--glass-border);-webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2)}
 .palette,.inspector{background:transparent}
 .componentList button,.property input,.property select{border-radius:10px}
 .componentList button:hover:not(:disabled){background:var(--surface-selected)}
 .componentList button>span{font-family:var(--sans)}
 .reorder button{border-radius:8px}
 .inspector h3{font-weight:550;letter-spacing:-.5px}
-.status{border-color:var(--glass-border);border-radius:0 0 20px 20px;background:var(--surface)}
+.status{border-color:var(--glass-border);border-radius:0 0 20px 20px;background:var(--glass-surface)}
 .eyebrow,.disclosure{letter-spacing:.4px}
 .submit{color:white}
-@media(prefers-reduced-transparency:reduce){.toolbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:#f5f8f0}}
+@media(prefers-reduced-transparency:reduce){.toolbar,.workspace,.status{-webkit-backdrop-filter:none;backdrop-filter:none;background:#f5f8f0}}

@@ -221,23 +221,23 @@
 .project-case .eyebrow,.project-case .case-facts>div>span,.case-outline{font-family:var(--sans);font-weight:500;letter-spacing:.06em}
 .case-outline{letter-spacing:0}
 .project-case .case-facts,.case-notes,.case-mobile-layout,.case-gallery-view{
- background:var(--surface);border-color:var(--glass-border);box-shadow:var(--glass-shadow);
- -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+ background:var(--glass-surface);border-color:var(--glass-border);box-shadow:var(--glass-shadow);
+ -webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2);
 }
 .project-case .case-facts,.case-mobile-layout{border-radius:24px}
 .case-notes{border-radius:24px}
 .case-note-tabs{border-radius:23px 23px 0 0;background:var(--surface-soft)}
 .case-note-tabs button{border-radius:12px;font-family:var(--sans);transition:background .18s ease,border-color .18s ease}
 .case-note-tabs strong{font-weight:500}
-.case-note-tabs button[aria-selected=true]{border-color:var(--glass-border);box-shadow:inset 0 1px 0 #ffffff85;color:var(--primary)}
+.case-note-tabs button[aria-selected=true]{border-color:var(--glass-border);box-shadow:none;color:var(--primary)}
 .case-note-tabs button:hover{background:var(--surface-selected)}
 .case-note-panel{border-radius:0 0 23px 23px}
 .case-note-tabs button>span,.case-portrait-grid h3 span,.case-export-steps li>span{font-family:var(--sans);font-variant-numeric:tabular-nums}
 .case-responsibilities li{border:0;border-bottom:1px solid var(--line);background:transparent}
 .case-responsibilities li:last-child{border-bottom:0}
-.case-media-tabs{background:var(--surface);border-color:var(--glass-border);border-radius:24px 24px 0 0}
+.case-media-tabs{background:var(--glass-surface);border-color:var(--glass-border);border-radius:24px 24px 0 0}
 .case-media-tabs button{border-radius:999px;font-family:var(--sans);font-weight:500;transition:background .18s ease}
-.case-media-tabs button[aria-pressed=true]{border-color:var(--glass-border);color:var(--primary);box-shadow:inset 0 1px 0 #ffffff80}
+.case-media-tabs button[aria-pressed=true]{border-color:var(--glass-border);color:var(--primary);box-shadow:none}
 .case-media-tabs button:hover{background:var(--surface-selected)}
 .case-gallery-view{border-radius:0 0 24px 24px}
 .case-gallery-view figcaption{border-radius:0 0 23px 0;background:var(--surface-soft)}
