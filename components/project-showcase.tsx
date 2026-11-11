@@ -10,9 +10,15 @@ export function ProjectShowcase({ children }: { children: ReactNode }) {
   const [slow, setSlow] = useState(false);
   const showCards = useCallback((reason: SceneFailure) => { setFailure(reason); setSlow(false); }, []);
   useEffect(() => {
-    if (failure && ['#professional-work', '#work-projects'].includes(window.location.hash)) {
-      document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
-    }
+    if (!failure) return;
+    const followHash = () => {
+      const hash = window.location.hash;
+      if (hash === '#personal-projects') document.getElementById('personal-notebooks')?.scrollIntoView();
+      else if (['#professional-work', '#work-projects'].includes(hash)) document.getElementById(hash.slice(1))?.scrollIntoView();
+    };
+    followHash();
+    window.addEventListener('hashchange', followHash);
+    return () => window.removeEventListener('hashchange', followHash);
   }, [failure]);
 
   return <>

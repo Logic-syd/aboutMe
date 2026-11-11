@@ -46,6 +46,7 @@ test('constellation selection keeps contributions accessible and labels clear', 
   for (const slug of ['renewable-energy-api', 'medical-curriculum', 'low-code-platform', 'love-story-theater']) {
     const projectIndex = projects.findIndex(project => project.slug === slug);
     const project = projects[projectIndex];
+    await page.getByRole('tab', { name: project.kind === 'commercial' ? /^Work / : /^Personal / }).click();
     const row = page.locator('.graph-project-entry').filter({ has: page.locator(`a[href="/projects/${slug}"]`) });
     await row.locator(':scope > button').click();
     await expect(row.locator(':scope > button')).toHaveAttribute('aria-expanded', 'true');

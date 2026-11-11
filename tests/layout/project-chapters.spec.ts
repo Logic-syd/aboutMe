@@ -256,7 +256,7 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   await expect(hero.getByText('I’ve built frontends for large-scale, high-traffic systems. I also build full-stack personal projects, with a focus on AI applications.', { exact: true })).toBeVisible();
   const workBuilding = hero.getByRole('button', { name: 'Explore Commercial work', exact: true });
   await workBuilding.click();
-  const preview = page.getByRole('region', { name: 'Commercial projects.', exact: true });
+  const preview = page.getByRole(page.viewportSize()!.width <= 800 ? 'dialog' : 'region', { name: 'Commercial projects.', exact: true });
   await expect(preview).toBeVisible();
   await expect(preview.locator('a[href^="/projects/"]')).toHaveCount(4);
   await expect(preview.getByRole('link').last()).toHaveText('More projects');
@@ -275,7 +275,7 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   }
   const top = page.getByRole('navigation', { name: 'Main navigation', exact: true });
   const sidebar = page.locator('.floating-sections');
-  const expected = ['My Projects', 'About Me', 'My Work', 'Growth Map'];
+  const expected = ['Projects', 'About', 'Experience', 'Places'];
   expect(await top.getByRole('link').evaluateAll(links => links.map(link => link.getAttribute('aria-label')))).toEqual(expected);
   for (const label of await top.locator('.nav-full-label').all()) await expect(label).toBeVisible();
   for (const name of expected) await expect(top.getByRole('link', { name, exact: true })).toBeVisible();
@@ -283,14 +283,18 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   await expect(page.locator('.header-connect').getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/Logic-syd');
   if (page.viewportSize()!.width > 800) {
     await expect(sidebar).toBeVisible();
-    expect(await sidebar.evaluate(element => element.getBoundingClientRect().width)).toBeLessThanOrEqual(28);
-    await sidebar.getByRole('link', { name: 'About Me', exact: true }).click();
+    const sideBounds = await sidebar.boundingBox();
+    const contentLeft = await page.locator('#work').evaluate(element => element.getBoundingClientRect().left + parseFloat(getComputedStyle(element).paddingLeft));
+    expect(sideBounds!.width).toBe(44);
+    expect(sideBounds!.x).toBeGreaterThan(6);
+    expect(sideBounds!.x + sideBounds!.width, 'Side navigation stays in the outer gutter').toBeLessThan(contentLeft);
+    await sidebar.getByRole('link', { name: 'About', exact: true }).click();
     await expect(page).toHaveURL(/#about$/);
-    await expect(sidebar.getByRole('link', { name: 'About Me', exact: true })).toHaveAttribute('aria-current', 'location');
-    await expect(top.getByRole('link', { name: 'About Me', exact: true })).toHaveAttribute('aria-current', 'location');
+    await expect(sidebar.getByRole('link', { name: 'About', exact: true })).toHaveAttribute('aria-current', 'location');
+    await expect(top.getByRole('link', { name: 'About', exact: true })).toHaveAttribute('aria-current', 'location');
   } else {
     await expect(sidebar).toBeHidden();
-    await top.getByRole('link', { name: 'My Projects', exact: true }).click();
+    await top.getByRole('link', { name: 'Projects', exact: true }).click();
     await expect(page).toHaveURL(/#work$/);
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);

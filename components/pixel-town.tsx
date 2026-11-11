@@ -54,51 +54,86 @@ export function PixelTown() {
   const [motion, setMotion] = useState(true);
   const place = places.find(item => item.id === selected)!;
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewAsSheet, setPreviewAsSheet] = useState(false);
   const [activation, setActivation] = useState(0);
   const previewId = useId();
   const preview = useRef<HTMLDivElement>(null);
+  const sheet = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
-  const map = useRef<HTMLDivElement>(null);
+  const townFrame = useRef<HTMLDivElement>(null);
   const closePreview = useCallback((restoreFocus = true) => {
+    sheet.current?.close();
     setPreviewOpen(false);
     if (restoreFocus) trigger.current?.focus({ preventScroll: true });
   }, []);
   const choosePlace = (id: PlaceId, button: HTMLButtonElement) => {
     trigger.current = button;
     setSelected(id);
+    setPreviewAsSheet(window.matchMedia('(max-width: 800px)').matches);
     setActivation(value => value + 1);
     setPreviewOpen(true);
   };
   useLayoutEffect(() => {
+    if (!previewOpen) return;
+    const compactViewport = window.matchMedia('(max-width: 800px)');
+    const updateMode = () => setPreviewAsSheet(compactViewport.matches);
+    compactViewport.addEventListener('change', updateMode);
+    return () => compactViewport.removeEventListener('change', updateMode);
+  }, [previewOpen]);
+  useLayoutEffect(() => {
     if (!previewOpen || !preview.current || !trigger.current) return;
     const card = preview.current;
+    const dialog = sheet.current;
+    const previousOverflow = document.body.style.overflow;
+    if (previewAsSheet && dialog) {
+      dialog.showModal();
+      document.body.style.overflow = 'hidden';
+    }
     const position = () => {
       if (!trigger.current) return;
       const anchor = trigger.current.getBoundingClientRect();
-      const bounds = map.current?.getBoundingClientRect();
+      const bounds = townFrame.current?.getBoundingClientRect();
       const viewport = window.visualViewport;
       const viewportLeft = viewport?.offsetLeft ?? 0, viewportTop = viewport?.offsetTop ?? 0;
       const viewportWidth = viewport?.width ?? window.innerWidth, viewportHeight = viewport?.height ?? window.innerHeight;
-      card.style.maxWidth = `${Math.max(0, viewportWidth - 24)}px`;
-      card.style.maxHeight = `${Math.max(0, viewportHeight - 24)}px`;
-      const width = card.offsetWidth, height = card.offsetHeight;
-      const minX = viewportLeft + 12, minY = viewportTop + 12;
-      const maxX = Math.max(minX, viewportLeft + viewportWidth - width - 12);
-      const maxY = Math.max(minY, viewportTop + viewportHeight - height - 12);
+      if (previewAsSheet && dialog) {
+        const width = Math.min(520, viewportWidth);
+        dialog.style.width = `${width}px`;
+        card.style.maxHeight = `${Math.max(0, viewportHeight - 12)}px`;
+        dialog.style.left = `${viewportLeft + (viewportWidth - width) / 2}px`;
+        dialog.style.top = `${viewportTop + viewportHeight - card.offsetHeight}px`;
+        card.style.visibility = 'visible';
+        return;
+      }
+      // Both buildings and the bottom tabs belong to this frame. Limit the
+      // preview to the visible town, so it cannot cover the next chapter.
+      const minX = Math.max(viewportLeft + 12, (bounds?.left ?? viewportLeft) + 12);
+      const minY = Math.max(viewportTop + 12, (bounds?.top ?? viewportTop) + 12);
+      const right = Math.min(viewportLeft + viewportWidth - 12, (bounds?.right ?? viewportLeft + viewportWidth) - 12);
+      const bottom = Math.min(viewportTop + viewportHeight - 12, (bounds?.bottom ?? viewportTop + viewportHeight) - 12);
       if (anchor.bottom < viewportTop || anchor.top > viewportTop + viewportHeight) {
         closePreview(false);
         return;
       }
+      // A partially visible town can be too small for a useful anchored card.
+      // The same accessible sheet is a readable fallback, without clipping it.
+      if (right - minX < 240 || bottom - minY < 220) {
+        setPreviewAsSheet(true);
+        return;
+      }
+      card.style.maxWidth = `${right - minX}px`;
+      card.style.maxHeight = `${bottom - minY}px`;
+      const width = card.offsetWidth, height = card.offsetHeight;
+      const maxX = Math.max(minX, right - width);
+      const maxY = Math.max(minY, bottom - height);
       const isMapTrigger = trigger.current.dataset.mapBuilding === 'true';
       let x = anchor.left + anchor.width / 2 - width / 2;
-      let y = anchor.bottom + 12;
-      if (viewportWidth > 700 && isMapTrigger) {
+      let y = anchor.top - height - 12;
+      if (isMapTrigger) {
         // Prefer the inner side of the town, so the selected building stays visible.
         const leftHalf = bounds ? anchor.left + anchor.width / 2 < bounds.left + bounds.width / 2 : anchor.left < viewportWidth / 2;
         x = leftHalf ? anchor.right + 14 : anchor.left - width - 14;
         y = anchor.top + anchor.height / 2 - height / 2;
-      } else if (y > maxY && anchor.top - height - 12 >= minY) {
-        y = anchor.top - height - 12;
       }
       card.style.left = `${Math.max(minX, Math.min(maxX, x))}px`;
       card.style.top = `${Math.max(minY, Math.min(maxY, y))}px`;
@@ -114,12 +149,21 @@ export function PixelTown() {
     window.visualViewport?.addEventListener('scroll', position);
     const outside = (event: PointerEvent) => {
       const target = event.target;
+      if (previewAsSheet) return;
       if (target instanceof Element && !card.contains(target) && !target.closest('[data-town-trigger]')) closePreview(false);
     };
     const escape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') { event.preventDefault(); closePreview(); }
       if (event.key !== 'Tab' || !card.contains(document.activeElement)) return;
       const stops = Array.from(card.querySelectorAll<HTMLElement>('button, a[href]'));
+      if (previewAsSheet) {
+        if (event.shiftKey && (document.activeElement === card || document.activeElement === stops[0])) {
+          event.preventDefault(); stops.at(-1)?.focus();
+        } else if (!event.shiftKey && document.activeElement === stops.at(-1)) {
+          event.preventDefault(); stops[0]?.focus();
+        }
+        return;
+      }
       if (event.shiftKey && (document.activeElement === card || document.activeElement === stops[0])) {
         event.preventDefault(); closePreview();
       } else if (!event.shiftKey && document.activeElement === stops.at(-1)) {
@@ -133,6 +177,10 @@ export function PixelTown() {
     document.addEventListener('pointerdown', outside);
     document.addEventListener('keydown', escape);
     return () => {
+      if (dialog) {
+        dialog.close();
+        document.body.style.overflow = previousOverflow;
+      }
       resize.disconnect();
       window.removeEventListener('resize', position);
       window.removeEventListener('scroll', position, true);
@@ -141,7 +189,15 @@ export function PixelTown() {
       document.removeEventListener('pointerdown', outside);
       document.removeEventListener('keydown', escape);
     };
-  }, [previewOpen, selected, activation, closePreview]);
+  }, [previewOpen, previewAsSheet, selected, activation, closePreview]);
+  const previewContent = <div ref={preview} id={previewId} role={previewAsSheet ? undefined : 'region'} aria-labelledby={`${previewId}-title`} tabIndex={-1} className={`${styles.preview} ${place.id === 'studio' ? styles.commercialPreview : ''}`}>
+    <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>
+    <h2 id={`${previewId}-title`}>{place.title}</h2>
+    <div className={styles.previewLinks}>
+      {place.slugs.filter(slug => slug !== place.href.replace('/projects/','')).map(slug => <Link key={slug} href={`/projects/${slug}`} onClick={() => closePreview(false)}>{projects.find(project => project.slug === slug)?.graphTitle}<PreviewArrow /></Link>)}
+      <a className={styles.previewPrimary} href={place.href} onClick={() => closePreview(false)}>{place.action}<PreviewArrow /></a>
+    </div>
+  </div>;
   return <section className={styles.townSection} aria-labelledby="town-title">
     <div className={styles.intro}>
       <p className={styles.kicker}><span aria-hidden="true" />Munich, Germany <span className={styles.relocation}>· Open to relocate</span></p>
@@ -153,9 +209,9 @@ export function PixelTown() {
       <div className={styles.skillContext}><p>Finance · Insurance · Energy · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
       <div className={styles.actions}><a href="#work">View projects <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></a></div>
     </div>
-    <div className={styles.gameWindow}>
+    <div ref={townFrame} className={styles.gameWindow} data-town-frame>
       <div className={styles.windowBar}><span><i aria-hidden="true" />Explore my town</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion} aria-label={motion ? 'Pause motion' : 'Resume motion'}><svg aria-hidden="true" viewBox="0 0 16 16">{motion ? <path d="M4 3h3v10H4zM10 3h3v10h-3z" /> : <path d="m5 3 8 5-8 5z" />}</svg>{motion ? 'Pause' : 'Resume'}</button></div>
-      <div ref={map} className={`${styles.map} ${motion ? '' : styles.paused}`} aria-describedby={`${previewId}-hint`}>
+      <div className={`${styles.map} ${motion ? '' : styles.paused}`} aria-describedby={`${previewId}-hint`}>
         <svg viewBox="0 0 1000 620" className={styles.landscape} aria-hidden="true" shapeRendering="crispEdges">
           <defs><linearGradient id={`${previewId}-sky`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#bfd9e1" /><stop offset="1" stopColor="#edf0dc" /></linearGradient><linearGradient id={`${previewId}-meadow`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#d3dfbf" /><stop offset="1" stopColor="#dce8ce" /></linearGradient></defs>
           <rect width="1000" height="620" fill={`url(#${previewId}-meadow)`} /><rect width="1000" height="160" fill={`url(#${previewId}-sky)`} />
@@ -178,13 +234,11 @@ export function PixelTown() {
       </div>
       <div className={styles.locationNav} aria-label="Choose a place">{places.map(item => <button key={item.id} aria-label={item.name} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-active={selected === item.id} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}>{item.tab}</button>)}</div>
     </div>
-    {previewOpen && createPortal(<div ref={preview} id={previewId} role="region" aria-labelledby={`${previewId}-title`} tabIndex={-1} className={`${styles.preview} ${place.id === 'studio' ? styles.commercialPreview : ''}`}>
-      <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>
-      <h2 id={`${previewId}-title`}>{place.title}</h2>
-      <div className={styles.previewLinks}>
-        {place.slugs.filter(slug => slug !== place.href.replace('/projects/','')).map(slug => <Link key={slug} href={`/projects/${slug}`} onClick={() => closePreview(false)}>{projects.find(project => project.slug === slug)?.graphTitle}<PreviewArrow /></Link>)}
-        <a className={styles.previewPrimary} href={place.href} onClick={() => closePreview(false)}>{place.action}<PreviewArrow /></a>
-      </div>
-    </div>, document.body)}
+    {previewOpen && createPortal(previewAsSheet ? <dialog ref={sheet} className={styles.previewSheet} aria-labelledby={`${previewId}-title`} onCancel={event => { event.preventDefault(); closePreview(); }} onPointerDown={event => {
+      const bounds = event.currentTarget.getBoundingClientRect();
+      if (event.target === event.currentTarget && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) {
+        event.preventDefault(); closePreview();
+      }
+    }}>{previewContent}</dialog> : previewContent, document.body)}
   </section>;
 }

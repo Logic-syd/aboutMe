@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 
 const sections = [
-  { id: 'work', label: 'My Projects', text: 'My projects', short: 'Projects' },
-  { id: 'about', label: 'About Me', text: 'About me', short: 'About' },
-  { id: 'career-history', label: 'My Work', text: 'My work', short: 'Work' },
-  { id: 'experience', label: 'Growth Map', text: 'Growth map', short: 'Map' },
+  { id: 'work', label: 'Projects', text: 'Projects', short: 'Projects' },
+  { id: 'about', label: 'About', text: 'About', short: 'About' },
+  { id: 'career-history', label: 'Experience', text: 'Experience', short: 'Experience' },
+  { id: 'experience', label: 'Places', text: 'Places', short: 'Places' },
 ];
 
 export function SectionNavigation({ detail, sidebar }: { detail: boolean; sidebar: boolean }) {

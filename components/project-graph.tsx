@@ -1,6 +1,6 @@
 'use client';
 
-import { Component, useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { Component, useCallback, useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { projects } from '@/lib/projects';
@@ -11,6 +11,11 @@ const ThreeGraph = dynamic(() => import('@/components/three-project-scene'), { s
 function subscribeMotion(callback: () => void) { const query = window.matchMedia('(prefers-reduced-motion: reduce)'); query.addEventListener('change', callback); return () => query.removeEventListener('change', callback); }
 const getMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const getServerMotion = () => true;
+const projectGroups = [
+  { kind: 'commercial', id: 'professional-work', label: 'Work', title: 'Work projects' },
+  { kind: 'independent', id: 'personal-projects', label: 'Personal', title: 'Personal projects' },
+] as const;
+type ProjectCategory = typeof projectGroups[number]['kind'];
 class SceneBoundary extends Component<{ children: ReactNode; onUnavailable: (reason: SceneFailure) => void }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
@@ -20,6 +25,7 @@ class SceneBoundary extends Component<{ children: ReactNode; onUnavailable: (rea
 
 export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason: SceneFailure) => void; onSlow: (slow: boolean) => void }) {
   const [selection, setSelection] = useState<GraphSelection>({ project: null, technology: null });
+  const [category, setCategory] = useState<ProjectCategory>('commercial');
   const [interaction, setInteraction] = useState({ nodeId: '', revision: 0 });
   const projectDirections = useRef(new Map<number, FocusSide>());
   const [motion, setMotion] = useState(true);
@@ -29,7 +35,9 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
   const [ready, setReady] = useState(false);
   const sceneReady = useCallback(() => { setReady(true); onSlow(false); }, [onSlow]);
   const region = useRef<HTMLDivElement>(null);
+  const catalog = useRef<HTMLDivElement>(null);
   const navigation = useRef<HTMLDivElement>(null);
+  const categoryButtons = useRef<(HTMLButtonElement | null)[]>([]);
   useEffect(() => {
     const list = navigation.current;
     if (!list || selection.project === null) return;
@@ -43,11 +51,27 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
       }
     });
     return () => cancelAnimationFrame(frame);
-  }, [selection.project, selection.technology]);
+  }, [category, selection.project, selection.technology]);
   useEffect(() => {
-    if (window.location.hash !== '#work-projects') return;
-    const frame = requestAnimationFrame(() => document.getElementById('work-projects')?.scrollIntoView({ block: 'start', behavior: 'instant' }));
-    return () => cancelAnimationFrame(frame);
+    let frame = 0;
+    const followHash = () => {
+      cancelAnimationFrame(frame);
+      const group = projectGroups.find(item => `#${item.id}` === window.location.hash);
+      if (!group && window.location.hash !== '#work-projects') return;
+      frame = requestAnimationFrame(() => {
+        if (group) {
+          setCategory(group.kind);
+          setSelection({ project: null, technology: null });
+          navigation.current?.scrollTo({ top: 0 });
+        }
+        // Scroll to the catalog including its tabs, rather than hiding the
+        // category switch just above an old project-group anchor.
+        frame = requestAnimationFrame(() => (group ? catalog.current : document.getElementById('work-projects'))?.scrollIntoView({ block: 'start', behavior: 'instant' }));
+      });
+    };
+    followHash();
+    window.addEventListener('hashchange', followHash);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('hashchange', followHash); };
   }, []);
   const reducedMotion = useSyncExternalStore(subscribeMotion, getMotion, getServerMotion);
   useEffect(() => {
@@ -71,9 +95,36 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     return () => window.clearTimeout(timeout);
   }, [loaded, ready, onSlow]);
   const project = selection.project === null ? null : projects[selection.project];
-  const selectProject = useCallback((index: number) => { setInteraction(current => ({ nodeId: projects[index].slug, revision: current.revision + 1 })); setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null, focusSide: projectDirections.current.get(index) ?? 1 }); }, []);
+  const selectProject = useCallback((index: number) => {
+    setCategory(projects[index].kind);
+    const group = projectGroups.find(item => item.kind === projects[index].kind)!;
+    window.history.replaceState(window.history.state, '', `#${group.id}`);
+    setInteraction(current => ({ nodeId: projects[index].slug, revision: current.revision + 1 }));
+    setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null, focusSide: projectDirections.current.get(index) ?? 1 });
+  }, []);
   const selectTechnology = useCallback((index: number) => { if (selection.project !== null) setInteraction(current => ({ nodeId: `${projects[selection.project!].slug}-tech-${index}`, revision: current.revision + 1 })); setSelection(current => ({ ...current, technology: current.technology === index ? null : index })); }, [selection.project]);
   const reset = useCallback(() => { setInteraction(current => ({ nodeId: 'root', revision: current.revision + 1 })); setSelection({ project: null, technology: null }); setView(current => ({ reset: current.reset + 1, zoom: 0 })); }, []);
+  const selectCategory = (next: ProjectCategory) => {
+    if (next !== category) {
+      setCategory(next);
+      reset();
+      navigation.current?.scrollTo({ top: 0 });
+    }
+    const group = projectGroups.find(item => item.kind === next)!;
+    window.history.replaceState(window.history.state, '', `#${group.id}`);
+  };
+  const navigateCategories = (event: KeyboardEvent<HTMLDivElement>) => {
+    const index = projectGroups.findIndex(group => group.kind === category);
+    let next: number;
+    if (event.key === 'ArrowRight') next = (index + 1) % projectGroups.length;
+    else if (event.key === 'ArrowLeft') next = (index - 1 + projectGroups.length) % projectGroups.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = projectGroups.length - 1;
+    else return;
+    event.preventDefault();
+    selectCategory(projectGroups[next].kind);
+    categoryButtons.current[next]?.focus();
+  };
   return <div className="project-explorer three-explorer">
 
     <div id="work-projects" className="project-explorer-workspace">
@@ -81,14 +132,11 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
       <div className="three-corner-label" aria-hidden="true"><span>PROJECT CONNECTIONS / THREE.JS</span><span>{selection.technology !== null ? 'CONTRIBUTIONS' : project ? 'TECHNOLOGIES' : 'SELECT A PROJECT'}</span></div>
       <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph projectDirections={projectDirections} onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
       <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
-      <p className="three-stage-hint">Drag a sphere · Choose a project to see its connections</p>
+      <p className="three-stage-hint">Drag to explore · Select a project</p>
     </div>
-    <div ref={navigation} className="graph-project-navigation">
-    <div className="graph-project-groups">{[
-      { kind: 'commercial', id: 'professional-work', title: 'Work projects' },
-      { kind: 'independent', id: 'personal-projects', title: 'Personal projects' },
-    ].map(group => <section id={group.id} className={`project-picker-group project-group-${group.kind}`} aria-labelledby={`${group.id}-title`} key={group.kind}>
-      <div className="project-group-heading"><h3 id={`${group.id}-title`}>{group.title}</h3><span>{projects.filter(item => item.kind === group.kind).length} projects</span></div>
+    <div ref={catalog} className="graph-project-navigation">
+    <div className="project-category-tabs" role="tablist" aria-label="Project categories" onKeyDown={navigateCategories}>{projectGroups.map((group, index) => <button ref={element => { categoryButtons.current[index] = element; }} type="button" role="tab" id={`${group.id}-tab`} aria-controls={group.id} aria-selected={category === group.kind} tabIndex={category === group.kind ? 0 : -1} onClick={() => selectCategory(group.kind)} key={group.kind}>{group.label}<span>{projects.filter(item => item.kind === group.kind).length}</span></button>)}</div>
+    <div ref={navigation} className="graph-project-groups">{projectGroups.map(group => <section id={group.id} role="tabpanel" tabIndex={0} hidden={category !== group.kind} className={`project-picker-group project-group-${group.kind}`} aria-labelledby={`${group.id}-tab`} key={group.kind}>
       <div className="graph-project-picker" aria-label={`Select from ${group.title.toLowerCase()}`}>{projects.map((item,index) => item.kind === group.kind && <div className="graph-project-entry" data-selected={selection.project === index} key={item.slug}>
         <button aria-pressed={selection.project === index} aria-expanded={selection.project === index} aria-controls={`project-${item.slug}-technologies`} onClick={() => selectProject(index)}>{graphTitles[index]}</button>
         <Link className="graph-project-case-link" href={`/projects/${item.slug}`} aria-label={`Read ${item.title} case study`} title={`Read ${item.title} case study`}>Details<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>
