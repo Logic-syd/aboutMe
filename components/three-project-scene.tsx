@@ -12,8 +12,7 @@ import { graphLeaves, graphTitles, constellationPoints, projectFocusSide, type F
 
 type Gradient = readonly [string, string, string];
 type Point = [number, number, number];
-type Orbit = { center: Point; radiusX: number; radiusY: number; angle: number };
-type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; orbit?: Orbit; kickDirection?: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; muted?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
+type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; kickDirection?: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; muted?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { projectDirections: React.RefObject<Map<number, FocusSide>>; onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
 const colors = ['#9eb6a0', '#98b9cc', '#c2a0aa', '#8cb6ad', '#c8bd8d', '#9caec3', '#c3ad88', '#96b9a9', '#c7acb4', '#9cacc2', '#9fb39a', '#a3bfc0', '#b5adbf'];
@@ -42,9 +41,12 @@ function satelliteGradient(gradient: Gradient): Gradient {
   const lighten = (color: string) => `#${new THREE.Color(color).lerp(new THREE.Color('#ffffff'), .42).getHexString()}`;
   return [lighten(gradient[0]), lighten(gradient[1]), lighten(gradient[2])];
 }
-function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse }: { anchors: Item[]; pixelScale: number; pulse: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
+function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse, pulseStrength }: { anchors: Item[]; pixelScale: number; pulse: number; pulseStrength: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Mesh>(null);
+  const halo = useRef<THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>>(null);
+  const label = useRef<HTMLDivElement>(null);
+  const ripple = useRef(0);
   const [hovered, setHovered] = useState(false);
   useCursor(hovered, 'grab');
   const offset = useRef(new THREE.Vector3());
@@ -52,14 +54,13 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
   const age = useRef(-(item.delay ?? 0));
   const [initialPosition] = useState<Point>(() => item.spawn ?? item.position);
   const dragging = useRef(false);
-  const last = useRef({ x: 0, y: 0 });
+  const last = useRef({ x: 0, y: 0, time: 0 });
+  const releaseVelocity = useRef(new THREE.Vector3());
   const moved = useRef(0);
   const pressed = useRef(false);
-  const scaleValue = useRef(1);
+  const scaleValue = useRef(item.spawn ? 0 : 1);
   const scaleVelocity = useRef(0);
-  const spinVelocity = useRef(0);
   const lastPulse = useRef(0);
-  const orbit = useRef(item.orbit ? { ...item.orbit, center: new THREE.Vector3(...item.orbit.center) } : null);
   const size = item.radius;
   const { camera, size: screen, invalidate } = useThree();
   const geometry = useMemo(() => {
@@ -80,21 +81,15 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => {
     if (pulse > 0 && pulse !== lastPulse.current && !reducedMotion) {
-      scaleValue.current = .96; scaleVelocity.current = .8;
-      velocity.current.addScaledVector(new THREE.Vector3(...(item.kickDirection ?? [0, 1, 0])), pixelScale * 110);
-      spinVelocity.current = (item.kickDirection?.[0] ?? 1) * 2.4;
+      scaleValue.current = 1 - .07 * pulseStrength;
+      scaleVelocity.current = 1.1 * pulseStrength;
+      velocity.current.addScaledVector(new THREE.Vector3(...(item.kickDirection ?? [0, 1, 0])), pixelScale * 105 * pulseStrength);
+      velocity.current.z += pixelScale * 60 * pulseStrength;
+      if (pulseStrength === 1) ripple.current = 1;
     }
     lastPulse.current = pulse;
     invalidate();
-  }, [pulse, reducedMotion, pixelScale, item.kickDirection, invalidate]);
-  function kick() {
-    if (!reducedMotion) {
-      scaleValue.current = .96; scaleVelocity.current = .8;
-      velocity.current.addScaledVector(new THREE.Vector3(...(item.kickDirection ?? [0, 1, 0])), pixelScale * 110);
-      spinVelocity.current = (item.kickDirection?.[0] ?? 1) * 2.4;
-    }
-    invalidate();
-  }
+  }, [pulse, pulseStrength, reducedMotion, pixelScale, item.kickDirection, invalidate]);
   useEffect(() => {
     const origin = item.spawnFrom ? positions.current.get(item.spawnFrom) : null;
     if (origin && group.current && !reducedMotion) group.current.position.copy(origin);
@@ -105,29 +100,12 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     if (!group.current) return;
     const time = state.clock.elapsedTime;
     const target = new THREE.Vector3(...item.position).add(offset.current);
-    let turning = false;
-    if (item.orbit && orbit.current) {
-      const current = orbit.current;
-      const angleDelta = Math.atan2(Math.sin(item.orbit.angle - current.angle), Math.cos(item.orbit.angle - current.angle));
-      const speed = reducedMotion ? 1 : 1 - Math.exp(-Math.min(delta, .05) * 4.5);
-      turning = Math.abs(angleDelta) > .002 || Math.abs(current.radiusX - item.orbit.radiusX) > .002 || Math.abs(current.radiusY - item.orbit.radiusY) > .002 || current.center.distanceTo(new THREE.Vector3(...item.orbit.center)) > .002;
-      current.angle += angleDelta * speed;
-      current.radiusX = THREE.MathUtils.lerp(current.radiusX, item.orbit.radiusX, speed);
-      current.radiusY = THREE.MathUtils.lerp(current.radiusY, item.orbit.radiusY, speed);
-      current.center.lerp(new THREE.Vector3(...item.orbit.center), speed);
-      target.set(current.center.x + Math.cos(current.angle) * current.radiusX, current.center.y + Math.sin(current.angle) * current.radiusY, item.position[2]).add(offset.current);
-    }
     if (animate && !dragging.current) {
       const phase = item.index * 1.37 + (item.kind === 'technology' ? 2 : 0);
       const drift = item.kind === 'project' && !item.active ? 7 : 2;
       const sway = Math.sin(time * .24 + phase) * pixelScale * drift;
-      if (orbit.current) {
-        target.x -= Math.sin(orbit.current.angle) * sway;
-        target.y += Math.cos(orbit.current.angle) * sway;
-      } else {
-        target.x += sway;
-        target.y += Math.sin(time * .31 + phase) * pixelScale * drift;
-      }
+      target.x += sway;
+      target.y += Math.sin(time * .31 + phase) * pixelScale * drift;
       target.z += Math.cos(time * .22 + phase) * pixelScale * drift * 2;
     }
     if (!reducedMotion && !dragging.current) {
@@ -152,25 +130,32 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
       velocity.current.multiplyScalar(Math.exp(-step * 8.5));
       group.current.position.addScaledVector(velocity.current, step);
     }
-    const scaleTarget = (hovered ? 1.05 : 1) * (pressed.current ? .94 : 1);
+    const scaleTarget = !reducedMotion && age.current < 0 ? 0 : (hovered ? 1.05 : 1) * (pressed.current ? .94 : 1);
     if (reducedMotion) { scaleValue.current = scaleTarget; scaleVelocity.current = 0; }
     else {
       scaleVelocity.current += (scaleTarget - scaleValue.current) * step * 75;
       scaleVelocity.current *= Math.exp(-step * 10);
       scaleValue.current += scaleVelocity.current * step;
     }
-    shell.current?.scale.setScalar(scaleValue.current);
+    const squash = 1 - scaleValue.current;
+    shell.current?.scale.set(scaleValue.current * (1 + squash * .35), scaleValue.current * (1 - squash * .35), scaleValue.current);
+    if (label.current) label.current.style.opacity = reducedMotion ? '1' : String(THREE.MathUtils.clamp((scaleValue.current - .45) / .55, 0, 1));
     if (shell.current && !reducedMotion) {
-      shell.current.rotation.y += step * ((animate ? .12 + item.index % 4 * .035 : 0) + spinVelocity.current * .3);
-      shell.current.rotation.z -= step * spinVelocity.current;
-      spinVelocity.current *= Math.exp(-step * 4);
+      shell.current.rotation.y += step * (animate ? .12 + item.index % 4 * .035 : 0);
+    }
+    if (halo.current) {
+      ripple.current = reducedMotion ? 0 : Math.max(0, ripple.current - step * 1.8);
+      halo.current.visible = ripple.current > 0;
+      halo.current.quaternion.copy(camera.quaternion);
+      halo.current.scale.setScalar(1 + (1 - ripple.current) * 1.2);
+      halo.current.material.opacity = ripple.current * ripple.current * .32;
     }
     onPosition(item.id, group.current.position);
     // HTML labels need the next frame's updated world matrices after an immediate move.
-    if (turning || Math.abs(spinVelocity.current) > .01 || (reducedMotion && positionChanged) || group.current.position.distanceTo(target) > .002 || velocity.current.length() > .01 || age.current < 0 || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
+    if (ripple.current > 0 || (reducedMotion && positionChanged) || group.current.position.distanceTo(target) > .002 || velocity.current.length() > .01 || age.current < 0 || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
   });
   function down(event: ThreeEvent<PointerEvent>) {
-    event.stopPropagation(); pressed.current = true; dragging.current = true; moved.current = 0; last.current = { x: event.clientX, y: event.clientY }; onDrag(true);
+    event.stopPropagation(); pressed.current = true; dragging.current = true; moved.current = 0; releaseVelocity.current.set(0, 0, 0); last.current = { x: event.clientX, y: event.clientY, time: event.timeStamp }; onDrag(true);
     (event.target as unknown as { setPointerCapture: (id: number) => void }).setPointerCapture(event.pointerId);
     invalidate();
   }
@@ -183,15 +168,22 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     const pixel = 2 * depth * Math.tan(THREE.MathUtils.degToRad((camera as THREE.PerspectiveCamera).fov / 2)) / screen.height;
     const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
-    offset.current.addScaledVector(right, dx * pixel).addScaledVector(up, -dy * pixel).clampLength(0, pixelScale * 85);
-    last.current = { x: event.clientX, y: event.clientY }; invalidate();
+    const movement = right.multiplyScalar(dx * pixel).addScaledVector(up, -dy * pixel);
+    offset.current.add(movement).clampLength(0, pixelScale * 85);
+    releaseVelocity.current.lerp(movement.divideScalar(THREE.MathUtils.clamp((event.timeStamp - last.current.time) / 1000, .008, .05)), .45).clampLength(0, pixelScale * 260);
+    last.current = { x: event.clientX, y: event.clientY, time: event.timeStamp }; invalidate();
   }
   function up(event: ThreeEvent<PointerEvent>) {
     if (!dragging.current) return;
     event.stopPropagation(); pressed.current = false; dragging.current = false; onDrag(false);
     (event.target as unknown as { releasePointerCapture: (id: number) => void }).releasePointerCapture(event.pointerId);
     offset.current.set(0, 0, 0);
-    if (moved.current < 6 && item.onSelect) item.onSelect(); else kick();
+    if (moved.current < 6 && item.onSelect) item.onSelect();
+    else if (!reducedMotion) {
+      // Preserve the release direction briefly before the spring settles home.
+      if (event.timeStamp - last.current.time < 100) velocity.current.addScaledVector(releaseVelocity.current, .35);
+      scaleVelocity.current = .35;
+    }
     invalidate();
   }
   return <group ref={group} name={`${item.kind}-${item.id}`} position={initialPosition}>
@@ -203,11 +195,12 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
         transparent={item.kind === 'technology'} opacity={item.kind === 'technology' ? .62 : 1} depthWrite={item.kind !== 'technology'}
         sheen={item.kind === 'root' ? .2 : item.kind === 'project' && !item.muted ? .15 : 0} sheenColor="#e8eee0" sheenRoughness={.65} />
     </mesh>
+    <mesh ref={halo} visible={false} raycast={() => null}><ringGeometry args={[size * 1.25, size * 1.25 + pixelScale, 48]} /><meshBasicMaterial color="#deefff" transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} /></mesh>
     {item.kind === 'technology' && <mesh><sphereGeometry args={[size * .35, 20, 16]} /><meshBasicMaterial color={item.color} transparent opacity={.24} depthWrite={false} /></mesh>}
     {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color={rootRingColor} metalness={.4} roughness={.28} /></mesh>}
     {item.active && (item.kind === 'project' || item.kind === 'technology') && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, pixelScale * .8, 8, 64]} /><meshStandardMaterial color={item.color} roughness={.65} emissive={item.color} emissiveIntensity={.08} /></mesh>}
     {(!item.quiet || hovered && item.kind !== 'leaf') && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
-      <div data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].kind === 'commercial' ? 'WORK' : 'PERSONAL'}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
+      <div ref={label} data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].kind === 'commercial' ? 'WORK' : 'PERSONAL'}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
         {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} title="Read case study" style={{ pointerEvents: 'auto' }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>}
       </div>
     </Html>}
@@ -363,11 +356,10 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     // The adjacent catalog carries names; a short scene reserves labels for focus and hover.
     const radiusY = Math.max(65, (height - 180) / 2);
     const focusSide = selection.focusSide ?? 1;
-    const rootX = expanded ? -focusSide * width * .12 : 0;
     const rootY = 14;
-    const radiusX = Math.min(width * (expanded ? .26 : .4), width / 2 - Math.abs(rootX) - 32);
+    const radiusX = Math.min(width * .4, width / 2 - 32);
     const overview = constellationPoints(projects.length);
-    if (compact && !expanded) {
+    if (compact) {
       // Keep a real gap on small canvases, including the clearing below the core.
       // This relaxation runs on layout changes only, not in the animation loop.
       const points = overview.map(node => ({ x: Math.cos(node.angle) * radiusX * node.spread, y: Math.sin(node.angle) * radiusY * node.spread }));
@@ -394,35 +386,51 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
         overview[index].spread = Math.hypot(position.x / radiusX, position.y / radiusY);
       });
     }
-    const angles = overview.map(position => position.angle);
-    const rotation = selection.project === null ? 0 : (focusSide > 0 ? 0 : Math.PI) - angles[selection.project];
-    const rootPosition = point(rootX, rootY);
-    const selectedPosition = point(rootX + focusSide * radiusX, rootY, .2);
-    const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 20 : 27) * worldPerPixel, gradient: rootGradient, color: rootRingColor, quiet: compact && expanded, active: false, index: 0, onSelect: onReset }];
+    // Keep the constellation's bearings. Only the selected planet approaches
+    // its reading position; no shared angular offset or shrinking orbit.
+    const rootPosition = point(0, rootY);
+    const selectedNode = selection.project === null ? null : overview[selection.project];
+    const selectedY = rootY + (selectedNode ? THREE.MathUtils.clamp(Math.sin(selectedNode.angle) * radiusY * .24, -24, 24) : 0);
+    const selectedPosition = point(focusSide * width * .16, selectedY, .7);
+    const branchX = focusSide * width * (width < 400 ? .29 : .35);
+    const branchTop = dense ? height / 2 - 90 : height * .2;
+    const branchTags = selection.project === null ? [] : projects[selection.project].tags;
+    const branchStep = dense ? Math.min(62, Math.max(30, (height - 210) / Math.max(1, branchTags.length - 1))) : 82;
+    const clearings = expanded ? [
+      { x: selectedPosition[0] / worldPerPixel, y: selectedY, radius: compact ? 35 : 52 },
+      ...branchTags.flatMap((_, index) => compactLeaves && selection.technology !== index ? [] : [{ x: branchX, y: branchTop - (compactLeaves ? 0 : index * branchStep), radius: compact ? 28 : 40 }]),
+    ] : [];
+    const result: Item[] = [{ id: 'root', kind: 'root', label: 'My work', position: rootPosition, radius: (compact ? 20 : 27) * worldPerPixel, gradient: rootGradient, color: rootRingColor, quiet: expanded, active: false, index: 0, onSelect: onReset }];
     projects.forEach((project, index) => {
       const active = selection.project === index;
       const commercial = project.kind === 'commercial';
-      const angle = angles[index] + rotation;
-      const projectRadius = (compact ? commercial ? 14 : 11 : commercial ? 21 : 15) * (1 + Math.sin(index * 2.1) * .16) * worldPerPixel * (expanded && !active ? .7 : active ? 1.15 : 1);
-      const satelliteRadius = (commercial ? 12 : 9) * worldPerPixel;
-      const spread = active ? 1 : overview[index].spread;
-      const position = point(rootX + Math.cos(angle) * radiusX * spread, rootY + Math.sin(angle) * radiusY * spread, active ? .2 : overview[index].depth);
+      const angle = overview[index].angle;
+      const projectRadius = (compact ? commercial ? 14 : 11 : commercial ? 21 : 15) * (1 + Math.sin(index * 2.1) * .16) * worldPerPixel * (active ? 1.1 : 1);
+      const baseX = Math.cos(angle) * radiusX * overview[index].spread;
+      const baseY = rootY + Math.sin(angle) * radiusY * overview[index].spread;
+      const nudge = new THREE.Vector2();
+      for (const clearing of clearings) {
+        const dx = baseX - clearing.x, dy = baseY - clearing.y;
+        const length = Math.max(.01, Math.hypot(dx, dy));
+        if (length < clearing.radius) nudge.add(new THREE.Vector2(dx || .01, dy).normalize().multiplyScalar(clearing.radius - length));
+      }
+      nudge.clampLength(0, compact ? 20 : 30);
+      const position = active ? selectedPosition : point(
+        THREE.MathUtils.clamp(baseX + nudge.x, -width / 2 + 28, width / 2 - 28),
+        THREE.MathUtils.clamp(baseY + nudge.y, -height / 2 + 104, height / 2 - 64), overview[index].depth,
+      );
       result.push({ id: project.slug, kind: 'project', label: graphTitles[index], position,
-        orbit: { center: rootPosition, radiusX: radiusX * spread * worldPerPixel, radiusY: radiusY * spread * worldPerPixel, angle },
-        kickDirection: expanded && active ? [focusSide, 0, 0] : [Math.cos(angle), Math.sin(angle), 0],
-        radius: expanded && compact && !active ? satelliteRadius : projectRadius, quiet: !active || compactLeaves && compact, muted: expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
+        kickDirection: [Math.cos(angle) * .55, .65 + Math.sin(angle) * .2, .35],
+        radius: projectRadius, quiet: !active || compactLeaves && compact, muted: expanded && !active, gradient: gradients[index % gradients.length], color: colors[index % colors.length], active, index, onSelect: () => onProject(index) });
     });
     if (selection.project !== null) {
       const project = projects[selection.project];
-      const branchX = focusSide * width * (width < 400 ? .29 : .35);
-      const branchTop = dense ? height / 2 - 90 : height * .2;
-      const branchStep = dense ? Math.min(62, Math.max(30, (height - 210) / Math.max(1, project.tags.length - 1))) : 82;
       project.tags.forEach((tag, index) => {
         if (compactLeaves && selection.technology !== index) return;
         const position = point(branchX, branchTop - (compactLeaves ? 0 : index * branchStep), .1);
         result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, quiet: compact && selection.technology !== index,
           kickDirection: [focusSide, 0, 0], radius: (compact ? 11 : 15) * worldPerPixel,
-          spawn: selectedPosition, spawnFrom: project.slug, delay: .18 + index * .075,
+          spawn: selectedPosition, spawnFrom: project.slug, delay: .06 + index * .055,
           gradient: satelliteGradient(gradients[selection.project! % gradients.length]), color: colors[selection.project! % colors.length],
           active: selection.technology === index, index, onSelect: () => onTechnology(index) });
       });
@@ -463,6 +471,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     if (camera.position.distanceTo(destination.current) < .01) destination.current = null; else invalidate();
   });
   const root = items[0];
+  const interactionNode = items.find(item => item.id === props.interaction.nodeId);
   return <>
     <fog attach="fog" args={[sceneFog, distance + 10, distance + 55]} />
     <OrbitalAtmosphere width={size.width * worldPerPixel} height={size.height * worldPerPixel} animate={props.animate && !props.reducedMotion && props.visible} />
@@ -470,7 +479,11 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     {expanded && items.filter(item => item.kind === 'project' && item.active).map(item => <Connection key={`root-${item.id}`} start={root} end={item} active positions={positions} animate={props.animate} />)}
     {expanded && items.filter(item => item.kind === 'technology').map(item => <Connection key={`tech-${item.id}`} start={items.find(node => node.id === projects[props.selection.project!].slug)!} end={item} active={props.selection.technology === null || item.active} positions={positions} animate={props.animate} />)}
     {props.selection.technology !== null && items.filter(item => item.kind === 'leaf').map(item => <Connection key={`leaf-${item.id}`} start={items.find(node => node.id === `${projects[props.selection.project!].slug}-tech-${props.selection.technology}`)!} end={item} active positions={positions} animate={props.animate} />)}
-    {items.map(item => <SphereNode pixelScale={worldPerPixel} anchors={items.filter(anchor => (item.kind === 'root' && anchor.kind === 'project') || anchor.id === (item.kind === 'project' ? 'root' : item.spawnFrom) || anchor.spawnFrom === item.id)} pulse={props.interaction.nodeId === item.id ? props.interaction.revision : 0} positions={positions} labelPortal={props.labelPortal} key={item.id} item={item} animate={props.animate} reducedMotion={props.reducedMotion} onDrag={setDragging} onPosition={(id,position) => { const cached = positions.current.get(id); if (cached) cached.copy(position); else positions.current.set(id, position.clone()); }} />)}
+    {items.map(item => {
+      const separation = interactionNode ? new THREE.Vector3(...item.position).distanceTo(new THREE.Vector3(...interactionNode.position)) / worldPerPixel : Infinity;
+      const pulseStrength = props.interaction.nodeId === item.id ? 1 : item.kind === 'project' ? Math.max(0, 1 - separation / 120) * .2 : 0;
+      return <SphereNode pixelScale={worldPerPixel} anchors={items.filter(anchor => (item.kind === 'root' && anchor.kind === 'project' && anchor.active) || anchor.id === (item.kind === 'project' ? 'root' : item.spawnFrom) || anchor.spawnFrom === item.id)} pulse={pulseStrength > 0 ? props.interaction.revision : 0} pulseStrength={pulseStrength} positions={positions} labelPortal={props.labelPortal} key={item.id} item={item} animate={props.animate} reducedMotion={props.reducedMotion} onDrag={setDragging} onPosition={(id,position) => { const cached = positions.current.get(id); if (cached) cached.copy(position); else positions.current.set(id, position.clone()); }} />;
+    })}
     <OrbitControls ref={controls} makeDefault enabled={!dragging} enablePan={false} enableZoom={false} enableDamping={!props.reducedMotion} minPolarAngle={.45} maxPolarAngle={Math.PI * .7} onStart={() => { destination.current = null; }} />
   </>;
 }

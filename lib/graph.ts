@@ -3,9 +3,10 @@ import { projects } from '@/lib/projects';
 export const graphTitles = projects.map(project => project.graphTitle ?? project.title);
 export type FocusSide = -1 | 1;
 export type GraphSelection = { project: number | null; technology: number | null; focusSide?: FocusSide };
-// Top projects turn right, bottom projects turn left; side projects stay on their side.
+// Open on the planet's existing horizontal side, without crossing the core.
+// A small dead zone around the vertical axis avoids drift flipping the side.
 export function projectFocusSide(x: number, y: number): FocusSide {
-  return Math.abs(y) > Math.abs(x) ? y >= 0 ? 1 : -1 : x >= 0 ? 1 : -1;
+  return Math.abs(x) > 12 ? x >= 0 ? 1 : -1 : y >= 0 ? 1 : -1;
 }
 export function graphLeaves(project: number, technology: number) {
   return projects[project].contributions?.[technology] ?? [projects[project].role];
