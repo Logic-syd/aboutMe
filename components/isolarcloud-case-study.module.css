@@ -132,20 +132,20 @@
 .ownership h2,.sectionHeading h2,.delivery h2,.contact h2,.dataFocus h2{font-weight:600;letter-spacing:-.035em}
 .kicker{font-weight:500;letter-spacing:.08em}
 .overviewNumber{font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.04em;color:var(--primary)}
-.tryLink{border-radius:999px;border:1px solid #ffffff65;background:linear-gradient(160deg,#59755f,var(--primary) 76%);color:#f8fbf5;box-shadow:inset 0 1px 0 #ffffff38,0 5px 16px #244a3615;transition:background .18s ease,box-shadow .18s ease}
-.tryLink:hover{background:var(--primary-hover);box-shadow:inset 0 1px 0 #ffffff38,0 6px 18px #244a3620}
+.tryLink{border-radius:999px;border:1px solid var(--glass-border);background:linear-gradient(160deg,#59755f,var(--primary) 76%);color:#f8fbf5;box-shadow:0 5px 16px #244a3615;transition:background .18s ease,box-shadow .18s ease}
+.tryLink:hover{background:var(--primary-hover);box-shadow:0 6px 18px #244a3620}
 .workspaceIcon{border-radius:12px;background:var(--surface-selected);color:var(--primary)}
 .workspace li{border-radius:8px;border-color:transparent;font-family:var(--sans)}
-.contact,.dataFocus{border-color:var(--glass-border);border-radius:24px;background:var(--surface);box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.contact,.dataFocus{border-color:var(--glass-border);border-radius:24px;background:var(--glass-surface);box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2)}
 .note summary{border-radius:10px}
 .noteNumber,.deliverySteps li>span{font-variant-numeric:tabular-nums}
 .page a:focus-visible,.note summary:focus-visible{outline-color:var(--primary)}
 @media(prefers-reduced-transparency:reduce){.contact,.dataFocus{background:#f7faf3;-webkit-backdrop-filter:none;backdrop-filter:none}}
 
-.productViews{border-radius:24px;border-color:var(--glass-border);background:var(--surface);box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.productViews{border-radius:24px;border-color:var(--glass-border);background:var(--glass-surface);box-shadow:var(--glass-shadow);-webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2)}
 .viewControls{border-radius:23px 23px 0 0;background:var(--surface-soft)}
 .viewControls button{border-radius:999px;font-weight:500}
-.viewControls button[aria-pressed=true]{border-color:var(--glass-border);color:var(--primary);box-shadow:inset 0 1px 0 #ffffff80}
+.viewControls button[aria-pressed=true]{border-color:var(--glass-border);color:var(--primary);box-shadow:none}
 .viewControls button:hover{background:var(--surface-selected)}
 .productFigure{background:transparent}
 .productFigure figcaption{background:var(--surface-soft)}

@@ -147,7 +147,7 @@ export function PixelTown() {
       <p className={styles.kicker}><span aria-hidden="true" />Munich, Germany <span className={styles.relocation}>· Open to relocate</span></p>
       <h1 id="town-title">Yidan Shao<span>.</span></h1>
       <p className={styles.role}>Senior Frontend Engineer</p>
-      <p className={styles.bio}>I build interfaces for energy, <Link href="/projects/ronghe-pay">insurance payments</Link> and education. Outside work, I make small games and maps.</p>
+      <p className={styles.bio}>I’ve built web and mobile interfaces across finance, insurance, energy and education.</p>
       <div className={styles.facts} aria-label="Experience at a glance"><div><strong>7+</strong><span>years in frontend</span></div><div><strong>{projects.length}</strong><span>project case studies</span></div></div>
       <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
       <div className={styles.skillContext}><p>Energy platforms · Payments · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
