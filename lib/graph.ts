@@ -11,6 +11,17 @@ export function graphLeaves(project: number, technology: number) {
   return projects[project].contributions?.[technology] ?? [projects[project].role];
 }
 
+// A stable, open spiral gives each project its own distance from the core.
+// The central clearing leaves room for the core label and grows with the catalog.
+export function constellationPoints(count: number) {
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+  return Array.from({ length: count }, (_, index) => ({
+    angle: .38 + index * goldenAngle,
+    spread: .48 + .5 * Math.sqrt((index + .5) / Math.max(1, count)),
+    depth: Math.sin(index * 1.73 + .5) * 1.7,
+  }));
+}
+
 // Measure the orbit in label-sized units to leave more room along its top and bottom.
 export function orbitPoints(count: number, radiusX: number, radiusY: number, start = Math.PI / 2, labelWidth = 1, labelHeight = 1) {
   const steps = 720;
