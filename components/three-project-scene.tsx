@@ -17,8 +17,8 @@ type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; labe
 type LabelPortal = React.RefObject<HTMLDivElement>;
 type Props = { projectDirections: React.RefObject<Map<number, FocusSide>>; onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
 const colors = ['#9eb6a0', '#98b9cc', '#c2a0aa', '#8cb6ad', '#c8bd8d', '#9caec3', '#c3ad88', '#96b9a9', '#c7acb4', '#9cacc2', '#9fb39a', '#a3bfc0', '#b5adbf'];
-const sceneFog = '#dce9e9';
-const rootRingColor = '#b8ad7e';
+const sceneFog = '#19354f';
+const rootRingColor = '#c7d8e5';
 // The meadow-pearl core, colored planets and pale glass satellites
 // distinguish roles without depending only on their radius.
 const rootGradient: Gradient = ['#f7f9ee', '#cfdfc9', '#9fbea9'];
@@ -196,15 +196,15 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
   }
   return <group ref={group} name={`${item.kind}-${item.id}`} position={initialPosition}>
     <mesh ref={shell} geometry={geometry} castShadow onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => { pressed.current = false; dragging.current = false; offset.current.set(0, 0, 0); onDrag(false); invalidate(); }} onPointerOver={event => { event.stopPropagation(); setHovered(true); }} onPointerOut={() => setHovered(false)}>
-      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={0}
-        roughness={item.kind === 'leaf' ? .75 : item.kind === 'technology' ? .16 : item.muted ? .45 : .22}
-        clearcoat={item.kind === 'leaf' ? 0 : item.muted ? .2 : .85}
-        clearcoatRoughness={.3} specularIntensity={item.kind === 'leaf' ? .18 : item.muted ? .35 : .9}
+      <meshPhysicalMaterial vertexColors color="#ffffff" metalness={.035}
+        roughness={item.kind === 'leaf' ? .75 : item.kind === 'technology' ? .16 : item.muted ? .45 : .18}
+        clearcoat={item.kind === 'leaf' ? 0 : item.muted ? .2 : .95}
+        clearcoatRoughness={.18} specularIntensity={item.kind === 'leaf' ? .18 : item.muted ? .35 : 1}
         transparent={item.kind === 'technology'} opacity={item.kind === 'technology' ? .62 : 1} depthWrite={item.kind !== 'technology'}
         sheen={item.kind === 'root' ? .2 : item.kind === 'project' && !item.muted ? .15 : 0} sheenColor="#e8eee0" sheenRoughness={.65} />
     </mesh>
     {item.kind === 'technology' && <mesh><sphereGeometry args={[size * .35, 20, 16]} /><meshBasicMaterial color={item.color} transparent opacity={.24} depthWrite={false} /></mesh>}
-    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color={rootRingColor} metalness={.12} roughness={.65} /></mesh>}
+    {item.kind === 'root' && <mesh rotation={[.8, .1, .3]}><torusGeometry args={[size * 1.35, pixelScale * 1.1, 8, 96]} /><meshStandardMaterial color={rootRingColor} metalness={.4} roughness={.28} /></mesh>}
     {item.active && (item.kind === 'project' || item.kind === 'technology') && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, pixelScale * .8, 8, 64]} /><meshStandardMaterial color={item.color} roughness={.65} emissive={item.color} emissiveIntensity={.08} /></mesh>}
     {(!item.quiet || hovered && item.kind !== 'leaf') && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
       <div data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>YIDAN SHAO</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].kind === 'commercial' ? 'WORK' : 'PERSONAL'}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
@@ -243,20 +243,44 @@ function Connection({ start, end, active, positions, animate }: { start: Item; e
   return <><primitive object={line} />{active && animate && <mesh ref={particle}><sphereGeometry args={[.035, 10, 8]} /><meshBasicMaterial color={end.color} /></mesh>}</>;
 }
 
-function OrbitalAtmosphere({ width, height, pixelScale, animate }: { width: number; height: number; pixelScale: number; animate: boolean }) {
+function OrbitalAtmosphere({ width, height, animate }: { width: number; height: number; animate: boolean }) {
   const field = useRef<THREE.Group>(null);
+  const material = useRef<THREE.ShaderMaterial>(null);
+  const { gl, size } = useThree();
+  const count = size.width < 650 ? 90 : 140;
+  const uniforms = useMemo(() => ({ uTime: { value: 0 }, uPixelRatio: { value: gl.getPixelRatio() } }), [gl]);
   const stars = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
-    const points = new Float32Array(110 * 3);
+    const points = new Float32Array(count * 3);
+    const sizes = new Float32Array(count);
+    const intensities = new Float32Array(count);
+    const phases = new Float32Array(count);
+    const glints = new Float32Array(count);
+    const colors = new Float32Array(count * 3);
     const random = (seed: number) => { const value = Math.sin(seed * 127.1 + 311.7) * 43758.5453; return value - Math.floor(value); };
-    for (let index = 0; index < 110; index++) {
-      points[index * 3] = (random(index * 3) - .5) * width * 1.15;
-      points[index * 3 + 1] = (random(index * 3 + 1) - .5) * height;
-      points[index * 3 + 2] = -3 - random(index * 3 + 2) * 5;
+    const tints = ['#d9edff', '#edf7ff', '#c3d9fa', '#e9ddf1'].map(color => new THREE.Color(color));
+    // Just a few diffraction points; the smaller, distant lights leave room for projects.
+    const highlights: Point[] = [[-.43, .31, -2], [.34, .37, -3], [-.25, -.32, -4], [.43, -.19, -2.5], [.12, .26, -5], [-.05, -.38, -4], [-.39, -.09, -3]];
+    for (let index = 0; index < count; index++) {
+      const glint = index < highlights.length;
+      const position = highlights[index];
+      points[index * 3] = glint ? position[0] * width : (random(index * 3) - .5) * width * 1.6;
+      points[index * 3 + 1] = glint ? position[1] * height : (random(index * 3 + 1) - .5) * height * 1.55;
+      points[index * 3 + 2] = glint ? position[2] : -2 - random(index * 3 + 2) * 11;
+      sizes[index] = glint ? 14 + random(index + 70) * 5 : 1.3 + random(index + 100) * 1.8;
+      intensities[index] = glint ? .68 : .28 + random(index + 120) * .38;
+      phases[index] = random(index + 140) * Math.PI * 2;
+      glints[index] = glint ? 1 : 0;
+      tints[index % tints.length].toArray(colors, index * 3);
     }
     geometry.setAttribute('position', new THREE.BufferAttribute(points, 3));
+    geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+    geometry.setAttribute('aIntensity', new THREE.BufferAttribute(intensities, 1));
+    geometry.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
+    geometry.setAttribute('aGlint', new THREE.BufferAttribute(glints, 1));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     return geometry;
-  }, [width, height]);
+  }, [width, height, count]);
   useEffect(() => () => stars.dispose(), [stars]);
   const trails = useMemo(() => [0, 1].map(orbit => Array.from({ length: 100 }, (_, index): Point => {
     const angle = index / 99 * Math.PI * 1.25 + orbit * 2.8;
@@ -266,13 +290,53 @@ function OrbitalAtmosphere({ width, height, pixelScale, animate }: { width: numb
   })), [width, height]);
   useFrame((state, delta) => {
     if (!field.current || !animate) return;
+    if (material.current) material.current.uniforms.uTime.value += Math.min(delta, .05);
     const easing = 1 - Math.exp(-Math.min(delta, .05) * 2);
     field.current.rotation.y = THREE.MathUtils.lerp(field.current.rotation.y, state.pointer.x * .035, easing);
     field.current.rotation.x = THREE.MathUtils.lerp(field.current.rotation.x, -state.pointer.y * .025, easing);
   });
   return <group ref={field}>
-    <points geometry={stars}><pointsMaterial color="#7398a9" size={pixelScale * 1.1} transparent opacity={.36} depthWrite={false} /></points>
-    {trails.map((points, index) => <Line key={index} points={points} color={index ? '#b4a88c' : '#87a9b5'} transparent opacity={.2} lineWidth={.6} depthWrite={false} />)}
+    <points geometry={stars} raycast={() => null}>
+      <shaderMaterial ref={material} uniforms={uniforms} vertexColors transparent depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false}
+        vertexShader={`
+          uniform float uTime;
+          uniform float uPixelRatio;
+          attribute float aSize;
+          attribute float aIntensity;
+          attribute float aPhase;
+          attribute float aGlint;
+          varying vec3 vColor;
+          varying float vIntensity;
+          varying float vGlint;
+          void main() {
+            vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_Position = projectionMatrix * viewPosition;
+            gl_PointSize = aSize * uPixelRatio * clamp(24.0 / -viewPosition.z, 0.5, 1.15);
+            vColor = color;
+            vIntensity = aIntensity * (0.86 + 0.14 * sin(uTime * 0.65 + aPhase));
+            vGlint = aGlint;
+          }
+        `}
+        fragmentShader={`
+          varying vec3 vColor;
+          varying float vIntensity;
+          varying float vGlint;
+          void main() {
+            vec2 point = gl_PointCoord * 2.0 - 1.0;
+            float radius = length(point);
+            if (radius > 1.0) discard;
+            float star = 1.0 - smoothstep(0.05, 0.95, radius);
+            float core = exp(-dot(point, point) * 72.0);
+            float vertical = exp(-abs(point.x) * 55.0) * pow(max(0.0, 1.0 - abs(point.y)), 1.5);
+            float horizontal = exp(-abs(point.y) * 55.0) * pow(max(0.0, 1.0 - abs(point.x)), 1.5);
+            float halo = exp(-dot(point, point) * 12.0) * 0.1;
+            float diamond = core + (vertical + horizontal) * 0.68 + halo;
+            float alpha = mix(star, diamond, vGlint) * vIntensity;
+            gl_FragColor = vec4(vColor, min(alpha, 0.9));
+          }
+        `} />
+    </points>
+    {trails.map((points, index) => <Line key={index} points={points} color={index ? '#a7a1c8' : '#8bb6cf'} transparent opacity={.14} lineWidth={.6} depthWrite={false} raycast={() => null} />)}
   </group>;
 }
 
@@ -401,8 +465,8 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
   const root = items[0];
   return <>
     <fog attach="fog" args={[sceneFog, distance + 10, distance + 55]} />
-    <OrbitalAtmosphere width={size.width * worldPerPixel} height={size.height * worldPerPixel} pixelScale={worldPerPixel} animate={props.animate} />
-    <ambientLight intensity={.9} /><hemisphereLight args={['#f7faf3', '#c7d4c1', 1.5]} /><directionalLight position={[-6, 8, 6]} intensity={2.3} color="#fffdf3" /><directionalLight position={[4, -3, 3]} intensity={.7} color="#d5e4ed" />
+    <OrbitalAtmosphere width={size.width * worldPerPixel} height={size.height * worldPerPixel} animate={props.animate && !props.reducedMotion && props.visible} />
+    <ambientLight intensity={.65} /><hemisphereLight args={['#dcecff', '#34495f', 1.35]} /><directionalLight position={[-6, 8, 6]} intensity={2.5} color="#faf8ff" /><directionalLight position={[4, -3, 3]} intensity={1.1} color="#9ed4f5" /><directionalLight position={[1, 4, -5]} intensity={.65} color="#d2c6f2" />
     {expanded && items.filter(item => item.kind === 'project' && item.active).map(item => <Connection key={`root-${item.id}`} start={root} end={item} active positions={positions} animate={props.animate} />)}
     {expanded && items.filter(item => item.kind === 'technology').map(item => <Connection key={`tech-${item.id}`} start={items.find(node => node.id === projects[props.selection.project!].slug)!} end={item} active={props.selection.technology === null || item.active} positions={positions} animate={props.animate} />)}
     {props.selection.technology !== null && items.filter(item => item.kind === 'leaf').map(item => <Connection key={`leaf-${item.id}`} start={items.find(node => node.id === `${projects[props.selection.project!].slug}-tech-${props.selection.technology}`)!} end={item} active positions={positions} animate={props.animate} />)}
