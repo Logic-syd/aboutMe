@@ -138,7 +138,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 /* Four direct case links, followed by the complete interactive catalog. */
-.pixel-portfolio { --page-gutter: clamp(36px, 4.4vw, 68px); }
+.pixel-portfolio { --page-gutter: clamp(44px, 8vw, 120px); }
 .pixel-portfolio .shell { max-width: 1440px; padding-left: var(--page-gutter); padding-right: var(--page-gutter); }
 .pixel-portfolio main>section:not(:first-child) { padding-top: 30px; padding-bottom: 36px; }
 .pixel-portfolio .section-heading h2, .pixel-portfolio .about-grid h2, .pixel-portfolio .skills-section h2 {
@@ -306,8 +306,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .project-section-counts { font-size: 11px; gap: 10px; }
 }
 @media(max-width:800px) {
-  .pixel-portfolio { --page-gutter: 22px; }
-  .site-header.craft-header { display: grid; grid-template-columns: auto 1fr; height: auto; padding: 0 22px; gap: 0; }
+  .pixel-portfolio { --page-gutter: 24px; }
+  .site-header.craft-header { display: grid; grid-template-columns: auto 1fr; height: auto; padding: 0 var(--page-gutter, 22px); gap: 0; }
   .craft-header .wordmark { height: 60px; grid-column: 1; grid-row: 1; font-size: 29px; }
   .craft-header .header-connect { grid-column: 2; grid-row: 1; justify-self: end; }
   .craft-header .header-connect>p { display: none; }
