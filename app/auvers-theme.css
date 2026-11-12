@@ -183,9 +183,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .featured-work-link { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 17px 10px; min-height: 98px; border-radius: 12px; transition: background .18s; }
 .featured-work-link:hover { background: #d7e6d343; }
 .featured-work-link svg { width: 23px; height: 23px; flex-shrink: 0; color: var(--primary); }
-.featured-work-company { font-size: 12px; line-height: 1.5; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+.featured-work-context { font-size: 12px; line-height: 1.5; font-weight: 500; letter-spacing: 0; color: var(--muted); }
 .featured-work-link h3 { font-size: clamp(18px, 1.65vw, 23px); line-height: 1.25; margin: 3px 0 4px; font-weight: 600; letter-spacing: -.6px; }
-.featured-work-focus { font-size: 13px; line-height: 1.5; color: var(--muted); }
+.featured-work-reason { max-width: 52ch; font-size: 14px; line-height: 1.6; color: var(--muted); }
 .all-work-heading { padding-top: 42px; margin-bottom: 16px; scroll-margin-top: 24px; }
 .all-work-heading h3 { font-size: 23px; letter-spacing: -.55px; }
 
@@ -380,7 +380,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .featured-work-list li+li { border-top: 1px solid var(--line); }
   .featured-work-link { min-height: 94px; padding: 15px 2px; }
   .featured-work-link h3 { font-size: 20px; }
-  .featured-work-focus { font-size: 12px; }
+  .featured-work-reason { font-size: 14px; }
   .all-work-heading { padding-top: 30px; }
   .pixel-portfolio .career-history-browser { border-radius: 22px; }
   .pixel-portfolio .project-explorer-workspace { --scene-height: clamp(340px,48svh,420px); }
