@@ -779,9 +779,13 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .pixel-portfolio .section-heading h2,.pixel-portfolio .about-grid h2,.pixel-portfolio .skills-section h2{font-family:var(--sans);font-size:clamp(28px,3vw,36px);font-weight:500;line-height:1.2;letter-spacing:-1px;margin:0}
 .pixel-portfolio .about-section{background:transparent;border:0}
 .pixel-portfolio .about-grid{align-items:start}
-.about-outside-work{max-width:470px;margin-top:26px}
-.about-outside-work h3{font-size:19px;line-height:1.4;letter-spacing:-.3px;margin-bottom:10px}
-.about-outside-work p{font-size:14px;line-height:1.7;color:var(--muted)}
+.about-outside-work{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);align-items:center;gap:clamp(24px,4vw,56px);padding-top:24px}
+.about-outside-work h3{max-width:360px;font-size:clamp(24px,2.6vw,32px);line-height:1.2;letter-spacing:-.6px;margin:14px 0 20px}
+.outside-work-story>p:not(.eyebrow){max-width:430px;font-size:15px;line-height:1.75;color:var(--muted);margin-top:14px}
+.outside-work-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:570px}
+.outside-work-photo .personal-photo-trigger{aspect-ratio:3/4;height:auto;border:0;background:transparent;border-radius:14px}
+.outside-work-photo>figcaption{font-family:var(--sans);font-size:12px;line-height:1.5;margin-top:10px}
+@media(max-width:800px){.about-outside-work{grid-template-columns:1fr;gap:24px;padding-top:12px}.outside-work-story>p:not(.eyebrow){max-width:540px}.outside-work-photos{gap:12px}.outside-work-photo>figcaption{font-size:11px}}
 .pixel-portfolio .project-explorer{border:0}
 .pixel-portfolio .about-story-list{margin:0}
 .pixel-portfolio .about-story-list li{border:0;padding:12px 0}

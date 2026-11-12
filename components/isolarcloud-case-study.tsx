@@ -21,8 +21,8 @@ export function IsolarCloudCaseStudy({ project, next }: { project: Project; next
     <main id="main" className={styles.main}>
       <CaseIntro>
       <header className={styles.hero} data-case-hero>
-        <div><p className={styles.kicker}>CASE {project.number} / NVT · SUNGROW · SOLAR & ENERGY STORAGE</p><h1>iSolarCloud.<br /><em>From China to Europe.</em></h1><p className={styles.intro}>My frontend work on Sungrow’s solar and energy-storage platform spans the China-to-Europe migration, plant and device feature settings, and more recent EU Data Act data-access requirements.</p><div className={styles.heroActions}><a href="#product" className={styles.tryLink}>Explore the platform <span aria-hidden="true">↓</span></a><a href="#migration" className={styles.secondaryLink}>Inside the migration ↓</a></div></div>
-        <aside className={styles.ownership} aria-label="My frontend contribution"><p className={styles.kicker}>MY PART IN THE PRODUCT</p><h2>Regional delivery.<br /> Real device workflows.</h2><p>I worked on adapting the China-based frontend for Europe and on features for individual plants and devices. Data-access requirements are one additional part of that wider work.</p><span className={styles.role}>{project.organization}</span></aside>
+        <div><p className={styles.kicker}>CASE {project.number} / NVT · SUNGROW · SOLAR & ENERGY STORAGE</p><h1>iSolarCloud.<br /><em>From China to Europe.</em></h1><p className={styles.intro}>Sungrow’s solar and energy-storage platform brings plant monitoring, energy analysis and device operations into one web application.</p><div className={styles.heroActions}><a href="#product" className={styles.tryLink}>Explore the platform <span aria-hidden="true">↓</span></a><a href="#migration" className={styles.secondaryLink}>Inside the migration ↓</a></div></div>
+        <aside className={styles.ownership} aria-label="My frontend contribution"><p className={styles.kicker}>MY PART IN THE PRODUCT</p><h2>Frontend development.</h2><p>I work on the China-to-Europe migration, plant and device settings, and EU Data Act data-access workflows.</p><span className={styles.role}>{project.organization}</span></aside>
       </header>
       <div data-case-overview className={styles.overview} aria-label="Project focus"><div><span className={styles.overviewNumber}>CN → EU</span><p>Frontend migration<span>Regional routing · Country rules · Localization</span></p></div><div><span className={styles.overviewNumber}>↳</span><p>Plants & devices<span>Feature settings · Capability-aware operations</span></p></div><div className={styles.stack}><span className={styles.kicker}>PLATFORM TECHNOLOGY</span><p>Vue 3 · TypeScript · Pinia<br /> ECharts · Axios · MQTT</p></div></div>
 
@@ -35,7 +35,7 @@ export function IsolarCloudCaseStudy({ project, next }: { project: Project; next
 
       <DataAccessChapter />
 
-      <div className={styles.contact}><div><p className={styles.kicker}>BUILDING A COMPLEX BUSINESS PRODUCT?</p><h2>Let’s make the workflows usable.</h2></div><a href="https://linkedin.com/in/yidanshao/">Let’s talk ↗</a></div><nav className={styles.next} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
+      <nav className={`case-next ${styles.next}`} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
     </main><Footer />
   </div>;
 }

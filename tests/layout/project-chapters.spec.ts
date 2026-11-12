@@ -196,7 +196,8 @@ test('Pfand Pause presents the 2.0 release with separate desktop and mobile capt
   }
   await expect(desktop.locator('img')).toHaveAttribute('src', /pfand-pause-v2-desktop-recycling/);
   await expect(mobile.locator('img')).toHaveAttribute('src', /pfand-pause-v2-mobile-game/);
-  await expect(mobile).toContainText('English, German and Chinese');
+  // Language support belongs to the release summary, not a repeated device-specific claim.
+  await expect(page.locator('main')).toContainText('English, German and Chinese');
   await expectCompleteScreens(page);
 });
 

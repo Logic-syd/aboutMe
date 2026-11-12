@@ -8,6 +8,10 @@ export const personalPhotos: PersonalPhoto[] = [
   { src: '/images/personal/graduation-classmates.jpg', alt: 'Graduation celebration with classmates', caption: 'Caps, classmates & a new beginning', shortCaption: 'With classmates', width: 1280, height: 960, position: '40% 60%' },
   { src: '/images/personal/current-office.jpg', alt: 'Yidan outside her current office in Munich', caption: 'Outside my current office · Munich', shortCaption: 'Working in Munich', width: 960, height: 1280, position: '50% 34%' },
 ];
+export const kilimanjaroPhotos: PersonalPhoto[] = [
+  { src: '/images/personal/kilimanjaro-summit.jpg', alt: 'Yidan at the Uhuru Peak summit sign on Mount Kilimanjaro', caption: 'Uhuru Peak · Mount Kilimanjaro · 5,895 m', shortCaption: 'At the summit · 5,895 m', width: 2880, height: 3840, fit: 'contain' },
+  { src: '/images/personal/tanzania-school-visit.jpg', alt: 'Yidan visiting a school after climbing Kilimanjaro, with students and donated supplies', caption: 'A school visit after the climb · Tanzania', shortCaption: 'Visiting a school after the climb', width: 960, height: 1280, fit: 'contain' },
+];
 export const workPhotos: Record<string, PersonalPhoto> = {
   fingard: { src: '/images/personal/fingard-team.jpg', alt: 'Fingard colleagues in an outdoor group photo', caption: 'With the Fingard team', width: 1280, height: 960, fit: 'contain' },
 };

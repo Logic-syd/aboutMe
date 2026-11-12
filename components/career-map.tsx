@@ -1,20 +1,16 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import type { Map as LeafletMap, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { experiences } from '@/lib/experience';
-import { projects } from '@/lib/projects';
 import { placeStories } from '@/lib/place-stories';
 import { PlaceMap } from '@/components/place-map';
 import { cityPhotos } from '@/lib/about';
 import { PhotoViewer } from '@/components/photo-viewer';
 
-// Personal chapters belong on the growth map, alongside the employment history.
-type MapStop = { id: string; label: string; area: string; project: string; relatedProjects?: string[] };
-const workStops: MapStop[] = experiences.map(experience => ({ id: experience.id, label: experience.company, area: experience.area, project: experience.project, relatedProjects: experience.relatedProjects }));
-const mapStops: MapStop[] = [workStops[0], { id: 'berlin', label: 'Independent projects · Job search', area: 'Wedding · Berlin, Germany', project: 'discovery-map' }, ...workStops.slice(1)];
+// This map tells the place stories; professional work has its own section.
+const mapStops = [experiences[0].id, 'berlin', ...experiences.slice(1).map(experience => experience.id)];
 const stopLabels: Record<string, { name: string; region: string }> = {
   berlin: { name: 'Berlin', region: 'Wedding · Germany' },
   sungrow: { name: 'Munich', region: 'Current base · Germany' },
@@ -34,11 +30,8 @@ export function CareerMap() {
   const markers = useRef<Marker[]>([]);
   const [selectedId, setSelectedId] = useState('sungrow');
   const [areaView, setAreaView] = useState(false);
-  const [storyTab, setStoryTab] = useState<'life' | 'work'>('life');
   const [mapState, setMapState] = useState<'loading' | 'ready' | 'unavailable'>('loading');
-  const selected = mapStops.find(e => e.id === selectedId)!;
   const place = placeStories[selectedId];
-  const relatedProjects = [selected.project, ...(selected.relatedProjects ?? [])].map(slug => projects.find(project => project.slug === slug)).filter(project => project !== undefined);
 
   useEffect(() => {
     const element = container.current;
@@ -54,22 +47,23 @@ export function CareerMap() {
         map.current = instance;
         L.control.zoom({ position: 'bottomleft' }).addTo(instance);
         L.imageOverlay('/images/career-map.svg', artworkBounds, { alt: 'Illustrative growth map: Berlin and Wedding in the north, a larger Munich in the south; Shanghai and Hangzhou in Zhejiang on the right. Not to scale.', interactive: false }).on('error', () => { if (!disposed) setMapState('unavailable'); }).addTo(instance);
-        markers.current = mapStops.map(experience => {
-          const size = experience.id === 'sungrow' ? 42 : 28;
-          const marker = L.marker(schematicPoints[experience.id], { icon: L.divIcon({ className: `career-pin atlas-pin ${experience.id === 'sungrow' ? 'current-base-pin' : ''}`, html: '<span aria-hidden="true"></span>', iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), title: `${experience.label} — ${experience.area}`, alt: `${experience.label} — ${experience.area}`, keyboard: true });
-          marker.bindTooltip(`${experience.label}<br>${experience.area}`, { direction: 'top', offset: [0, -18] });
-          marker.on('click', () => { setSelectedId(experience.id); setAreaView(true); });
+        markers.current = mapStops.map(id => {
+          const { name, region } = stopLabels[id];
+          const size = id === 'sungrow' ? 42 : 28;
+          const marker = L.marker(schematicPoints[id], { icon: L.divIcon({ className: `career-pin atlas-pin ${id === 'sungrow' ? 'current-base-pin' : ''}`, html: '<span aria-hidden="true"></span>', iconSize: [size, size], iconAnchor: [size / 2, size / 2] }), title: `${name} — ${region}`, alt: `${name} — ${region}`, keyboard: true });
+          marker.bindTooltip(`${name}<br>${region}`, { direction: 'top', offset: [0, -18] });
+          marker.on('click', () => { setSelectedId(id); setAreaView(true); });
           marker.on('add', () => {
             const icon = marker.getElement();
             if (!icon) return;
             icon.tabIndex = 0;
             icon.setAttribute('role', 'button');
-            icon.setAttribute('aria-label', `${experience.label} — ${experience.area}`);
+            icon.setAttribute('aria-label', `${name} — ${region}`);
             icon.addEventListener('keydown', event => {
               if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 event.stopPropagation();
-                setSelectedId(experience.id);
+                setSelectedId(id);
                 setAreaView(true);
               }
             });
@@ -89,7 +83,7 @@ export function CareerMap() {
 
   useEffect(() => {
     markers.current.forEach((marker, index) => {
-      const active = mapStops[index].id === selectedId;
+      const active = mapStops[index] === selectedId;
       const icon = marker.getElement();
       icon?.classList.toggle('is-selected', active);
       icon?.setAttribute('aria-pressed', String(active));
@@ -103,7 +97,7 @@ export function CareerMap() {
     if (map.current) map.current.fitBounds(artworkBounds, { padding: [10, 10], animate: false });
   }
   return <div className="career-explorer place-story-explorer">
-    <div className="career-location-picker" aria-label="Choose a city or neighbourhood, most recent chapter first">{mapStops.map(experience => <button key={experience.id} className={experience.id === 'sungrow' ? 'current-base-location' : ''} onClick={() => selectExperience(experience.id)} aria-pressed={selectedId === experience.id}><span><strong>{stopLabels[experience.id].name}</strong><small>{stopLabels[experience.id].region}</small></span></button>)}</div>
+    <div className="career-location-picker" aria-label="Choose a city or neighbourhood, most recent chapter first">{mapStops.map(id => <button key={id} className={id === 'sungrow' ? 'current-base-location' : ''} onClick={() => selectExperience(id)} aria-pressed={selectedId === id}><span><strong>{stopLabels[id].name}</strong><small>{stopLabels[id].region}</small></span></button>)}</div>
     <div className="career-map-panel">
       <div className="career-map-visual">
       <div className="map-toolbar"><span className="eyebrow">{areaView ? 'LOCAL MAP / REAL GEOGRAPHY' : 'GROWTH MAP / NOT TO SCALE'}</span><button type="button" onClick={() => {
@@ -117,16 +111,12 @@ export function CareerMap() {
       {areaView && <PlaceMap key={selectedId} place={place} />}
       </div>
       <div className="career-selected place-story" aria-live="polite">
-        <p className="eyebrow">{place.neighbourhood ? `${place.neighbourhood} · ` : ''}{place.name} / {place.region}</p><h3>{storyTab === 'life' ? place.headline : selected.label}</h3>
-        <div className="place-story-tabs" aria-label="Choose a city story"><button aria-pressed={storyTab === 'life'} aria-controls="place-story-chapter" onClick={() => setStoryTab('life')}>Life here</button><button aria-pressed={storyTab === 'work'} aria-controls="place-story-chapter" onClick={() => setStoryTab('work')}>Work & projects</button></div>
-        <div id="place-story-chapter">{storyTab === 'life' ? <>
+        <p className="eyebrow">{place.neighbourhood ? `${place.neighbourhood} · ` : ''}{place.name} / {place.region}</p><h3>{place.headline}</h3>
+        <div id="place-story-chapter">
           <p className="place-life-description">{place.description}</p>
           <div className={`place-memory-chapter ${cityPhotos[selectedId] ? 'has-photo' : ''}`}><blockquote className="place-memory"><p>{place.memory}</p></blockquote>{cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" />}</div>
           <div className="place-story-links is-life"><a className="place-source-link" href={place.source.url}>About this place <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a></div>
-        </> : <>
-          <div className="place-reflection"><p>{place.reflection}</p></div>
-          <ul className="place-project-links" aria-label={`Projects from ${place.name}`}>{relatedProjects.map(project => <li key={project.slug}><Link href={`/projects/${project.slug}`} aria-label={`Read ${project.title} case study`}><span>{project.graphTitle ?? project.title}</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link></li>)}</ul>
-        </>}</div>
+        </div>
       </div>
     </div>
     <p className="map-note">{areaView ? 'OpenStreetMap geography · The circle marks a city area, not an office.' : 'Places I’ve lived and worked · Overview not to scale · Munich is my current base.'}</p>

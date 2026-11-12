@@ -4,7 +4,8 @@ export type Project = {
   kind: 'commercial' | 'independent'; slug: string; number: string; title: string; shortTitle: string; category: string; organization: string;
   affiliation?: string; status?: string; inDevelopment?: boolean; archived?: boolean; description: string; tags: string[]; role: string;
   problem: string; responsibilities: string[]; decisions: { title: string; text: string }[];
-  delivery: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
+  delivery?: string; flow: string[]; lesson?: string; graphTitle?: string; contributions?: string[][];
+  caseHeadings?: { problem: string; approach: string; delivery?: string };
   featured?: boolean; heroTitle?: string; heroDetail?: string;
   links?: { label: 'Live Demo' | 'Play on Game Jolt' | 'Source Code'; href: string }[];
   screenshots?: ProjectScreenshot[]; mobileScreenshots?: ProjectScreenshot[];
@@ -20,7 +21,7 @@ export const projects: Project[] = [
     heroTitle: "Energy APIs", heroDetail: "Developer platform",
     kind: 'commercial', slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
     category: 'Energy · Developer experience', organization: 'NeuVerge-Tron / Sungrow',
-    description: 'Led a standalone renewable-energy API platform, with responsibility for the React frontend, European delivery, online API debugging and application-management workflows.',
+    description: "React frontend leadership for a renewable-energy API platform, including European delivery, an online API debugger and application-management workflows.",
     tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'API platform lead · React frontend',
     problem: 'Developers need to move from API documentation to application authorization and working calls across regional sites. The platform brings these workflows together with application management and operational tooling.',
     responsibilities: ['Lead the API platform and its React frontend delivery, including the European site.', 'Develop online API debugging with regional gateways, application credentials and permission checks.', 'Preserve raw debugger responses and distinguish network failures from business errors.', 'Implement application-management interfaces for developers.'],
@@ -29,7 +30,6 @@ export const projects: Project[] = [
       { title: 'A debugger needs a different response contract', text: 'Online debugging checks application permissions and uses application-level credentials. It preserves the raw API response instead of applying the ordinary portal result wrapper.' },
       { title: 'Separate network failures from business errors', text: 'A completed HTTP request can still report a business failure. The debugger preserves the response for inspection, while the interface distinguishes transport failures from application-level errors so developers can understand where a call failed.' }
     ],
-    delivery: 'My scope covers API platform leadership, European frontend delivery, online debugging and application management. The interactive case uses illustrative data and makes no live API requests.',
     flow: ['Application access', 'Regional gateway', 'API response']
   },
   {
@@ -38,7 +38,7 @@ export const projects: Project[] = [
     heroTitle: "iSolarCloud", heroDetail: "China → Europe",
     kind: 'commercial', slug: 'isolarcloud', number: '02', title: 'iSolarCloud — Solar & Energy Storage Platform', shortTitle: 'From China to Europe. From plants to devices.',
     category: 'Energy · Regional migration · Device operations', organization: 'NeuVerge-Tron (NVT) / Sungrow',
-    description: 'Frontend work on iSolarCloud (阳光云), Sungrow’s solar and energy-storage management platform: migrating the China-based experience to Europe, developing plant and device feature settings, and adding EU Data Act data-access workflows.',
+    description: "Vue and TypeScript frontend development for Sungrow’s solar and energy-storage platform: China-to-Europe migration, plant and device settings, and EU Data Act data access.",
     tags: ['Vue 3', 'TypeScript', 'Multi-region delivery', 'Plant & device workflows', 'CSS-in-JS'], role: 'Frontend development · China-to-Europe migration · Plant & device features',
     problem: 'Bringing an established energy platform from China to Europe involves more than translation. Cloud routing, product behavior, country eligibility, number and time interpretation, asynchronous services and device capabilities all need to agree while existing regional workflows continue to work.',
     responsibilities: ['Worked on the frontend migration of iSolarCloud from China to Europe.', 'Developed feature settings and business interfaces for individual plants and devices.', 'Worked with regional product behavior, service routing and country-specific rules.', 'Implemented EU Data Act data-access and privacy-consent interfaces, including authorization, scope selection, asynchronous export states and downloads.', 'Coordinated country rules with plant and device states: explained disabled features, hid unavailable functions and provided fallback actions for abnormal states.'],
@@ -50,7 +50,6 @@ export const projects: Project[] = [
       { title: 'Make consent and data scope explicit', text: 'EU Data Act data-access work included authorization and privacy-consent workflows. Scope selection, asynchronous preparation and download handling need to remain connected so the interface makes the requested data and current task state clear.' },
       { title: 'Make unavailable features understandable', text: 'I coordinated plant and device states with country-specific rules, explaining disabled features, hiding unavailable functions and providing fallback actions for abnormal states. Feature availability is part of the workflow, not just a visual toggle.' }
     ],
-    delivery: 'Frontend contributions spanning China-to-Europe migration, plant and device feature settings, and EU Data Act data access. Public visitor-demo screenshots illustrate the platform; workflow examples use local sample data.',
     flow: ['Regional context', 'Plant & device workflows', 'Data access'],
     screenshots: [
       { src: '/images/isolarcloud-plant-overview.png', width: 1800, height: 776, alt: 'The iSolarCloud public European visitor demo showing a residential solar and energy-storage plant overview and energy flow.', caption: 'Plant overview · Public European visitor demo.' },
@@ -66,15 +65,19 @@ export const projects: Project[] = [
     kind: 'independent', slug: 'discovery-map', number: '03', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
     category: 'Independent product · Full stack', organization: 'Personal project', status: 'In development · Not released', inDevelopment: true,
     description: 'An independently built discovery product with 500+ curated places, connecting a React / Next.js map experience to a structured location dataset.',
+    caseHeadings: {"problem": "From a collection of places to a useful map.", "approach": "The data behind discovery."},
     tags: ['Next.js', 'Node.js / Express', 'Supabase / PostgreSQL', 'SSR', 'Web SDK'], role: 'Independent developer · Frontend and backend',
-    problem: 'Place discovery needs both a useful browsing experience and organized location data. I am building a coffee and craft beer map around a curated dataset of more than 500 venues.',
-    responsibilities: ['Developing the React / Next.js map product independently.', 'Organizing and importing a dataset of 500+ places.', 'Building with Node.js / Express and Supabase / PostgreSQL, including data access policies and server-side rendering.', 'Built an initial web SDK for embedding Coffee Map functionality in third-party websites.'],
-    decisions: [
-      { title: 'A structured foundation for discovery', text: 'Using PostgreSQL through Supabase for the venue dataset, with data imports and access policies treated as part of the product work.' },
-      { title: 'Server rendering alongside an interactive map', text: 'Using Next.js and SSR in the web experience, while React supports the interactive discovery interface.' },
-      { title: 'Bring discovery into another website', text: 'Built an initial web SDK for embedding Coffee Map functionality in third-party websites. This adds an integration surface alongside the standalone discovery product; the SDK remains an initial implementation within the project’s ongoing development.' }
+    problem: "A collection of favourite places becomes harder to browse as it grows. The product needs a consistent venue dataset, a map people can explore and a way to bring that discovery experience into another website.",
+    responsibilities: [
+      "Building the full-stack product, from the React / Next.js interface to the Node.js / Express backend.",
+      "Curating and importing venue records into Supabase / PostgreSQL, with data-access policies.",
+      "Developing the standalone map and an initial embeddable web SDK.",
     ],
-    delivery: 'In active development and not publicly released. The 500+ figure describes the curated venue dataset, not users or adoption. No live demo or source-code link is offered until a public version is available.',
+    decisions: [
+      {"title": "Give venue data a shared structure", "text": "Imports feed the PostgreSQL dataset through Supabase. Data organization and access policies are part of the backend work, so the map has a structured source to query as the collection grows."},
+      {"title": "Combine server rendering and map interaction", "text": "Next.js provides server-side rendering for the web experience; React handles the interactive map. These are two parts of the same product, with different rendering responsibilities."},
+      {"title": "Support a host website", "text": "The initial web SDK makes Coffee Map functionality embeddable in third-party websites. It adds an integration surface beyond the standalone app and is still part of the project’s ongoing development."},
+    ],
     flow: ['Curated places', 'PostgreSQL', 'Map discovery']
   },
   {
@@ -88,18 +91,14 @@ export const projects: Project[] = [
     ],
     heroTitle: "AI sports assessment", heroDetail: "Canvas + real-time video",
     kind: 'commercial', slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
-    category: 'Sports education · Real-time assessment', organization: 'Danzhu (淡竹)', status: 'Regional use · High-school entrance PE exams',
-    description: 'Migrated a TV-based sports system from jQuery to React, used for high-school entrance PE examinations in parts of China, as well as sports-school training and middle-school PE classes. The frontend connects camera video with backend AI analysis using Canvas, video-stream transmission and WebSocket scoring updates, with synchronized audio-visual feedback and spoken results.',
+    category: 'Sports education · Real-time assessment', organization: 'Danzhu', status: 'Regional use · High-school entrance PE exams',
+    description: "Migrated a TV-based sports examination and training frontend from jQuery to React, integrating camera streams, backend AI scoring, Canvas and WebSocket updates. The system is used in regional high-school entrance PE exams and school training in China.",
     tags: ['jQuery → React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · React migration & real-time assessment',
-    problem: 'The system is used for high-school entrance physical-education examinations in parts of China, as well as everyday training at sports schools and middle-school PE classes, with fitness assessment and analysis reports. Multiple people could train or take an exam together. The system needed face recognition to distinguish participants and had to turn camera input and backend AI scores into timely, understandable feedback on a TV display.',
+    problem: "Several people could train or take an exam together. Camera input, recognition data and backend scores had to stay associated with the right participant while visual and spoken feedback remained coordinated on a TV display.",
     responsibilities: [
-      'Migrated existing jQuery frontend code to React.',
-      'Developed React interfaces for TV-based sports examinations, everyday training, fitness assessment and analysis reports.',
-      'Worked with camera capture and video-stream transmission to the backend AI analysis system.',
-      'Used Canvas drawing and manipulation to implement visual presentation.',
-      'Integrated WebSocket-based real-time scoring data from the backend into the frontend.',
-      'Handled audio-visual synchronization and spoken score announcements after training.',
-      'Worked on multi-person assessment interfaces and integration with face recognition to distinguish participants and present individual results.'
+      "Migrated the examination and training interfaces from jQuery to React.",
+      "Integrated camera capture, video transmission and WebSocket scoring updates with Canvas presentation.",
+      "Developed multi-person result displays, analysis reports and synchronized spoken feedback.",
     ],
     decisions: [
       { title: 'Scaling from two cameras to eight', text: 'Increasing camera inputs from two to eight provided more data, but the stream could stall in certain operating states. This became a prolonged debugging challenge that the team eventually resolved.' },
@@ -110,7 +109,6 @@ export const projects: Project[] = [
       { title: 'Support several participants in one session', text: 'Multiple people could train or take an exam together. The system used face recognition to distinguish participants; the frontend needed to present assessment data for the corresponding people.' },
       { title: 'Cover practice as well as examinations', text: 'The same system supported high-school entrance sports examinations and daily training, with scoring, fitness assessment and analysis reports. The frontend presented both the live session and its results.' }
     ],
-    delivery: 'The system has been used for high-school entrance PE examinations in parts of China, as well as sports-school daily training and middle-school PE classes. My frontend work included jQuery-to-React migration, Canvas, video transmission, real-time scoring, audio-visual synchronization and multi-person assessment. AI analysis and face recognition were backend capabilities integrated into the frontend experience.',
     flow: ['Camera video', 'Backend AI analysis', 'Live scores + reports']
   },
   {
@@ -118,43 +116,42 @@ export const projects: Project[] = [
     heroTitle: "Low-code tools", heroDetail: "Configurable interfaces",
     kind: 'commercial', slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Compose the interface. Keep the data connected.',
     category: 'Developer tools · Internal platform', organization: 'Longshine', status: 'Commercial work · Interactive reconstruction',
-    description: 'Built composite components and theme switching for a low-code platform that helped internal marketing and construction teams assemble simple apps. The platform began in Vue 3 and later moved to Vue 2 to join the company’s wider micro-frontend system.',
+    description: "An internal low-code platform for marketing and construction teams to assemble simple apps. I developed composite components and one-click theme switching.",
+    caseHeadings: {"problem": "Simple apps for internal teams.", "approach": "Components, hierarchy and shared appearance."},
     tags: ['Vue 3 → Vue 2', 'Composite components', 'Drag-and-drop', 'Theming'], role: 'Frontend development · Composite components & theming',
-    problem: 'As low-code development gained momentum, we built an internal platform for the marketing and construction departments to assemble simple apps from reusable components. My technical challenges centered on composite-component data flow, drag-and-drop parent-child relationships and consistent theme switching.',
-    responsibilities: ['Participated in technical selection and developed composite components for the internal low-code platform.', 'Worked on data-flow design between composite components and their nested fields.', 'Handled drag-and-drop hierarchy so component placement and parent-child relationships stayed consistent.', 'Implemented theme switching across the assembled application.'],
-    decisions: [
-      { title: 'Design the data flow of a composite component', text: 'My work included composite components made from smaller interface elements. Designing how their data flowed between the component and its children was a central difficulty: the assembled page needed coherent values and configuration as it was edited.' },
-      { title: 'Dragging changes structure as well as position', text: 'Drag-and-drop interactions affected component hierarchy, including which container a component belonged to. I worked on these parent-child relationships so moving a component made sense within the assembled page.' },
-      { title: 'Switch the theme across the application', text: 'I implemented theme switching for the platform. The selected appearance needed to apply consistently to the composed interface and its reusable components.' },
-      { title: 'Fit the company’s existing platform', text: 'The project began as an internal Vue 3 application. It later moved to Vue 2 to integrate with the company’s overall micro-frontend system. The company-system integration requirements drove this change in framework version.' }
+    problem: "As low-code development gained momentum, our team built a platform for colleagues outside engineering. They needed to assemble pages from reusable parts while keeping nested fields, component placement and the application’s appearance consistent.",
+    responsibilities: [
+      "Participated in technical selection and built composite components, including their data flow.",
+      "Worked on nested drag-and-drop relationships in the page builder.",
+      "Implemented application-wide theme switching.",
     ],
-    delivery: 'Commercial frontend work on composite components, component data flow, drag-and-drop hierarchy and theming. The interactive builder is a new portfolio reconstruction using sample components and local data; it does not reproduce proprietary source code or the original product UI.',
+    decisions: [
+      {"title": "Values and configuration across nested fields", "text": "A composite component contains smaller interface elements. I worked on how values and configuration flowed between the parent and its children, so editing the assembled page kept those parts in agreement."},
+      {"title": "A drop changes the component hierarchy", "text": "Moving a component can change which container owns it. The drag-and-drop work had to preserve parent-child relationships as well as the visible placement of the component."},
+      {"title": "One theme across the composed app", "text": "A theme change needed to reach the reusable components and the assembled interface together. I implemented this switching behavior so a page kept a consistent appearance after customization."},
+      {"title": "Vue 3 to Vue 2 for company integration", "text": "The platform began as an internal Vue 3 application. It later moved to Vue 2 to join the company’s wider micro-frontend system; compatibility with that existing system drove the framework change."},
+    ],
     flow: ['Reusable components', 'Page hierarchy + data flow', 'Marketing + construction apps']
   },
   {
     graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"], ["Restricted intranet debugging", "API requests, Cookies and permissions"]],
     heroTitle: "Operations", heroDetail: "Component library + workflows",
     kind: 'commercial', slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Reusable components. Workflow-aware interfaces.',
-    category: 'Enterprise systems · Component library & workflows', organization: 'Longshine (朗新) · State Grid project', status: 'Commercial work · Written case study',
-    description: 'Developed a shared frontend component library and work-order interfaces for a State Grid management system at Longshine. This combined hands-on experience building reusable UI with a deeper understanding of business workflows—skills I bring to SaaS frontend development.',
+    category: 'Enterprise systems · Component library & workflows', organization: 'Longshine · State Grid project', status: 'Commercial work · Written case study',
+    description: "Shared React and TypeScript components and work-order interfaces for a State Grid management system at Longshine, within a development programme of approximately 1,000 people.",
+    caseHeadings: {"problem": "Shared UI inside a large enterprise system.", "approach": "Requests, permissions and interrupted sessions."},
     tags: ['React', 'TypeScript', 'Component library', 'Business workflows', 'Browser networking'], role: 'Frontend development · Component library & work-order system',
-    problem: 'Enterprise software needs reusable interface building blocks as well as screens that reflect how the business operates. Within a 1,000-person State Grid development programme, my work connected component-library development with the practical workflows of a work-order system.',
+    problem: "Work-order screens needed to fit a shared management system and its business processes. Deployment inside State Grid’s restricted intranet added integration constraints around browser requests, Cookies, permissions and authentication.",
     responsibilities: [
-      'Developed reusable frontend components as part of the management system’s shared component library.',
-      'Implemented work-order system interfaces, applying shared components to business-facing screens.',
-      'Built familiarity with business-system workflows through work-order development, connecting process requirements with frontend implementation.',
-      'Collaborated within an approximately 1,000-person development team at Longshine.',
-      'Investigated browser networking, API requests, Cookies and permissions in State Grid’s restricted intranet environment.',
-      'Implemented session-error handling, state cleanup and login redirects, plus notifications and sign-out on login elsewhere as the system moved to single-session access.'
+      "Developed reusable components for the shared frontend library and applied them to work-order interfaces.",
+      "Investigated API and browser-networking issues in the restricted intranet.",
+      "Implemented session recovery and the frontend behavior for single-session access.",
     ],
     decisions: [
-      { title: 'Build for reuse across business interfaces', text: 'Component-library development was a core part of my contribution. I worked on reusable UI building blocks that could support the management system’s interfaces, gaining practical experience with the shared frontend foundations used in enterprise products.' },
-      { title: 'Understand the workflow behind the screen', text: 'Working on the work-order system deepened my understanding of how business processes translate into interfaces. This experience helps me approach a screen in the context of the wider workflow and the task it needs to support.' },
-      { title: 'Debug integration inside a restricted intranet', text: 'Investigated browser networking, API request, Cookie and permission issues in State Grid’s intranet. This meant looking beyond the component itself to the request and access context in the deployed environment.' },
-      { title: 'Recover when a session is no longer valid', text: 'Implemented frontend session-error handling in the State Grid system, including state cleanup and redirects to login. The interface needed to leave the expired session and guide the user back through authentication.' },
-      { title: 'Handle login elsewhere under single-session access', text: 'As the State Grid system moved to single-session access, I implemented notifications and sign-out when a user logged in elsewhere. The frontend needed to explain the interruption and end the previous session consistently.' }
+      {"title": "Trace the deployed request", "text": "Intranet integration issues required inspecting browser requests, Cookies and permissions together. A component working locally did not settle whether its request had the necessary access context in the deployed system."},
+      {"title": "Recover from an expired session", "text": "Session-error handling cleared stale frontend state and redirected the user to login. The transition needed to leave the invalid session consistently instead of keeping business screens active with outdated authentication."},
+      {"title": "Explain a sign-out caused by another login", "text": "When the system moved to single-session access, a login elsewhere could end the current session. I implemented the notification and sign-out behavior so users understood the interruption and returned through authentication."},
     ],
-    delivery: 'Commercial component-library and work-order frontend development at Longshine, within a 1,000-person project team. The experience strengthened both my ability to build reusable enterprise interfaces and my understanding of business workflows—foundations for SaaS frontend development. My work also included intranet integration debugging across browser requests, Cookies and permissions.',
     flow: ['Shared component library', 'Work-order interfaces', 'Business workflows']
   },
   {
@@ -163,25 +160,27 @@ export const projects: Project[] = [
     category: 'Fintech · Collections & payouts', organization: 'Fingard · Ronghe Pay',
     affiliation: 'The name combines “Ronghe” (integration in Chinese) with “Pay”: integrated payments.',
     status: 'Commercial project · Written case study',
-    description: 'Built the Vue 2 frontend during the 2018 upgrade of a PHP-based insurance payments product, then supported new insurer and bank integrations. My work included institution-specific configuration, response-field adaptation, large-data rendering and payment safeguards.',
+    description: "Rebuilt the frontend of a PHP-based insurance payments product in Vue 2 in 2018, then supported new insurance-company and bank integrations as the platform grew.",
+    caseHeadings: {"problem": "Many institutions, one payment workflow.", "approach": "Bank responses and payment safeguards."},
     tags: ['Vue 2', 'Multi-bank integration', 'Payment safety', 'Rendering performance', 'Reconciliation'], role: 'Frontend development · Rebuild & ongoing integrations',
-    problem: 'Insurers needed premium collections and claim payouts across banks through one platform. As more clients joined, each insurer and bank required its own configuration. Bank interfaces and response fields differed, while growing data volumes and real-time payment safety added frontend challenges. The platform supported batch and single payments, real-time settlement where available, and reconciliation statements.',
-    responsibilities: ['Built the Vue 2 frontend from zero to one during the 2018 upgrade of an existing PHP-based product.', 'Supported new insurance-company and bank integrations through institution-specific configuration and frontend adaptation of differing response fields.', 'Optimized frontend rendering as payment-related data volumes grew.', 'Worked on real-time payment safeguards, including prevention of duplicate submissions, across collection and payout workflows.'],
-    decisions: [
-      { title: 'A rebuild followed by new integrations', text: 'My zero-to-one contribution refers to the Vue 2 frontend rebuild of an existing PHP-based product in 2018. The work continued as we onboarded more insurance companies and banks, each with corresponding configuration and integration needs.' },
-      { title: 'Different banks, different response fields', text: 'Bank APIs returned different structures and information, and the fields reaching the frontend were not always uniform. Some differences were normalized by the backend; others needed frontend handling. My work included adapting those fields and institution-specific configuration to the payment interface.' },
-      { title: 'Render growing datasets efficiently', text: 'As data volumes increased, frontend rendering also needed optimization. I worked on rendering performance so larger datasets could remain usable within the payment workflows.' },
-      { title: 'Real-time payment safety', text: 'Real-time payment flows required safeguards against duplicate payments. My frontend work included handling repeated payment submissions as part of the overall payment-safety requirements, alongside backend processing. Frontend interaction safeguards were one part of that protection.' },
-      { title: 'From collections and payouts to reconciliation', text: 'The platform supported file-based batch operations and single transactions: premium collections through authorized banks, claim payouts to customers and real-time settlement where supported. Reconciliation statements gave insurers a record to check after money moved, alongside additional value-added services.' }
+    problem: "Insurers used the platform for premium collections, claim payouts and reconciliation. Each new institution brought its own configuration and bank API contract. Larger datasets and real-time payments added requirements for responsive rendering and protection against repeated submissions.",
+    responsibilities: [
+      "Built the Vue 2 frontend from the ground up during the product upgrade.",
+      "Integrated institution-specific configuration and adapted bank response fields for the payment interfaces.",
+      "Optimized rendering for larger payment datasets and implemented frontend submission safeguards.",
     ],
-    lesson: 'This was where I began learning the payment domain. Accuracy and timeliness matter throughout the workflow: institution-specific data needs careful interpretation, growing datasets need usable interfaces, and payment actions need safeguards against repetition.',
-    delivery: 'Commercial frontend work spanning the 2018 Vue 2 rebuild, ongoing insurer and bank integrations, rendering optimization and payment safeguards. This written case uses a workflow illustration; it does not reproduce the product interface.',
+    decisions: [
+      {"title": "Normalize only where responsibility is clear", "text": "Bank APIs returned different structures and fields. The backend normalized some differences; others reached the frontend unchanged. I adapted those remaining fields and institution-specific configuration so the payment screens could interpret each integration correctly."},
+      {"title": "Guard repeated payment actions", "text": "Real-time payment workflows needed protection against duplicate payments. My work handled repeated submissions in the frontend, alongside backend processing. These interaction safeguards were one part of the payment-safety requirements, not a replacement for server-side protection."},
+      {"title": "Carry payment context through reconciliation", "text": "The product supported file-based batches and single transactions, authorized-bank collections and customer claim payouts. Real-time settlement depended on the bank’s capabilities. Reconciliation statements gave insurers the records needed to check completed money movements."},
+    ],
     flow: ['Insurer + bank configuration', 'Payment workflows + safeguards', 'Reconciliation statements']
   },
   {
     kind: 'independent', slug: 'mountain-chess', number: '08', title: 'Mountain Chess — Offline Chess for Hiking', shortTitle: 'A chessboard for a mountain break.',
     graphTitle: 'Mountain chess', category: 'Personal product · Offline game', organization: 'Independent project', status: 'Published · Play online',
     description: 'I love hiking and chess, so I built a game for solo breaks in the mountains: a local computer opponent, saved games and offline play after the first online setup.',
+    caseHeadings: {"problem": "A game without a signal or an opponent.", "approach": "Offline readiness and on-device play.", "delivery": "Ready before the hike."},
     tags: ['JavaScript', 'PWA / Service Worker', 'Local chess engine', 'LocalStorage / i18n'], role: 'Independent developer · Product, interface and game logic',
     contributions: [
       ['Responsive board and game controls', 'No framework or runtime dependencies'],
@@ -189,13 +188,11 @@ export const projects: Project[] = [
       ['Legal moves and game outcomes', 'Local search with three difficulty settings'],
       ['Save and resume on the same device', 'Chinese, English and German interfaces']
     ],
-    problem: 'I enjoy hiking as much as chess. When I stopped for a rest alone in the mountains, I wanted to play a game without depending on a signal or finding an opponent. That personal need became Mountain Chess: a small, phone-friendly game that can travel with me, remember an unfinished position and work after its resources have been cached.',
+    problem: "A mountain break can be short, with no reliable signal. The game needed to open offline, provide a local opponent, remember an unfinished position and avoid unnecessary phone activity between moves.",
     responsibilities: [
-      'Designed and built the responsive chessboard, move feedback, game controls and win/draw screens.',
-      'Implemented chess rules and a computer opponent that runs on the device, with three difficulty settings.',
-      'Added Service Worker caching, PWA installation metadata and an explicit offline-readiness check.',
-      'Persisted the game and preferences locally, and provided Chinese, English and German interfaces.',
-      'Published the static application on GitHub Pages and built a default power-saving mode for use on a phone.'
+      "Designed the board, controls and game-result screens, and implemented the chess rules and local opponent.",
+      "Built offline caching and readiness checks, saved games and power-saving behavior.",
+      "Published the static PWA on GitHub Pages with Chinese, English and German interfaces.",
     ],
     decisions: [
       { title: 'Make offline readiness something I can check', text: 'A Service Worker caches the application, chess pieces and language resources. The readiness check verifies the active worker, version and cached files. Before a hike, I can check those resources and reopen the game offline to confirm it is ready.' },
@@ -203,7 +200,7 @@ export const projects: Project[] = [
       { title: 'Spend work only when it is needed', text: 'The computer calculates during its own turn. Pending computer turns pause when the page is hidden; power-saving mode is on by default and reduces animation while disabling sound and vibration. Move highlights and game-result feedback remain available.' },
       { title: 'Let a short break become a resumable game', text: 'LocalStorage preserves the position, move history and preferences in the same browser. Undo, board rotation and side selection support casual sessions. The three interface languages are cached too, and switching language keeps the current game intact.' }
     ],
-    delivery: 'Published and playable on GitHub Pages, with a public source repository. The gallery shows the live English interface and a German checkmate screen from my phone. Offline use requires an initial online visit and completed caching; saved games remain in the same device and browser.',
+    delivery: "The game and source are public. Offline play requires an initial online visit and completed caching; a saved game stays in the same device and browser.",
     flow: ['Cache before the hike', 'Play on the device', 'Save & resume'],
     links: [
       { label: 'Live Demo', href: 'https://logic-syd.github.io/chessOffline/dist/' },
@@ -218,7 +215,8 @@ export const projects: Project[] = [
   {
     kind: 'independent', slug: 'pfand-pause', number: '09', title: 'Pfand Pause 2.0 — A Bottle-Return Puzzle', shortTitle: 'A new country. A familiar everyday puzzle.',
     graphTitle: 'Pfand Pause', category: 'Independent product · Puzzle game · Version 2.0', organization: 'Independent project', status: 'Published · Version 2.0',
-    description: 'Inspired by my move to Germany and informal research with newly arrived students, I designed, built and published Pfand Pause. Version 2.0 turns a supermarket bottle-return machine into a layered matching puzzle: twenty untimed rounds, a seven-slot counter, glass sorting and a packaging quiz, with English, German and Chinese interfaces.',
+    description: "A bottle-return puzzle inspired by moving to Germany. I researched, designed and built Pfand Pause; version 2.0 has twenty untimed rounds, glass sorting and a separate packaging quiz.",
+    caseHeadings: {"problem": "An unfamiliar everyday routine.", "approach": "Game rules that survive rapid input.", "delivery": "Version 2.0 is published."},
     tags: ['React / TypeScript', 'Game rules / Verification', 'Responsive SVG / CSS', 'LocalStorage / i18n'], role: 'Independent developer · Research, game design, development and publishing',
     contributions: [
       ['Independent product ownership', 'Responsive desktop and mobile interfaces', 'Version 2.0 release'],
@@ -226,15 +224,12 @@ export const projects: Project[] = [
       ['Original bottle and shop artwork', 'Touch and keyboard interaction', 'Animation-safe input queues'],
       ['English, German and Chinese', 'Saved completed rounds and preferences', 'Reduced motion and sound controls']
     ],
-    problem: 'When I moved to Germany, unfamiliar drinks bottles were difficult to recognize. Informal research with newly arrived students suggested that people rarely seek out bottle information and find it hard to remember. I wanted to turn that everyday friction into an approachable product. Version 2.0 combines a fictional bottle-return puzzle with a separate packaging quiz that explains real return and recycling clues.',
+    problem: "Informal research with newly arrived students suggested that people rarely look up bottle information and find it difficult to remember. I wanted to make packaging clues approachable through play, while keeping fictional puzzle rules separate from real recycling guidance.",
     responsibilities: [
-      'Owned the product from informal research and game design through React / TypeScript development, verification and publishing.',
-      'Redesigned the 2.0 game around layered bottle cards, three-of-a-kind returns, a shared seven-slot counter and twenty untimed rounds.',
-      'Added non-deposit glass sorting from round eleven and a separate eight-question packaging guide.',
-      'Handled overlapping cards, queued taps, duplicate-click prevention and cancellation when restarting or leaving a round.',
-      'Built original SVG / CSS visuals and layouts that fit desktop, mobile and embedded browser containers.',
-      'Implemented English, German and Chinese interfaces, keyboard and touch controls, reduced motion, sound effects and local progress storage.',
-      'Verified legal solution paths and boundary rules, including a seventh bottle that completes a triple before a full-counter loss is evaluated.'
+      "Owned informal research, product and game design, React / TypeScript development and publishing.",
+      "Built the layered three-of-a-kind puzzle with a seven-slot counter, plus non-deposit glass sorting from round eleven and an eight-question packaging guide.",
+      "Created the SVG / CSS artwork and responsive layouts, with touch, keyboard, language, sound and reduced-motion controls.",
+      "Verified solution paths and boundary rules across all twenty rounds.",
     ],
     decisions: [
       { title: 'Separate the puzzle from real recycling guidance', text: 'Three matching bottles and seven slots are fictional puzzle rules. The packaging quiz separately explains return and recycling clues, using feedback after each answer. Refunds are simulated, and real return eligibility depends on packaging and shop rules.' },
@@ -244,7 +239,7 @@ export const projects: Project[] = [
       { title: 'Save completed progress with clear boundaries', text: 'Completed rounds and preferences are stored locally, with a migration for the revised campaign. Settings include English, German and Chinese, sound and reduced motion. Progress belongs to the current browser and does not synchronize across devices or hosting sites.' },
       { title: 'Create atmosphere without a countdown', text: 'The supermarket queue grows more impatient during inactivity, with optional visual and sound effects. Activity resets the pressure, and pausing or leaving the page stops it. There is no time penalty or timeout; the player can keep planning their next move.' }
     ],
-    delivery: 'Published Pfand Pause and released version 2.0 with twenty rounds, a packaging quiz and later-round glass sorting. I owned research, product and game design, implementation, verification and publishing. The release brings the same game to desktop and mobile browsers, with language, sound and motion preferences and locally saved completed rounds.',
+    delivery: "Version 2.0 is playable on Game Jolt, with public source code. The English, German and Chinese interfaces share the same campaign. Completed rounds and preferences are saved in the current browser.",
     flow: ['Read packaging clues', 'Match or sort bottles', 'Return the whole bag'],
     links: [
       { label: 'Play on Game Jolt', href: 'https://gamejolt.com/games/pfand-pause/1106213' },
@@ -255,8 +250,8 @@ export const projects: Project[] = [
       { src: '/images/pfand-pause-v2-desktop-game.png', width: 1440, height: 810, label: 'Layered puzzle', alt: 'The desktop Pfand Pause 2.0 puzzle showing layered bottle cards, the seven-slot counter and round controls after two real bottle selections.', caption: 'Version 2.0 · First round after two bottle selections · Desktop browser.' },
       { src: '/images/pfand-pause-v2-desktop-recycling.png', width: 1440, height: 810, label: 'Packaging guide', alt: 'The Pfand Pause 2.0 packaging quiz in English, presenting a bottle and return or recycling destinations on desktop.', caption: 'Version 2.0 · The separate packaging and recycling guide · Desktop browser.' }
     ],
-    mobileDescription: 'On desktop, the bottle bag and counter sit side by side. On a phone, they stack vertically so the layered cards, all seven slots and round controls stay together. These are captures of the same 2.0 web release, in a mobile browser viewport.',
-    mobileHighlights: ['Touch controls with queued bottle selections.', 'English, German and Chinese interfaces.', 'Completed rounds and preferences saved in the current browser.'],
+    mobileDescription: "The desktop bottle bag and counter sit side by side. On a phone they stack, keeping the cards, seven slots and round controls together. These captures show the same 2.0 release at 390 × 844.",
+    mobileHighlights: ["Tap exposed bottles to queue a selection.", "Keep the counter and next move in view."],
     mobileScreenshots: [
       { src: '/images/pfand-pause-v2-mobile-start.png', width: 390, height: 844, label: 'Start screen', alt: 'Pfand Pause 2.0 start screen in a 390 by 844 mobile browser viewport, with its bottle-return illustration and touch controls.', caption: 'Version 2.0 · Mobile start screen · 390 × 844.' },
       { src: '/images/pfand-pause-v2-mobile-game.png', width: 390, height: 844, label: 'Touch puzzle', alt: 'The Pfand Pause 2.0 first round in a mobile browser viewport, showing the layered cards and seven-slot counter after two real selections.', caption: 'Version 2.0 · Mobile puzzle · 390 × 844.' }
@@ -264,8 +259,9 @@ export const projects: Project[] = [
   },
   {
     kind: 'commercial', slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
-    graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine (朗新)', status: 'Commercial work · Written case study',
-    description: 'Built multiple large-screen dashboards as part of smart-city projects at Longshine, integrating map APIs and route tracking for Wuxi, Hainan and Taiyuan, with customizations for each location.',
+    graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine', status: 'Commercial work · Written case study',
+    description: "Large-screen smart-city dashboards with map views and route tracking for Wuxi, Hainan and Taiyuan. I was the sole frontend developer for the initial dashboard, then adapted it for regional requirements.",
+    caseHeadings: {"problem": "Regional dashboards with a shared foundation.", "approach": "Host systems and older browsers."},
     tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization', 'Browser compatibility'], role: 'Sole frontend developer for the initial dashboard · Regional delivery',
     contributions: [
       ['Map API integration', 'Geographic views within the dashboards'],
@@ -274,30 +270,24 @@ export const projects: Project[] = [
       ['Wuxi, Hainan and Taiyuan', 'Location-specific customizations'],
       ['Chrome 54 compatibility', 'iframe integration', 'Local cross-origin debugging']
     ],
-    problem: 'Smart-city projects in different locations needed large-screen dashboards with map views and route tracking. The dashboards shared the same foundation, but Wuxi, Hainan and Taiyuan each had specific requirements that called for a customized version.',
+    problem: "The locations shared a dashboard foundation but needed different customizations. The frontend also had to fit existing host systems and the browser versions actually used on site.",
     responsibilities: [
-      'Solely owned frontend development of the initial smart-city dashboard at Longshine.',
-      'Built multiple large-screen dashboard interfaces for regional smart-city projects.',
-      'Integrated map APIs into the dashboard experience.',
-      'Implemented map-based route tracking.',
-      'Adapted the shared foundation for Wuxi, Hainan and Taiyuan, including Chrome 54 compatibility and fallback behavior.',
-      'Integrated a dashboard into an existing system through an iframe and resolved local cross-origin issues within same-origin policy constraints.'
+      "Built the initial frontend and subsequent regional dashboard versions at Longshine.",
+      "Integrated map APIs and map-based route tracking into the large-screen interfaces.",
+      "Handled host-system embedding and browser compatibility requirements.",
     ],
     decisions: [
-      { title: 'Own the initial frontend', text: 'Was the sole frontend developer for the initial smart-city dashboard, then worked on regional dashboard versions built around a shared foundation.' },
-      { title: 'Keep a common foundation across versions', text: 'The dashboards were based on the same foundation. My work covered multiple versions, carrying that common base into the implementation for each location.' },
-      { title: 'Connect maps with route tracking', text: 'Map API integration and route tracking formed part of the large-screen interfaces, bringing geographic context and routes into the dashboard experience.' },
-      { title: 'Adapt to local requirements', text: 'Wuxi, Hainan and Taiyuan each required specific customizations. The work combined the shared dashboard foundation with those differences rather than delivering an identical interface for every location.' },
-      { title: 'Integrate through an iframe', text: 'Embedded a dashboard in an existing system through an iframe and resolved cross-origin issues during local development. The integration had to work within browser same-origin policy constraints, alongside the host system.' },
-      { title: 'Support the browser actually in use', text: 'The required browser environment included Chrome 54 in 2021. I adapted frontend behavior and added compatibility fallbacks so the dashboard could work in that environment.' }
+      {"title": "Retain the shared base across regional versions", "text": "The implementations for Wuxi, Hainan and Taiyuan drew on the same foundation. Regional customization had to fit that common structure while accommodating each location’s requirements."},
+      {"title": "Work within the iframe boundary", "text": "One dashboard was embedded in an existing system through an iframe. I resolved local cross-origin issues within browser same-origin policy constraints so development and integration could work with the host system."},
+      {"title": "Support Chrome 54 in 2021", "text": "The required environment included Chrome 54. I adapted frontend behavior and added compatibility fallbacks for that deployment target, rather than assuming current-browser support."},
     ],
-    delivery: 'A written case study of commercial frontend work at Longshine across multiple regional dashboards. The workflow illustration summarizes the shared foundation and local customization work.',
     flow: ['Shared dashboard foundation', 'Maps + route tracking', 'Regional customizations']
   },
   {
     kind: 'commercial', slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'React interfaces for cross-region finance.',
-    graphTitle: 'SME financing', category: 'Fintech · React business interfaces', organization: 'GLP (普洛斯)', status: 'Commercial frontend work',
-    description: 'React frontend development for an SME financing system spanning domestic and overseas markets, with a focus on business interfaces and requirements around time zones, currencies and exchange rates.',
+    graphTitle: 'SME financing', category: 'Fintech · React business interfaces', organization: 'GLP', status: 'Commercial frontend work',
+    description: "React frontend development for GLP’s SME financing platform, supporting business workflows across domestic and overseas markets.",
+    caseHeadings: {"problem": "Financial data across markets.", "approach": "Preserve the meaning of dates and amounts."},
     tags: ['React', 'Business interfaces', 'Time zones', 'Currencies & exchange rates', 'Accessibility'], role: 'React frontend development',
     contributions: [
       ['React business interfaces', 'Business requirements to UI'],
@@ -306,27 +296,23 @@ export const projects: Project[] = [
       ['Currency-aware financial presentation', 'Exchange-rate context'],
       ['Accessibility improvements', 'Product, backend and QA collaboration']
     ],
-    problem: 'An SME financing system needed business interfaces for domestic and overseas markets, where dates, currencies and exchange rates required careful handling.',
+    problem: "A date or an amount could mean something different in another market. Financing screens needed clear time-zone, currency and exchange-rate context without changing the underlying business values.",
     responsibilities: [
-      'Developed React frontend interfaces for the financing system.',
-      'Worked on business screens supporting SME financing workflows.',
-      'Handled frontend requirements involving time zones, currencies and exchange rates.',
-      'Implemented accessibility improvements and collaborated with product, backend and QA on business rules, API integration and testing.'
+      "Developed React business interfaces for SME financing workflows.",
+      "Handled cross-region date, currency and exchange-rate requirements.",
+      "Implemented accessibility improvements and worked with product, backend and QA on business rules, API integration and testing.",
     ],
     decisions: [
-      { title: 'React for business interfaces', text: 'Worked on React interfaces for the financing system, translating business requirements into frontend screens.' },
-      { title: 'Date and time interpretation across regions', text: 'Time-zone requirements make the distinction between a timestamp and its local display important. Dates and times need an unambiguous regional context when a financing workflow spans domestic and overseas markets.' },
-      { title: 'Currency-aware amounts and exchange rates', text: 'Financial interfaces need to keep an amount’s currency clear and distinguish monetary values from the exchange rates used to interpret them. Relevant frontend concerns include decimal precision, rounding and number formatting across markets.' },
-      { title: 'Separate business values from display formatting', text: 'Cross-region financial requirements call for a clear distinction between underlying business data and how a screen presents it. Date, amount and currency formatting need to preserve the meaning of the data throughout the interface.' },
-      { title: 'Improve accessibility within business workflows', text: 'Implemented accessibility improvements in the financing interfaces. I also worked with product, backend and QA on business rules, API integration and testing, connecting interface changes to the financing workflows they supported.' }
+      {"title": "Distinguish a timestamp from its local display", "text": "Time-zone requirements made the regional context of dates and times important. A timestamp and the local time shown to a user need to remain distinguishable when a financing workflow spans markets."},
+      {"title": "Keep currency and exchange-rate context visible", "text": "A monetary amount needs its currency, while an exchange rate describes how values relate. Decimal precision, rounding and number formatting are frontend concerns that must preserve that meaning rather than silently reinterpret business data."},
     ],
-    delivery: 'React frontend contributions to an SME financing system at GLP, with experience in business interfaces and cross-region financial requirements.',
     flow: ['React interfaces', 'Financing workflows', 'Time + currency context']
   },
   {
     kind: 'commercial', slug: 'running-mini-program', number: '12', title: 'Student Sports Mini-Program & Teacher Dashboard', shortTitle: 'From student training to teacher insights.',
-    graphTitle: 'Student sports platform', category: 'Education · Mobile training & administration', organization: 'Danzhu (淡竹)', status: 'Commercial work · Used by schools',
-    description: 'Vue / uni-app student training interfaces and a teacher management dashboard, serving multiple universities and Shanghai primary schools. The product combines running, camera-based exercise counting, weak-network data saving and deferred uploads with student results and report exports.',
+    graphTitle: 'Student sports platform', category: 'Education · Mobile training & administration', organization: 'Danzhu', status: 'Commercial work · Used by schools',
+    description: "A Vue / uni-app student sports mini-program with a companion teacher dashboard: running and camera-based exercises on the phone, results and report exports for teachers.",
+    caseHeadings: {"problem": "Training outside a reliable connection.", "approach": "Recording, transmission and school context.", "delivery": "Used across different school settings."},
     tags: ['Vue / uni-app', 'Camera-based exercise tracking', 'Weak-network resilience', 'Peak running traffic', 'Teacher dashboard & exports', 'Age-specific experiences'], role: 'Frontend development · Student mini-program & teacher dashboard',
     contributions: [
       ['Student running and free-training interfaces'],
@@ -336,36 +322,33 @@ export const projects: Project[] = [
       ['Student result management', 'Teacher score-report exports'],
       ['University and primary-school versions', 'Different AI movement criteria', 'Adapted visual and spoken feedback']
     ],
-    problem: 'Students needed running and free-training tools, while teachers needed a management system to review results and export score reports. Running periods brought high concurrent usage, and weak connectivity required training data to be saved for later upload. University and primary-school versions also needed different movement-assessment criteria and age-appropriate visual and spoken feedback.',
+    problem: "Student running periods created high concurrent usage, often under weak connectivity. Training records needed to survive until upload was possible. University and primary-school versions also used different movement-assessment criteria and required age-appropriate feedback.",
     responsibilities: [
-      'Developed Vue / uni-app student interfaces for running and free training, including running metrics, route maps and checkpoints.',
-      'Integrated phone-camera capture for exercise statistics across sit-ups, jumping jacks, squats and other activities.',
-      'Worked on weak-network data saving and deferred uploads for student training sessions.',
-      'Optimized frontend performance for high concurrent usage during peak student running periods.',
-      'Worked on teacher management interfaces for reviewing student results and exporting score reports.',
-      'Adapted interface presentation and voice feedback for university and primary-school versions with different AI movement-assessment criteria.'
+      "Developed running metrics, route maps and checkpoints, plus phone-camera integration for sit-ups, jumping jacks, squats and other exercises.",
+      "Worked on local training-data saving, deferred uploads and frontend performance during peak running periods.",
+      "Built teacher result-management and score-report export interfaces.",
+      "Adapted visual and spoken feedback for university and primary-school versions.",
     ],
     decisions: [
-      { title: 'Keep training data through weak connectivity', text: 'The mini-program saved training data under weak-network conditions and deferred uploads. This allowed recording and transmission to happen at different times, addressing the connectivity constraints of student training.' },
-      { title: 'Combine running with camera-based exercise tracking', text: 'Running and free training belonged to one mini-program. Free-training activities included sit-ups, jumping jacks and squats, with phone-camera input supporting exercise statistics.' },
-      { title: 'Optimize for peak running periods', text: 'Optimized frontend performance for high concurrent usage during peak student running periods. Alongside this work, weak-network saving retained training records until they could be transmitted through deferred uploads.' },
-      { title: 'Connect student activity to teacher reporting', text: 'The teacher management system let teachers view student results and export score reports, connecting student training with school assessment and administration.' },
-      { title: 'Adapt the experience for different age groups', text: 'University and primary-school versions used different AI movement-assessment standards. Visual presentation and voice feedback were also adjusted for the respective student groups.' }
+      {"title": "Separate recording from transmission", "text": "Under weak connectivity, the mini-program saved training data and deferred its upload. A training record therefore did not depend on a successful network request at the moment the activity happened."},
+      {"title": "Keep camera exercises understandable on a phone", "text": "Free training combined phone-camera capture with exercise statistics for activities such as sit-ups, jumping jacks and squats. The student interface had to connect that input to the feedback shown during the activity."},
+      {"title": "Adapt assessment and feedback by age group", "text": "University and primary-school versions used different AI movement-assessment standards. The frontend presentation and voice feedback were adjusted for those student groups alongside the assessment differences."},
     ],
-    delivery: 'The mini-program served multiple universities and multiple primary schools in Shanghai. My frontend work covered student training, peak-period performance optimization, weak-network data handling, teacher result management and report exports, with separate university and primary-school experiences. The gallery shows an original, privacy-redacted running-session screenshot.',
+    delivery: "The mini-program served multiple universities and primary schools in Shanghai. The teacher dashboard connected student activity to results review and score-report exports.",
     flow: ['Student training', 'Save + upload results', 'Teacher review + export']
   },
   {
     kind: 'independent', slug: 'weibo-deleter', number: '13', title: 'Weibo Deleter — A Small Browser Extension', shortTitle: 'A small tool for a friend’s repetitive task.',
     graphTitle: 'Weibo deleter', category: 'Personal tool · Browser extension', organization: 'Independent project', status: 'Personal tool · Public source',
-    description: 'A small React browser extension built for a friend who wanted to delete Weibo posts in batches. It turns a deeply nested, roughly four-click deletion flow into a selectable batch operation.',
+    description: "A small React browser extension I built for a friend who wanted to delete old Weibo posts in batches.",
+    caseHeadings: {"problem": "A repetitive action hidden inside menus.", "approach": "Automating a changing page."},
     tags: ['React / Vite', 'Chrome Extension / MV3', 'DOM automation'], role: 'Independent developer',
     contributions: [
       ['Post selection popup', 'Progress and result messages'],
       ['Popup-to-content-script messaging'],
       ['Nested menu and confirmation handling', 'Sequential batch operations', 'Adapting to Weibo UI changes']
     ],
-    problem: 'A friend wanted to delete old Weibo posts in batches, but Weibo did not offer a quick way to do it. The delete action was buried behind several interactions—roughly four clicks—and frequent interface changes made the relevant elements difficult to locate.',
+    problem: "Deleting one post took roughly four clicks through nested menus and confirmation controls. Elements appeared only after earlier interactions, and Weibo’s interface changes made them difficult to locate reliably.",
     responsibilities: [
       'Built a React / Vite extension popup for selecting posts and showing operation progress.',
       'Implemented content-script DOM interaction and messaging to process selected posts sequentially.',
@@ -375,14 +358,14 @@ export const projects: Project[] = [
       { title: 'Follow the page interaction step by step', text: 'The content script opens each post’s menu, locates the deletion action and handles confirmation, with pauses between steps for the page to respond.' },
       { title: 'Expect the interface to change', text: 'The difficult part was locating controls that only appear after earlier clicks. Weibo’s redesigns also meant revisiting DOM selectors and menu structure rather than treating the automation as a one-time implementation.' }
     ],
-    delivery: 'A small personal browser-extension project with public source code, built around a friend’s practical need.',
     flow: ['Select posts', 'Menu + confirmation', 'Batch progress'],
     links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/weibo-deleter' }]
   },
   {
     kind: 'commercial', slug: 'medical-curriculum', number: '14', title: 'Public Health Curriculum & Knowledge Explorer', shortTitle: 'Majors, shared courses and the knowledge between them.',
-    graphTitle: 'PKU Public Health curriculum', category: 'Public health education · Existing-system redesign', organization: 'School of Public Health, Peking University', affiliation: 'Peking University Health Science Center', status: 'Launched · Around 6 weeks of development',
-    description: 'Redesigned an existing curriculum system for the School of Public Health, Peking University, as an independent collaborator through a partner company. As the sole frontend developer, I worked with one backend developer to launch the React and Three.js experience in around six weeks, during August–September 2024.',
+    graphTitle: 'PKU Public Health curriculum', category: 'Public health education · Existing-system redesign', organization: 'School of Public Health, Peking University', affiliation: 'Peking University Health Science Center', status: 'Launched',
+    description: "A React and Three.js redesign of an existing public-health curriculum system, combining an interactive 3D knowledge explorer with course-selection interfaces.",
+    caseHeadings: {"problem": "A curriculum that crosses programme boundaries.", "approach": "Free movement without conflicting gestures.", "delivery": "Redesigned and launched."},
     tags: ['React', 'Three.js', 'Curriculum relationships', 'Demonstration UI & performance', 'Course-selection workflows'], role: 'Sole frontend developer · One backend collaborator',
     contributions: [
       ['Sole frontend ownership', 'Existing-system redesign', 'Basic course-selection operations'],
@@ -391,32 +374,28 @@ export const projects: Project[] = [
       ['High-fidelity UI reproduction', 'Customized node labels', 'Repeated-interaction stability', 'Event-binding overhead'],
       ['Course browsing and selection interfaces']
     ],
-    problem: 'An existing medical education system needed a more polished visual experience. Its majors, overlapping and shared courses, and course-specific knowledge points also called for a 3D presentation. The redesign paired that demonstration experience with practical course-selection interfaces, under high UI-reproduction, label-customization and performance requirements. One frontend developer and one backend developer completed the work through to launch in around six weeks.',
+    problem: "The school wanted a polished demonstration screen for an existing education system. Majors shared courses, and each course had its own knowledge points. That connected structure needed to remain legible while users freely selected and dragged nodes, with highly customized labels and strict UI and performance requirements.",
     responsibilities: [
-      'Owned frontend development as the sole frontend developer, collaborating independently through a partner company during August–September 2024.',
-      'Built React interfaces to redesign the existing medical education system.',
-      'Developed a Three.js sphere-based view of majors, courses and course-specific knowledge points, with distinct left-click, right-click, double-click and free-drag interactions.',
-      'Presented course overlap and shared courses across different majors.',
-      'Worked on high-fidelity UI reproduction and customized node labels for the demonstration screen.',
-      'Worked on stability under repeated 3D interactions, alongside the demonstration’s rendering performance requirements.',
-      'Implemented basic course-selection operations alongside the curriculum explorer.',
-      'Worked with one backend developer to complete the redesign and launch in around six weeks.'
+      "Owned the frontend as an independent collaborator through a partner company, working with one backend developer during August–September 2024.",
+      "Built the 3D curriculum explorer and React course-selection interfaces.",
+      "Implemented customized node labels, precise UI reproduction and the complex mouse interactions.",
+      "Worked on rendering performance, event-binding overhead and stability through repeated use.",
     ],
     decisions: [
-      { title: 'Stability through repeated interaction', text: 'I worked on the stability of the 3D experience under repeated operation. Continuous node dragging, repeated selection and successive exploration of the curriculum needed consistent interaction state and responsive behavior throughout a demonstration. This stability work formed part of my frontend delivery, alongside the highly customized visual presentation and rendering performance requirements.' },
-      { title: 'Coordinate complex mouse events', text: 'Left-click, right-click and double-click each had their own operation, alongside free node dragging. I worked on distinguishing and coordinating these interaction paths so one gesture would not unintentionally trigger another operation. The number of event bindings also affected performance, making event handling part of the repeated-interaction stability work for the demonstration.' },
-      { title: 'A curriculum is more than a tree', text: 'Different majors can share the same course, including common courses taken across programmes. The relationship model needs to distinguish a course from its membership in several majors, while retaining the knowledge points belonging to that course.' },
-      { title: 'Shared courses create visual complexity', text: 'A shared course can connect to many majors. Showing every relationship with the same emphasis can make a 3D view difficult to read. The design challenge is to preserve the overall structure while making an individual major, course and its knowledge points understandable.' },
-      { title: 'Exploration and course operations need a common context', text: 'The 3D presentation and the React course interfaces describe the same educational content. A course’s identity and its major relationships need to remain consistent across these views; the curriculum structure and a student’s course selection represent different kinds of state.' },
-      { title: 'Precise UI reproduction includes the labels', text: 'The demonstration screen had high UI-reproduction requirements, including customized labels. The appearance of the sphere nodes, connections and labels needed to follow the requested design consistently throughout the interactive view.' }
+      {"title": "Separate left-click, right-click, double-click and drag", "text": "Each mouse action had its own operation, alongside free node dragging. I worked on distinguishing these paths so one gesture would not also trigger another action. Event-binding overhead made this a performance concern as well as an interaction problem."},
+      {"title": "Stay stable through repeated manipulation", "text": "The demonstration needed to remain responsive through continuous dragging, repeated selections and successive exploration. I worked on maintaining consistent interaction state across those operations, alongside the rendering performance requirements."},
+      {"title": "Represent shared courses without losing their identity", "text": "A course could belong to several majors, including common courses taken across programmes, while retaining its own knowledge points. The relationship structure and visual emphasis needed to make both the overall curriculum and an individual course understandable."},
+      {"title": "Keep exploration and selection in the same context", "text": "The 3D explorer and course-selection interfaces described the same educational content. Course identity and major relationships needed to agree across both views, while a student’s selection remained distinct from the curriculum structure."},
+      {"title": "Treat labels as part of the visual specification", "text": "The screen was intended for demonstration, with demanding UI-reproduction requirements. Node labels needed custom treatment alongside the spheres and connections, and that visual consistency had to hold while the scene was being manipulated."},
     ],
-    delivery: 'Completed and launched in around six weeks during August–September 2024. I was the sole frontend developer, working with one backend developer through a partner company on the redesign of an existing education system at the School of Public Health, Peking University. My scope covered React course interfaces, interactive Three.js curriculum visualization, distinct mouse events and free node dragging, customized labels, high-fidelity UI reproduction and stability under repeated 3D interaction. The workflow illustration summarizes the project context.',
+    delivery: "The two-person frontend/backend team completed the redesign and launched it in around six weeks.",
     flow: ['Majors + shared courses', '3D knowledge exploration', 'Course selection']
   },
   {
     kind: 'independent', slug: 'catch-that-train', number: '15', title: 'Catch That Train! — A Journey Under Pressure', shortTitle: 'Small decisions. One departing train.',
     graphTitle: 'Catch That Train!', category: 'Independent product · Browser strategy game', organization: 'Personal project', status: 'Playable browser game · English & Chinese',
-    description: 'A portrait mobile browser strategy game about catching a high-speed train in China. Four travelers navigate six stations, balancing time, energy, directions and everyday interruptions. I built the React and TypeScript experience, including touch and keyboard controls, bilingual presentation, local achievements and shareable results.',
+    description: "A portrait mobile browser game about rushing for a train in China. Four travelers navigate six stations, balancing time, energy, directions and everyday interruptions.",
+    caseHeadings: {"problem": "Make pressure understandable.", "approach": "A consistent clock through interrupted input.", "delivery": "Playable, with room to grow."},
     tags: ['React / TypeScript', 'Game state / Shared clock', 'Touch / Spatial interaction', 'i18n / Verification'], role: 'Independent developer',
     contributions: [
       ['React game interfaces', 'SVG and CSS scenes', 'Local achievements and result sharing'],
@@ -426,11 +405,10 @@ export const projects: Project[] = [
     ],
     problem: 'Make rushing for a train feel tense but understandable. A route, a queue, a distraction or a burst of sprinting can change the outcome. Players need clear choices and feedback, while the game needs consistent time, movement and resource rules across different travelers and stations.',
     responsibilities: [
-      'Built preparation, metro and station interfaces for four playable travelers across six station scenarios, with Normal and Extreme modes.',
-      'Implemented a shared game-state engine for deadlines, route costs, stamina, interruptions and result attribution.',
-      'Developed touch and keyboard controls, lane obstacles and collision-aware entrance scenes for the student at Shanghai Hongqiao.',
-      'Added English and Chinese display, local achievements and character unlocks, same-station challenge links and result-image exports.',
-      'Used automated tests and seeded simulations to verify transitions, resource boundaries and different journey strategies.'
+      "Built the React / TypeScript preparation, metro and station interfaces, with Normal and Extreme modes.",
+      "Implemented the game-state engine, time and resource rules, route forecasts and collision-aware Hongqiao entrance scenes.",
+      "Added touch and keyboard input, English and Chinese presentation, local achievements and result sharing.",
+      "Verified transitions and journey strategies with automated tests and seeded simulations.",
     ],
     decisions: [
       { title: 'One clock, several kinds of time', text: 'Movement, handling, waiting and metro travel have different time rules. The engine separates actual input time from fixed task costs, then derives recovery from time already charged. Route forecasts and journey budgets reuse these rules to keep the interface and outcomes consistent.' },
@@ -440,7 +418,7 @@ export const projects: Project[] = [
       { title: 'Keep earned progress consistent', text: 'Run IDs prevent duplicate achievement awards. Stored profiles are parsed, migrated and merged so an older browser tab cannot remove earned unlocks. Records stay in the current browser; shared links contain the station, title and outcome without uploading the player’s saved history.' },
       { title: 'Make verification reproducible', text: 'An injectable random source supports seeded tests and journey simulations. Reports record the character, station, mode, input model and decisions, making rule changes easier to compare. Simulation results describe the tested strategies and assumptions, rather than measured human win rates.' }
     ],
-    delivery: 'A playable English and Chinese browser game with four traveler chapters, six station scenarios, local achievements and shareable results. The student’s Hongqiao chapter adds walkable entrance scenes. Station layouts are gameplay abstractions; progress stays in the current browser, and family mode remains planned.',
+    delivery: "The game is playable online with public source code. Station layouts are gameplay abstractions, progress stays in the current browser, and family mode remains planned.",
     flow: ['Prepare + choose a route', 'Navigate + manage resources', 'Board + review the journey'],
     links: [
       { label: 'Live Demo', href: 'https://logic-syd.github.io/catchThatTrain-/' },
@@ -457,7 +435,8 @@ export const projects: Project[] = [
     kind: 'independent', slug: 'love-story-theater', number: '16', title: 'Love Story Theater', shortTitle: 'A little comfort, written as a story.',
     graphTitle: 'Love Story Theater', category: 'Personal project · Full-stack AI storytelling', organization: 'Personal project',
     status: 'Offline · No longer maintained', archived: true,
-    description: 'I made this for a friend going through a breakup: a conversational app that turned shared memories and relationship details into hopeful fictional stories. I built a Next.js frontend and a separate Kotlin / Ktor backend connected to DeepSeek. The service is now offline and the project is no longer maintained.',
+    description: "I made this for a friend going through a breakup: a conversational app that turned shared memories and relationship details into hopeful fictional stories.",
+    caseHeadings: {"problem": "Gather the story before generating it.", "approach": "Conversation state across a separate AI backend.", "delivery": "An archived full-stack experiment."},
     tags: ['Next.js / React', 'TypeScript / MUI', 'Kotlin / Ktor', 'DeepSeek API', 'i18n'], role: 'Independent full-stack developer',
     contributions: [
       ['Conversational React interface', 'Separate frontend application'],
@@ -466,12 +445,11 @@ export const projects: Project[] = [
       ['Contextual follow-up questions', 'Story-generation prompts'],
       ['English, Chinese and German', 'Localized question pools']
     ],
-    problem: 'The idea began with a friend’s breakup. I wanted to make something personal and comforting: a conversation that gathered details gradually, then used them to write an imaginative, hopeful story. The engineering task was to connect that guided chat experience to an AI service through a separate backend.',
+    problem: "The app needed to gather details gradually before generating a longer narrative. A guided conversation had to keep track of answers, move through question stages and carry the selected language into the AI request.",
     responsibilities: [
-      'Built the Next.js, React and TypeScript chat interface with Material UI, message history, typing feedback and a story-generation loading state.',
-      'Implemented a separate Kotlin / Ktor backend with JSON endpoints for contextual follow-up questions and final story generation.',
-      'Connected the backend to DeepSeek and wrote prompts for the conversational tone, supplied context and requested story language.',
-      'Organized English, Chinese and German interface copy and question pools separately from the chat rendering.'
+      "Built the Next.js / React / TypeScript interface with Material UI, message history, typing feedback and story-generation loading states.",
+      "Developed the separate Kotlin / Ktor JSON API and its DeepSeek integration.",
+      "Wrote conversational and story prompts, with English, Chinese and German content.",
     ],
     decisions: [
       { title: 'Separate the interface from model calls', text: 'The Next.js client handled the conversation and called a configurable backend URL through Axios. The Kotlin / Ktor service accepted JSON requests, built prompts and called DeepSeek. This kept the browser interface and model integration in separate applications.' },
@@ -479,7 +457,7 @@ export const projects: Project[] = [
       { title: 'Two API paths, two different tasks', text: 'A dynamic-interaction endpoint generated a follow-up question from the previous answer and a chosen topic. A separate story endpoint used the collected relationship details to generate a longer narrative. Backend request models and a shared response shape connected these tasks to the chat interface.' },
       { title: 'Carry language through the full flow', text: 'English, Chinese and German copy lived in a separate content module, including question pools and interface messages. Requests included the selected language so backend prompts could ask for a question or story in that language too.' }
     ],
-    delivery: 'A personal full-stack experiment, originally made for a friend after a breakup. The service has stopped running and the project is no longer maintained. The source repository remains available to show the separate frontend and backend implementation.',
+    delivery: "The service has stopped running and is no longer maintained. The public repository preserves the separate frontend and backend implementations.",
     flow: ['Guided Next.js conversation', 'Kotlin / Ktor JSON API', 'DeepSeek-generated story'],
     links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/Love-Story-Theater' }]
   }

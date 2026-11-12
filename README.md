@@ -2,7 +2,7 @@
 
 Public portfolio: https://yidan-builds.vercel.app/
 
-English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project explorer, fifteen project case studies, a Leaflet growth map and contact links. Each project has a statically generated detail route.
+English portfolio built with Next.js App Router, TypeScript and Tailwind CSS. The homepage includes an interactive Three.js project explorer, sixteen project case studies, a Leaflet growth map and contact links. Each project has a statically generated detail route.
 
 ## Local development
 
@@ -168,11 +168,13 @@ The interactive project constellation is a local ocean-blue night-sky surface wi
 
 Keep generous outer space across the entire homepage: the header, town, project catalog, Skills, About me, Experience, Places and footer share an 8vw gutter (capped at 120px) inside the centered 1440px shell, with 24px gutters on mobile. The hero introduction uses at most 440px of actual grid width; keep its gap to the town compact instead of allocating unused space between the two. Short-height adjustments must retain the horizontal gutters and fit the complete town without cropping or shrinking all text.
 
-About me includes the owner's confirmed Kilimanjaro summit and subsequent donation of notebooks, ballpoint pens and sanitary pads to a school, followed by her wish to do useful work and contribute to a better world. Keep this as a personal Outside work entry. The school, trip date and donation quantities have not been specified; the existing graduation and Munich photos retain their original context.
+About me includes the owner's confirmed Kilimanjaro summit and subsequent donation of notebooks, ballpoint pens and sanitary pads to a school, followed by her wish to do useful work and contribute to a better world. The two supplied photographs appear together in a separate Outside work row: `public/images/personal/kilimanjaro-summit.jpg` (2880 × 3840) and `public/images/personal/tanzania-school-visit.jpg` (960 × 1280). Both files are unchanged copies of the owner’s originals, displayed in their full portrait proportions with captions and an accessible enlarged view. The school, trip date and donation quantities have not been specified; the existing graduation and Munich photos retain their original context.
+
+Places shows city-life descriptions, personal memories and local maps. The former Work & projects tab and its duplicate project links have been removed; professional context remains in Experience and the project cases.
 
 The homepage keeps React, TypeScript, Vue, Next.js and Three.js in a short introduction, with the complete technology groups in a visible Skills section. Keep that section and the server-rendered profile/structured data aligned so simplifying the presentation does not remove relevant HR or search keywords. Backend technologies remain identified as personal-project experience. Use plain English, confirmed work and personal details; remove repeated slogans and decorative frames while retaining the town, photos, places and boundaries needed to operate interactive tools.
 
-The five proposed case-page structures are recorded in [the portfolio refresh plan](docs/portfolio-refresh-plan.md). They are **proposals only**; this homepage cleanup does not implement those detail-page changes.
+The earlier structural proposals are recorded in [the portfolio refresh plan](docs/portfolio-refresh-plan.md). The current editorial revision covers all sixteen cases: concise product introductions, explicit personal scope and technical details with project-specific headings. Outcome chapters are optional (`delivery`) and only appear when they add an actual result, current status or product limitation. Do not recreate a generic responsibility summary as a closing chapter. The bespoke API, iSolarCloud and sports cases follow the same separation of product, role and implementation; media and interactive demonstrations retain their source/sample labels. Existing demos, screenshots, core technical details and visible search keywords remain part of the cases.
 
 ## Owner-supplied CV additions
 

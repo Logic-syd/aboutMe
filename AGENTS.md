@@ -32,6 +32,10 @@ The browser tests iterate `lib/projects.ts`, so newly added projects automatical
 
 ## Content integrity
 
+Give each part of a case a different job: the introduction identifies the product, the context explains the constraint, contributions establish personal scope, and technical notes explain implementation decisions. Use project-specific `caseHeadings` where useful. Keep `delivery` optional: omit the outcome chapter when it would only repeat the introduction or responsibilities. Preserve concrete engineering details and visible technology keywords; do not replace them with generic lessons or unverified outcomes. Label illustrative media once beside the illustration, and keep sample-data notices next to demos.
+
+The Places map contains city-life stories only; professional context belongs in Experience and the project cases. The Kilimanjaro summit and school-visit photographs belong together in About, with full-image viewing and their original proportions and files preserved.
+
 Keep public portfolio prose, project titles and graph labels in English. Retain the specific public-health-school identity using the English naming recorded in README.md; do not introduce Chinese-only labels when updating this project.
 
 Update project facts at their existing sources. Preserve distinctions between the standalone React API platform and the Vue/TypeScript iSolarCloud platform. Do not invent employment dates, release status, quantified outcomes, compliance guarantees, or historical bug causes. Label illustrative workflows and synthetic interactive data clearly. Retain personal photos and original screenshots unchanged unless the owner specifically requests an image edit.
