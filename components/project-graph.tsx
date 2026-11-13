@@ -97,8 +97,6 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
   const project = selection.project === null ? null : projects[selection.project];
   const selectProject = useCallback((index: number) => {
     setCategory(projects[index].kind);
-    const group = projectGroups.find(item => item.kind === projects[index].kind)!;
-    window.history.replaceState(window.history.state, '', `#${group.id}`);
     setInteraction(current => ({ nodeId: projects[index].slug, revision: current.revision + 1 }));
     setSelection(current => current.project === index ? { project: null, technology: null } : { project: index, technology: null, focusSide: projectDirections.current.get(index) ?? 1 });
   }, []);
@@ -110,8 +108,6 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
       reset();
       navigation.current?.scrollTo({ top: 0 });
     }
-    const group = projectGroups.find(item => item.kind === next)!;
-    window.history.replaceState(window.history.state, '', `#${group.id}`);
   };
   const navigateCategories = (event: KeyboardEvent<HTMLDivElement>) => {
     const index = projectGroups.findIndex(group => group.kind === category);
