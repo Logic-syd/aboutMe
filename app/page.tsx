@@ -79,7 +79,7 @@ export default function Home() {
       <section id="skills" className="shell skills-section" aria-labelledby="skills-title">
         <h2 id="skills-title">Skills</h2>
         <div className="skills-overview">{technologyGroups.map(group => <div className="skills-group" key={group.label}><h3>{group.label}</h3><ul>{group.skills.map(skill => <li key={skill}>{skill}</li>)}</ul></div>)}</div>
-        <p className="skills-context">Commercial work: energy platforms, insurance payments and education. <Link href="/projects/ronghe-pay">Collections, payouts and reconciliation</Link> are part of my payments experience.</p>
+        <p className="skills-context">Payments experience: <Link href="/projects/ronghe-pay">premium collections, claim payouts and payment reconciliation</Link>.</p>
       </section>
       <AboutMe />
       <section id="career-history" className="shell experience-section professional-work-section" aria-labelledby="career-history-title">

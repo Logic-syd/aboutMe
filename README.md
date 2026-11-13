@@ -152,7 +152,7 @@ Desktop case chapters use the viewport as a maximum reading budget, not a compul
 
 ## Search visibility
 
-The production URL is `https://yidan-builds.vercel.app`, configured in `lib/profile.ts`. The shared profile keeps visible technology keywords and the homepage's structured data aligned with the owner's experience. Describe backend tools as personal-project work; keep insurance collections, payouts and reconciliation connected to the Ronghe Pay case. Use natural, accurate copy rather than unrelated trending keywords.
+The production URL is `https://yidan-builds.vercel.app`, configured in `lib/profile.ts`. The shared profile keeps visible technology keywords and the homepage's structured data aligned with the owner's experience. Describe backend tools as personal-project work; keep insurance collections, payouts and reconciliation connected to the Ronghe Pay case. The hero contains the homepage's single industry overview; Skills adds specific experience with premium collections, claim payouts and payment reconciliation without repeating the industry list. Keep the role, location, technologies and industry terms in the metadata and structured profile. Use natural, accurate copy rather than unrelated trending keywords.
 
 The homepage and every project route have their own canonical URL. `app/sitemap.ts` derives the sitemap from the project catalog so additions are included automatically; `robots.txt` permits crawling and points to it. The homepage includes a Schema.org ProfilePage with its Person entity, public profile links and known skills. No invented ratings, achievements, modification dates or search-ranking guarantees are included.
 
