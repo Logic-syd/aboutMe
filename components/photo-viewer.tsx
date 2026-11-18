@@ -5,6 +5,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import type { PersonalPhoto } from '@/lib/about';
 
 export function PhotoViewer({ photo, className = '' }: { photo: PersonalPhoto; className?: string }) {
+  const crop = photo.previewCrop;
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
   const captionId = useId();
@@ -25,8 +26,12 @@ export function PhotoViewer({ photo, className = '' }: { photo: PersonalPhoto; c
   function finishClosing() { restoreScroll(); setOpen(false); }
   function closePhoto() { dialog.current?.close(); finishClosing(); }
   return <figure className={`personal-photo ${className}`}>
-    <button className="personal-photo-trigger" aria-label={`Open photo: ${photo.caption}`} aria-haspopup="dialog" onClick={openPhoto}>
-      <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(max-width: 800px) 75vw, 300px" style={{ objectFit: photo.fit ?? 'cover', objectPosition: photo.position ?? '50% 50%' }} />
+    <button className="personal-photo-trigger" aria-label={`Open photo: ${photo.caption}`} aria-haspopup="dialog" onClick={openPhoto} style={crop ? { aspectRatio: `${crop.width} / ${crop.height}`, height: 'auto' } : undefined}>
+      <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(max-width: 800px) 75vw, 300px" style={crop ? {
+        position: 'absolute', maxWidth: 'none', objectFit: 'fill',
+        width: `${photo.width / crop.width * 100}%`, height: `${photo.height / crop.height * 100}%`,
+        left: `${-crop.x / crop.width * 100}%`, top: `${-crop.y / crop.height * 100}%`,
+      } : { objectFit: photo.fit ?? 'cover', objectPosition: photo.position ?? '50% 50%' }} />
       <span className="personal-photo-open" aria-hidden="true">↗</span>
     </button>
     <figcaption>{photo.shortCaption ?? photo.caption}</figcaption>

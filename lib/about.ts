@@ -1,5 +1,5 @@
 export type Education = { school: string; degree: string; college: string; context: string; year?: string };
-export type PersonalPhoto = { src: string; alt: string; caption: string; width: number; height: number; position?: string; fit?: 'cover' | 'contain'; shortCaption?: string };
+export type PersonalPhoto = { src: string; alt: string; caption: string; width: number; height: number; position?: string; fit?: 'cover' | 'contain'; shortCaption?: string; previewCrop?: { x: number; y: number; width: number; height: number } };
 
 // Education and photo contexts are owner-confirmed. Display framing preserves the original files.
 export const education: Education = { school: 'Jilin University', degree: 'Bachelor’s degree', college: 'School of Software', context: 'A member of China’s Project 985 university initiative.' };
@@ -17,6 +17,7 @@ export const workPhotos: Record<string, PersonalPhoto> = {
 };
 export const cityPhotos: Record<string, PersonalPhoto> = {
   sungrow: { src: '/images/personal/allianz-matchday.jpg', alt: 'Watching football at Allianz Arena in Munich', caption: 'Match day · Allianz Arena', shortCaption: 'Allianz Arena', width: 959, height: 1280, position: '63% 35%' },
+  berlin: { src: '/images/personal/berlinale-red-carpet.jpg', alt: 'Yidan on the red carpet in front of the blue Berlinale festival backdrop', caption: 'At a Berlinale premiere · Berlin', shortCaption: 'Berlinale · cropped view', width: 959, height: 1280, previewCrop: { x: 260, y: 380, width: 600, height: 900 } },
 };
 
 export const coursework: string[] = ['Data Structures & Algorithms', 'Operating Systems', 'Databases', 'Computer Networks', 'Software Engineering'];
