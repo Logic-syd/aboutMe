@@ -113,7 +113,7 @@
  .case-gallery-view img{height:100%;object-fit:contain}
  .case-gallery-view figcaption{min-height:0;overflow:auto;scrollbar-width:thin}
  .case-gallery.is-landscape .case-gallery-view>a{height:min(52svh,520px)}
- .case-gallery.is-landscape.has-mobile-showcase .case-gallery-view>a{height:min(64svh,590px)}
+ .case-gallery.is-landscape.has-mobile-showcase .case-gallery-view>a{height:min(60svh,590px)}
  .case-running-view{height:auto;min-height:0}
  .case-running-view .case-notes{height:auto;min-height:0}
  .case-notes.is-horizontal .case-note-tabs{flex-shrink:0}
@@ -153,7 +153,7 @@
  .case-gallery-view{grid-template-columns:minmax(0,1fr) 220px}
  .case-gallery-view figcaption{padding:18px;font-size:12px}
  .case-gallery.is-landscape .case-gallery-view>a{height:44svh}
- .case-gallery.is-landscape.has-mobile-showcase .case-gallery-view>a{height:60svh}
+ .case-gallery.is-landscape.has-mobile-showcase .case-gallery-view>a{height:56svh}
  .case-gallery.is-landscape .case-gallery-view figcaption{padding:8px 14px}
  .case-mobile-layout{padding:16px 24px;gap:30px}
  .case-mobile-copy h3{font-size:25px;margin-bottom:12px}

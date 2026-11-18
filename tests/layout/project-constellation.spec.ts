@@ -43,7 +43,7 @@ test('constellation selection keeps contributions accessible and labels clear', 
   // Cover short and long titles, different tag counts, and a personal project
   // at the end of the catalog. Do not require every node to carry a label:
   // the narrow layout deliberately puts full text in the adjacent catalog.
-  for (const slug of ['renewable-energy-api', 'medical-curriculum', 'low-code-platform', 'love-story-theater']) {
+  for (const slug of ['renewable-energy-api', 'medical-curriculum', 'low-code-platform', 'love-story-theater', 'wordweave']) {
     const projectIndex = projects.findIndex(project => project.slug === slug);
     const project = projects[projectIndex];
     await page.getByRole('tab', { name: project.kind === 'commercial' ? /^Work / : /^Personal / }).click();

@@ -8,5 +8,6 @@ export const coreTechnologies = ['React', 'TypeScript', 'Vue', 'Next.js', 'Three
 export const technologyGroups = [
   { label: 'Web & mobile', skills: ['React', 'TypeScript', 'JavaScript', 'Vue', 'Next.js', 'React Native', 'uni-app', 'HTML', 'CSS'] },
   { label: '3D & real-time', skills: ['Three.js', 'Canvas', 'WebSocket', 'Map APIs'] },
-  { label: 'Personal product backend', skills: ['Node.js', 'Express', 'Supabase', 'PostgreSQL', 'Kotlin', 'Ktor'] },
+  { label: 'Personal product backend', skills: ['Node.js', 'Express', 'Supabase', 'PostgreSQL', 'Prisma', 'Kotlin', 'Ktor'] },
+  { label: 'AI & browser tools', skills: ['LLM API integration', 'DeepSeek', 'Zod', 'Chrome Extensions', 'Manifest V3'] },
 ];

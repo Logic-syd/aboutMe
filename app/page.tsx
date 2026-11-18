@@ -27,9 +27,9 @@ const featuredProjects = [
     reason: 'A jQuery-to-React migration connecting camera streams, WebSocket scores and individual results for school PE assessment.',
   },
   {
-    slug: 'love-story-theater', context: 'Love Story Theater · Personal project · Archived',
-    title: 'Building a full-stack AI app',
-    reason: 'Made for a friend after a breakup: a Next.js conversation interface, a separate Kotlin / Ktor backend and DeepSeek-generated stories.',
+    slug: 'wordweave', context: 'Wordweave · Personal project · AI language learning',
+    title: 'Turning AI output into a learning product',
+    reason: 'A Next.js reader and browser extension, with validated model output, contextual vocabulary, PostgreSQL persistence and generation limits.',
   },
 ];
 
