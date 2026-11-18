@@ -114,7 +114,11 @@ export function CareerMap() {
         <p className="eyebrow">{place.neighbourhood ? `${place.neighbourhood} · ` : ''}{place.name} / {place.region}</p><h3>{place.headline}</h3>
         <div id="place-story-chapter">
           <p className="place-life-description">{place.description}</p>
-          <div className={`place-memory-chapter ${cityPhotos[selectedId] ? 'has-photo' : ''}`}><blockquote className="place-memory"><p>{place.memory}</p></blockquote>{cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" />}</div>
+          {place.photoMemory && <blockquote className="place-memory"><p>{place.memory}</p></blockquote>}
+          <div className={`place-memory-chapter ${cityPhotos[selectedId] ? 'has-photo' : ''}`}>
+            {place.photoMemory ? <p className="place-life-description place-photo-memory">{place.photoMemory}</p> : <blockquote className="place-memory"><p>{place.memory}</p></blockquote>}
+            {cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" />}
+          </div>
           <div className="place-story-links is-life"><a className="place-source-link" href={place.source.url}>About this place <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a></div>
         </div>
       </div>

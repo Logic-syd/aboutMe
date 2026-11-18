@@ -38,6 +38,8 @@ Use concrete project and section titles, sentence-case editorial labels and firs
 
 The Places map contains city-life stories only; professional context belongs in Experience and the project cases. The Kilimanjaro summit and school-visit photographs belong together in About, with full-image viewing and their original proportions and files preserved.
 
+When adding a city memory or photograph, retain the owner's existing introduction and memories verbatim unless rewriting them is explicitly requested. Add the new story alongside them; a new photo is not permission to shorten or replace earlier personal writing.
+
 Keep public portfolio prose, project titles and graph labels in English. Retain the specific public-health-school identity using the English naming recorded in README.md; do not introduce Chinese-only labels when updating this project.
 
 Update project facts at their existing sources. Preserve distinctions between the standalone React API platform and the Vue/TypeScript iSolarCloud platform. Do not invent employment dates, release status, quantified outcomes, compliance guarantees, or historical bug causes. Label illustrative workflows and synthetic interactive data clearly. Retain personal photos and original screenshots unchanged unless the owner specifically requests an image edit.

@@ -566,6 +566,7 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .career-team-photo .personal-photo-trigger{height:172px}
 .place-memory-chapter.has-photo{display:grid;grid-template-columns:minmax(0,1fr) 110px;align-items:center;gap:14px;margin:14px 0 16px}
 .place-story-explorer .place-memory-chapter.has-photo .place-memory{margin:0}
+.place-memory-chapter .place-photo-memory{margin:0}
 .place-memory-photo .personal-photo-trigger{height:114px}
 .place-memory-photo>figcaption{font-size:9px;line-height:1.4}
 .personal-photo-dialog{width:min(94vw,980px);max-width:none;max-height:calc(100dvh - 24px);padding:42px 16px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);overflow:auto;box-shadow:0 12px 60px #49333f30}
