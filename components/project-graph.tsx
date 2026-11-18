@@ -125,7 +125,7 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
 
     <div id="work-projects" className="project-explorer-workspace">
     <div ref={region} className="three-stage" aria-label="Interactive three-dimensional project knowledge graph">
-      <div className="three-corner-label" aria-hidden="true"><span>PROJECT CONNECTIONS / THREE.JS</span><span>{selection.technology !== null ? 'CONTRIBUTIONS' : project ? 'TECHNOLOGIES' : 'SELECT A PROJECT'}</span></div>
+      <div className="three-corner-label" aria-hidden="true"><span>Project connections / Three.js</span><span>{selection.technology !== null ? 'My contributions' : project ? 'Technologies' : 'Select a project'}</span></div>
       <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph projectDirections={projectDirections} onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
       <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
       <p className="three-stage-hint">Drag to explore · Select a project</p>
@@ -141,6 +141,6 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     </section>)}</div>
     </div>
     </div>
-    <div className="graph-selection-summary" aria-live="polite">{project ? <><div><h3>{project.title}</h3><p>{project.role}</p></div><Link className="text-link graph-case-button" href={`/projects/${project.slug}`}>Read case study <span aria-hidden="true">↗</span></Link></> : <p>Select a project to explore its technologies. Details opens the full case study.</p>}</div>
+    <div className="graph-selection-summary" aria-live="polite">{project ? <><div><h3>{project.title}</h3><p>{project.role}</p></div><Link className="text-link graph-case-button" href={`/projects/${project.slug}`}>Read case study </Link></> : <p>Select a project to explore its technologies. Details opens the full case study.</p>}</div>
   </div>;
 }

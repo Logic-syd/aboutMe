@@ -130,7 +130,7 @@
 .hero h1{font-weight:600;letter-spacing:-.045em}
 .hero h1 em{font-style:normal;font-weight:500;color:var(--primary)}
 .ownership h2,.sectionHeading h2,.delivery h2,.contact h2,.dataFocus h2{font-weight:600;letter-spacing:-.035em}
-.kicker{font-weight:500;letter-spacing:.08em}
+.kicker{font:500 12px/1.5 var(--sans);letter-spacing:0}
 .overviewNumber{font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.04em;color:var(--primary)}
 .tryLink{border-radius:999px;border:1px solid var(--glass-border);background:linear-gradient(160deg,#59755f,var(--primary) 76%);color:#f8fbf5;box-shadow:0 5px 16px #244a3615;transition:background .18s ease,box-shadow .18s ease}
 .tryLink:hover{background:var(--primary-hover);box-shadow:0 6px 18px #244a3620}

@@ -40,7 +40,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   outline: 3px solid var(--primary);
   outline-offset: 4px;
 }
-.eyebrow, .pixel-portfolio .eyebrow { font-family: var(--sans); font-weight: 600; letter-spacing: .095em; }
+.eyebrow, .pixel-portfolio .eyebrow { font-family: var(--sans); font-size: 12px; line-height: 1.5; font-weight: 500; letter-spacing: 0; text-transform: none; }
 .button {
   min-height: 44px;
   border: 1px solid #30533f14;
@@ -340,7 +340,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .pixel-portfolio .career-history-picker button[aria-pressed=true] { background: var(--surface-selected); color: var(--ink); box-shadow: none; }
 .pixel-portfolio .career-history-picker button:hover { background: var(--surface-soft); }
 .pixel-portfolio .career-history-detail { padding: 14px 22px; }
-.career-history-detail .eyebrow { font-family: var(--sans); letter-spacing: .09em; }
+.career-history-detail .eyebrow { font-family: var(--sans); letter-spacing: 0; }
 .place-story-explorer .career-location-picker { gap: 8px; border: 0; background: transparent; }
 .place-story-explorer .career-location-picker button {
   border: 1px solid var(--glass-border);
@@ -444,3 +444,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   *, *::before, *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 }
 @media(prefers-reduced-motion:reduce) { .button:active { transform: none; } }
+
+/* Editorial labels stay quiet; glass, color and interaction styling stay shared. */
+.wordmark span, .craft-header .wordmark span { color: inherit; }
+.project-case .case-facts>div>span { font: 500 12px/1.5 var(--sans); letter-spacing: 0; text-transform: none; }
+.case-screen-heading h2:first-child { margin-top: 0; }
+.case-next>a>span { letter-spacing: 0; }

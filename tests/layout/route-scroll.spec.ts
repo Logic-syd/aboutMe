@@ -6,7 +6,7 @@ async function expectHomepageTop(page: Page, url: string) {
   await page.waitForLoadState('networkidle');
   await expect(page).toHaveURL(url);
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-  await expect(page.getByRole('heading', { name: 'Yidan Shao.', exact: true })).toBeInViewport();
+  await expect(page.getByRole('heading', { name: 'Yidan Shao', exact: true })).toBeInViewport();
 }
 
 test('project selection stays local and consecutive homepage refreshes start at the top', async ({ page }) => {

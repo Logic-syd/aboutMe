@@ -200,17 +200,16 @@ export function PixelTown() {
   </div>;
   return <section className={styles.townSection} aria-labelledby="town-title">
     <div className={styles.intro}>
-      <p className={styles.kicker}><span aria-hidden="true" />Munich, Germany <span className={styles.relocation}>· Open to relocate</span></p>
-      <h1 id="town-title">Yidan Shao<span>.</span></h1>
+      <p className={styles.kicker}>Based in Munich, Germany. Open to relocate.</p>
+      <h1 id="town-title">Yidan Shao</h1>
       <p className={styles.role}>Senior Frontend Engineer</p>
-      <p className={styles.bio}>I’ve built frontends for large-scale, high-traffic systems. I also build full-stack personal projects, with a focus on AI applications.</p>
-      <div className={styles.facts} aria-label="Experience at a glance"><div><strong>7+</strong><span>years in frontend</span></div><div><strong>{projects.length}</strong><span>project case studies</span></div></div>
+      <p className={styles.bio}>I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.</p>
       <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
       <div className={styles.skillContext}><p>Finance · Insurance · Energy · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
       <div className={styles.actions}><a href="#work">View projects <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></a></div>
     </div>
     <div ref={townFrame} className={styles.gameWindow} data-town-frame>
-      <div className={styles.windowBar}><span><i aria-hidden="true" />Explore my town</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion} aria-label={motion ? 'Pause motion' : 'Resume motion'}><svg aria-hidden="true" viewBox="0 0 16 16">{motion ? <path d="M4 3h3v10H4zM10 3h3v10h-3z" /> : <path d="m5 3 8 5-8 5z" />}</svg>{motion ? 'Pause' : 'Resume'}</button></div>
+      <div className={styles.windowBar}><span>Explore my town</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion} aria-label={motion ? 'Pause motion' : 'Resume motion'}><svg aria-hidden="true" viewBox="0 0 16 16">{motion ? <path d="M4 3h3v10H4zM10 3h3v10h-3z" /> : <path d="m5 3 8 5-8 5z" />}</svg>{motion ? 'Pause' : 'Resume'}</button></div>
       <div className={`${styles.map} ${motion ? '' : styles.paused}`} aria-describedby={`${previewId}-hint`}>
         <svg viewBox="0 0 1000 620" className={styles.landscape} aria-hidden="true" shapeRendering="crispEdges">
           <defs><linearGradient id={`${previewId}-sky`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#bfd9e1" /><stop offset="1" stopColor="#edf0dc" /></linearGradient><linearGradient id={`${previewId}-meadow`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#d3dfbf" /><stop offset="1" stopColor="#dce8ce" /></linearGradient></defs>

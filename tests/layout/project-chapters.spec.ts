@@ -256,7 +256,7 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   const hero = page.locator('section[aria-labelledby="town-title"]');
   await expect(hero.getByLabel('Core technologies')).toBeVisible();
   await expect(hero.getByText('Three.js', { exact: true })).toBeVisible();
-  await expect(hero.getByText('I’ve built frontends for large-scale, high-traffic systems. I also build full-stack personal projects, with a focus on AI applications.', { exact: true })).toBeVisible();
+  await expect(hero.getByText('I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.', { exact: true })).toBeVisible();
   const workBuilding = hero.getByRole('button', { name: 'Explore Commercial work', exact: true });
   await workBuilding.click();
   const preview = page.getByRole(page.viewportSize()!.width <= 800 ? 'dialog' : 'region', { name: 'Commercial projects.', exact: true });

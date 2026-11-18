@@ -100,10 +100,10 @@ export function CareerMap() {
     <div className="career-location-picker" aria-label="Choose a city or neighbourhood, most recent chapter first">{mapStops.map(id => <button key={id} className={id === 'sungrow' ? 'current-base-location' : ''} onClick={() => selectExperience(id)} aria-pressed={selectedId === id}><span><strong>{stopLabels[id].name}</strong><small>{stopLabels[id].region}</small></span></button>)}</div>
     <div className="career-map-panel">
       <div className="career-map-visual">
-      <div className="map-toolbar"><span className="eyebrow">{areaView ? 'LOCAL MAP / REAL GEOGRAPHY' : 'GROWTH MAP / NOT TO SCALE'}</span><button type="button" onClick={() => {
+      <div className="map-toolbar"><span className="eyebrow">{areaView ? 'Local map' : 'Places I’ve lived · Not to scale'}</span><button type="button" onClick={() => {
         if (areaView) { setAreaView(false); requestAnimationFrame(() => { map.current?.invalidateSize(); map.current?.fitBounds(artworkBounds, { padding: [10, 10], animate: false }); }); }
         else setAreaView(true);
-      }}>{areaView ? 'Back to growth map ↗' : `Explore ${place.name} ↗`}</button></div>
+      }}>{areaView ? 'Back to overview' : `Explore ${place.name}`}</button></div>
       <div className="career-overview-map" hidden={areaView}>
         <div ref={container} className="career-map-canvas schematic-map" role="region" aria-label="Interactive illustrated map of places Yidan has lived and worked" />
         {mapState === 'unavailable' && <p className="map-fallback" role="status">The overview map could not load. Select a place to open its area map and story.</p>}

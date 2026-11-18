@@ -34,6 +34,8 @@ The browser tests iterate `lib/projects.ts`, so newly added projects automatical
 
 Give each part of a case a different job: the introduction identifies the product, the context explains the constraint, contributions establish personal scope, and technical notes explain implementation decisions. Use project-specific `caseHeadings` where useful. Keep `delivery` optional: omit the outcome chapter when it would only repeat the introduction or responsibilities. Preserve concrete engineering details and visible technology keywords; do not replace them with generic lessons or unverified outcomes. Label illustrative media once beside the illustration, and keep sample-data notices next to demos.
 
+Use concrete project and section titles, sentence-case editorial labels and first-person descriptions of the owner's work. Omit a chapter kicker when it repeats its heading. Reserve numbered labels for actual steps, and keep project counts in the catalog and drawer rather than promotional statistics. Preserve visible technology keywords, screenshot attribution and one clear email contact on detail pages. These copy conventions do not replace the approved gradient, glass surfaces, system typography or interactive behavior.
+
 The Places map contains city-life stories only; professional context belongs in Experience and the project cases. The Kilimanjaro summit and school-visit photographs belong together in About, with full-image viewing and their original proportions and files preserved.
 
 Keep public portfolio prose, project titles and graph labels in English. Retain the specific public-health-school identity using the English naming recorded in README.md; do not introduce Chinese-only labels when updating this project.

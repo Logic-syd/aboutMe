@@ -14,7 +14,7 @@ export function CareerExperience() {
     <div className="career-history-picker" aria-label="Choose a work experience">{experiences.map(experience => <button key={experience.id} onClick={() => setSelectedId(experience.id)} aria-pressed={selectedId === experience.id} aria-controls="career-history-detail"><strong>{experience.company}</strong><span>{experience.city}</span></button>)}</div>
     <article id="career-history-detail" className="career-history-detail" aria-live="polite">
       <p className="eyebrow">{selected.city} / {selected.domain}</p><h3>{selected.company}</h3><div className={`career-history-story ${workPhotos[selected.id] ? 'has-photo' : ''}`}><p className="experience-description">{selected.description}</p>{workPhotos[selected.id] && <PhotoViewer photo={workPhotos[selected.id]} className="career-team-photo" />}</div>
-      <div className="experience-case-links">{[selected.project, ...(selected.relatedProjects ?? [])].map(slug => <Link key={slug} className="text-link experience-case-link" href={`/projects/${slug}`}>{projects.find(project => project.slug === slug)?.title}<span aria-hidden="true">↗</span></Link>)}</div>
+      <div className="experience-case-links">{[selected.project, ...(selected.relatedProjects ?? [])].map(slug => <Link key={slug} className="text-link experience-case-link" href={`/projects/${slug}`}>{projects.find(project => project.slug === slug)?.title}</Link>)}</div>
     </article>
   </div>;
 }

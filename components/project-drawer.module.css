@@ -64,7 +64,7 @@
 .close:hover { background: #ffffff73; color: var(--ink); }
 .list { flex: 1; min-height: 0; padding: 18px 12px 22px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #7b9d9073 transparent; }
 .list section+section { margin-top: 24px; }
-.list h3 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 12px 8px; color: var(--muted); font: 500 11px/1.5 var(--sans); letter-spacing: .09em; text-transform: uppercase; }
+.list h3 { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 12px 8px; color: var(--muted); font: 500 13px/1.5 var(--sans); letter-spacing: 0; }
 .list h3 span { font-size: 11px; letter-spacing: 0; }
 .list ul { list-style: none; margin: 0; padding: 0; }
 .list li+li { margin-top: 2px; }

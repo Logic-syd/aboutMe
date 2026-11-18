@@ -16,7 +16,7 @@ export function CaseNotes({ notes, label, horizontal = false }: { notes: CaseNot
       if (next === null) return;
       event.preventDefault(); setSelected(next); buttons.current[next]?.focus();
     }}>
-      {notes.map((item, index) => <button ref={element => { buttons.current[index] = element; }} key={item.label} id={`${prefix}-tab-${index}`} type="button" role="tab" aria-selected={index === active} aria-controls={`${prefix}-panel-${index}`} tabIndex={index === active ? 0 : -1} onClick={() => setSelected(index)}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong></button>)}
+      {notes.map((item, index) => <button ref={element => { buttons.current[index] = element; }} key={item.label} id={`${prefix}-tab-${index}`} type="button" role="tab" aria-selected={index === active} aria-controls={`${prefix}-panel-${index}`} tabIndex={index === active ? 0 : -1} onClick={() => setSelected(index)}><strong>{item.label}</strong></button>)}
     </div>
     <div className="case-note-panels">{notes.map((note, index) => <div className="case-note-panel" key={note.label} id={`${prefix}-panel-${index}`} role="tabpanel" aria-labelledby={`${prefix}-tab-${index}`} aria-hidden={index !== active} inert={index !== active} tabIndex={index === active ? 0 : -1}><div className="case-note-copy"><h3>{note.title}</h3>{note.summary && <p className="case-note-summary">{note.summary}</p>}<div className="case-note-detail">{note.body}</div></div></div>)}</div>
   </div>;

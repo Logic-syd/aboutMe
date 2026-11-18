@@ -4,7 +4,7 @@ export function Diagram({ project, compact = false }: { project: Project; compac
   return (
     <figure className={`diagram diagram-${project.slug} ${compact ? 'diagram-compact' : ''}`}>
       <div className="diagram-grid" aria-hidden="true" />
-      <div className="diagram-top"><span>CONCEPT / {project.number}</span><span aria-hidden="true">↗</span></div>
+      <div className="diagram-top"><span>Workflow</span></div>
       <div className="diagram-flow">
         {project.flow.map((item, index) => <div className="flow-item" key={item}>
           <div className="flow-node"><span className="node-index">0{index + 1}</span><span>{item}</span><span className="node-dot" aria-hidden="true" /></div>

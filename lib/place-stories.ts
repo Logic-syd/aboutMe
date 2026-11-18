@@ -15,8 +15,8 @@ export type PlaceStory = {
 export const placeStories: Record<string, PlaceStory> = {
   sungrow: {
     slug: 'munich', name: 'Munich', region: 'Bavaria, Germany',
-    headline: 'City life, close to nature.',
-    description: 'Munich is my current base in Germany, where city life stays close to nature. Beyond beer, football and hiking, I love its cinemas, theatre and museums.',
+    headline: 'Weekends in Munich',
+    description: 'I live in Munich. Alongside football and hiking, I spend time in its cinemas, theatres and museums.',
     memory: 'My most relaxed Munich weekends: watching surfers in the English Garden, then heading to the Münchner Freiheit area for a coffee.',
     reflection: 'I admire the purpose of NeuVerge-Tron / Sungrow’s energy business. In the context of the energy crisis, working on renewable-energy products feels especially meaningful to me.',
     bounds: [[48.11, 11.53], [48.18, 11.64]], reference: [48.142, 11.582],
@@ -24,7 +24,7 @@ export const placeStories: Record<string, PlaceStory> = {
   },
   berlin: {
     slug: 'berlin', name: 'Berlin', region: 'Germany', neighbourhood: 'Wedding',
-    headline: 'My first chapter in Germany.',
+    headline: 'My first home in Germany',
     description: 'Berlin was my first home in Germany. I lived in Wedding for over a year, looking for my next role and building my own projects. Interesting, open and welcoming, it made room for people from everywhere—including me.',
     memory: 'Summer afternoons lying by the river, talking with friends. Winter walks through parks, watching people ice-skate. Film festivals, theatre, exhibitions, and food from all over the world. Even the odd late-night encounter after a film in Neukölln has not changed my love for Berlin.',
     reflection: 'Alongside my job search, I kept building independent products, including my coffee and craft beer discovery map. I would love to move back to Berlin for the right work opportunity.',
@@ -33,7 +33,7 @@ export const placeStories: Record<string, PlaceStory> = {
   },
   danzhu: {
     slug: 'caohejing', name: 'Caohejing Hi-Tech Park', region: 'Shanghai, China',
-    headline: 'Ideas in the middle of a city.',
+    headline: 'Tech events in Caohejing',
     description: 'Caohejing Hi-Tech Park is one of Shanghai’s established technology districts, with a lively mix of software, research and game development. ByteDance and miHoYo are among the names associated with its tech and gaming community.',
     memory: 'I associate this neighbourhood with ByteDance, miHoYo and the energy of a busy tech community. I often came across miHoYo events here.',
     reflection: 'At Danzhu, I migrated a TV-based sports assessment system from jQuery to React and worked on a student training mini-program with teacher reporting tools. Serving university and primary-school students brought together real-time feedback, weak-network data handling and age-specific training experiences.',
@@ -42,7 +42,7 @@ export const placeStories: Record<string, PlaceStory> = {
   },
   glp: {
     slug: 'zhangjiang', name: 'Zhangjiang Science City', region: 'Shanghai, China',
-    headline: 'A place built around possibility.',
+    headline: 'Programmers and plaid shirts',
     description: 'Zhangjiang Science City, in Shanghai’s Pudong district, brings together software, research and technology businesses. It is one of the city’s best-known centres for innovation.',
     memory: 'For me, Zhangjiang was a gathering place for programmers. My lasting image of the streets is a sea of plaid shirts—a familiar kind of developer uniform.',
     reflection: 'Working on an SME financing system at GLP introduced me to the demands of international business software. Time zones, currencies and exchange rates were part of the product requirements, deepening my understanding of how regional context affects financial interfaces.',
@@ -51,7 +51,7 @@ export const placeStories: Record<string, PlaceStory> = {
   },
   longshine: {
     slug: 'west-lake', name: 'West Lake', region: 'Hangzhou · Zhejiang, China',
-    headline: 'Water, gardens and a wider view.',
+    headline: 'Friday traffic by West Lake',
     description: 'West Lake is one of Hangzhou’s best-known attractions and a UNESCO World Heritage cultural landscape. Its lake, causeways, gardens and surrounding hills have inspired artists and poets for centuries.',
     memory: 'Beautiful, busy, and unmistakably Hangzhou. There were always plenty of visitors, and Friday traffic became part of my memory of working nearby.',
     reflection: 'At Longshine, energy dashboards and low-code tools were both enjoyable to build and useful in practice. Developing a component library and work-order interfaces for the State Grid management system deepened my understanding of business workflows. Working within a 1,000-person team also gave me a new understanding of teamwork.',
@@ -60,7 +60,7 @@ export const placeStories: Record<string, PlaceStory> = {
   },
   fingard: {
     slug: 'xixi', name: 'Xixi Wetland', region: 'Hangzhou · Zhejiang, China',
-    headline: 'A green setting. A first beginning.',
+    headline: 'Runs after work in Xixi',
     description: 'Xixi National Wetland Park is a green retreat in western Hangzhou, with interconnected waterways, wetland habitats and a long local cultural history. Its scenery offers a gentler side of city life.',
     memory: 'Xixi felt especially comfortable. We often went running in the park after work, then returned to the office to continue our evening work.',
     reflection: 'Fingard was my first frontend role. Contributing to a product from zero to one let me discover the pleasure of turning an idea into a working interface—and made me want to keep building.',

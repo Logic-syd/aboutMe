@@ -19,7 +19,7 @@ export const projects: Project[] = [
     graphTitle: "Energy API platform", contributions: [["API platform ownership", "React frontend delivery"], ["Typed frontend implementation"], ["Online API debugging", "Request and response integration"], ["Application management", "Developer workflows"]],
     featured: true,
     heroTitle: "Energy APIs", heroDetail: "Developer platform",
-    kind: 'commercial', slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'Making energy APIs accessible.',
+    kind: 'commercial', slug: 'renewable-energy-api', number: '01', title: 'Renewable-Energy API Platform', shortTitle: 'API documentation, access and debugging',
     category: 'Energy · Developer experience', organization: 'NeuVerge-Tron / Sungrow',
     description: "React frontend leadership for a renewable-energy API platform, including European delivery, an online API debugger and application-management workflows.",
     tags: ['React', 'TypeScript', 'API integration', 'Developer experience'], role: 'API platform lead · React frontend',
@@ -36,7 +36,7 @@ export const projects: Project[] = [
     graphTitle: "iSolarCloud", contributions: [["Plant and device interfaces", "European product adaptation"], ["Typed business interfaces", "Data-access workflows"], ["China-to-Europe frontend migration", "Regional routing and country rules", "Numbers, time zones and service dependencies"], ["Plant feature configuration", "Device parameter settings", "Country, firmware and protocol capabilities"], ["CSS-in-JS business interfaces"]],
     featured: true,
     heroTitle: "iSolarCloud", heroDetail: "China → Europe",
-    kind: 'commercial', slug: 'isolarcloud', number: '02', title: 'iSolarCloud — Solar & Energy Storage Platform', shortTitle: 'From China to Europe. From plants to devices.',
+    kind: 'commercial', slug: 'isolarcloud', number: '02', title: 'iSolarCloud — Solar & Energy Storage Platform', shortTitle: 'European migration and device operations',
     category: 'Energy · Regional migration · Device operations', organization: 'NeuVerge-Tron (NVT) / Sungrow',
     description: "Vue and TypeScript frontend development for Sungrow’s solar and energy-storage platform: China-to-Europe migration, plant and device settings, and EU Data Act data access.",
     tags: ['Vue 3', 'TypeScript', 'Multi-region delivery', 'Plant & device workflows', 'CSS-in-JS'], role: 'Frontend development · China-to-Europe migration · Plant & device features',
@@ -62,10 +62,10 @@ export const projects: Project[] = [
     graphTitle: "Coffee & beer map", contributions: [["React map experience", "Server-side rendering"], ["Backend development", "Data import workflows"], ["500+ curated venues", "Data access policies"], ["Server-rendered web experience"], ["Initial web SDK", "Third-party website embedding"]],
     featured: true,
     heroTitle: "Discovery map", heroDetail: "Independent product",
-    kind: 'independent', slug: 'discovery-map', number: '03', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'Good places, thoughtfully mapped.',
+    kind: 'independent', slug: 'discovery-map', number: '03', title: 'Coffee & Craft Beer Discovery Map', shortTitle: 'A personal coffee and craft beer map',
     category: 'Independent product · Full stack', organization: 'Personal project', status: 'In development · Not released', inDevelopment: true,
     description: 'An independently built discovery product with 500+ curated places, connecting a React / Next.js map experience to a structured location dataset.',
-    caseHeadings: {"problem": "From a collection of places to a useful map.", "approach": "The data behind discovery."},
+    caseHeadings: {"problem": "Places for a personal discovery map", "approach": "Venue data, access rules and embedding"},
     tags: ['Next.js', 'Node.js / Express', 'Supabase / PostgreSQL', 'SSR', 'Web SDK'], role: 'Independent developer · Frontend and backend',
     problem: "A collection of favourite places becomes harder to browse as it grows. The product needs a consistent venue dataset, a map people can explore and a way to bring that discovery experience into another website.",
     responsibilities: [
@@ -90,7 +90,7 @@ export const projects: Project[] = [
       ["Multiple simultaneous participants", "Face-recognition integration", "Individual score presentation"]
     ],
     heroTitle: "AI sports assessment", heroDetail: "Canvas + real-time video",
-    kind: 'commercial', slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'From live movement to individual feedback.',
+    kind: 'commercial', slug: 'sports-education', number: '04', title: 'AI Sports Examination & Training System', shortTitle: 'Live video and individual assessment results',
     category: 'Sports education · Real-time assessment', organization: 'Danzhu', status: 'Regional use · High-school entrance PE exams',
     description: "Migrated a TV-based sports examination and training frontend from jQuery to React, integrating camera streams, backend AI scoring, Canvas and WebSocket updates. The system is used in regional high-school entrance PE exams and school training in China.",
     tags: ['jQuery → React', 'Canvas', 'Video streams', 'WebSocket', 'Audio-visual synchronization', 'Multi-person assessment'], role: 'Frontend development · React migration & real-time assessment',
@@ -114,10 +114,10 @@ export const projects: Project[] = [
   {
     graphTitle: "Low-code platform", contributions: [["Vue 3 internal platform", "Vue 2 integration into the company system"], ["Composite components", "Component data flow"], ["Drag-and-drop hierarchy", "Nested page configuration"], ["One-click theme switching"]],
     heroTitle: "Low-code tools", heroDetail: "Configurable interfaces",
-    kind: 'commercial', slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Compose the interface. Keep the data connected.',
+    kind: 'commercial', slug: 'low-code-platform', number: '05', title: 'Internal Low-Code Platform', shortTitle: 'Components, drag-and-drop editing and themes',
     category: 'Developer tools · Internal platform', organization: 'Longshine', status: 'Commercial work · Interactive reconstruction',
     description: "An internal low-code platform for marketing and construction teams to assemble simple apps. I developed composite components and one-click theme switching.",
-    caseHeadings: {"problem": "Simple apps for internal teams.", "approach": "Components, hierarchy and shared appearance."},
+    caseHeadings: {"problem": "Apps for marketing and construction teams", "approach": "Composite components, drag hierarchy and themes"},
     tags: ['Vue 3 → Vue 2', 'Composite components', 'Drag-and-drop', 'Theming'], role: 'Frontend development · Composite components & theming',
     problem: "As low-code development gained momentum, our team built a platform for colleagues outside engineering. They needed to assemble pages from reusable parts while keeping nested fields, component placement and the application’s appearance consistent.",
     responsibilities: [
@@ -136,10 +136,10 @@ export const projects: Project[] = [
   {
     graphTitle: "Component library & workflows", contributions: [["Component-library development"], ["Typed frontend implementation"], ["Reusable UI building blocks", "Shared enterprise interfaces"], ["Work-order system interfaces", "Business workflow understanding"], ["Restricted intranet debugging", "API requests, Cookies and permissions"]],
     heroTitle: "Operations", heroDetail: "Component library + workflows",
-    kind: 'commercial', slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Reusable components. Workflow-aware interfaces.',
+    kind: 'commercial', slug: 'operations-monitoring', number: '06', title: 'State Grid Operations & Monitoring Platform', shortTitle: 'Shared components and work-order interfaces',
     category: 'Enterprise systems · Component library & workflows', organization: 'Longshine · State Grid project', status: 'Commercial work · Written case study',
     description: "Shared React and TypeScript components and work-order interfaces for a State Grid management system at Longshine, within a development programme of approximately 1,000 people.",
-    caseHeadings: {"problem": "Shared UI inside a large enterprise system.", "approach": "Requests, permissions and interrupted sessions."},
+    caseHeadings: {"problem": "Components for an enterprise system", "approach": "Requests, permissions and interrupted sessions"},
     tags: ['React', 'TypeScript', 'Component library', 'Business workflows', 'Browser networking'], role: 'Frontend development · Component library & work-order system',
     problem: "Work-order screens needed to fit a shared management system and its business processes. Deployment inside State Grid’s restricted intranet added integration constraints around browser requests, Cookies, permissions and authentication.",
     responsibilities: [
@@ -156,12 +156,12 @@ export const projects: Project[] = [
   },
   {
     graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend rebuild", "PHP-based product upgrade"], ["Insurer and bank configuration", "Bank-specific response fields"], ["Real-time payment safeguards", "Duplicate-payment prevention"], ["Large-data rendering optimization"], ["Collections, payouts and reconciliation"]],
-    kind: 'commercial', slug: 'ronghe-pay', number: '07', title: 'Ronghe Pay — Insurance Payments Platform', shortTitle: 'Care in every payment.',
+    kind: 'commercial', slug: 'ronghe-pay', number: '07', title: 'Ronghe Pay — Insurance Payments Platform', shortTitle: 'Insurer integrations and bank payment workflows',
     category: 'Fintech · Collections & payouts', organization: 'Fingard · Ronghe Pay',
     affiliation: 'The name combines “Ronghe” (integration in Chinese) with “Pay”: integrated payments.',
     status: 'Commercial project · Written case study',
     description: "Rebuilt the frontend of a PHP-based insurance payments product in Vue 2 in 2018, then supported new insurance-company and bank integrations as the platform grew.",
-    caseHeadings: {"problem": "Many institutions, one payment workflow.", "approach": "Bank responses and payment safeguards."},
+    caseHeadings: {"problem": "Insurer configuration and bank APIs", "approach": "Response fields and duplicate submissions"},
     tags: ['Vue 2', 'Multi-bank integration', 'Payment safety', 'Rendering performance', 'Reconciliation'], role: 'Frontend development · Rebuild & ongoing integrations',
     problem: "Insurers used the platform for premium collections, claim payouts and reconciliation. Each new institution brought its own configuration and bank API contract. Larger datasets and real-time payments added requirements for responsive rendering and protection against repeated submissions.",
     responsibilities: [
@@ -177,10 +177,10 @@ export const projects: Project[] = [
     flow: ['Insurer + bank configuration', 'Payment workflows + safeguards', 'Reconciliation statements']
   },
   {
-    kind: 'independent', slug: 'mountain-chess', number: '08', title: 'Mountain Chess — Offline Chess for Hiking', shortTitle: 'A chessboard for a mountain break.',
+    kind: 'independent', slug: 'mountain-chess', number: '08', title: 'Mountain Chess — Offline Chess for Hiking', shortTitle: 'Offline chess for hiking breaks',
     graphTitle: 'Mountain chess', category: 'Personal product · Offline game', organization: 'Independent project', status: 'Published · Play online',
     description: 'I love hiking and chess, so I built a game for solo breaks in the mountains: a local computer opponent, saved games and offline play after the first online setup.',
-    caseHeadings: {"problem": "A game without a signal or an opponent.", "approach": "Offline readiness and on-device play.", "delivery": "Ready before the hike."},
+    caseHeadings: {"problem": "Offline chess during a hike", "approach": "Caching, local play and saved games", "delivery": "Offline setup before a hike"},
     tags: ['JavaScript', 'PWA / Service Worker', 'Local chess engine', 'LocalStorage / i18n'], role: 'Independent developer · Product, interface and game logic',
     contributions: [
       ['Responsive board and game controls', 'No framework or runtime dependencies'],
@@ -213,10 +213,10 @@ export const projects: Project[] = [
     screenshotCredit: { label: 'Chess-piece artwork credits', href: 'https://github.com/Logic-syd/chessOffline/blob/main/dist/pieces/NOTICE.txt' }
   },
   {
-    kind: 'independent', slug: 'pfand-pause', number: '09', title: 'Pfand Pause 2.0 — A Bottle-Return Puzzle', shortTitle: 'A new country. A familiar everyday puzzle.',
+    kind: 'independent', slug: 'pfand-pause', number: '09', title: 'Pfand Pause 2.0 — A Bottle-Return Puzzle', shortTitle: 'A puzzle based on German bottle returns',
     graphTitle: 'Pfand Pause', category: 'Independent product · Puzzle game · Version 2.0', organization: 'Independent project', status: 'Published · Version 2.0',
     description: "A bottle-return puzzle inspired by moving to Germany. I researched, designed and built Pfand Pause; version 2.0 has twenty untimed rounds, glass sorting and a separate packaging quiz.",
-    caseHeadings: {"problem": "An unfamiliar everyday routine.", "approach": "Game rules that survive rapid input.", "delivery": "Version 2.0 is published."},
+    caseHeadings: {"problem": "German bottle-return rules", "approach": "Game rules, queued input and saved progress", "delivery": "Published version 2.0"},
     tags: ['React / TypeScript', 'Game rules / Verification', 'Responsive SVG / CSS', 'LocalStorage / i18n'], role: 'Independent developer · Research, game design, development and publishing',
     contributions: [
       ['Independent product ownership', 'Responsive desktop and mobile interfaces', 'Version 2.0 release'],
@@ -258,10 +258,10 @@ export const projects: Project[] = [
     ]
   },
   {
-    kind: 'commercial', slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'A shared foundation, adapted to each place.',
+    kind: 'commercial', slug: 'smart-city-dashboards', number: '10', title: 'Smart City Dashboards', shortTitle: 'Regional maps and operational dashboards',
     graphTitle: 'Smart city dashboards', category: 'Smart city · Geographic visualization', organization: 'Longshine', status: 'Commercial work · Written case study',
     description: "Large-screen smart-city dashboards with map views and route tracking for Wuxi, Hainan and Taiyuan. I was the sole frontend developer for the initial dashboard, then adapted it for regional requirements.",
-    caseHeadings: {"problem": "Regional dashboards with a shared foundation.", "approach": "Host systems and older browsers."},
+    caseHeadings: {"problem": "Dashboards for different cities", "approach": "Host systems and older browsers"},
     tags: ['Map APIs', 'Route tracking', 'Large-screen interfaces', 'Regional customization', 'Browser compatibility'], role: 'Sole frontend developer for the initial dashboard · Regional delivery',
     contributions: [
       ['Map API integration', 'Geographic views within the dashboards'],
@@ -284,10 +284,10 @@ export const projects: Project[] = [
     flow: ['Shared dashboard foundation', 'Maps + route tracking', 'Regional customizations']
   },
   {
-    kind: 'commercial', slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'React interfaces for cross-region finance.',
+    kind: 'commercial', slug: 'glp-sme-financing', number: '11', title: 'SME Financing Platform', shortTitle: 'React interfaces for international financing',
     graphTitle: 'SME financing', category: 'Fintech · React business interfaces', organization: 'GLP', status: 'Commercial frontend work',
     description: "React frontend development for GLP’s SME financing platform, supporting business workflows across domestic and overseas markets.",
-    caseHeadings: {"problem": "Financial data across markets.", "approach": "Preserve the meaning of dates and amounts."},
+    caseHeadings: {"problem": "Financial data across markets", "approach": "Time zones, currencies and exchange rates"},
     tags: ['React', 'Business interfaces', 'Time zones', 'Currencies & exchange rates', 'Accessibility'], role: 'React frontend development',
     contributions: [
       ['React business interfaces', 'Business requirements to UI'],
@@ -309,10 +309,10 @@ export const projects: Project[] = [
     flow: ['React interfaces', 'Financing workflows', 'Time + currency context']
   },
   {
-    kind: 'commercial', slug: 'running-mini-program', number: '12', title: 'Student Sports Mini-Program & Teacher Dashboard', shortTitle: 'From student training to teacher insights.',
+    kind: 'commercial', slug: 'running-mini-program', number: '12', title: 'Student Sports Mini-Program & Teacher Dashboard', shortTitle: 'Student training and teacher reports',
     graphTitle: 'Student sports platform', category: 'Education · Mobile training & administration', organization: 'Danzhu', status: 'Commercial work · Used by schools',
     description: "A Vue / uni-app student sports mini-program with a companion teacher dashboard: running and camera-based exercises on the phone, results and report exports for teachers.",
-    caseHeadings: {"problem": "Training outside a reliable connection.", "approach": "Recording, transmission and school context.", "delivery": "Used across different school settings."},
+    caseHeadings: {"problem": "Student training on weak networks", "approach": "Video uploads and school reporting", "delivery": "University and primary-school use"},
     tags: ['Vue / uni-app', 'Camera-based exercise tracking', 'Weak-network resilience', 'Peak running traffic', 'Teacher dashboard & exports', 'Age-specific experiences'], role: 'Frontend development · Student mini-program & teacher dashboard',
     contributions: [
       ['Student running and free-training interfaces'],
@@ -338,10 +338,10 @@ export const projects: Project[] = [
     flow: ['Student training', 'Save + upload results', 'Teacher review + export']
   },
   {
-    kind: 'independent', slug: 'weibo-deleter', number: '13', title: 'Weibo Deleter — A Small Browser Extension', shortTitle: 'A small tool for a friend’s repetitive task.',
+    kind: 'independent', slug: 'weibo-deleter', number: '13', title: 'Weibo Deleter — A Small Browser Extension', shortTitle: 'A browser extension for repeated Weibo deletions',
     graphTitle: 'Weibo deleter', category: 'Personal tool · Browser extension', organization: 'Independent project', status: 'Personal tool · Public source',
     description: "A small React browser extension I built for a friend who wanted to delete old Weibo posts in batches.",
-    caseHeadings: {"problem": "A repetitive action hidden inside menus.", "approach": "Automating a changing page."},
+    caseHeadings: {"problem": "Repeated deletions through Weibo menus", "approach": "DOM selectors and menu timing"},
     tags: ['React / Vite', 'Chrome Extension / MV3', 'DOM automation'], role: 'Independent developer',
     contributions: [
       ['Post selection popup', 'Progress and result messages'],
@@ -362,10 +362,10 @@ export const projects: Project[] = [
     links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/weibo-deleter' }]
   },
   {
-    kind: 'commercial', slug: 'medical-curriculum', number: '14', title: 'Public Health Curriculum & Knowledge Explorer', shortTitle: 'Majors, shared courses and the knowledge between them.',
+    kind: 'commercial', slug: 'medical-curriculum', number: '14', title: 'Public Health Curriculum & Knowledge Explorer', shortTitle: 'A 3D map of courses and knowledge points',
     graphTitle: 'PKU Public Health curriculum', category: 'Public health education · Existing-system redesign', organization: 'School of Public Health, Peking University', affiliation: 'Peking University Health Science Center', status: 'Launched',
     description: "A React and Three.js redesign of an existing public-health curriculum system, combining an interactive 3D knowledge explorer with course-selection interfaces.",
-    caseHeadings: {"problem": "A curriculum that crosses programme boundaries.", "approach": "Free movement without conflicting gestures.", "delivery": "Redesigned and launched."},
+    caseHeadings: {"problem": "Courses shared across programmes", "approach": "Dragging, picking and repeated interaction", "delivery": "Redesigned and launched"},
     tags: ['React', 'Three.js', 'Curriculum relationships', 'Demonstration UI & performance', 'Course-selection workflows'], role: 'Sole frontend developer · One backend collaborator',
     contributions: [
       ['Sole frontend ownership', 'Existing-system redesign', 'Basic course-selection operations'],
@@ -392,10 +392,10 @@ export const projects: Project[] = [
     flow: ['Majors + shared courses', '3D knowledge exploration', 'Course selection']
   },
   {
-    kind: 'independent', slug: 'catch-that-train', number: '15', title: 'Catch That Train! — A Journey Under Pressure', shortTitle: 'Small decisions. One departing train.',
+    kind: 'independent', slug: 'catch-that-train', number: '15', title: 'Catch That Train! — A Journey Under Pressure', shortTitle: 'A mobile game about catching a train',
     graphTitle: 'Catch That Train!', category: 'Independent product · Browser strategy game', organization: 'Personal project', status: 'Playable browser game · English & Chinese',
     description: "A portrait mobile browser game about rushing for a train in China. Four travelers navigate six stations, balancing time, energy, directions and everyday interruptions.",
-    caseHeadings: {"problem": "Make pressure understandable.", "approach": "A consistent clock through interrupted input.", "delivery": "Playable, with room to grow."},
+    caseHeadings: {"problem": "Time pressure in a train-catching game", "approach": "Time accounting and interrupted input", "delivery": "Published game and current scope"},
     tags: ['React / TypeScript', 'Game state / Shared clock', 'Touch / Spatial interaction', 'i18n / Verification'], role: 'Independent developer',
     contributions: [
       ['React game interfaces', 'SVG and CSS scenes', 'Local achievements and result sharing'],
@@ -432,11 +432,11 @@ export const projects: Project[] = [
     ]
   },
   {
-    kind: 'independent', slug: 'love-story-theater', number: '16', title: 'Love Story Theater', shortTitle: 'A little comfort, written as a story.',
+    kind: 'independent', slug: 'love-story-theater', number: '16', title: 'Love Story Theater', shortTitle: 'An AI storytelling app for a friend',
     graphTitle: 'Love Story Theater', category: 'Personal project · Full-stack AI storytelling', organization: 'Personal project',
     status: 'Offline · No longer maintained', archived: true,
     description: "I made this for a friend going through a breakup: a conversational app that turned shared memories and relationship details into hopeful fictional stories.",
-    caseHeadings: {"problem": "Gather the story before generating it.", "approach": "Conversation state across a separate AI backend.", "delivery": "An archived full-stack experiment."},
+    caseHeadings: {"problem": "A story for a friend after a breakup", "approach": "Next.js conversation and Kotlin APIs", "delivery": "Offline and no longer maintained"},
     tags: ['Next.js / React', 'TypeScript / MUI', 'Kotlin / Ktor', 'DeepSeek API', 'i18n'], role: 'Independent full-stack developer',
     contributions: [
       ['Conversational React interface', 'Separate frontend application'],
@@ -462,11 +462,11 @@ export const projects: Project[] = [
     links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/Love-Story-Theater' }]
   },
   {
-    kind: 'independent', slug: 'wordweave', number: '17', title: 'Wordweave — Learn Through Context', shortTitle: 'Read something useful. Keep the words.',
+    kind: 'independent', slug: 'wordweave', number: '17', title: 'Wordweave — Learn Through Context', shortTitle: 'English and German reading with AI',
     graphTitle: 'Wordweave', category: 'Personal product · Full-stack AI language learning', organization: 'Independent project',
     status: 'Public reading samples · Personal workspace',
     description: 'An AI-assisted reader for native Chinese speakers learning technical English and German, with contextual word cards, spaced review and a companion browser extension.',
-    caseHeadings: { problem: 'Learn without losing the thread.', approach: 'From model output to a reliable reading experience.', delivery: 'A web reader and a companion extension.' },
+    caseHeadings: { problem: 'English and German in context', approach: 'Generation validation, usage limits and vocabulary', delivery: 'Public samples and a manually installed extension' },
     tags: ['Next.js / React', 'TypeScript / Zod', 'PostgreSQL / Prisma', 'LLM APIs / DeepSeek', 'Chrome Extension / MV3'], role: 'Independent full-stack developer · Web app and browser extension',
     contributions: [
       ['Responsive reading interface', 'Next.js pages and server API routes', 'Desktop word popovers and mobile word cards'],
