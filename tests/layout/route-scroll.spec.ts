@@ -10,6 +10,12 @@ async function expectHomepageTop(page: Page, url: string) {
 }
 
 test('project selection stays local and consecutive homepage refreshes start at the top', async ({ page }) => {
+  await page.addInitScript(() => {
+    if ((performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming)?.type !== 'reload') return;
+    const positions: number[] = [];
+    Object.assign(window, { homepageReloadPositions: positions });
+    window.addEventListener('scroll', () => positions.push(window.scrollY), { passive: true });
+  });
   await page.goto('/?source=refresh-check');
   await page.getByRole('tab', { name: /^Personal / }).click();
   const project = page.locator('#personal-projects .graph-project-entry > button').first();
@@ -21,6 +27,8 @@ test('project selection stays local and consecutive homepage refreshes start at 
   for (let refresh = 0; refresh < 2; refresh++) {
     await page.reload();
     await expectHomepageTop(page, '/?source=refresh-check');
+    const positions = await page.evaluate(() => (window as Window & { homepageReloadPositions?: number[] }).homepageReloadPositions);
+    expect(positions?.filter(position => position !== 0), 'A reload never flashes the previous scroll position').toEqual([]);
   }
 });
 

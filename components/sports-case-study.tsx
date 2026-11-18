@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ProjectListLink } from '@/components/project-drawer';
 import type { Project } from '@/lib/projects';
 import { Header, Footer } from '@/components/site';
 import { SportsAssessmentDemo } from '@/components/sports-assessment-demo';
@@ -37,6 +38,6 @@ export function SportsCaseStudy({ project, next }: { project: Project; next: Pro
       </div>
     </CaseChapter>
     <Link href="/projects/running-mini-program" className={styles.related}><div><span className={styles.kicker}>ALSO AT DANZHU</span><h2>Training on a smaller screen.</h2><p>The student mini-program and teacher dashboard: camera-based exercises, weak-network saving and score reporting.</p></div><span aria-hidden="true">↗</span></Link>
-    <nav className={styles.next} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
+    <nav className={styles.next} aria-label="Case study navigation"><ProjectListLink>← All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
   </main><Footer /></div>;
 }

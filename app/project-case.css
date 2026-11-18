@@ -92,6 +92,7 @@
 .case-running-figure>a{display:block;position:relative}
 .case-running-figure figcaption{font-size:11px;line-height:1.7;color:var(--muted);margin-top:12px}
 .case-data-overview{max-width:800px;margin:auto}
+.case-data-overview>.button{max-width:100%;white-space:normal}
 .case-data-overview>p:not(.case-lead){font-size:15px;line-height:1.8;color:var(--muted);margin-top:16px}
 .case-export-steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:0;margin:30px 0;gap:12px}
 .case-export-steps li{padding:16px 10px;border-top:2px solid var(--accent-border);font-size:13px;line-height:1.5}

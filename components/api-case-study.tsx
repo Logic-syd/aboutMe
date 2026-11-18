@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ProjectListLink } from '@/components/project-drawer';
 import type { Project } from '@/lib/projects';
 import { Header, Footer } from '@/components/site';
 import { ApiPlatformDemo } from '@/components/api-platform-demo';
@@ -72,7 +73,7 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
         <CaseNotes label="API engineering topics" notes={engineeringNotes.map(note => ({ label: note.label, title: note.title, body: <p>{note.detail}</p> }))} />
       </CaseChapter>
 
-      <nav className={`case-next ${styles.next}`} aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
+      <nav className={`case-next ${styles.next}`} aria-label="Case study navigation"><ProjectListLink>← All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav>
     </main>
     <Footer />
   </div>;

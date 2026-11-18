@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { ProjectListLink } from '@/components/project-drawer';
 import { notFound } from 'next/navigation';
 import { projects } from '@/lib/projects';
 import { ProjectLinks } from '@/components/project-links';
@@ -60,6 +61,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     {project.delivery && <CaseChapter id="delivery" kicker="04 / OUTCOME" title={project.caseHeadings?.delivery ?? 'Where the project stands.'}>
       <div className={project.lesson ? 'case-two-column' : 'case-delivery-copy'}><p>{project.delivery}</p>{project.lesson && <article><h3>What I learned.</h3><p>{project.lesson}</p></article>}</div>
     </CaseChapter>}
-    <nav className="case-next" aria-label="Case study navigation"><Link href="/#work">← All projects</Link><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav><div className="case-contact"><p>Have a similar challenge?</p><a className="text-link" href="mailto:yidanshao622@gmail.com">Let’s talk ↗</a></div>
+    <nav className="case-next" aria-label="Case study navigation"><ProjectListLink>← All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>UP NEXT</span>{next.title} ↗</Link></nav><div className="case-contact"><p>Have a similar challenge?</p><a className="text-link" href="mailto:yidanshao622@gmail.com">Let’s talk ↗</a></div>
   </main><Footer /></div>;
 }

@@ -1,4 +1,15 @@
 /* Shared atmosphere and native-feeling controls for the approved Auvers design. */
+:root {
+  --crystal-rim: linear-gradient(132deg, #ffffffeb 0%, #c3edfca6 10%, #ffffff0a 24%, #c9c8f285 46%, #f4d4ecad 59%, #ffffff0d 72%, #c1eae596 87%, #ffffffc7 100%);
+  --crystal-glints:
+    radial-gradient(ellipse 22px 2px at 12% 1px, #fffffff0, #ffffff00 100%),
+    radial-gradient(ellipse 2px 15px at 12% 1px, #ffffffa6, #ffffff00 100%),
+    radial-gradient(ellipse 2px 17px at calc(100% - 1px) 42%, #ffffffd9, #ffffff00 100%),
+    radial-gradient(ellipse 16px 2px at calc(100% - 1px) 42%, #ffffffb3, #ffffff00 100%),
+    radial-gradient(ellipse 22px 2px at 67% calc(100% - 1px), #ffffffcc, #ffffff00 100%),
+    radial-gradient(ellipse 46% 76% at -25% 10%, #b8edff66, #b8edff00 100%),
+    radial-gradient(ellipse 38% 55% at 120% 58%, #ebc2ef52, #ebc2ef00 100%);
+}
 body {
   position: relative;
   isolation: isolate;
@@ -233,7 +244,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .pixel-portfolio .graph-project-navigation::before {
   z-index: 2;
   padding: 1.5px;
-  background: linear-gradient(132deg, #ffffffeb 0%, #c3edfca6 10%, #ffffff0a 24%, #c9c8f285 46%, #f4d4ecad 59%, #ffffff0d 72%, #c1eae596 87%, #ffffffc7 100%);
+  background: var(--crystal-rim);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -241,14 +252,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .pixel-portfolio .graph-project-navigation::after {
   z-index: 0;
-  background:
-    radial-gradient(ellipse 22px 2px at 12% 1px, #fffffff0, #ffffff00 100%),
-    radial-gradient(ellipse 2px 15px at 12% 1px, #ffffffa6, #ffffff00 100%),
-    radial-gradient(ellipse 2px 17px at calc(100% - 1px) 42%, #ffffffd9, #ffffff00 100%),
-    radial-gradient(ellipse 16px 2px at calc(100% - 1px) 42%, #ffffffb3, #ffffff00 100%),
-    radial-gradient(ellipse 22px 2px at 67% calc(100% - 1px), #ffffffcc, #ffffff00 100%),
-    radial-gradient(ellipse 46% 76% at -25% 10%, #b8edff66, #b8edff00 100%),
-    radial-gradient(ellipse 38% 55% at 120% 58%, #ebc2ef52, #ebc2ef00 100%);
+  background: var(--crystal-glints);
 }
 .graph-project-navigation>.project-category-tabs,
 .graph-project-navigation>.graph-project-groups { position: relative; z-index: 1; }

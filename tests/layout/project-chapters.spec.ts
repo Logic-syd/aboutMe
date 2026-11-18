@@ -75,6 +75,8 @@ for (const project of projects) {
     await expect(page.locator('head link[rel=canonical]')).toHaveAttribute('href', `${siteUrl}/projects/${project.slug}`);
     await expect(page.locator('head meta[property="og:url"]')).toHaveAttribute('content', `${siteUrl}/projects/${project.slug}`);
     await expect(page.locator('[data-case-screen="intro"]')).toHaveCount(1);
+    await expect(page.getByRole('button', { name: 'Open project list', exact: true })).toBeVisible();
+    await expect(page.locator('dialog a[aria-current="page"]')).toHaveAttribute('href', `/projects/${project.slug}`);
     expect(await page.locator('[data-case-screen="chapter"]').count()).toBeGreaterThan(0);
     await expectCompleteScreens(page);
     const home = page.getByRole('link', { name: 'Back to home', exact: true });

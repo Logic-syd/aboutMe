@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ProjectListLink } from '@/components/project-drawer';
 
 const sections = [
   { id: 'work', label: 'Projects', text: 'Projects', short: 'Projects' },
@@ -25,5 +26,7 @@ export function SectionNavigation({ detail, sidebar }: { detail: boolean; sideba
     schedule();
     return () => { window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); cancelAnimationFrame(frame); };
   }, [detail, sidebar]);
-  return <div className="nav-sections">{sections.map(section => <a key={section.id} href={`${detail ? '/' : ''}#${section.id}`} aria-label={section.label} aria-current={active === section.id ? 'location' : undefined} onClick={() => { if (!detail) setActive(section.id); }}><span className="nav-full-label">{section.text}</span><span className="nav-short-label" aria-hidden="true">{section.short}</span></a>)}</div>;
+  return <div className="nav-sections">{sections.map(section => detail && section.id === 'work'
+    ? <ProjectListLink key={section.id} label={section.label}><span className="nav-full-label">{section.text}</span><span className="nav-short-label" aria-hidden="true">{section.short}</span></ProjectListLink>
+    : <a key={section.id} href={`${detail ? '/' : ''}#${section.id}`} aria-label={section.label} aria-current={active === section.id ? 'location' : undefined} onClick={() => { if (!detail) setActive(section.id); }}><span className="nav-full-label">{section.text}</span><span className="nav-short-label" aria-hidden="true">{section.short}</span></a>)}</div>;
 }
