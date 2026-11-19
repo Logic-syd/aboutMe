@@ -20,7 +20,7 @@ export function ProjectListLink({ children, className, label }: { children: Reac
   }}>{children}</Link>;
 }
 
-export function ProjectDrawer({ projects, children, edgeTrigger = true }: { projects: DrawerProject[]; children: ReactNode; edgeTrigger?: boolean }) {
+export function ProjectDrawer({ projects, children }: { projects: DrawerProject[]; children: ReactNode }) {
   const pathname = usePathname();
   const id = useId();
   const dialog = useRef<HTMLDialogElement>(null);
@@ -95,9 +95,9 @@ export function ProjectDrawer({ projects, children, edgeTrigger = true }: { proj
 
   return <ProjectDrawerContext.Provider value={{ open, id, show }}>
     {children}
-    {edgeTrigger && <button type="button" className={styles.trigger} aria-label="Open project list" aria-haspopup="dialog" aria-expanded={open} aria-controls={id} onClick={event => show(event.currentTarget)}>
+    <button type="button" className={styles.trigger} aria-label="Open project list" aria-haspopup="dialog" aria-expanded={open} aria-controls={id} onClick={event => show(event.currentTarget)}>
       <span className={styles.mark} aria-hidden="true" /><span>Projects</span>
-    </button>}
+    </button>
     <dialog id={id} ref={dialog} className={styles.drawer} aria-labelledby={`${id}-title`} onClose={() => { if (!dialog.current?.open) finishClosing(); }} onCancel={event => { event.preventDefault(); close(); }} onKeyDown={trapFocus} onPointerDown={event => {
       const bounds = event.currentTarget.getBoundingClientRect();
       pointerOutside.current = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;

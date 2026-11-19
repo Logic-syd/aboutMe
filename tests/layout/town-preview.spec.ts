@@ -1,15 +1,14 @@
 import { expect, test } from '@playwright/test';
 
-test('desktop town previews stay inside the visible town for every building', async ({ page }) => {
+test('desktop town previews stay inside the visible town for buildings and tabs', async ({ page }) => {
   test.skip(page.viewportSize()!.width <= 800, 'Narrow viewports use the modal sheet.');
   await page.goto('/');
 
   const frame = page.locator('[data-town-frame]');
   const triggers = frame.locator('[data-town-trigger]');
-  await expect(triggers).toHaveCount(6);
   for (const trigger of await triggers.all()) {
     await trigger.click();
-    const preview = page.getByRole('dialog').filter({ has: page.getByRole('button', { name: 'Close preview', exact: true }) });
+    const preview = page.getByRole('region').filter({ has: page.getByRole('button', { name: 'Close preview', exact: true }) });
     await expect(preview).toBeVisible();
     const bounds = await preview.boundingBox();
     const town = await frame.boundingBox();
@@ -23,15 +22,15 @@ test('desktop town previews stay inside the visible town for every building', as
   }
 });
 
-test('mobile town sheet is modal, keeps its project-list action reachable and restores focus', async ({ page }) => {
+test('mobile town sheet is modal, keeps every work link reachable and restores focus', async ({ page }) => {
   test.skip(page.viewportSize()!.width > 800, 'Desktop uses an anchored preview.');
   await page.goto('/');
-  const trigger = page.locator('[data-town-trigger]:not([data-map-building])').filter({ hasText: /^Commercial work$/ });
+  const trigger = page.locator('[data-town-trigger]:not([data-map-building])').filter({ hasText: /^Work$/ });
   await trigger.click();
   const sheet = page.getByRole('dialog', { name: 'Commercial projects.', exact: true });
   await expect(sheet).toBeVisible();
   expect(await sheet.evaluate(element => element.matches(':modal'))).toBe(true);
-  await expect(sheet.getByRole('link')).toHaveCount(1);
+  await expect(sheet.locator('a[href^="/projects/"]')).toHaveCount(4);
   await expect(sheet.getByRole('link').last()).toHaveText('More projects');
 
   const bounds = await sheet.boundingBox();

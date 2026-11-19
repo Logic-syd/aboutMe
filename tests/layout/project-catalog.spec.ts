@@ -7,9 +7,6 @@ test('project categories are discoverable, keyboard accessible and keep all case
   const html = await response!.text();
   for (const project of projects) expect(html).toContain(`href="/projects/${project.slug}"`);
 
-  await expect(page.locator('.featured-work-list > li')).toHaveCount(4);
-  await expect(page.locator('.project-card-group')).toHaveCount(0);
-  await expect(page.locator('#about #skills')).toHaveCount(1);
   const tabs = page.getByRole('tablist', { name: 'Project categories' });
   const work = tabs.getByRole('tab', { name: /^Work / });
   const personal = tabs.getByRole('tab', { name: /^Personal / });

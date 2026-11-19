@@ -1,21 +1,33 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import { projects } from '@/lib/projects';
 import { sceneFailureMessages, type SceneFailure } from '@/lib/scene-status';
 import { ProjectGraph } from '@/components/project-graph';
 
-export function ProjectShowcase() {
+export function ProjectShowcase({ children }: { children: ReactNode }) {
   const [failure, setFailure] = useState<SceneFailure | null>(null);
   const [slow, setSlow] = useState(false);
-  const [attempt, setAttempt] = useState(0);
-  const showFallback = useCallback((reason: SceneFailure) => { setFailure(reason); setSlow(false); }, []);
-  const retry = () => {
-    // A failed dynamic import stays cached until the page loads again.
-    if (failure === 'download-failed') { window.location.reload(); return; }
-    setFailure(null); setSlow(false); setAttempt(value => value + 1);
-  };
+  const showCards = useCallback((reason: SceneFailure) => { setFailure(reason); setSlow(false); }, []);
+  useEffect(() => {
+    if (!failure) return;
+    const followHash = () => {
+      const hash = window.location.hash;
+      if (hash === '#personal-projects') document.getElementById('personal-notebooks')?.scrollIntoView();
+      else if (['#professional-work', '#work-projects'].includes(hash)) document.getElementById(hash.slice(1))?.scrollIntoView();
+    };
+    followHash();
+    window.addEventListener('hashchange', followHash);
+    return () => window.removeEventListener('hashchange', followHash);
+  }, [failure]);
+
   return <>
-    {slow && !failure && <p className="project-fallback-notice" role="status">The 3D view is still loading. The project list is ready to browse.</p>}
-    <ProjectGraph onUnavailable={showFallback} onSlow={setSlow} attempt={attempt} fallback={failure ? <div className="scene-fallback"><p role="status">{sceneFailureMessages[failure]}</p><button className="button button-outline" onClick={retry}>{failure === 'download-failed' ? 'Reload page' : 'Retry 3D view'}</button></div> : undefined} />
+    {failure ? <div className="project-fallback-notice"><p role="status">{sceneFailureMessages[failure]}</p><button className="button button-outline" onClick={() => {
+      // A rejected dynamic import remains cached; a reload starts a fresh download.
+      if (failure === 'download-failed') { window.location.reload(); return; }
+      setFailure(null); setSlow(false);
+    }}>{failure === 'download-failed' ? 'Reload page' : 'Retry 3D view'}</button></div> : <ProjectGraph onUnavailable={showCards} onSlow={setSlow} />}
+    {slow && <p className="project-fallback-notice" role="status">The 3D view is still loading. Browse the projects below while it finishes.</p>}
+    {(failure || slow) && <div id={failure ? 'professional-work' : undefined} className="project-case-cards" aria-label={`All ${projects.length} project case studies`}>{failure && <div id="work-projects" />}{children}</div>}
   </>;
 }

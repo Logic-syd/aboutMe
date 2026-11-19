@@ -19,14 +19,14 @@ const sites: { id: Site; en: string; zh: string }[] = [
 
 const copy = {
   en: {
-    title: 'Developer playground', sample: 'Sample mode', language: 'Interface language',
-    configuration: '01 / Configure', site: 'Business site', app: 'Sample application',
+    title: 'Developer playground', sample: 'SAMPLE MODE', language: 'Interface language',
+    configuration: '01 / CONFIGURE', site: 'Business site', app: 'Sample application',
     authorized: 'Authorized app', restricted: 'No API permission',
     endpoint: 'Example endpoint', summary: 'Plant summary', devices: 'Device status',
     scenario: 'Gateway condition', healthy: 'Healthy response', delayed: 'Simulate a timeout',
     run: 'Run sample request', running: 'Running sample…', reset: 'Reset',
-    request: 'Request preview', credentials: 'Synthetic application credentials',
-    route: '02 / Follow the request', permission: 'App permission', gateway: 'Site gateway', response: 'Raw response',
+    request: 'REQUEST PREVIEW', credentials: 'Synthetic application credentials',
+    route: '02 / FOLLOW THE REQUEST', permission: 'App permission', gateway: 'Site gateway', response: 'Raw response',
     ready: 'Ready to explore', checking: 'Checking application permission…', routing: 'Waiting for the selected gateway…',
     complete: 'Sample response received', denied: 'Request stopped before the gateway', timeout: 'The sample gateway timed out',
     idleHint: 'Choose a site, then run a request to see how access, routing and the response fit together.',
@@ -36,7 +36,7 @@ const copy = {
     retry: 'Retry with a recovered gateway',
     granted: 'Granted', checkingShort: 'Checking', deniedShort: 'Denied', waiting: 'Waiting', notReached: 'Not reached',
     received: 'Received', timedOut: 'Timed out', selected: 'Selected', readyShort: 'Ready',
-    successLabel: 'Sample plant / 001', today: 'Energy today', power: 'Current power', capacity: 'Installed capacity',
+    successLabel: 'SAMPLE PLANT / 001', today: 'Energy today', power: 'Current power', capacity: 'Installed capacity',
     online: 'Online devices', offline: 'Offline devices', availability: 'Availability',
     json: 'Inspect raw JSON', responseNote: 'Illustrative fields inside the documented response envelope.',
     protocolTitle: 'One request layer. Two different contracts.',
@@ -157,7 +157,7 @@ export function ApiPlatformDemo() {
     <div className={styles.demo} data-case-demo="api">
       <div className={styles.console} lang={language === 'en' ? 'en' : 'zh-CN'}>
         <div className={styles.toolbar}>
-          <div className={styles.identity}><span>{t.title}</span><span className={styles.sample}>{t.sample}</span></div>
+          <div className={styles.identity}><span className={styles.logo} aria-hidden="true">↗</span><span>{t.title}</span><span className={styles.sample}>{t.sample}</span></div>
           <div className={styles.language} role="group" aria-label={t.language}>
             <button type="button" aria-pressed={language === 'en'} onClick={() => { clearRun(); setLanguage('en'); }}>EN</button>
             <button type="button" aria-pressed={language === 'zh'} onClick={() => { clearRun(); setLanguage('zh'); }}>中文</button>
@@ -180,7 +180,7 @@ export function ApiPlatformDemo() {
               <small>{t.credentials}</small>
             </div>
             <div className={styles.actions}>
-              <button type="button" className={styles.run} disabled={busy} onClick={() => run()}>{busy ? t.running : t.run}</button>
+              <button type="button" className={styles.run} disabled={busy} onClick={() => run()}>{busy ? t.running : t.run}<span aria-hidden="true">{busy ? '···' : '↗'}</span></button>
               <button type="button" className={styles.reset} onClick={() => { clearRun(); setSite('eu'); setApplication('authorized'); setEndpoint('summary'); setScenario('healthy'); }}>{t.reset}</button>
             </div>
           </div>
@@ -197,10 +197,10 @@ export function ApiPlatformDemo() {
                 <details className={styles.json}><summary>{t.json}<span aria-hidden="true">{'{ }'}</span></summary><pre tabIndex={0} aria-label={t.json}>{JSON.stringify(result, null, 2)}</pre><p>{t.responseNote}</p></details>
               </div>
             ) : phase === 'denied' || phase === 'timeout' ? (
-              <div className={styles.errorState}><span className={styles.errorIcon} aria-hidden="true">{phase === 'denied' ? '⊘' : '↻'}</span><p>{phase === 'denied' ? t.deniedHint : t.timeoutHint}</p><button type="button" onClick={() => { if (phase === 'denied') { setApplication('authorized'); run(false, 'authorized'); } else run(true); }}>{phase === 'denied' ? t.deniedAction : t.retry}</button></div>
+              <div className={styles.errorState}><span className={styles.errorIcon} aria-hidden="true">{phase === 'denied' ? '⊘' : '↻'}</span><p>{phase === 'denied' ? t.deniedHint : t.timeoutHint}</p><button type="button" onClick={() => { if (phase === 'denied') { setApplication('authorized'); run(false, 'authorized'); } else run(true); }}>{phase === 'denied' ? t.deniedAction : t.retry}<span aria-hidden="true">↗</span></button></div>
             ) : (
               <div className={styles.emptyState} data-running={busy} aria-hidden={busy ? 'true' : undefined}>
-                <div className={styles.routeVisual} aria-hidden="true"><span>{'{ }'}</span><i /><div><b>{currentSite[language]}</b><small>{t.gatewayLabel}</small></div><i /><span>→</span></div>
+                <div className={styles.routeVisual} aria-hidden="true"><span>{'{ }'}</span><i /><div><b>{currentSite[language]}</b><small>{t.gatewayLabel}</small></div><i /><span>↗</span></div>
                 <p>{t.idleHint}</p>
               </div>
             )}

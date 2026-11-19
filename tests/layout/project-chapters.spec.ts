@@ -254,27 +254,27 @@ test('interactive consoles keep a complete frame when results expand', async ({ 
 test('homepage keeps text navigation, compact side dots and top contact links', async ({ page }) => {
   await page.goto('/');
   const hero = page.locator('section[aria-labelledby="town-title"]');
-  await expect(page.locator('#skills').getByText('Three.js', { exact: true })).toBeVisible();
-  await expect(hero.getByRole('link', { name: 'Email me', exact: true })).toHaveAttribute('href', 'mailto:yidanshao622@gmail.com');
-  await expect(hero.getByText('I build frontends for a renewable-energy API platform, insurance payments and PE exam software. On the side I make small projects, like a chess game for hiking breaks and a map of coffee and craft beer spots. They all live in this town, so click a building.', { exact: true })).toBeVisible();
+  await expect(hero.getByLabel('Core technologies')).toBeVisible();
+  await expect(hero.getByText('Three.js', { exact: true })).toBeVisible();
+  await expect(hero.getByText('I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.', { exact: true })).toBeVisible();
   const workBuilding = hero.getByRole('button', { name: 'Explore Commercial work', exact: true });
   await workBuilding.click();
-  const preview = page.getByRole('dialog', { name: 'Commercial projects.', exact: true });
+  const preview = page.getByRole(page.viewportSize()!.width <= 800 ? 'dialog' : 'region', { name: 'Commercial projects.', exact: true });
   await expect(preview).toBeVisible();
-  await expect(preview.getByRole('link')).toHaveCount(1);
+  await expect(preview.locator('a[href^="/projects/"]')).toHaveCount(4);
   await expect(preview.getByRole('link').last()).toHaveText('More projects');
   await expect(preview.getByRole('link').last()).toHaveAttribute('href', '#work-projects');
   for (const link of await preview.getByRole('link').all()) {
     expect(await link.evaluate(element => {
       const bounds = element.getBoundingClientRect();
       return bounds.left >= 0 && bounds.right <= innerWidth && bounds.top >= 0 && bounds.bottom <= innerHeight;
-    }), 'The project-list action remain inside the viewport').toBe(true);
+    }), 'All four cases and the More projects action remain inside the viewport').toBe(true);
   }
   await page.keyboard.press('Escape');
   await expect(preview).toHaveCount(0);
   await expect(workBuilding).toBeFocused();
   if (page.viewportSize()!.width > 800) {
-    expect(await hero.evaluate(element => element.getBoundingClientRect().bottom), 'Introduction and town fit the first screen').toBeLessThanOrEqual(page.viewportSize()!.height + 1);
+    expect(await hero.evaluate(element => element.getBoundingClientRect().bottom), 'Core technologies and town fit the first screen').toBeLessThanOrEqual(page.viewportSize()!.height + 1);
   }
   const top = page.getByRole('navigation', { name: 'Main navigation', exact: true });
   const sidebar = page.locator('.floating-sections');

@@ -46,7 +46,7 @@ export function CareerMap() {
         const instance = L.map(element, { crs: L.CRS.Simple, scrollWheelZoom: false, minZoom: -3, maxZoom: 1.5, zoomSnap: .1, zoomDelta: .5, zoomControl: false, attributionControl: false, maxBounds: [[-200, -200], [800, 1200]], maxBoundsViscosity: .9 });
         map.current = instance;
         L.control.zoom({ position: 'bottomleft' }).addTo(instance);
-        L.imageOverlay('/images/career-map.svg', artworkBounds, { alt: 'Illustrative map of where I’ve lived and worked: Berlin and Wedding in the north, a larger Munich in the south; Shanghai and Hangzhou in Zhejiang on the right. Not to scale.', interactive: false }).on('error', () => { if (!disposed) setMapState('unavailable'); }).addTo(instance);
+        L.imageOverlay('/images/career-map.svg', artworkBounds, { alt: 'Illustrative growth map: Berlin and Wedding in the north, a larger Munich in the south; Shanghai and Hangzhou in Zhejiang on the right. Not to scale.', interactive: false }).on('error', () => { if (!disposed) setMapState('unavailable'); }).addTo(instance);
         markers.current = mapStops.map(id => {
           const { name, region } = stopLabels[id];
           const size = id === 'sungrow' ? 42 : 28;

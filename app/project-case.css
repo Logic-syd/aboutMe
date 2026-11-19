@@ -83,7 +83,7 @@
 .case-mobile-gallery{min-width:0;text-align:center}
 .case-mobile-gallery .case-media-tabs{justify-content:center;border:0;background:transparent;padding:0 0 12px}
 .case-mobile-screen{margin:0}
-.case-mobile-screen>a{display:block;width:fit-content;max-width:100%;margin:0 auto;border:1px solid var(--line);background:var(--paper);box-shadow:none}
+.case-mobile-screen>a{display:block;width:fit-content;max-width:100%;margin:0 auto;border:1px solid var(--line);background:var(--paper);box-shadow:var(--soft-shadow)}
 .case-mobile-screen img{display:block;width:auto;max-width:100%;height:min(52svh,440px);object-fit:contain}
 .case-mobile-screen figcaption{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:12px;font-size:11px;line-height:1.6;color:var(--muted)}
 .case-mobile-screen figcaption a{text-decoration:underline;text-underline-offset:4px;color:var(--ink)}
@@ -210,7 +210,7 @@
 @media(max-width:800px){.case-outline{margin-top:20px;border-top:0}}
 
 .project-case .status-archived{color:var(--muted)}
-.project-case .status-archived i{background:var(--surface-soft)}
+.project-case .status-archived i{background:#8a8d84}
 
 /* The case studies share the portfolio's quiet glass and system typography.
    Layout budgets remain owned by the chapter rules above. */
@@ -219,38 +219,42 @@
 .project-case em{font-family:var(--sans);font-style:normal;color:var(--primary);font-weight:500}
 .project-case .case-header h1{letter-spacing:-.045em}
 .case-screen-heading h2,.case-mobile-copy h3{font-family:var(--sans);font-weight:600;letter-spacing:-.035em}
-.project-case .eyebrow,.project-case .case-facts>div>span,.case-outline{font-family:var(--sans);font-weight:500;letter-spacing:0}
+.project-case .eyebrow,.project-case .case-facts>div>span,.case-outline{font-family:var(--sans);font-weight:500;letter-spacing:.06em}
 .case-outline{letter-spacing:0}
 .project-case .case-facts,.case-notes,.case-mobile-layout,.case-gallery-view{
- background:var(--glass-surface);border-color:var(--glass-border);box-shadow:none;
+ background:var(--glass-surface);border-color:var(--glass-border);box-shadow:var(--glass-shadow);
+ -webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2);
 }
-.project-case .case-facts,.case-mobile-layout{border-radius:10px}
-.case-notes{border-radius:10px}
-.case-note-tabs{border-radius:10px 10px 0 0;background:var(--surface-soft)}
-.case-note-tabs button{border-radius:6px;font-family:var(--sans);transition:background .18s ease,border-color .18s ease}
+.project-case .case-facts,.case-mobile-layout{border-radius:24px}
+.case-notes{border-radius:24px}
+.case-note-tabs{border-radius:23px 23px 0 0;background:var(--surface-soft)}
+.case-note-tabs button{border-radius:12px;font-family:var(--sans);transition:background .18s ease,border-color .18s ease}
 .case-note-tabs strong{font-weight:500}
-.case-note-tabs button[aria-selected=true]{border-color:var(--glass-border);box-shadow:none;color:var(--ink)}
+.case-note-tabs button[aria-selected=true]{border-color:var(--glass-border);box-shadow:none;color:var(--primary)}
 .case-note-tabs button:hover{background:var(--surface-selected)}
-.case-note-panel{border-radius:0 0 10px 10px}
+.case-note-panel{border-radius:0 0 23px 23px}
 .case-note-tabs button>span,.case-portrait-grid h3 span,.case-export-steps li>span{font-family:var(--sans);font-variant-numeric:tabular-nums}
 .case-responsibilities li{border:0;border-bottom:1px solid var(--line);background:transparent}
 .case-responsibilities li:last-child{border-bottom:0}
-.case-media-tabs{background:var(--glass-surface);border-color:var(--glass-border);border-radius:10px 10px 0 0}
-.case-media-tabs button{border-radius:6px;font-family:var(--sans);font-weight:500;transition:background .18s ease}
-.case-media-tabs button[aria-pressed=true]{border-color:var(--glass-border);color:var(--ink);box-shadow:none}
+.case-media-tabs{background:var(--glass-surface);border-color:var(--glass-border);border-radius:24px 24px 0 0}
+.case-media-tabs button{border-radius:999px;font-family:var(--sans);font-weight:500;transition:background .18s ease}
+.case-media-tabs button[aria-pressed=true]{border-color:var(--glass-border);color:var(--primary);box-shadow:none}
 .case-media-tabs button:hover{background:var(--surface-selected)}
-.case-gallery-view{border-radius:0 0 10px 10px}
-.case-gallery-view figcaption{border-radius:0 0 10px 0;background:var(--surface-soft)}
-.case-gallery.is-landscape .case-gallery-view figcaption{border-radius:0 0 10px 10px}
-.case-image-action{border-radius:10px;background:var(--panel);border-color:var(--glass-border);color:var(--primary);font-family:var(--sans);box-shadow:none}
+.case-gallery-view{border-radius:0 0 24px 24px}
+.case-gallery-view figcaption{border-radius:0 0 23px 0;background:var(--surface-soft)}
+.case-gallery.is-landscape .case-gallery-view figcaption{border-radius:0 0 23px 23px}
+.case-image-action{border-radius:999px;background:#f8fbf4eb;border-color:var(--glass-border);color:var(--primary);font-family:var(--sans);box-shadow:0 2px 10px #30533f0b}
 .case-mobile-gallery .case-media-tabs{border-radius:0}
-.case-mobile-screen>a{border-radius:10px;border-color:var(--glass-border)}
+.case-mobile-screen>a{border-radius:12px;border-color:var(--glass-border)}
 .case-image-action,.case-media-credit,.case-mobile-screen figcaption a,.case-portrait-grid figcaption>a{font-family:var(--sans)}
 .case-portrait-grid h3{font-weight:600}
-.project-case .tags li{border-radius:6px;background:var(--surface-soft)}
+.project-case .tags li{border-radius:999px;background:var(--surface-soft)}
 @media(max-width:800px){
- .project-case .case-facts,.case-notes,.case-mobile-layout{border-radius:10px}
- .case-note-tabs{border-radius:10px 10px 0 0}
- .case-note-panel{border-radius:0 0 10px 10px}
- .case-gallery-view figcaption{border-radius:0 0 10px 10px}
+ .project-case .case-facts,.case-notes,.case-mobile-layout{border-radius:20px}
+ .case-note-tabs{border-radius:19px 19px 0 0}
+ .case-note-panel{border-radius:0 0 19px 19px}
+ .case-gallery-view figcaption{border-radius:0 0 23px 23px}
+}
+@media(prefers-reduced-transparency:reduce){
+ .project-case .case-facts,.case-notes,.case-mobile-layout,.case-gallery-view,.case-media-tabs{background:#f7faf3;-webkit-backdrop-filter:none;backdrop-filter:none}
 }

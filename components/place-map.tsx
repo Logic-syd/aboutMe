@@ -34,11 +34,11 @@ export function PlaceMap({ place }: { place: PlaceStory }) {
         L.control.zoom({ position: 'bottomleft' }).addTo(instance);
         L.control.scale({ imperial: false, position: 'bottomright' }).addTo(instance);
         function style(kind: string, roadClass?: string): PathOptions {
-          if (kind === 'water') return { color: '#b8c7d0', weight: .8, fillColor: '#d9e1e6', fillOpacity: 1 };
+          if (kind === 'water') return { color: '#b9d5d8', weight: .8, fillColor: '#c7dfe0', fillOpacity: 1 };
           if (kind === 'park') return { color: '#cdd7bd', weight: .5, fillColor: '#dce4ce', fillOpacity: .85 };
-          if (kind === 'waterway') return { color: '#b8c7d0', weight: 3, opacity: .9 };
+          if (kind === 'waterway') return { color: '#b3d2d7', weight: 3, opacity: .9 };
           const major = ['motorway', 'trunk', 'primary', 'secondary'].includes(roadClass ?? '');
-          return { color: major ? '#c27a8a' : '#dcc9c6', weight: major ? 2.2 : 1.2, opacity: .9 };
+          return { color: major ? '#d5bca9' : '#d9d6cc', weight: major ? 2.2 : 1.2, opacity: .9 };
         }
         // Keep land and water beneath the road network; all geometry is real OSM data.
         const ordered: FeatureCollection = { ...data, features: [...data.features].sort((a,b) => {
@@ -55,7 +55,7 @@ export function PlaceMap({ place }: { place: PlaceStory }) {
           },
         }).addTo(instance);
         instance.setMinZoom(Math.floor(instance.getBoundsZoom(bounds)) - 1);
-        L.circle(place.reference, { radius: 450, color: '#9a3f58', weight: 1.5, dashArray: '5 5', fillColor: '#c27a8a', fillOpacity: .12, interactive: false }).addTo(instance);
+        L.circle(place.reference, { radius: 450, color: '#426754', weight: 1.5, dashArray: '5 5', fillColor: '#8da262', fillOpacity: .12, interactive: false }).addTo(instance);
         instance.fitBounds(bounds, { padding: [8, 8], animate: false });
         resize = new ResizeObserver(() => { instance.invalidateSize(); instance.fitBounds(bounds, { padding: [8, 8], animate: false }); });
         resize.observe(element!);
@@ -72,9 +72,9 @@ export function PlaceMap({ place }: { place: PlaceStory }) {
 
   return <div className={`place-map-frame ${state === 'unavailable' ? 'is-unavailable' : ''}`}>
     <div ref={container} className="career-map-canvas geographic-map" role="region" aria-label={`Geographic map of ${place.name}, ${place.region}`} />
-    {state === 'ready' && <><div className="place-map-badge"><span className="eyebrow">{place.neighbourhood ? 'My neighbourhood' : 'Area view'}</span><strong>{place.neighbourhood ?? place.name}</strong><small>{place.neighbourhood ? `${place.name} · ${place.region}` : place.region}</small></div><span className="place-map-north" aria-hidden="true">N ↑</span></>}
+    {state === 'ready' && <><div className="place-map-badge"><span className="eyebrow">{place.neighbourhood ? 'MY NEIGHBOURHOOD' : 'AREA VIEW'}</span><strong>{place.neighbourhood ?? place.name}</strong><small>{place.neighbourhood ? `${place.name} · ${place.region}` : place.region}</small></div><span className="place-map-north" aria-hidden="true">N ↑</span></>}
     {state === 'loading' && <p className="place-map-status" role="status">Opening {place.name}…</p>}
-    {state === 'unavailable' && <p className="place-map-status" role="status">The area map could not load. You can still read the place story below or return to the places overview.</p>}
-    {state === 'ready' && <button className="place-map-reset" type="button" onClick={() => map.current?.fitBounds(areaBounds.current, { padding: [8, 8], animate: false })}>Reset area view</button>}
+    {state === 'unavailable' && <p className="place-map-status" role="status">The area map could not load. You can still read the place story below or return to the growth map.</p>}
+    {state === 'ready' && <button className="place-map-reset" type="button" onClick={() => map.current?.fitBounds(areaBounds.current, { padding: [8, 8], animate: false })}>Reset area view ↗</button>}
   </div>;
 }
