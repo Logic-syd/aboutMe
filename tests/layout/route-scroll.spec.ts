@@ -42,9 +42,11 @@ test('homepage refresh clears a previous catalog anchor but explicit section lin
     await expectHomepageTop(page, '/?source=shared');
   }
 
-  await page.getByRole('link', { name: 'All skills' }).click();
-  await expect(page).toHaveURL('/?source=shared#skills');
-  await expect(page.locator('#skills h2')).toBeInViewport();
+  await page.getByRole('navigation', { name: 'Main navigation', exact: true }).getByRole('link', { name: 'About', exact: true }).click();
+  await expect(page).toHaveURL('/?source=shared#about');
+  await expect(page.locator('#about')).toBeInViewport();
+  await page.goto('/?source=shared#skills');
+  await expect(page.locator('#skills')).toBeInViewport();
 });
 
 test('refresh preserves a project detail chapter link', async ({ page }) => {

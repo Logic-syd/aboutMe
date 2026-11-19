@@ -2,9 +2,6 @@
 
 import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import Link from 'next/link';
-import { projects } from '@/lib/projects';
-import { coreTechnologies } from '@/lib/profile';
 import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
@@ -30,7 +27,7 @@ function Building({ place }: { place: typeof places[number] }) {
       <rect x="30" y="6" width="85" height="24" fill="#786b79" /><rect x="33" y="9" width="79" height="18" fill="#f8f3e6" />
       <path d="M40 16H57V25H40ZM45 12H52V16H49V14H48V16H45Z" fill="#687a61" />
       <path d="M40 20H57M48 19V22" stroke="#f8f3e6" strokeWidth="1" />
-      <text x="62" y="23" fill="#596b52" fontFamily="monospace" fontSize="13" fontWeight="700" letterSpacing="1">WORK</text>
+      <text x="62" y="23" fill="#354f30" fontFamily="var(--pixel)" fontSize="13" fontWeight="400">WORK</text>
       <rect x="48" y="36" width="48" height="6" fill="#bac4ad" />
     </g>}
     {place.id === 'cafe' && <><path d="M30 52H118V63H30Z" fill="#f3e7d6" /><path d="M30 52H42V63H30ZM54 52H66V63H54ZM78 52H90V63H78ZM102 52H114V63H102Z" fill="#b88796" /><rect x="48" y="26" width="30" height="12" fill="#f6ece0" /><path d="M78 28H87V35H78" fill="none" stroke="#f6ece0" strokeWidth="4" /></>}
@@ -61,6 +58,26 @@ export function PixelTown() {
   const sheet = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
   const townFrame = useRef<HTMLDivElement>(null);
+  const section = useRef<HTMLElement>(null);
+  const intro = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const element = section.current;
+    const text = intro.current;
+    if (!element || !text) return;
+    const fitTown = () => {
+      const layout = getComputedStyle(element);
+      const spacing = parseFloat(layout.paddingTop) + parseFloat(layout.paddingBottom) + parseFloat(layout.rowGap);
+      const available = window.innerHeight - (element.getBoundingClientRect().top + window.scrollY) - text.offsetHeight - spacing;
+      element.style.setProperty('--town-max-width', `${Math.max(0, available) / .62}px`);
+    };
+    const observer = new ResizeObserver(fitTown);
+    observer.observe(text);
+    const header = document.querySelector('.site-header');
+    if (header) observer.observe(header);
+    window.addEventListener('resize', fitTown);
+    fitTown();
+    return () => { observer.disconnect(); window.removeEventListener('resize', fitTown); };
+  }, []);
   const closePreview = useCallback((restoreFocus = true) => {
     sheet.current?.close();
     setPreviewOpen(false);
@@ -105,8 +122,7 @@ export function PixelTown() {
         card.style.visibility = 'visible';
         return;
       }
-      // Both buildings and the bottom tabs belong to this frame. Limit the
-      // preview to the visible town, so it cannot cover the next chapter.
+      // Keep the anchored desktop preview within the visible town.
       const minX = Math.max(viewportLeft + 12, (bounds?.left ?? viewportLeft) + 12);
       const minY = Math.max(viewportTop + 12, (bounds?.top ?? viewportTop) + 12);
       const right = Math.min(viewportLeft + viewportWidth - 12, (bounds?.right ?? viewportLeft + viewportWidth) - 12);
@@ -168,7 +184,7 @@ export function PixelTown() {
         event.preventDefault(); closePreview();
       } else if (!event.shiftKey && document.activeElement === stops.at(-1)) {
         event.preventDefault();
-        const locations = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-town-trigger]'));
+        const locations = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-town-trigger]')).filter(element => element.getClientRects().length);
         const next = locations[locations.indexOf(trigger.current!) + 1] ?? trigger.current;
         closePreview(false);
         next?.focus({ preventScroll: true });
@@ -190,27 +206,22 @@ export function PixelTown() {
       document.removeEventListener('keydown', escape);
     };
   }, [previewOpen, previewAsSheet, selected, activation, closePreview]);
-  const previewContent = <div ref={preview} id={previewId} role={previewAsSheet ? undefined : 'region'} aria-labelledby={`${previewId}-title`} tabIndex={-1} className={`${styles.preview} ${place.id === 'studio' ? styles.commercialPreview : ''}`}>
+  const previewContent = <div ref={preview} id={previewId} role={previewAsSheet ? undefined : 'dialog'} aria-modal={previewAsSheet ? undefined : false} aria-labelledby={`${previewId}-title`} tabIndex={-1} className={styles.preview}>
     <div className={styles.previewBar}><p>{place.name}</p><button type="button" className={styles.previewClose} onClick={() => closePreview()} aria-label="Close preview">×</button></div>
     <h2 id={`${previewId}-title`}>{place.title}</h2>
     <div className={styles.previewLinks}>
-      {place.slugs.filter(slug => slug !== place.href.replace('/projects/','')).map(slug => <Link key={slug} href={`/projects/${slug}`} onClick={() => closePreview(false)}>{projects.find(project => project.slug === slug)?.graphTitle}<PreviewArrow /></Link>)}
-      <a className={styles.previewPrimary} href={place.href} onClick={() => closePreview(false)}>{place.action}<PreviewArrow /></a>
+      <a className={styles.previewPrimary} href={place.href} onClick={() => closePreview(false)}>{place.action}{place.href.startsWith('https://') && <PreviewArrow />}</a>
     </div>
   </div>;
-  return <section className={styles.townSection} aria-labelledby="town-title">
-    <div className={styles.intro}>
-      <p className={styles.kicker}>Based in Munich, Germany. Open to relocate.</p>
+  return <section ref={section} className={styles.townSection} aria-labelledby="town-title">
+    <div ref={intro} className={styles.intro}>
       <h1 id="town-title">Yidan Shao</h1>
-      <p className={styles.role}>Senior Frontend Engineer</p>
+      <p className={styles.role}>Senior frontend engineer in Munich. Open to relocate.</p>
       <p className={styles.bio}>I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.</p>
-      <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
-      <div className={styles.skillContext}><p>Finance · Insurance · Energy · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
-      <div className={styles.actions}><a href="#work">View projects <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></a></div>
+      <div className={styles.actions}><a className={styles.primary} href="#work">View projects</a><a href="mailto:yidanshao622@gmail.com">Email me</a></div>
     </div>
     <div ref={townFrame} className={styles.gameWindow} data-town-frame>
-      <div className={styles.windowBar}><span>Explore my town</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion} aria-label={motion ? 'Pause motion' : 'Resume motion'}><svg aria-hidden="true" viewBox="0 0 16 16">{motion ? <path d="M4 3h3v10H4zM10 3h3v10h-3z" /> : <path d="m5 3 8 5-8 5z" />}</svg>{motion ? 'Pause' : 'Resume'}</button></div>
-      <div className={`${styles.map} ${motion ? '' : styles.paused}`} aria-describedby={`${previewId}-hint`}>
+      <div className={`${styles.map} ${motion ? '' : styles.paused}`}>
         <svg viewBox="0 0 1000 620" className={styles.landscape} aria-hidden="true" shapeRendering="crispEdges">
           <defs><linearGradient id={`${previewId}-sky`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#bfd9e1" /><stop offset="1" stopColor="#edf0dc" /></linearGradient><linearGradient id={`${previewId}-meadow`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#d3dfbf" /><stop offset="1" stopColor="#dce8ce" /></linearGradient></defs>
           <rect width="1000" height="620" fill={`url(#${previewId}-meadow)`} /><rect width="1000" height="160" fill={`url(#${previewId}-sky)`} />
@@ -227,12 +238,13 @@ export function PixelTown() {
           <rect x="584" y="353" width="56" height="9" fill="#a99b87" /><rect x="589" y="362" width="5" height="12" fill="#897f72" /><rect x="629" y="362" width="5" height="12" fill="#897f72" />
           <path d="M136 582H852" stroke="#b0a99d" strokeWidth="9" /><path d="M142 574V590M167 574V590M192 574V590M217 574V590M242 574V590M267 574V590M292 574V590M317 574V590" stroke="#c4b9a7" strokeWidth="4" />
         </svg>
-        {places.map(item => <button key={item.id} className={`${styles.building} ${item.id === 'studio' ? styles.commercialBuilding : ''} ${previewOpen && selected === item.id ? styles.selected : ''}`} style={{ left: `${item.x}%`, top: `${item.y}%` }} onClick={event => choosePlace(item.id, event.currentTarget)} aria-label={`Explore ${item.id === 'studio' ? 'Commercial work' : item.name}`} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger data-map-building="true"><Building place={item} /><span className={styles.buildingLabel}>{item.id === 'studio' ? 'Commercial work' : item.name}</span></button>)}
-        <div className={styles.avatar} style={{ left: `${place.x+5}%`, top: `${place.y+23}%` }} aria-hidden="true"><span className={styles.avatarBubble}>Hi!</span><svg viewBox="0 0 24 34" shapeRendering="crispEdges"><ellipse cx="12" cy="32" rx="10" ry="2" fill="#65736a" opacity=".2" /><path d="M6 3H18V6H21V19H3V6H6Z" fill="#655867" /><rect x="7" y="8" width="11" height="12" fill="#efd0b5" /><rect x="7" y="7" width="12" height="4" fill="#655867" /><rect x="9" y="13" width="2" height="2" fill="#544c54" /><rect x="15" y="13" width="2" height="2" fill="#544c54" /><rect x="6" y="20" width="14" height="9" fill="#b890a4" /><rect x="3" y="22" width="4" height="7" fill="#efd0b5" /><rect x="19" y="22" width="3" height="7" fill="#efd0b5" /><path d="M7 29H11V33H5V31H7ZM15 29H19V31H21V33H15Z" fill="#6e747d" /></svg></div>
-        <span id={`${previewId}-hint`} className={styles.mapBadge}>Choose a building to explore</span>
+        <div className={styles.sign} aria-hidden="true">Explore my town</div>
+        {places.map(item => <button key={item.id} className={`${styles.building} ${item.id === 'studio' ? styles.commercialBuilding : ''} ${previewOpen && selected === item.id ? styles.selected : ''}`} style={{ left: `${item.x}%`, top: `${item.y}%` }} onClick={event => choosePlace(item.id, event.currentTarget)} aria-label={`Explore ${item.id === 'studio' ? 'Commercial work' : item.name}`} aria-haspopup="dialog" aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-town-trigger data-map-building="true"><Building place={item} /><span className={styles.buildingLabel}>{item.id === 'studio' ? 'Commercial work' : item.name}</span></button>)}
+        <div className={styles.avatar} style={{ left: `${place.x+5}%`, top: `${place.y+23}%` }} aria-hidden="true"><span className={styles.avatarBubble}>{place.title}</span><svg viewBox="0 0 24 34" shapeRendering="crispEdges"><ellipse cx="12" cy="32" rx="10" ry="2" fill="#65736a" opacity=".2" /><path d="M6 3H18V6H21V19H3V6H6Z" fill="#655867" /><rect x="7" y="8" width="11" height="12" fill="#efd0b5" /><rect x="7" y="7" width="12" height="4" fill="#655867" /><rect x="9" y="13" width="2" height="2" fill="#544c54" /><rect x="15" y="13" width="2" height="2" fill="#544c54" /><rect x="6" y="20" width="14" height="9" fill="#b890a4" /><rect x="3" y="22" width="4" height="7" fill="#efd0b5" /><rect x="19" y="22" width="3" height="7" fill="#efd0b5" /><path d="M7 29H11V33H5V31H7ZM15 29H19V31H21V33H15Z" fill="#6e747d" /></svg></div>
+        <button className={styles.pause} onClick={() => setMotion(value => !value)} aria-pressed={!motion} aria-label={motion ? 'Pause motion' : 'Resume motion'}><svg aria-hidden="true" viewBox="0 0 16 16">{motion ? <path d="M4 3h3v10H4zM10 3h3v10h-3z" /> : <path d="m5 3 8 5-8 5z" />}</svg></button>
       </div>
-      <div className={styles.locationNav} aria-label="Choose a place">{places.map(item => <button key={item.id} aria-label={item.name} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-active={selected === item.id} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}>{item.tab}</button>)}</div>
     </div>
+      <div className={styles.locationNav} aria-label="Choose a place">{places.map(item => <button key={item.id} aria-label={item.id === 'studio' ? 'Commercial work' : item.name} aria-pressed={previewOpen && selected === item.id} aria-expanded={previewOpen && selected === item.id} aria-controls={previewId} data-active={selected === item.id} data-town-trigger onClick={event => choosePlace(item.id, event.currentTarget)}>{item.id === 'studio' ? 'Commercial work' : item.name}</button>)}</div>
     {previewOpen && createPortal(previewAsSheet ? <dialog ref={sheet} className={styles.previewSheet} aria-labelledby={`${previewId}-title`} onCancel={event => { event.preventDefault(); closePreview(); }} onPointerDown={event => {
       const bounds = event.currentTarget.getBoundingClientRect();
       if (event.target === event.currentTarget && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) {

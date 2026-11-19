@@ -27,13 +27,13 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   ctx.clearRect(0, 0, 1120, 570);
-  const background = ctx.createRadialGradient(560, 210, 20, 560, 300, 670);
-  background.addColorStop(0, "#3f544b"); background.addColorStop(1, "#243930");
+  const background = "#221f2c";
+  const fontFamily = getComputedStyle(canvas).fontFamily;
   ctx.fillStyle = background; ctx.fillRect(0, 0, 1120, 570);
   ctx.strokeStyle = "#c4d7c019"; ctx.lineWidth = 1;
   for (let y = 370; y <= 570; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1120, y); ctx.stroke(); }
   for (let x = -500; x < 1800; x += 160) { ctx.beginPath(); ctx.moveTo(560 + (x - 560) * .4, 370); ctx.lineTo(x, 570); ctx.stroke(); }
-  ctx.fillStyle = "#d6e0cf48"; ctx.font = "12px monospace"; ctx.fillText("MOVEMENT STUDIO / JUMPING JACKS", 38, 38);
+  ctx.fillStyle = "#d6e0cf48"; ctx.font = `12px ${fontFamily}`; ctx.fillText("MOVEMENT STUDIO / JUMPING JACKS", 38, 38);
   ctx.textAlign = "right"; ctx.fillText("SYNTHETIC MOTION", 1082, 38); ctx.textAlign = "left";
   for (let i = 0; i < participants; i++) {
     const x = participants === 1 ? 560 : 260 + i * 300;
@@ -49,7 +49,7 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
     ctx.fillStyle = "#14271f55"; ctx.beginPath(); ctx.ellipse(x, 486, 96 + p * 15, 17, 0, 0, Math.PI * 2); ctx.fill();
     if (overlay) {
       ctx.strokeStyle = PEOPLE[i].color + "88"; ctx.lineWidth = 1; ctx.setLineDash([6, 7]); ctx.strokeRect(x - 126, 91, 252, 417); ctx.setLineDash([]);
-      ctx.fillStyle = PEOPLE[i].color; ctx.font = "13px monospace"; ctx.fillText(`ID 0${i + 1} · TRACKED`, x - 124, 78);
+      ctx.fillStyle = PEOPLE[i].color; ctx.font = `13px ${fontFamily}`; ctx.fillText(`ID 0${i + 1} · TRACKED`, x - 124, 78);
       ctx.fillStyle = "#253a31"; ctx.fillRect(x - 80, 101, 160, 23);
     }
     const line = (points: Point[], color: string, width: number) => {
@@ -64,7 +64,7 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
     line([[x, 211 - lift], [x, 321 - lift]], PEOPLE[i].color, 72);
     ctx.fillStyle = "#b5c5ae"; ctx.beginPath(); ctx.arc(...head, 29, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = "#21372e"; ctx.beginPath(); ctx.arc(x, 153 - lift, 29, Math.PI, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = "#30483b"; ctx.font = "bold 26px monospace"; ctx.textAlign = "center"; ctx.fillText(`0${i + 1}`, x, 280 - lift); ctx.textAlign = "left";
+    ctx.fillStyle = "#30483b"; ctx.font = `bold 26px ${fontFamily}`; ctx.textAlign = "center"; ctx.fillText(`0${i + 1}`, x, 280 - lift); ctx.textAlign = "left";
     if (overlay) {
       const skeleton = "#fff8e199";
       line([shoulders[0], shoulders[1]], skeleton, 2);
@@ -77,7 +77,7 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
       }
       ctx.strokeStyle = "#f4e2ba"; ctx.lineWidth = 1; ctx.strokeRect(x - 22, 140 - lift, 44, 42);
     }
-    ctx.font = "13px monospace"; ctx.textAlign = "center"; ctx.fillStyle = PEOPLE[i].color; ctx.fillText(PEOPLE[i].name.toUpperCase(), x, 540); ctx.textAlign = "left";
+    ctx.font = `13px ${fontFamily}`; ctx.textAlign = "center"; ctx.fillStyle = PEOPLE[i].color; ctx.fillText(PEOPLE[i].name.toUpperCase(), x, 540); ctx.textAlign = "left";
   }
 }
 
