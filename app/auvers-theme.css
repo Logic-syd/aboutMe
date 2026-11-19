@@ -298,7 +298,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .pixel-portfolio .about-section { background: transparent; }
 .about-photo-timeline .personal-photo-trigger { border: 1px solid var(--glass-border); border-radius: 10px; box-shadow: none; }
 .about-timeline-photo>figcaption, .personal-photo>figcaption { font-family: var(--sans); font-size: 11px; line-height: 1.5; }
-.personal-photo-open { border-radius: 50%; background: var(--panel); }
+.personal-photo-open { border-radius: 6px; background: var(--panel); }
 .about-outside-work { padding-left: 15px; border-left: 2px solid var(--rose); }
 .pixel-portfolio .career-history-browser { padding: 12px; }
 .pixel-portfolio .career-history-picker { gap: 5px; padding: 0 12px 0 0; }
@@ -412,3 +412,10 @@ h1 em, h2 em, h3 em, h1 span, .pink-period { color: inherit; font-weight: inheri
 .project-explorer .space-label, .project-explorer .space-node-case-link { color: #fbf6f4; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .project-explorer .three-controls button { background: var(--panel); } }
 @media (prefers-reduced-transparency: reduce) { .project-explorer .three-controls button { background: var(--panel); backdrop-filter: none; -webkit-backdrop-filter: none; } }
+
+.personal-photo-open svg { width: 20px; height: 20px; }
+
+a { text-decoration: underline; text-underline-offset: 3px; }
+a.wordmark, a.button, .featured-work-link { text-decoration: none; }
+.featured-work-link h3 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.craft-header .header-sections a[aria-current=location]::after { display: none; }

@@ -13,13 +13,13 @@ export function Header({ detail = false, sidebar = false }: { detail?: boolean; 
   </>;
 }
 export function Footer({ pixel = false }: { pixel?: boolean } = {}) {
-  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link>{pixel ? <p>Yidan Shao</p> : <a href="mailto:yidanshao622@gmail.com">yidanshao622@gmail.com</a>}<a href="#top">Back to top ↑</a></footer>;
+  return <footer className="shell footer"><Link className="wordmark" href="/">ys<span>.</span></Link>{pixel ? <p>Yidan Shao</p> : <a href="mailto:yidanshao622@gmail.com">yidanshao622@gmail.com</a>}<a href="#top">Back to top</a></footer>;
 }
 export function Contact() {
   return <section id="contact" className="contact-section">
     <div className="shell contact-inner">
-      <div><h2>Contact</h2></div>
-      <a className="email-link" href="mailto:yidanshao622@gmail.com">yidanshao622@gmail.com <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a>
+      <div><h2>Contact</h2><p>Write to me about work, an idea, or just to say hello. I’d love to hear from you.</p></div>
+      <a className="email-link" href="mailto:yidanshao622@gmail.com">yidanshao622@gmail.com</a>
     </div>
   </section>;
 }

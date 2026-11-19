@@ -75,7 +75,7 @@ test('the edge handle preserves reading position and switches cases without stal
 
 test('the case ending uses the same drawer and switching to home unlocks scrolling', async ({ page }) => {
   await page.goto('/projects/catch-that-train');
-  await page.getByRole('link', { name: '← All projects', exact: true }).click();
+  await page.getByRole('link', { name: 'All projects', exact: true }).click();
   const drawer = drawerFor(page);
   await expect(drawer).toBeVisible();
   await expect(drawer.locator('[aria-current="page"]')).toHaveAttribute('href', '/projects/catch-that-train');

@@ -256,7 +256,7 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   const hero = page.locator('section[aria-labelledby="town-title"]');
   await expect(page.locator('#skills').getByText('Three.js', { exact: true })).toBeVisible();
   await expect(hero.getByRole('link', { name: 'Email me', exact: true })).toHaveAttribute('href', 'mailto:yidanshao622@gmail.com');
-  await expect(hero.getByText('I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.', { exact: true })).toBeVisible();
+  await expect(hero.getByText('I build frontends for a renewable-energy API platform, insurance payments and PE exam software. On the side I make small projects, like a chess game for hiking breaks and a map of coffee and craft beer spots. They all live in this town, so click a building.', { exact: true })).toBeVisible();
   const workBuilding = hero.getByRole('button', { name: 'Explore Commercial work', exact: true });
   await workBuilding.click();
   const preview = page.getByRole('dialog', { name: 'Commercial projects.', exact: true });

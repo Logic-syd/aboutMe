@@ -217,7 +217,7 @@ export function PixelTown() {
     <div ref={intro} className={styles.intro}>
       <h1 id="town-title">Yidan Shao</h1>
       <p className={styles.role}>Senior frontend engineer in Munich. Open to relocate.</p>
-      <p className={styles.bio}>I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.</p>
+      <p className={styles.bio}>I build frontends for a renewable-energy API platform, insurance payments and PE exam software. On the side I make small projects, like a chess game for hiking breaks and a map of coffee and craft beer spots. They all live in this town, so click a building.</p>
       <div className={styles.actions}><a className={styles.primary} href="#work">View projects</a><a href="mailto:yidanshao622@gmail.com">Email me</a></div>
     </div>
     <div ref={townFrame} className={styles.gameWindow} data-town-frame>

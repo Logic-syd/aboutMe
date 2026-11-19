@@ -33,8 +33,8 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
   ctx.strokeStyle = "#c4d7c019"; ctx.lineWidth = 1;
   for (let y = 370; y <= 570; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1120, y); ctx.stroke(); }
   for (let x = -500; x < 1800; x += 160) { ctx.beginPath(); ctx.moveTo(560 + (x - 560) * .4, 370); ctx.lineTo(x, 570); ctx.stroke(); }
-  ctx.fillStyle = "#d6e0cf48"; ctx.font = `12px ${fontFamily}`; ctx.fillText("MOVEMENT STUDIO / JUMPING JACKS", 38, 38);
-  ctx.textAlign = "right"; ctx.fillText("SYNTHETIC MOTION", 1082, 38); ctx.textAlign = "left";
+  ctx.fillStyle = "#d6e0cf48"; ctx.font = `12px ${fontFamily}`; ctx.fillText("Movement studio / Jumping jacks", 38, 38);
+  ctx.textAlign = "right"; ctx.fillText("Synthetic motion", 1082, 38); ctx.textAlign = "left";
   for (let i = 0; i < participants; i++) {
     const x = participants === 1 ? 560 : 260 + i * 300;
     const p = reduced ? .3 : (1 - Math.cos(Math.max(0, time - i * .22) * Math.PI * 2 / 1.8)) / 2;
@@ -49,7 +49,7 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
     ctx.fillStyle = "#14271f55"; ctx.beginPath(); ctx.ellipse(x, 486, 96 + p * 15, 17, 0, 0, Math.PI * 2); ctx.fill();
     if (overlay) {
       ctx.strokeStyle = PEOPLE[i].color + "88"; ctx.lineWidth = 1; ctx.setLineDash([6, 7]); ctx.strokeRect(x - 126, 91, 252, 417); ctx.setLineDash([]);
-      ctx.fillStyle = PEOPLE[i].color; ctx.font = `13px ${fontFamily}`; ctx.fillText(`ID 0${i + 1} · TRACKED`, x - 124, 78);
+      ctx.fillStyle = PEOPLE[i].color; ctx.font = `13px ${fontFamily}`; ctx.fillText(`ID 0${i + 1}: tracked`, x - 124, 78);
       ctx.fillStyle = "#253a31"; ctx.fillRect(x - 80, 101, 160, 23);
     }
     const line = (points: Point[], color: string, width: number) => {
@@ -77,7 +77,7 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
       }
       ctx.strokeStyle = "#f4e2ba"; ctx.lineWidth = 1; ctx.strokeRect(x - 22, 140 - lift, 44, 42);
     }
-    ctx.font = `13px ${fontFamily}`; ctx.textAlign = "center"; ctx.fillStyle = PEOPLE[i].color; ctx.fillText(PEOPLE[i].name.toUpperCase(), x, 540); ctx.textAlign = "left";
+    ctx.font = `13px ${fontFamily}`; ctx.textAlign = "center"; ctx.fillStyle = PEOPLE[i].color; ctx.fillText(PEOPLE[i].name, x, 540); ctx.textAlign = "left";
   }
 }
 
@@ -153,7 +153,7 @@ export function SportsAssessmentDemo() {
 
   return (
     <div className={styles.demo} data-testid="sports-demo" data-case-demo="sports">
-      <div className={styles.caption}><span>Interactive recreation · Sample data</span><span>01 / MOVEMENT → FEEDBACK</span></div>
+      <div className={styles.caption}><span>Interactive recreation · Sample data</span><span>Movement and feedback</span></div>
       <div className={styles.stageLayout}><div className={styles.console}>
         <div className={styles.toolbar}>
           <div><span className={styles.statusDot} data-running={view.phase === "running"} /><span role="status">{status}</span></div>
@@ -162,8 +162,8 @@ export function SportsAssessmentDemo() {
         <div className={styles.viewport}>
           <canvas ref={canvas} width={1120} height={570} aria-label={`Animated jumping-jack demonstration with ${participants} sample students. Individual results are listed below.`} role="img" />
           {view.phase === "ready" && <button className={styles.stageStart} onClick={startPause}><span aria-hidden="true">▶</span> Start a 12-second session</button>}
-          {view.phase === "paused" && <div className={styles.stageLabel}>PAUSED — YOUR RESULTS ARE SAVED</div>}
-          {view.phase === "complete" && <div className={styles.stageLabel}>SESSION COMPLETE · {total} REPS RECEIVED</div>}
+          {view.phase === "paused" && <div className={styles.stageLabel}>Paused — your results are saved</div>}
+          {view.phase === "complete" && <div className={styles.stageLabel}>Session complete: {total} repetitions received</div>}
         </div>
         <div className={styles.progress} role="progressbar" aria-label="Training progress" aria-valuemin={0} aria-valuemax={12} aria-valuenow={Math.floor(view.time)}><span style={{ width: `${view.time / DURATION * 100}%` }} /></div>
         <div className={styles.pipeline} aria-label="Simulated data pipeline">
@@ -171,7 +171,7 @@ export function SportsAssessmentDemo() {
         </div>
       </div>
       <div className={styles.sidePanel}><div className={styles.controls}>
-        <div className={styles.transport}><button className={styles.primary} onClick={startPause}>{view.phase === "running" ? "Pause session" : view.phase === "paused" ? "Resume session" : view.phase === "complete" ? "Play again" : "Start session"}<span aria-hidden="true">{view.phase === "running" ? "Ⅱ" : "↗"}</span></button><button className={styles.reset} onClick={() => reset()} aria-label="Reset session">↺ Reset</button></div>
+        <div className={styles.transport}><button className={styles.primary} onClick={startPause}>{view.phase === "running" ? "Pause session" : view.phase === "paused" ? "Resume session" : view.phase === "complete" ? "Play again" : "Start session"}</button><button className={styles.reset} onClick={() => reset()} aria-label="Reset session">↺ Reset</button></div>
         <fieldset className={styles.participants}><legend>Participants <span>· changing resets</span></legend><div>{[1, 3].map(count => <button key={count} aria-pressed={participants === count} onClick={() => { if (count !== participants) reset(count); }}>{count === 1 ? "One student" : "Three students"}</button>)}</div></fieldset>
         <div className={styles.delay}><label htmlFor="sports-result-delay">Result delay <output htmlFor="sports-result-delay">{delay} ms</output></label><input id="sports-result-delay" type="range" min={0} max={1200} step={100} value={delay} onChange={event => setDelay(Number(event.target.value))} /><span>Increase it to see results arrive later.</span></div>
       </div>
@@ -180,7 +180,7 @@ export function SportsAssessmentDemo() {
         <label><input type="checkbox" checked={audio} disabled={!hasSpeech} onChange={event => { setAudio(event.target.checked); setSpeechNote(""); if (!event.target.checked && hasSpeech) window.speechSynthesis.cancel(); }} /> Announce final scores {hasSpeech ? "" : "(unavailable)"}</label>
         <span>{reduced ? "Reduced motion · static poses" : "No camera access needed"}</span>
       </div>
-      <div className={styles.resultsHeading}><span>{view.phase === "complete" ? "YOUR SAMPLE SESSION REPORT" : "INDIVIDUAL RESULTS"}</span><span>{view.phase === "complete" ? "6 repetitions per student" : "Scores appear when the session ends"}</span></div>
+      <div className={styles.resultsHeading}><span>{view.phase === "complete" ? "Your sample session report" : "Individual results"}</span><span>{view.phase === "complete" ? "6 repetitions per student" : "Scores appear when the session ends"}</span></div>
       <div className={styles.results} data-participants={participants}>
         {PEOPLE.slice(0, participants).map((person, index) => <div className={styles.result} key={person.name} style={{ "--student-color": person.color } as React.CSSProperties}><div className={styles.student}><i /><span>{person.name}<small>Identity tracked separately</small></span></div><div className={styles.numbers}><span><strong data-testid={`reps-${index}`}>{view.reps[index]}</strong> reps received</span><span><strong>{view.phase === "complete" ? person.score : "—"}</strong> / 100<span className={styles.scoreLabel}>sample score</span></span></div></div>)}
       </div>
