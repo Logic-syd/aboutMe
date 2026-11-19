@@ -229,7 +229,7 @@
 .case-note-tabs{border-radius:10px 10px 0 0;background:var(--surface-soft)}
 .case-note-tabs button{border-radius:6px;font-family:var(--sans);transition:background .18s ease,border-color .18s ease}
 .case-note-tabs strong{font-weight:500}
-.case-note-tabs button[aria-selected=true]{border-color:var(--glass-border);box-shadow:none;color:var(--primary)}
+.case-note-tabs button[aria-selected=true]{border-color:var(--glass-border);box-shadow:none;color:var(--ink)}
 .case-note-tabs button:hover{background:var(--surface-selected)}
 .case-note-panel{border-radius:0 0 10px 10px}
 .case-note-tabs button>span,.case-portrait-grid h3 span,.case-export-steps li>span{font-family:var(--sans);font-variant-numeric:tabular-nums}
@@ -237,7 +237,7 @@
 .case-responsibilities li:last-child{border-bottom:0}
 .case-media-tabs{background:var(--glass-surface);border-color:var(--glass-border);border-radius:10px 10px 0 0}
 .case-media-tabs button{border-radius:6px;font-family:var(--sans);font-weight:500;transition:background .18s ease}
-.case-media-tabs button[aria-pressed=true]{border-color:var(--glass-border);color:var(--primary);box-shadow:none}
+.case-media-tabs button[aria-pressed=true]{border-color:var(--glass-border);color:var(--ink);box-shadow:none}
 .case-media-tabs button:hover{background:var(--surface-selected)}
 .case-gallery-view{border-radius:0 0 10px 10px}
 .case-gallery-view figcaption{border-radius:0 0 10px 0;background:var(--surface-soft)}

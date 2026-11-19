@@ -41,7 +41,8 @@ function satelliteGradient(gradient: Gradient): Gradient {
   const lighten = (color: string) => `#${new THREE.Color(color).lerp(new THREE.Color('#ffffff'), .42).getHexString()}`;
   return [lighten(gradient[0]), lighten(gradient[1]), lighten(gradient[2])];
 }
-function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse, pulseStrength }: { anchors: Item[]; pixelScale: number; pulse: number; pulseStrength: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
+function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse, pulseStrength }: { anchors: Item[]; pixelScale: number; pulse: number; pulseStrength: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
+  const staticMotion = reducedMotion || !animate;
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Mesh>(null);
   const halo = useRef<THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>>(null);
@@ -80,7 +81,7 @@ function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, posi
   }, [size, item.gradient, item.kind]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => {
-    if (pulse > 0 && pulse !== lastPulse.current && !reducedMotion) {
+    if (pulse > 0 && pulse !== lastPulse.current && !staticMotion) {
       scaleValue.current = 1 - .07 * pulseStrength;
       scaleVelocity.current = 1.1 * pulseStrength;
       velocity.current.addScaledVector(new THREE.Vector3(...(item.kickDirection ?? [0, 1, 0])), pixelScale * 105 * pulseStrength);
@@ -89,18 +90,18 @@ function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, posi
     }
     lastPulse.current = pulse;
     invalidate();
-  }, [pulse, pulseStrength, reducedMotion, pixelScale, item.kickDirection, invalidate]);
+  }, [pulse, pulseStrength, staticMotion, pixelScale, item.kickDirection, invalidate]);
   useEffect(() => {
     const origin = item.spawnFrom ? positions.current.get(item.spawnFrom) : null;
-    if (origin && group.current && !reducedMotion) group.current.position.copy(origin);
+    if (origin && group.current && !staticMotion) group.current.position.copy(origin);
     invalidate();
-  }, [item.spawnFrom, positions, reducedMotion, invalidate]);
+  }, [item.spawnFrom, positions, staticMotion, invalidate]);
   useEffect(() => { offset.current.set(0, 0, 0); invalidate(); }, [item.position, invalidate]);
   useFrame((_, delta) => {
     if (!group.current) return;
     const target = new THREE.Vector3(...item.position).add(offset.current);
 
-    if (!reducedMotion && !dragging.current) {
+    if (!staticMotion && !dragging.current) {
       // Small coupled springs let a pulled sphere gently tug its connections.
       const tug = new THREE.Vector3();
       for (const anchor of anchors) {
@@ -116,14 +117,14 @@ function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, posi
     const step = Math.min(delta, 1 / 30);
     age.current += step;
     const positionChanged = group.current.position.distanceToSquared(target) > .000001;
-    if (reducedMotion) { group.current.position.copy(target); velocity.current.set(0, 0, 0); }
+    if (staticMotion) { group.current.position.copy(target); velocity.current.set(0, 0, 0); }
     else if (age.current >= 0) {
       velocity.current.addScaledVector(target.clone().sub(group.current.position), step * 64);
       velocity.current.multiplyScalar(Math.exp(-step * 8.5));
       group.current.position.addScaledVector(velocity.current, step);
     }
-    const scaleTarget = !reducedMotion && age.current < 0 ? 0 : (hovered ? 1.05 : 1) * (pressed.current ? .94 : 1);
-    if (reducedMotion) { scaleValue.current = scaleTarget; scaleVelocity.current = 0; }
+    const scaleTarget = !staticMotion && age.current < 0 ? 0 : (hovered ? 1.05 : 1) * (pressed.current ? .94 : 1);
+    if (staticMotion) { scaleValue.current = scaleTarget; scaleVelocity.current = 0; }
     else {
       scaleVelocity.current += (scaleTarget - scaleValue.current) * step * 75;
       scaleVelocity.current *= Math.exp(-step * 10);
@@ -131,10 +132,10 @@ function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, posi
     }
     const squash = 1 - scaleValue.current;
     shell.current?.scale.set(scaleValue.current * (1 + squash * .35), scaleValue.current * (1 - squash * .35), scaleValue.current);
-    if (label.current) label.current.style.opacity = reducedMotion ? '1' : String(THREE.MathUtils.clamp((scaleValue.current - .45) / .55, 0, 1));
+    if (label.current) label.current.style.opacity = staticMotion ? '1' : String(THREE.MathUtils.clamp((scaleValue.current - .45) / .55, 0, 1));
 
     if (halo.current) {
-      ripple.current = reducedMotion ? 0 : Math.max(0, ripple.current - step * 1.8);
+      ripple.current = staticMotion ? 0 : Math.max(0, ripple.current - step * 1.8);
       halo.current.visible = ripple.current > 0;
       halo.current.quaternion.copy(camera.quaternion);
       halo.current.scale.setScalar(1 + (1 - ripple.current) * 1.2);
@@ -142,7 +143,7 @@ function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, posi
     }
     onPosition(item.id, group.current.position);
     // HTML labels need the next frame's updated world matrices after an immediate move.
-    if (ripple.current > 0 || (reducedMotion && positionChanged) || group.current.position.distanceTo(target) > .002 || velocity.current.length() > .01 || age.current < 0 || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
+    if (ripple.current > 0 || (staticMotion && positionChanged) || group.current.position.distanceTo(target) > .002 || velocity.current.length() > .01 || age.current < 0 || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
   });
   function down(event: ThreeEvent<PointerEvent>) {
     event.stopPropagation(); pressed.current = true; dragging.current = true; moved.current = 0; releaseVelocity.current.set(0, 0, 0); last.current = { x: event.clientX, y: event.clientY, time: event.timeStamp }; onDrag(true);
@@ -169,7 +170,7 @@ function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, posi
     (event.target as unknown as { releasePointerCapture: (id: number) => void }).releasePointerCapture(event.pointerId);
     offset.current.set(0, 0, 0);
     if (moved.current < 6 && item.onSelect) item.onSelect();
-    else if (!reducedMotion) {
+    else if (!staticMotion) {
       // Preserve the release direction briefly before the spring settles home.
       if (event.timeStamp - last.current.time < 100) velocity.current.addScaledVector(releaseVelocity.current, .35);
       scaleVelocity.current = .35;
@@ -191,7 +192,7 @@ function SphereNode({ item, reducedMotion, onDrag, onPosition, labelPortal, posi
     {item.active && (item.kind === 'project' || item.kind === 'technology') && <mesh rotation={[.5, .2, -.4]}><torusGeometry args={[size * 1.35, pixelScale * .8, 8, 64]} /><meshStandardMaterial color={item.color} roughness={.65} emissive={item.color} emissiveIntensity={.08} /></mesh>}
     {(!item.quiet || hovered && item.kind !== 'leaf') && <Html portal={labelPortal} center position={[0, -size - pixelScale * (item.kind === 'project' ? 32 : 25), .05]} zIndexRange={[20, 1]} style={{ pointerEvents: 'none' }}>
       <div ref={label} data-node-id={item.id} className={`space-node-label ${item.kind === 'project' ? 'is-project' : ''} ${item.satellite ? 'is-satellite' : ''}`}>{item.onSelect ? <button className={`space-label label-${item.kind} ${item.active ? 'active' : ''}`} onClick={item.onSelect} aria-pressed={item.active} style={{ pointerEvents: 'auto' }}>{item.kind === 'root' ? <><span>Yidan Shao</span><strong>My work</strong></> : <>{item.kind === 'project' && <span>{projects[item.index].kind === 'commercial' ? 'Work' : 'Personal'}</span>}<strong>{item.label}</strong></>}</button> : <span className="space-label label-leaf"><strong>{item.label}</strong></span>}
-        {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} title="Read case study" style={{ pointerEvents: 'auto' }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>}
+        {item.kind === 'project' && <Link className="space-case-link" href={`/projects/${projects[item.index].slug}`} aria-label={`Read ${projects[item.index].title} case study`} title="Read case study" style={{ pointerEvents: 'auto' }}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6" /></svg></Link>}
       </div>
     </Html>}
   </group>;

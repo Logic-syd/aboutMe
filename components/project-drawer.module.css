@@ -55,7 +55,7 @@
 .heading, .list { position: relative; z-index: 1; }
 .heading { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 16px 14px 24px; border-bottom: 1px solid var(--line); }
 .heading h2 { display: flex; align-items: baseline; gap: 10px; margin: 0; font: 600 25px/1.25 var(--sans); letter-spacing: -.03em; }
-.heading h2 span { color: var(--muted); font-size: 12px; font-weight: 400; letter-spacing: -.03em; }
+.heading h2 span { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: -.03em; }
 .close { display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; border: 1px solid var(--glass-border); border-radius: 6px; background: var(--panel); color: var(--primary); font: 300 26px/1 var(--sans); }
 .close:hover { background: var(--surface-selected); color: var(--ink); }
 .list { flex: 1; min-height: 0; padding: 18px 12px 22px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #7b9d9073 transparent; }

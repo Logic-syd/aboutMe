@@ -7,7 +7,7 @@ const DURATION = 12;
 const PEOPLE = [
   { name: "Student 01", color: "#c2d7ba", score: 94 },
   { name: "Student 02", color: "#dcc0cd", score: 91 },
-  { name: "Student 03", color: "#e9c5a4", score: 96 },
+  { name: "Student 03", color: "#b8c7d0", score: 96 },
 ];
 type Phase = "ready" | "running" | "paused" | "complete";
 type Packet = { person: number; due: number };
@@ -33,7 +33,7 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
   ctx.strokeStyle = "#c4d7c019"; ctx.lineWidth = 1;
   for (let y = 370; y <= 570; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(1120, y); ctx.stroke(); }
   for (let x = -500; x < 1800; x += 160) { ctx.beginPath(); ctx.moveTo(560 + (x - 560) * .4, 370); ctx.lineTo(x, 570); ctx.stroke(); }
-  ctx.fillStyle = "#d6e0cf48"; ctx.font = `12px ${fontFamily}`; ctx.fillText("Movement studio / Jumping jacks", 38, 38);
+  ctx.fillStyle = "#e3a4b4"; ctx.font = `12px ${fontFamily}`; ctx.fillText("Movement studio / Jumping jacks", 38, 38);
   ctx.textAlign = "right"; ctx.fillText("Synthetic motion", 1082, 38); ctx.textAlign = "left";
   for (let i = 0; i < participants; i++) {
     const x = participants === 1 ? 560 : 260 + i * 300;
@@ -59,23 +59,23 @@ function paint(canvas: HTMLCanvasElement, time: number, participants: number, ov
     for (let side = 0; side < 2; side++) {
       line([hips[side], knees[side], feet[side]], "#91a89b", 24);
       line([shoulders[side], elbows[side], hands[side]], PEOPLE[i].color, 22);
-      line([feet[side], [feet[side][0] + (side ? 13 : -13), 478]], "#f2ead8", 13);
+      line([feet[side], [feet[side][0] + (side ? 13 : -13), 478]], "#fbf6f4", 13);
     }
     line([[x, 211 - lift], [x, 321 - lift]], PEOPLE[i].color, 72);
     ctx.fillStyle = "#b5c5ae"; ctx.beginPath(); ctx.arc(...head, 29, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = "#21372e"; ctx.beginPath(); ctx.arc(x, 153 - lift, 29, Math.PI, Math.PI * 2); ctx.fill();
     ctx.fillStyle = "#30483b"; ctx.font = `bold 26px ${fontFamily}`; ctx.textAlign = "center"; ctx.fillText(`0${i + 1}`, x, 280 - lift); ctx.textAlign = "left";
     if (overlay) {
-      const skeleton = "#fff8e199";
+      const skeleton = "#fbf6f499";
       line([shoulders[0], shoulders[1]], skeleton, 2);
       line([[x, 200 - lift], [x, 330 - lift]], skeleton, 2);
       for (let side = 0; side < 2; side++) {
         line([hands[side], elbows[side], shoulders[side], hips[side], knees[side], feet[side]], skeleton, 2);
       }
       for (const [a, b] of [...shoulders, ...elbows, ...hands, ...hips, ...knees, ...feet]) {
-        ctx.beginPath(); ctx.arc(a, b, 4, 0, Math.PI * 2); ctx.fillStyle = "#fff5d8"; ctx.fill();
+        ctx.beginPath(); ctx.arc(a, b, 4, 0, Math.PI * 2); ctx.fillStyle = "#fbf6f4"; ctx.fill();
       }
-      ctx.strokeStyle = "#f4e2ba"; ctx.lineWidth = 1; ctx.strokeRect(x - 22, 140 - lift, 44, 42);
+      ctx.strokeStyle = "#e3a4b4"; ctx.lineWidth = 1; ctx.strokeRect(x - 22, 140 - lift, 44, 42);
     }
     ctx.font = `13px ${fontFamily}`; ctx.textAlign = "center"; ctx.fillStyle = PEOPLE[i].color; ctx.fillText(PEOPLE[i].name, x, 540); ctx.textAlign = "left";
   }
@@ -157,7 +157,7 @@ export function SportsAssessmentDemo() {
       <div className={styles.stageLayout}><div className={styles.console}>
         <div className={styles.toolbar}>
           <div><span className={styles.statusDot} data-running={view.phase === "running"} /><span role="status">{status}</span></div>
-          <span className={styles.timer} aria-label={`${Math.floor(view.time)} of 12 seconds`}>{String(Math.floor(view.time)).padStart(2, "0")} <span>/ 12 SEC</span></span>
+          <span className={styles.timer} aria-label={`${Math.floor(view.time)} of 12 seconds`}>{String(Math.floor(view.time)).padStart(2, "0")} <span>/ 12 sec</span></span>
         </div>
         <div className={styles.viewport}>
           <canvas ref={canvas} width={1120} height={570} aria-label={`Animated jumping-jack demonstration with ${participants} sample students. Individual results are listed below.`} role="img" />

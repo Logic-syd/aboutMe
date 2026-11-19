@@ -6,6 +6,7 @@ test('desktop town previews stay inside the visible town for every building', as
 
   const frame = page.locator('[data-town-frame]');
   const triggers = frame.locator('[data-town-trigger]');
+  await expect(triggers).toHaveCount(6);
   for (const trigger of await triggers.all()) {
     await trigger.click();
     const preview = page.getByRole('dialog').filter({ has: page.getByRole('button', { name: 'Close preview', exact: true }) });

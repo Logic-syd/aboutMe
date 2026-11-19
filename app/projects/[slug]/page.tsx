@@ -49,6 +49,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     {project.slug === 'running-mini-program' && <RunningShowcase />}
     {project.slug === 'low-code-platform' && <CaseChapter id="app-builder" kicker="Interactive demo" title="Build your own app" description="Compose a page, arrange its fields and change the theme. Then try the app you made." layout="demo"><LowCodeDemo /></CaseChapter>}
     <ProjectGallery project={project} />
+    {project.slug === 'love-story-theater' && <CaseChapter id="demo-preview" title="Demo"><p className="case-demo-placeholder">Screenshots or a recording will be added here. The app is currently offline and no longer maintained; its source code is linked above.</p></CaseChapter>}
     <CaseChapter id="problem" kicker="Context" title={project.caseHeadings?.problem ?? 'The problem'}>
       <div className="case-two-column"><p className="case-lead">{project.problem}</p><div className="case-diagram"><Diagram project={project} compact /></div></div>
     </CaseChapter>

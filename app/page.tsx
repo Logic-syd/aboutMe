@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { ProjectShowcase } from '@/components/project-showcase';
-import { ProjectLinks } from '@/components/project-links';
+import { ProjectDrawer, ProjectListLink } from '@/components/project-drawer';
 import { PixelTown } from '@/components/pixel-town';
 import { CareerMap } from '@/components/career-map';
 import { projects } from '@/lib/projects';
@@ -60,27 +59,14 @@ export default function Home() {
       <PixelTown />
       <section id="work" className="shell work-section" aria-labelledby="work-title">
         <div className="section-heading"><div><h2 id="work-title">Selected work</h2></div><div className="work-heading-links"><a href="#project-explorer" className="all-projects-link">All projects</a></div></div>
-        <ul className="featured-work-list" aria-label="Selected work and personal projects">{featuredProjects.map(project => <li key={project.slug}><Link href={`/projects/${project.slug}`} className="featured-work-link"><div><p className="featured-work-context">{project.context}</p><h3>{project.title}</h3><p className="featured-work-reason">{project.reason}</p></div></Link></li>)}</ul>
-        <div id="project-explorer" className="all-work-heading"><h3>Explore all projects</h3></div>
-        <ProjectShowcase>
-        {[
-          { kind: 'commercial', title: 'Work projects', id: 'work-notebooks' },
-          { kind: 'independent', title: 'Personal projects', id: 'personal-notebooks' },
-        ].map(group => <section id={group.id} className={`project-card-group project-group-${group.kind}`} aria-labelledby={`${group.id}-title`} key={group.kind}>
-        <div className="project-group-heading"><h3 id={`${group.id}-title`}>{group.title}</h3><span>{projects.filter(project => project.kind === group.kind).length} projects</span></div>
-        <div className="project-grid">{projects.filter(project => project.kind === group.kind).map(project => <article className="small-project town-project-card" key={project.slug}>
-          {project.screenshots?.[0] && <Link className="town-card-preview" href={`/projects/${project.slug}`} aria-label={`View ${project.title} case study`}><Image src={project.screenshots[0].src} alt={project.screenshots[0].alt} width={project.screenshots[0].width} height={project.screenshots[0].height} sizes="(max-width: 650px) 85vw, 350px" /></Link>}
-          <p className="eyebrow">{project.organization}</p><h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3><p>{project.description}</p>
-          {project.status && <span className="small-status">{project.status}</span>}<ul className="tags" aria-label="Technologies">{project.tags.slice(0, 3).map(tag => <li key={tag}>{tag}</li>)}</ul>
-          <Link className="text-link" href={`/projects/${project.slug}`}>Read case study</Link><ProjectLinks project={project} />
-        </article>)}</div></section>)}
-        </ProjectShowcase>
+        <ul className="featured-work-list" aria-label="Selected work and personal projects">{featuredProjects.map(project => <li key={project.slug}><Link href={`/projects/${project.slug}`} className="featured-work-link"><div><h3>{project.title}</h3><p className="featured-work-context">{project.context}</p></div><p className="featured-work-reason">{project.reason}</p></Link></li>)}</ul>
       </section>
-      <section id="skills" className="shell skills-section" aria-labelledby="skills-title">
-        <h2 id="skills-title">Skills</h2>
-        <div className="skills-overview">{technologyGroups.map(group => <div className="skills-group" key={group.label}><h3>{group.label}</h3><ul>{group.skills.map(skill => <li key={skill}>{skill}</li>)}</ul></div>)}</div>
-        <p className="skills-context">Payments experience: <Link href="/projects/ronghe-pay">premium collections, claim payouts and payment reconciliation</Link>.</p>
-      </section>
+      <ProjectDrawer projects={projects.map(({ slug, title, kind }) => ({ slug, title, kind }))} edgeTrigger={false}>
+        <section id="project-explorer" className="shell all-work-section" aria-labelledby="all-work-title">
+          <div className="section-heading"><h2 id="all-work-title">Explore all projects</h2><ProjectListLink className="text-link" label="Browse project list">Project list</ProjectListLink></div>
+          <ProjectShowcase />
+        </section>
+      </ProjectDrawer>
       <AboutMe />
       <section id="career-history" className="shell experience-section professional-work-section" aria-labelledby="career-history-title">
         <div className="section-heading"><div><h2 id="career-history-title">Experience</h2></div></div>

@@ -289,17 +289,17 @@ button{font:inherit;color:inherit;cursor:pointer}button:disabled{opacity:.5;curs
 .pixel-portfolio .craft-header{background:var(--surface);border-bottom:1px solid var(--line)}
 .pixel-portfolio .wordmark{font-family:var(--sans);letter-spacing:-2px}
 .pixel-portfolio .tech-strip{background:var(--surface-selected);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.pixel-portfolio .work-section{padding-top:65px}.pixel-portfolio .section-heading h2{font-family:Georgia,serif;letter-spacing:-1px;font-size:38px}
+.pixel-portfolio .work-section{padding-top:65px}.pixel-portfolio .section-heading h2{font-family:var(--sans);letter-spacing:-1px;font-size:38px}
 .pixel-portfolio .eyebrow{font-family:var(--sans);font-weight:400;letter-spacing:0}
 .pixel-portfolio .town-project-card{border:1px solid var(--line);border-radius:0;background:var(--paper);box-shadow:none;padding:26px}
 .pixel-portfolio .small-project-top>span:first-child{font:22px var(--sans);color:var(--pink)}
 .pixel-portfolio .town-card-stamp{font:34px var(--sans);color:var(--pink);border:1px dashed var(--line);padding:2px 8px;line-height:1}
 .pixel-portfolio .town-project-card:nth-child(3n+2) .town-card-stamp{color:var(--ink);border-color:var(--line)}
 .pixel-portfolio .town-project-card:nth-child(3n) .town-card-stamp{color:var(--ink);border-color:var(--line)}
-.pixel-portfolio .town-project-card h3{font-size:23px;font-family:Georgia,serif;letter-spacing:-.4px}
+.pixel-portfolio .town-project-card h3{font-size:23px;font-family:var(--sans);letter-spacing:-.4px}
 .pixel-portfolio .town-project-card .tags li{border-radius:0;background:var(--surface-soft);border-color:var(--line)}
 .pixel-portfolio .about-section{background:var(--surface-soft);border-color:var(--line)}
-.pixel-portfolio .about-grid h2,.pixel-portfolio .contact-inner h2{font-family:Georgia,serif;font-weight:400}
+.pixel-portfolio .about-grid h2,.pixel-portfolio .contact-inner h2{font-family:var(--sans);font-weight:400}
 .pixel-portfolio .professional-work-section{background:var(--paper)}
 .pixel-portfolio .contact-section{background:var(--surface-selected)}.pixel-portfolio .footer{font-family:var(--sans)}
 @media(max-width:650px){.pixel-portfolio .work-section{padding-top:45px}.pixel-portfolio .section-heading h2{font-size:30px}.pixel-portfolio .project-grid{gap:20px}}
