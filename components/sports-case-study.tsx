@@ -18,9 +18,9 @@ export function SportsCaseStudy({ next }: { project: Project; next: Project }) {
   return <div id="top" className={`project-case ${styles.page}`}><Header detail /><main id="main" className={styles.main}>
     <CaseIntro>
       <header className={styles.hero} data-case-hero><div><p className={styles.kicker}>Danzhu · AI sports assessment</p><h1>AI sports assessment.<br /><em>Live video and scores.</em></h1><p className={styles.intro}>A TV-based sports examination and training system. I migrated its frontend from jQuery to React and connected live video, AI scoring and synchronized feedback.</p></div>
-        <div className={styles.context}><span className={styles.contextLabel}><i /> In regional use</span><h2>China’s high-school entrance PE exams.</h2><p>The system has been used in high-school entrance PE examinations in parts of China, as well as sports-school training and middle-school PE classes.</p><a href="#sports-demo" className={styles.tryLink}>Explore the interactive demo <span aria-hidden="true">↓</span></a></div>
+        <div className={styles.context}><span className={styles.contextLabel}><i /> In regional use</span><h2>China’s high-school entrance PE exams.</h2><p>The system has been used in high-school entrance PE examinations in parts of China, as well as sports-school training and middle-school PE classes.</p><a href="#sports-demo" className={styles.tryLink}>Explore the interactive demo </a></div>
       </header>
-      <div className={styles.facts} data-case-overview><div><span>My role</span><p>Frontend development<br />jQuery → React migration</p></div><div><span>Technologies</span><p>Canvas · Video streams · WebSocket<br />Multi-person results · Audio-visual synchronization</p></div><div><span>In this case</span><nav aria-label="On this case study"><a href="#sports-demo">Play the demo ↘</a><a href="#sports-pipeline">Follow the data ↘</a><a href="#sports-scaling">From 2 to 8 cameras ↘</a><a href="#sports-migration">Explore the migration ↘</a></nav></div></div>
+      <div className={styles.facts} data-case-overview><div><span>My role</span><p>Frontend development<br />jQuery → React migration</p></div><div><span>Technologies</span><p>Canvas · Video streams · WebSocket<br />Multi-person results · Audio-visual synchronization</p></div><div><span>In this case</span><nav aria-label="On this case study"><a href="#sports-demo">Play the demo</a><a href="#sports-pipeline">Follow the data</a><a href="#sports-scaling">From 2 to 8 cameras</a><a href="#sports-migration">Explore the migration</a></nav></div></div>
     </CaseIntro>
     <CaseChapter id="sports-demo" kicker="Interactive demo" title="A sample assessment session" description="Start a session, add participants and adjust the scoring delay to see how the interface handles incoming scores." layout="demo"><SportsAssessmentDemo /></CaseChapter>
     <CaseChapter id="sports-pipeline" title="Camera input and individual results" description="System workflow: I implemented the frontend integrations; AI analysis and face recognition ran on the backend.">
@@ -38,6 +38,6 @@ export function SportsCaseStudy({ next }: { project: Project; next: Project }) {
       </div>
     </CaseChapter>
     <Link href="/projects/running-mini-program" className={styles.related}><div><span className={styles.kicker}>Also at Danzhu</span><h2>Student training mini-program</h2><p>The student mini-program and teacher dashboard: camera-based exercises, weak-network saving and score reporting.</p></div></Link>
-    <nav className={styles.next} aria-label="Case study navigation"><ProjectListLink>← All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>Next project</span>{next.title}</Link></nav>
+    <nav className={styles.next} aria-label="Case study navigation"><ProjectListLink>All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>Next project</span>{next.title}</Link></nav>
   </main><Footer /></div>;
 }

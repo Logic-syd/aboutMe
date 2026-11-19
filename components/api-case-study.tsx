@@ -36,7 +36,7 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
           <p className={styles.kicker}>Sungrow · Developer platform</p>
           <h1>Energy API platform.<br /><em>Docs, access and debugging.</em></h1>
           <p className={styles.intro}>A standalone developer platform for renewable-energy APIs: documentation, application access, online debugging and usage across regional sites.</p>
-          <div className={styles.heroActions}><a href="#api-playground" className={styles.tryLink}>Try API debugging <span aria-hidden="true">↓</span></a><a href="#api-engineering" className={styles.secondaryLink}>Engineering notes ↓</a></div>
+          <div className={styles.heroActions}><a href="#api-playground" className={styles.tryLink}>Try API debugging </a><a href="#api-engineering" className={styles.secondaryLink}>Engineering notes</a></div>
         </div>
         <aside id="api-delivery" className={styles.ownership} aria-label="My role and delivery">
           <p className={styles.kicker}>My role</p>
@@ -73,7 +73,7 @@ export function ApiCaseStudy({ project, next }: { project: Project; next: Projec
         <CaseNotes label="API engineering topics" notes={engineeringNotes.map(note => ({ label: note.label, title: note.title, body: <p>{note.detail}</p> }))} />
       </CaseChapter>
 
-      <nav className={`case-next ${styles.next}`} aria-label="Case study navigation"><ProjectListLink>← All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>Next project</span>{next.title}</Link></nav>
+      <nav className={`case-next ${styles.next}`} aria-label="Case study navigation"><ProjectListLink>All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>Next project</span>{next.title}</Link></nav>
     </main>
     <Footer />
   </div>;

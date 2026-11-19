@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import type { PersonalPhoto } from '@/lib/about';
 
-export function PhotoViewer({ photo, className = '' }: { photo: PersonalPhoto; className?: string }) {
+export function PhotoViewer({ photo, className = '', previewFit }: { photo: PersonalPhoto; className?: string; previewFit?: 'cover' | 'contain' }) {
   const crop = photo.previewCrop;
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
@@ -31,8 +31,8 @@ export function PhotoViewer({ photo, className = '' }: { photo: PersonalPhoto; c
         position: 'absolute', maxWidth: 'none', objectFit: 'fill',
         width: `${photo.width / crop.width * 100}%`, height: `${photo.height / crop.height * 100}%`,
         left: `${-crop.x / crop.width * 100}%`, top: `${-crop.y / crop.height * 100}%`,
-      } : { objectFit: photo.fit ?? 'cover', objectPosition: photo.position ?? '50% 50%' }} />
-      <span className="personal-photo-open" aria-hidden="true">↗</span>
+      } : { objectFit: previewFit ?? photo.fit ?? 'cover', objectPosition: photo.position ?? '50% 50%' }} />
+      <span className="personal-photo-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m6 0h5v-5" /></svg></span>
     </button>
     <figcaption>{photo.shortCaption ?? photo.caption}</figcaption>
     <dialog ref={dialog} className="personal-photo-dialog" aria-labelledby={captionId} onClose={finishClosing} onCancel={finishClosing} onClick={event => { if (event.target === event.currentTarget) closePhoto(); }}>

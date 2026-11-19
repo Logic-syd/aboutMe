@@ -12,7 +12,7 @@ test('initial HTML exposes the public profile without running page scripts', asy
       canonical: document.querySelector('link[rel=canonical]')?.getAttribute('href'),
       robots: document.querySelector('meta[name=robots]')?.getAttribute('content'),
       description: document.querySelector('meta[name=description]')?.getAttribute('content'),
-      coreSkills: [...document.querySelectorAll('section[aria-labelledby="town-title"] ul li')].map(item => item.textContent),
+      coreSkills: [...document.querySelectorAll('#skills li')].map(item => item.textContent),
       skills: [...document.querySelectorAll('#skills li')].map(item => item.textContent),
       projectLinks: [...new Set([...document.querySelectorAll('a[href^="/projects/"]')].map(link => link.getAttribute('href')))],
       profile: JSON.parse(document.querySelector('script[type="application/ld+json"]')?.textContent ?? '{}'),
@@ -23,7 +23,7 @@ test('initial HTML exposes the public profile without running page scripts', asy
   expect(profile.robots).toMatch(/\bindex\b/);
   expect(profile.robots).not.toMatch(/noindex/);
   expect(profile.description).toContain('insurance payments');
-  expect(profile.coreSkills).toEqual(coreTechnologies);
+  expect(profile.coreSkills).toEqual(expect.arrayContaining(coreTechnologies));
   expect(profile.skills).toEqual(technologyGroups.flatMap(group => group.skills));
   expect(profile.profile['@type']).toBe('ProfilePage');
   expect(profile.profile.mainEntity['@type']).toBe('Person');

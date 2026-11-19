@@ -155,14 +155,14 @@ export const projects: Project[] = [
     flow: ['Shared component library', 'Work-order interfaces', 'Business workflows']
   },
   {
-    graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend rebuild", "PHP-based product upgrade"], ["Insurer and bank configuration", "Bank-specific response fields"], ["Real-time payment safeguards", "Duplicate-payment prevention"], ["Large-data rendering optimization"], ["Collections, payouts and reconciliation"]],
+    graphTitle: "Ronghe Pay", contributions: [["Vue 2 frontend development", "PHP-based product upgrade"], ["Insurer and bank configuration", "Bank-specific response fields"], ["Real-time payment safeguards", "Duplicate-payment prevention"], ["Large-data rendering optimization"], ["Collections, payouts and reconciliation"]],
     kind: 'commercial', slug: 'ronghe-pay', number: '07', title: 'Ronghe Pay — Insurance Payments Platform', shortTitle: 'Insurer integrations and bank payment workflows',
     category: 'Fintech · Collections & payouts', organization: 'Fingard · Ronghe Pay',
     affiliation: 'The name combines “Ronghe” (integration in Chinese) with “Pay”: integrated payments.',
     status: 'Commercial project · Written case study',
-    description: "Rebuilt the frontend of a PHP-based insurance payments product in Vue 2 in 2018, then supported new insurance-company and bank integrations as the platform grew.",
+    description: "Built the Vue 2 frontend for a PHP-based insurance payments product in 2018, then supported new insurance-company and bank integrations as the platform grew.",
     caseHeadings: {"problem": "Insurer configuration and bank APIs", "approach": "Response fields and duplicate submissions"},
-    tags: ['Vue 2', 'Multi-bank integration', 'Payment safety', 'Rendering performance', 'Reconciliation'], role: 'Frontend development · Rebuild & ongoing integrations',
+    tags: ['Vue 2', 'Multi-bank integration', 'Payment safety', 'Rendering performance', 'Reconciliation'], role: 'Frontend development and ongoing integrations',
     problem: "Insurers used the platform for premium collections, claim payouts and reconciliation. Each new institution brought its own configuration and bank API contract. Larger datasets and real-time payments added requirements for responsive rendering and protection against repeated submissions.",
     responsibilities: [
       "Built the Vue 2 frontend from the ground up during the product upgrade.",

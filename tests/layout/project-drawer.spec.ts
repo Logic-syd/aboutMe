@@ -75,7 +75,7 @@ test('the edge handle preserves reading position and switches cases without stal
 
 test('the case ending uses the same drawer and switching to home unlocks scrolling', async ({ page }) => {
   await page.goto('/projects/catch-that-train');
-  await page.getByRole('link', { name: '← All projects', exact: true }).click();
+  await page.getByRole('link', { name: 'All projects', exact: true }).click();
   const drawer = drawerFor(page);
   await expect(drawer).toBeVisible();
   await expect(drawer.locator('[aria-current="page"]')).toHaveAttribute('href', '/projects/catch-that-train');
@@ -105,4 +105,23 @@ test('a short phone viewport keeps close visible and every project reachable', a
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
   await page.keyboard.press('Escape');
   await expect(drawer).toBeHidden();
+});
+
+
+test('the homepage directory opens inline without adding another fixed side control', async ({ page }) => {
+  await page.goto('/#project-explorer');
+  const trigger = page.getByRole('link', { name: 'Browse project list', exact: true });
+  await expect(page.getByRole('button', { name: 'Open project list', exact: true })).toHaveCount(0);
+  await trigger.click();
+  const drawer = drawerFor(page);
+  await expect(drawer).toBeVisible();
+  await expect(drawer.getByRole('link')).toHaveCount(projects.length);
+  await expect(drawer.locator('[aria-current="page"]')).toHaveCount(0);
+  await page.keyboard.press('Escape');
+  await expect(drawer).toBeHidden();
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await drawer.locator('a[href="/projects/wordweave"]').click();
+  await expect(page).toHaveURL('/projects/wordweave');
+  expect(await page.evaluate(() => document.body.style.overflow)).not.toBe('hidden');
 });

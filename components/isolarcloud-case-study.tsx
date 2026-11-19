@@ -22,7 +22,7 @@ export function IsolarCloudCaseStudy({ project, next }: { project: Project; next
     <main id="main" className={styles.main}>
       <CaseIntro>
       <header className={styles.hero} data-case-hero>
-        <div><p className={styles.kicker}>NVT / Sungrow · Solar and energy storage</p><h1>iSolarCloud.<br /><em>From China to Europe.</em></h1><p className={styles.intro}>Sungrow’s solar and energy-storage platform brings plant monitoring, energy analysis and device operations into one web application.</p><div className={styles.heroActions}><a href="#product" className={styles.tryLink}>Explore the platform <span aria-hidden="true">↓</span></a><a href="#migration" className={styles.secondaryLink}>Inside the migration ↓</a></div></div>
+        <div><p className={styles.kicker}>NVT / Sungrow · Solar and energy storage</p><h1>iSolarCloud.<br /><em>From China to Europe.</em></h1><p className={styles.intro}>Sungrow’s solar and energy-storage platform brings plant monitoring, energy analysis and device operations into one web application.</p><div className={styles.heroActions}><a href="#product" className={styles.tryLink}>Explore the platform </a><a href="#migration" className={styles.secondaryLink}>Inside the migration</a></div></div>
         <aside className={styles.ownership} aria-label="My frontend contribution"><p className={styles.kicker}>My role</p><h2>Frontend development</h2><p>I work on the China-to-Europe migration, plant and device settings, and EU Data Act data-access workflows.</p><span className={styles.role}>{project.organization}</span></aside>
       </header>
       <div data-case-overview className={styles.overview} aria-label="Project focus"><div><span className={styles.overviewNumber}>CN → EU</span><p>Frontend migration<span>Regional routing · Country rules · Localization</span></p></div><div><span className={styles.overviewNumber}>↳</span><p>Plants & devices<span>Feature settings · Capability-aware operations</span></p></div><div className={styles.stack}><span className={styles.kicker}>Technologies</span><p>Vue 3 · TypeScript · Pinia<br /> ECharts · Axios · MQTT</p></div></div>
@@ -36,7 +36,7 @@ export function IsolarCloudCaseStudy({ project, next }: { project: Project; next
 
       <DataAccessChapter />
 
-      <nav className={`case-next ${styles.next}`} aria-label="Case study navigation"><ProjectListLink>← All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>Next project</span>{next.title}</Link></nav>
+      <nav className={`case-next ${styles.next}`} aria-label="Case study navigation"><ProjectListLink>All projects</ProjectListLink><Link href={`/projects/${next.slug}`}><span>Next project</span>{next.title}</Link></nav>
     </main><Footer />
   </div>;
 }

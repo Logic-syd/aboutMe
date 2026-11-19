@@ -71,3 +71,24 @@ test('constellation selection keeps contributions accessible and labels clear', 
     await expectReadableLabels(page, stage, `${slug}: reset`);
   }
 });
+
+
+test('a lost graphics context preserves the catalog, contributions and retry action', async ({ page }) => {
+  await page.goto('/#project-explorer');
+  const stage = page.locator('.three-stage');
+  await stage.scrollIntoViewIfNeeded();
+  await expect(stage.locator('[data-node-id="root"]')).toBeVisible();
+  await stage.locator('canvas').evaluate(canvas => canvas.dispatchEvent(new Event('webglcontextlost', { cancelable: true })));
+  await expect(stage.getByRole('status')).toContainText('interrupted');
+  await expect(page.locator('.graph-project-navigation a.graph-project-case-link')).toHaveCount(projects.length);
+  await expect(page.locator('.project-card-group')).toHaveCount(0);
+  await page.getByRole('tab', { name: /^Personal / }).click();
+  const row = page.locator('.graph-project-entry').filter({ has: page.locator('a[href="/projects/wordweave"]') });
+  await row.locator(':scope > button').click();
+  await row.locator('.project-technology-panel > div > button').first().click();
+  await expect(row.getByRole('list', { name: 'Selected technology contributions' })).toBeVisible();
+  await stage.getByRole('button', { name: 'Retry 3D view', exact: true }).click();
+  await expect(stage.locator('canvas')).toBeVisible();
+  await expect(stage.locator('[data-node-id="wordweave-tech-0"]')).toBeVisible();
+  await expect(row.locator(':scope > button')).toHaveAttribute('aria-expanded', 'true');
+});

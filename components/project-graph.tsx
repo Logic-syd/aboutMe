@@ -23,7 +23,7 @@ class SceneBoundary extends Component<{ children: ReactNode; onUnavailable: (rea
   render() { return this.state.failed ? null : this.props.children; }
 }
 
-export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason: SceneFailure) => void; onSlow: (slow: boolean) => void }) {
+export function ProjectGraph({ onUnavailable, onSlow, fallback, attempt = 0 }: { onUnavailable: (reason: SceneFailure) => void; onSlow: (slow: boolean) => void; fallback?: ReactNode; attempt?: number }) {
   const [selection, setSelection] = useState<GraphSelection>({ project: null, technology: null });
   const [category, setCategory] = useState<ProjectCategory>('commercial');
   const [interaction, setInteraction] = useState({ nodeId: '', revision: 0 });
@@ -90,10 +90,10 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     return () => observer.disconnect();
   }, [onUnavailable]);
   useEffect(() => {
-    if (!loaded || ready) return;
+    if (!loaded || ready || fallback) return;
     const timeout = window.setTimeout(() => onSlow(true), 12000);
     return () => window.clearTimeout(timeout);
-  }, [loaded, ready, onSlow]);
+  }, [loaded, ready, onSlow, fallback]);
   const project = selection.project === null ? null : projects[selection.project];
   const selectProject = useCallback((index: number) => {
     setCategory(projects[index].kind);
@@ -126,16 +126,16 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     <div id="work-projects" className="project-explorer-workspace">
     <div ref={region} className="three-stage" aria-label="Interactive three-dimensional project knowledge graph">
       <div className="three-corner-label" aria-hidden="true"><span>Project connections / Three.js</span><span>{selection.technology !== null ? 'My contributions' : project ? 'Technologies' : 'Select a project'}</span></div>
-      <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph projectDirections={projectDirections} onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
-      <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
-      <p className="three-stage-hint">Drag to explore · Select a project</p>
+      {fallback ?? <SceneBoundary key={attempt} onUnavailable={onUnavailable}>{loaded ? <ThreeGraph projectDirections={projectDirections} onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>}
+      <div className="three-controls" aria-label="3D view controls" hidden={!!fallback}><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
+      <p className="three-stage-hint">{fallback ? 'Choose a project from the list to read its case study.' : 'Drag to explore. Select a project.'}</p>
     </div>
     <div ref={catalog} className="graph-project-navigation">
     <div className="project-category-tabs" role="tablist" aria-label="Project categories" onKeyDown={navigateCategories}>{projectGroups.map((group, index) => <button ref={element => { categoryButtons.current[index] = element; }} type="button" role="tab" id={`${group.id}-tab`} aria-controls={group.id} aria-selected={category === group.kind} tabIndex={category === group.kind ? 0 : -1} onClick={() => selectCategory(group.kind)} key={group.kind}>{group.label}<span>{projects.filter(item => item.kind === group.kind).length}</span></button>)}</div>
     <div ref={navigation} className="graph-project-groups">{projectGroups.map(group => <section id={group.id} role="tabpanel" tabIndex={0} hidden={category !== group.kind} className={`project-picker-group project-group-${group.kind}`} aria-labelledby={`${group.id}-tab`} key={group.kind}>
       <div className="graph-project-picker" aria-label={`Select from ${group.title.toLowerCase()}`}>{projects.map((item,index) => item.kind === group.kind && <div className="graph-project-entry" data-selected={selection.project === index} key={item.slug}>
         <button aria-pressed={selection.project === index} aria-expanded={selection.project === index} aria-controls={`project-${item.slug}-technologies`} onClick={() => selectProject(index)}>{graphTitles[index]}</button>
-        <Link className="graph-project-case-link" href={`/projects/${item.slug}`} aria-label={`Read ${item.title} case study`} title={`Read ${item.title} case study`}>Details<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></Link>
+        <Link className="graph-project-case-link" href={`/projects/${item.slug}`} aria-label={`Read ${item.title} case study`} title={`Read ${item.title} case study`}>Details</Link>
         {selection.project === index && <div id={`project-${item.slug}-technologies`} className="technology-picker project-technology-panel"><span className="eyebrow">Technologies & contributions</span><div>{item.tags.map((tag,technologyIndex) => <button key={tag} aria-pressed={selection.technology === technologyIndex} onClick={() => selectTechnology(technologyIndex)}>{tag}<span aria-hidden="true">{selection.technology === technologyIndex ? '−' : '+'}</span></button>)}</div>{selection.technology !== null && <ul className="graph-contributions" aria-label="Selected technology contributions">{graphLeaves(index, selection.technology).map(leaf => <li key={leaf}>{leaf}</li>)}</ul>}</div>}
       </div>)}</div>
     </section>)}</div>
