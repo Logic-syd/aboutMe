@@ -1,5 +1,9 @@
 # Portfolio maintenance
 
+## Current visual trial: homepage first screen only
+
+The owner requested the oil-pink palette in `app/oil-pink-hero.css` for the homepage header and pixel-town introduction only. Keep the tokens scoped to `.oil-pink-scope` until the owner requests a wider rollout. Use self-hosted Newsreader headings, Figtree prose and Silkscreen town labels; a fixed 3% inline-SVG grain; and an outer 1px line, 10px surface mat and inner 1px line around the town. No gradients, yellow/gold/terracotta accents, pill buttons, trailing button arrows or colored individual headline words in this trial. Ordinary surfaces are opaque; floating town previews may use `rgba(251,246,244,.7)` with an opaque reduced-transparency fallback. Preserve the town's behavior and existing copy. The remaining homepage, project lists, photos, constellation and case pages retain their current design until requested. Review actual browser rendering, not generated mockups.
+
 ## Complete desktop chapters (owner requirement)
 
 Every project detail page must present complete, readable modules on a desktop screen. This applies to every new project and every edit, including bespoke case studies. Keep the same principle on the homepage; its short contact/footer area is intentionally compact.

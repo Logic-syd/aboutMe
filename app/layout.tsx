@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import './project-case.css';
 import './auvers-theme.css';
+import './oil-pink-hero.css';
+import { figtree, newsreader, silkscreen } from './fonts';
 import { RouteScroll } from '@/components/route-scroll';
 import { profileDescription, siteUrl } from '@/lib/profile';
 
@@ -16,5 +18,5 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { themeColor: '#d3e4e8' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><RouteScroll /><a className="skip-link" href="#main">Skip to content</a>{children}</body></html>;
+  return <html lang="en" className={`${newsreader.variable} ${figtree.variable} ${silkscreen.variable}`}><body><RouteScroll /><a className="skip-link" href="#main">Skip to content</a>{children}</body></html>;
 }
