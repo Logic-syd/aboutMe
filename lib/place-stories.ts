@@ -6,7 +6,6 @@ export type PlaceStory = {
   description: string;
   reflection: string;
   memory?: string;
-  photoMemory?: string;
   neighbourhood?: string;
   bounds: [[number, number], [number, number]];
   reference: [number, number];
@@ -27,8 +26,7 @@ export const placeStories: Record<string, PlaceStory> = {
     slug: 'berlin', name: 'Berlin', region: 'Germany', neighbourhood: 'Wedding',
     headline: 'My first home in Germany',
     description: 'Berlin was my first home in Germany. I lived in Wedding for over a year, looking for my next role and building my own projects. Interesting, open and welcoming, it made room for people from everywhere—including me.',
-    memory: 'Summer afternoons lying by the river, talking with friends. Winter walks through parks, watching people ice-skate. Film festivals, theatre, exhibitions, and food from all over the world. Even the odd late-night encounter after a film in Neukölln has not changed my love for Berlin.',
-    photoMemory: 'I love Berlin’s cultural life, so I couldn’t miss the Berlinale. I bought a ticket to a premiere and got to walk the red carpet and take this photo.',
+    memory: 'Summer afternoons lying by the river, talking with friends. Winter walks through parks, watching people ice-skate. Film festivals, theatre, exhibitions, and food from all over the world. At the Berlinale, I bought a premiere ticket and got to walk the red carpet for a photo. Even the odd late-night encounter after a film in Neukölln has not changed my love for Berlin.',
     reflection: 'Alongside my job search, I kept building independent products, including my coffee and craft beer discovery map. I would love to move back to Berlin for the right work opportunity.',
     bounds: [[52.525, 13.315], [52.58, 13.425]], reference: [52.55, 13.36],
     source: { title: 'Explore Berlin', url: 'https://www.visitberlin.de/en' },
