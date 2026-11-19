@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { Viewport } from 'next';
 import Image from 'next/image';
 import { ProjectShowcase } from '@/components/project-showcase';
 import { ProjectLinks } from '@/components/project-links';
@@ -10,8 +9,6 @@ import { profileDescription, siteUrl, technologyGroups } from '@/lib/profile';
 import { CareerExperience } from '@/components/career-experience';
 import { AboutMe } from '@/components/about-me';
 import { Contact, Footer, Header } from '@/components/site';
-
-export const viewport: Viewport = { themeColor: '#f6eeeb' };
 
 const featuredProjects = [
   {
@@ -58,9 +55,9 @@ const profileSchema = {
 export default function Home() {
   return <div id="top" className="pixel-portfolio">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema).replace(/</g, '\\u003c') }} />
-    <div className="oil-pink-scope oil-pink-header"><Header sidebar /></div>
+    <Header sidebar />
     <main id="main">
-      <div className="oil-pink-scope oil-pink-hero-stage"><PixelTown /></div>
+      <PixelTown />
       <section id="work" className="shell work-section" aria-labelledby="work-title">
         <div className="section-heading"><div><h2 id="work-title">Selected work</h2></div><div className="work-heading-links"><a href="#project-explorer" className="all-projects-link">All projects <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 9l5 5 5-5" /></svg></a></div></div>
         <ul className="featured-work-list" aria-label="Selected work and personal projects">{featuredProjects.map(project => <li key={project.slug}><Link href={`/projects/${project.slug}`} className="featured-work-link"><div><p className="featured-work-context">{project.context}</p><h3>{project.title}</h3><p className="featured-work-reason">{project.reason}</p></div><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></Link></li>)}</ul>
