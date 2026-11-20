@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { clearHomeReturn, homeEntryKey, markHomeReturn, returningHomeView, saveHomeView } from '@/lib/home-view';
 
 // Run in the initial HTML, before native restoration and the catalog's hash
 // handlers. A homepage reload starts over; explicit section links on a new
@@ -34,10 +35,46 @@ const resetHomepageOnReload = `(() => {
 
 export function RouteScroll() {
   const pathname = usePathname();
+  const previousPath = useRef(pathname);
   useEffect(() => {
-    if (pathname !== '/') window.dispatchEvent(new Event('portfolio:leave-home'));
-    // Open each case at its title; preserve homepage links to named sections.
-    if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    const onHistory = (event: PopStateEvent) => {
+      if (window.location.pathname === '/' && previousPath.current !== '/') markHomeReturn(event.state);
+      else clearHomeReturn();
+    };
+    const onLink = (event: MouseEvent) => {
+      if (!(event.target instanceof Element) || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const anchor = event.target.closest('a');
+      if (anchor && anchor.target !== '_blank') {
+        const key = homeEntryKey();
+        if (key) saveHomeView(key, { x: window.scrollX, y: window.scrollY });
+        clearHomeReturn();
+      }
+    };
+    window.addEventListener('popstate', onHistory);
+    document.addEventListener('click', onLink, true);
+    return () => { window.removeEventListener('popstate', onHistory); document.removeEventListener('click', onLink, true); };
+  }, []);
+  useLayoutEffect(() => {
+    previousPath.current = pathname;
+    if (pathname !== '/') {
+      window.dispatchEvent(new Event('portfolio:leave-home'));
+      if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      return;
+    }
+    const restored = returningHomeView();
+    const key = homeEntryKey();
+    let frame = 0;
+    const restore = () => { if (restored) window.scrollTo({ top: restored.y, left: restored.x, behavior: 'instant' }); };
+    if (restored) { restore(); frame = requestAnimationFrame(restore); }
+    else if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    const record = () => {
+      if (key && window.location.pathname === '/') saveHomeView(key, { x: window.scrollX, y: window.scrollY });
+    };
+    window.addEventListener('scroll', record, { passive: true });
+    // A direct section link may have scrolled before hydration installed this
+    // listener. Preserve that starting position even if the user never scrolls.
+    record();
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', record); };
   }, [pathname]);
   return <script dangerouslySetInnerHTML={{ __html: resetHomepageOnReload }} />;
 }

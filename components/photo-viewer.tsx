@@ -3,8 +3,9 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import type { PersonalPhoto } from '@/lib/about';
+import { displayImage } from '@/lib/image-assets';
 
-export function PhotoViewer({ photo, className = '' }: { photo: PersonalPhoto; className?: string }) {
+export function PhotoViewer({ photo, className = '', sizes = '300px' }: { photo: PersonalPhoto; className?: string; sizes?: string }) {
   const crop = photo.previewCrop;
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
@@ -27,7 +28,7 @@ export function PhotoViewer({ photo, className = '' }: { photo: PersonalPhoto; c
   function closePhoto() { dialog.current?.close(); finishClosing(); }
   return <figure className={`personal-photo ${className}`}>
     <button className="personal-photo-trigger" aria-label={`Open photo: ${photo.caption}`} aria-haspopup="dialog" onClick={openPhoto} style={crop ? { aspectRatio: `${crop.width} / ${crop.height}`, height: 'auto' } : undefined}>
-      <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(max-width: 800px) 75vw, 300px" style={crop ? {
+      <Image src={displayImage(photo.src)} alt={photo.alt} width={photo.width} height={photo.height} sizes={`auto, ${sizes}`} style={crop ? {
         position: 'absolute', maxWidth: 'none', objectFit: 'fill',
         width: `${photo.width / crop.width * 100}%`, height: `${photo.height / crop.height * 100}%`,
         left: `${-crop.x / crop.width * 100}%`, top: `${-crop.y / crop.height * 100}%`,
@@ -37,7 +38,7 @@ export function PhotoViewer({ photo, className = '' }: { photo: PersonalPhoto; c
     <figcaption>{photo.shortCaption ?? photo.caption}</figcaption>
     <dialog ref={dialog} className="personal-photo-dialog" aria-labelledby={captionId} onClose={finishClosing} onCancel={finishClosing} onClick={event => { if (event.target === event.currentTarget) closePhoto(); }}>
       <button className="personal-photo-close" aria-label="Close photo" onClick={closePhoto}>×</button>
-      {open && <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="92vw" />}
+      {open && <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="auto, (max-width: 800px) calc(100vw - 42px), (max-width: 1040px) calc(94vw - 34px), 946px" />}
       <p id={captionId}>{photo.caption}</p>
     </dialog>
   </figure>;

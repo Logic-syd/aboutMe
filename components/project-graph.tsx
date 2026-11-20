@@ -4,13 +4,18 @@ import { Component, useCallback, useEffect, useRef, useState, useSyncExternalSto
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { projects } from '@/lib/projects';
-import { classifySceneError, type SceneFailure } from '@/lib/scene-status';
+import { classifySceneError, sceneFailureMessages, type SceneFailure } from '@/lib/scene-status';
 import { graphLeaves, graphTitles, type FocusSide, type GraphSelection } from '@/lib/graph';
+import { homeEntryKey, returningHomeView, saveHomeView, type CameraView } from '@/lib/home-view';
 
-const ThreeGraph = dynamic(() => import('@/components/three-project-scene'), { ssr: false, loading: () => <div className="three-loading">Preparing the 3D constellation…</div> });
+let sceneModule: Promise<typeof import('@/components/three-project-scene')> | undefined;
+const loadScene = () => sceneModule ??= import('@/components/three-project-scene').catch(error => { sceneModule = undefined; throw error; });
+const ThreeGraph = dynamic(loadScene, { ssr: false, loading: () => <div className="three-loading">Preparing the 3D constellation…</div> });
 function subscribeMotion(callback: () => void) { const query = window.matchMedia('(prefers-reduced-motion: reduce)'); query.addEventListener('change', callback); return () => query.removeEventListener('change', callback); }
 const getMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const getServerMotion = () => true;
+function subscribeVisibility(callback: () => void) { document.addEventListener('visibilitychange', callback); return () => document.removeEventListener('visibilitychange', callback); }
+const getVisibility = () => document.visibilityState !== 'hidden';
 const projectGroups = [
   { kind: 'commercial', id: 'professional-work', label: 'Work', title: 'Work projects' },
   { kind: 'independent', id: 'personal-projects', label: 'Personal', title: 'Personal projects' },
@@ -23,21 +28,42 @@ class SceneBoundary extends Component<{ children: ReactNode; onUnavailable: (rea
   render() { return this.state.failed ? null : this.props.children; }
 }
 
-export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason: SceneFailure) => void; onSlow: (slow: boolean) => void }) {
-  const [selection, setSelection] = useState<GraphSelection>({ project: null, technology: null });
-  const [category, setCategory] = useState<ProjectCategory>('commercial');
+export function ProjectGraph({ onUnavailable, onSlow, failure, onRetry }: { onUnavailable: (reason: SceneFailure) => void; onSlow: (slow: boolean) => void; failure: SceneFailure | null; onRetry: () => void }) {
+  const [restored] = useState(returningHomeView);
+  const [selection, setSelection] = useState<GraphSelection>(restored?.explorer?.selection ?? { project: null, technology: null });
+  const [category, setCategory] = useState<ProjectCategory>(restored?.explorer?.category ?? 'commercial');
   const [interaction, setInteraction] = useState({ nodeId: '', revision: 0 });
-  const projectDirections = useRef(new Map<number, FocusSide>());
-  const [motion, setMotion] = useState(true);
-  const [view, setView] = useState({ reset: 0, zoom: 0 });
+  const projectDirections = useRef(new Map<number, FocusSide>(restored?.explorer?.directions));
+  const [motion, setMotion] = useState(restored?.explorer?.motion ?? true);
+  const [view, setView] = useState({ reset: 0, zoom: restored?.explorer?.zoom ?? 0 });
   const [visible, setVisible] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(restored?.explorer?.loaded ?? false);
   const [ready, setReady] = useState(false);
   const sceneReady = useCallback(() => { setReady(true); onSlow(false); }, [onSlow]);
   const region = useRef<HTMLDivElement>(null);
   const catalog = useRef<HTMLDivElement>(null);
   const navigation = useRef<HTMLDivElement>(null);
   const categoryButtons = useRef<(HTMLButtonElement | null)[]>([]);
+  const entry = useRef<string | null>(null);
+  const cameraView = useRef<CameraView | undefined>(restored?.camera);
+  const [initialCamera, setInitialCamera] = useState(restored?.camera);
+  const saveCamera = useCallback((camera: CameraView) => {
+    cameraView.current = camera;
+    if (entry.current) saveHomeView(entry.current, { camera });
+  }, []);
+  useEffect(() => {
+    entry.current = homeEntryKey();
+    if (navigation.current && restored?.explorer) navigation.current.scrollTop = restored.explorer.catalogScroll;
+  }, [restored]);
+  useEffect(() => {
+    const list = navigation.current;
+    const save = () => {
+      if (entry.current) saveHomeView(entry.current, { explorer: { selection, category, motion, zoom: view.zoom, loaded, catalogScroll: list?.scrollTop ?? 0, directions: [...projectDirections.current] }, camera: cameraView.current });
+    };
+    save();
+    list?.addEventListener('scroll', save, { passive: true });
+    return () => { save(); list?.removeEventListener('scroll', save); };
+  }, [selection, category, motion, view.zoom, loaded]);
   useEffect(() => {
     const list = navigation.current;
     if (!list || selection.project === null) return;
@@ -69,31 +95,39 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
         frame = requestAnimationFrame(() => (group ? catalog.current : document.getElementById('work-projects'))?.scrollIntoView({ block: 'start', behavior: 'instant' }));
       });
     };
-    followHash();
+    if (!returningHomeView()) followHash();
     window.addEventListener('hashchange', followHash);
     return () => { cancelAnimationFrame(frame); window.removeEventListener('hashchange', followHash); };
   }, []);
   const reducedMotion = useSyncExternalStore(subscribeMotion, getMotion, getServerMotion);
+  const pageVisible = useSyncExternalStore(subscribeVisibility, getVisibility, getServerMotion);
   useEffect(() => {
     const element = region.current;
     if (!element) return;
-    let requested = false;
+    let nearby = false, prefetched = false;
+    const preload = () => {
+      const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+      if (!nearby || prefetched || window.scrollY < 32 || connection?.saveData) return;
+      prefetched = true;
+      void loadScene().catch(() => { /* The visible scene handles retry/fallback. */ });
+      window.removeEventListener('scroll', preload);
+    };
+    const ahead = new IntersectionObserver(([entry]) => { nearby = entry.isIntersecting; preload(); }, { rootMargin: '600px' });
     const observer = new IntersectionObserver(([entry]) => {
-      setVisible(entry.isIntersecting);
-      if (!entry.isIntersecting || requested) return;
-      requested = true;
-      // Let the actual renderer create its context; a throwaway probe needlessly
-      // allocates a second GPU context and can disagree with renderer options.
-      setLoaded(true);
-    }, { rootMargin: '100px' });
+      const inView = entry.isIntersecting && entry.intersectionRatio > 0;
+      setVisible(inView);
+      if (inView) setLoaded(true);
+    });
+    ahead.observe(element);
     observer.observe(element);
-    return () => observer.disconnect();
-  }, [onUnavailable]);
+    window.addEventListener('scroll', preload, { passive: true });
+    return () => { ahead.disconnect(); observer.disconnect(); window.removeEventListener('scroll', preload); };
+  }, []);
   useEffect(() => {
-    if (!loaded || ready) return;
+    if (!loaded || ready || failure) return;
     const timeout = window.setTimeout(() => onSlow(true), 12000);
     return () => window.clearTimeout(timeout);
-  }, [loaded, ready, onSlow]);
+  }, [loaded, ready, failure, onSlow]);
   const project = selection.project === null ? null : projects[selection.project];
   const selectProject = useCallback((index: number) => {
     setCategory(projects[index].kind);
@@ -126,7 +160,7 @@ export function ProjectGraph({ onUnavailable, onSlow }: { onUnavailable: (reason
     <div id="work-projects" className="project-explorer-workspace">
     <div ref={region} className="three-stage" aria-label="Interactive three-dimensional project knowledge graph">
       <div className="three-corner-label" aria-hidden="true"><span>Project connections / Three.js</span><span>{selection.technology !== null ? 'My contributions' : project ? 'Technologies' : 'Select a project'}</span></div>
-      <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph projectDirections={projectDirections} onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible} reducedMotion={reducedMotion} visible={visible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>
+      {failure ? <div className="three-loading"><div><p role="status">{sceneFailureMessages[failure]}</p><button className="button button-outline" onClick={() => { setInitialCamera(cameraView.current); onRetry(); }}>{failure === 'download-failed' ? 'Reload page' : 'Retry 3D view'}</button></div></div> : <SceneBoundary onUnavailable={onUnavailable}>{loaded ? <ThreeGraph projectDirections={projectDirections} initialView={initialCamera} onViewChange={saveCamera} onUnavailable={onUnavailable} onReady={sceneReady} interaction={interaction} selection={selection} onProject={selectProject} onTechnology={selectTechnology} onReset={reset} animate={motion && !reducedMotion && visible && pageVisible} reducedMotion={reducedMotion} visible={visible && pageVisible} view={view} /> : <div className="three-loading">3D project constellation</div>}</SceneBoundary>}
       <div className="three-controls" aria-label="3D view controls"><button onClick={() => setView(v => ({ ...v, zoom: v.zoom + 1 }))} aria-label="Zoom in">+</button><button onClick={() => setView(v => ({ ...v, zoom: v.zoom - 1 }))} aria-label="Zoom out">−</button><button onClick={reset}>Reset view</button><button aria-pressed={!motion || reducedMotion} disabled={reducedMotion} onClick={() => setMotion(m => !m)}>{!motion || reducedMotion ? 'Motion paused' : 'Pause motion'}</button></div>
       <p className="three-stage-hint">Drag to explore · Select a project</p>
     </div>

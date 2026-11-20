@@ -116,7 +116,7 @@ export function CareerMap() {
           <p className="place-life-description">{place.description}</p>
           <div className={`place-memory-chapter ${cityPhotos[selectedId] ? 'has-photo' : ''}`}>
             <blockquote className="place-memory"><p>{place.memory}</p></blockquote>
-            {cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" />}
+            {cityPhotos[selectedId] && <PhotoViewer photo={cityPhotos[selectedId]} className="place-memory-photo" sizes="(max-width: 800px) 160px, (max-height: 650px) 144px, 176px" />}
           </div>
           <div className="place-story-links is-life"><a className="place-source-link" href={place.source.url} target="_blank" rel="noopener noreferrer" aria-label="About this place (opens in a new tab)">About this place <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></a></div>
         </div>

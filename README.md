@@ -38,6 +38,8 @@ npm run test:layout
 
 A system Chromium can be used by setting `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/path/to/chromium`. The tests start the production server on port 3090 and save traces for failures.
 
+Run `npm run images:optimize` after adding or replacing a personal photo or large screenshot. It regenerates display copies and their manifest without overwriting originals. See [media and 3D performance notes](./docs/performance.md) for the loading, drag and history-return behavior.
+
 ## Deploy to Vercel
 
 The production site is published at https://about-me-henna-alpha.vercel.app/ and was verified in signed-out browser contexts on 8 October 2026. The Vercel project is connected to this GitHub repository, with `main` as the production branch. Future pushes to `main` update the same production domain.

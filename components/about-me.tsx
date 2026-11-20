@@ -20,7 +20,7 @@ export function AboutMe() {
         <p>I reached the summit of Mount Kilimanjaro. After the descent, I visited a school and donated some notebooks, ballpoint pens and sanitary pads.</p>
         <p>I want to do work that is useful to people, and contribute to a better world in the ways I can.</p>
       </div>
-      <div className="outside-work-photos">{kilimanjaroPhotos.map(photo => <PhotoViewer key={photo.src} photo={photo} className="outside-work-photo" />)}</div>
+      <div className="outside-work-photos">{kilimanjaroPhotos.map(photo => <PhotoViewer key={photo.src} photo={photo} className="outside-work-photo" sizes="(max-width: 800px) calc((100vw - 60px) / 2), (max-width: 1440px) 24vw, 340px" />)}</div>
     </section>
   </div></section>;
 }

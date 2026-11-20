@@ -4,7 +4,7 @@ export const sceneFailureMessages: Record<SceneFailure, string> = {
   'graphics-unavailable': 'This browser could not start the 3D graphics view. Check that hardware acceleration is enabled, or try another browser.',
   'context-lost': 'The browser interrupted the 3D graphics view. Try loading it again.',
   'download-failed': 'The 3D files could not be downloaded. Check your connection and reload the page.',
-  'scene-error': 'The 3D scene encountered an error. You can retry or browse the project cards below.',
+  'scene-error': 'The 3D scene encountered an error. You can retry or use the project list.',
 };
 
 export function classifySceneError(error: Error): SceneFailure {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Html, OrbitControls, Line, useCursor } from '@react-three/drei';
 import Link from 'next/link';
@@ -8,13 +8,14 @@ import * as THREE from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { projects } from '@/lib/projects';
 import type { SceneFailure } from '@/lib/scene-status';
+import type { CameraView } from '@/lib/home-view';
 import { graphLeaves, graphTitles, constellationPoints, projectFocusSide, type FocusSide, type GraphSelection } from '@/lib/graph';
 
 type Gradient = readonly [string, string, string];
 type Point = [number, number, number];
 type Item = { id: string; kind: 'root' | 'project' | 'technology' | 'leaf'; label: string; position: Point; kickDirection?: Point; spawn?: Point; spawnFrom?: string; delay?: number; quiet?: boolean; satellite?: boolean; muted?: boolean; gradient?: Gradient; color: string; radius: number; active: boolean; index: number; onSelect?: () => void };
 type LabelPortal = React.RefObject<HTMLDivElement>;
-type Props = { projectDirections: React.RefObject<Map<number, FocusSide>>; onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
+type Props = { initialView?: CameraView; onViewChange: (view: CameraView) => void; projectDirections: React.RefObject<Map<number, FocusSide>>; onUnavailable: (reason: SceneFailure) => void; onReady: () => void; interaction: { nodeId: string; revision: number }; selection: GraphSelection; onProject: (index: number) => void; onTechnology: (index: number) => void; onReset: () => void; animate: boolean; reducedMotion: boolean; visible: boolean; view: { reset: number; zoom: number } };
 const colors = ['#9eb6a0', '#98b9cc', '#c2a0aa', '#8cb6ad', '#c8bd8d', '#9caec3', '#c3ad88', '#96b9a9', '#c7acb4', '#9cacc2', '#9fb39a', '#a3bfc0', '#b5adbf'];
 const sceneFog = '#19354f';
 const rootRingColor = '#c7d8e5';
@@ -41,65 +42,88 @@ function satelliteGradient(gradient: Gradient): Gradient {
   const lighten = (color: string) => `#${new THREE.Color(color).lerp(new THREE.Color('#ffffff'), .42).getHexString()}`;
   return [lighten(gradient[0]), lighten(gradient[1]), lighten(gradient[2])];
 }
-function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse, pulseStrength }: { anchors: Item[]; pixelScale: number; pulse: number; pulseStrength: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; onDrag: (dragging: boolean) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
+const satelliteGradients = gradients.map(satelliteGradient);
+const SphereNode = memo(function SphereNode({ item, animate, reducedMotion, visible, restorePosition, dragPointerRef, onDrag, onPosition, labelPortal, positions, anchors, pixelScale, pulse, pulseStrength }: { anchors: Item[]; pixelScale: number; pulse: number; pulseStrength: number; positions: React.RefObject<Map<string, THREE.Vector3>>; labelPortal: LabelPortal; item: Item; animate: boolean; reducedMotion: boolean; visible: boolean; restorePosition: boolean; dragPointerRef: React.RefObject<number | null>; onDrag: (dragging: boolean, cancel?: () => void) => void; onPosition: (id: string, position: THREE.Vector3) => void }) {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Mesh>(null);
   const halo = useRef<THREE.Mesh<THREE.RingGeometry, THREE.MeshBasicMaterial>>(null);
   const label = useRef<HTMLDivElement>(null);
   const ripple = useRef(0);
+  const motionTime = useRef(0);
   const [hovered, setHovered] = useState(false);
   useCursor(hovered, 'grab');
   const offset = useRef(new THREE.Vector3());
   const velocity = useRef(new THREE.Vector3());
-  const age = useRef(-(item.delay ?? 0));
-  const [initialPosition] = useState<Point>(() => item.spawn ?? item.position);
+  const age = useRef(restorePosition ? 0 : -(item.delay ?? 0));
+  const [initialPosition] = useState<Point>(() => restorePosition ? item.position : item.spawn ?? item.position);
   const dragging = useRef(false);
   const last = useRef({ x: 0, y: 0, time: 0 });
   const releaseVelocity = useRef(new THREE.Vector3());
   const moved = useRef(0);
   const pressed = useRef(false);
-  const scaleValue = useRef(item.spawn ? 0 : 1);
+  const scaleValue = useRef(item.spawn && !restorePosition ? 0 : 1);
   const scaleVelocity = useRef(0);
   const lastPulse = useRef(0);
+  const pointerId = useRef<number | null>(null);
+  const scratch = useMemo(() => ({ target: new THREE.Vector3(), tug: new THREE.Vector3(), delta: new THREE.Vector3(), anchor: new THREE.Vector3(), right: new THREE.Vector3(), up: new THREE.Vector3(), movement: new THREE.Vector3() }), []);
+  const staticMotion = reducedMotion || !animate;
   const size = item.radius;
   const { camera, size: screen, invalidate } = useThree();
   const geometry = useMemo(() => {
-    const sphere = new THREE.SphereGeometry(size, item.kind === 'leaf' ? 24 : 40, item.kind === 'leaf' ? 16 : 32);
+    // Radius changes with selection and viewport size; scale the mesh instead
+    // of disposing and uploading all its vertex buffers again.
+    const sphere = new THREE.SphereGeometry(1, item.kind === 'leaf' ? 24 : 40, item.kind === 'leaf' ? 16 : 32);
     const points = sphere.getAttribute('position');
     const shades = (item.gradient ?? rootGradient).map(color => new THREE.Color(color));
     const colors = new Float32Array(points.count * 3);
     const tint = new THREE.Color();
     for (let index = 0; index < points.count; index++) {
-      const blend = THREE.MathUtils.clamp((points.getY(index) - points.getX(index) * .18) / (size * 2.05) + .5, 0, 1);
+      const blend = THREE.MathUtils.clamp((points.getY(index) - points.getX(index) * .18) / 2.05 + .5, 0, 1);
       if (blend < .5) tint.copy(shades[2]).lerp(shades[1], THREE.MathUtils.smoothstep(blend * 2, 0, 1));
       else tint.copy(shades[1]).lerp(shades[0], THREE.MathUtils.smoothstep((blend - .5) * 2, 0, 1));
       tint.toArray(colors, index * 3);
     }
     sphere.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     return sphere;
-  }, [size, item.gradient, item.kind]);
+  }, [item.gradient, item.kind]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => {
-    if (pulse > 0 && pulse !== lastPulse.current && !reducedMotion) {
+    if (pulse > 0 && pulse !== lastPulse.current && !staticMotion) {
       scaleValue.current = 1 - .07 * pulseStrength;
       scaleVelocity.current = 1.1 * pulseStrength;
-      velocity.current.addScaledVector(new THREE.Vector3(...(item.kickDirection ?? [0, 1, 0])), pixelScale * 105 * pulseStrength);
+      velocity.current.addScaledVector(scratch.delta.set(...(item.kickDirection ?? [0, 1, 0])), pixelScale * 105 * pulseStrength);
       velocity.current.z += pixelScale * 60 * pulseStrength;
       if (pulseStrength === 1) ripple.current = 1;
     }
     lastPulse.current = pulse;
     invalidate();
-  }, [pulse, pulseStrength, reducedMotion, pixelScale, item.kickDirection, invalidate]);
+  }, [pulse, pulseStrength, staticMotion, pixelScale, item.kickDirection, invalidate, scratch]);
   useEffect(() => {
     const origin = item.spawnFrom ? positions.current.get(item.spawnFrom) : null;
-    if (origin && group.current && !reducedMotion) group.current.position.copy(origin);
+    if (origin && group.current && !staticMotion && !restorePosition) group.current.position.copy(origin);
     invalidate();
-  }, [item.spawnFrom, positions, reducedMotion, invalidate]);
+  }, [item.spawnFrom, positions, staticMotion, restorePosition, invalidate]);
   useEffect(() => { offset.current.set(0, 0, 0); invalidate(); }, [item.position, invalidate]);
-  useFrame((state, delta) => {
-    if (!group.current) return;
-    const time = state.clock.elapsedTime;
-    const target = new THREE.Vector3(...item.position).add(offset.current);
+  const cancelDrag = useCallback(() => {
+    if (!dragging.current) return;
+    if (dragPointerRef.current === pointerId.current) dragPointerRef.current = null;
+    pressed.current = false; dragging.current = false; pointerId.current = null;
+    offset.current.set(0, 0, 0); releaseVelocity.current.set(0, 0, 0);
+    onDrag(false); invalidate();
+  }, [onDrag, invalidate, dragPointerRef]);
+  useEffect(() => { if (!visible) cancelDrag(); }, [visible, cancelDrag]);
+  useEffect(() => {
+    const cache = positions.current;
+    return () => { cache.delete(item.id); cancelDrag(); };
+  }, [item.id, positions, cancelDrag]);
+  useFrame((_, delta) => {
+    if (!visible || !group.current) return;
+    const step = Math.min(delta, 1 / 30);
+    if (animate) motionTime.current += step;
+    // R3F resets its clock when switching frame modes. Keep a local phase so
+    // leaving and re-entering the viewport resumes the same gentle drift.
+    const time = motionTime.current;
+    const target = scratch.target.set(...item.position).add(offset.current);
     if (animate && !dragging.current) {
       const phase = item.index * 1.37 + (item.kind === 'technology' ? 2 : 0);
       const drift = item.kind === 'project' && !item.active ? 7 : 2;
@@ -108,43 +132,45 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
       target.y += Math.sin(time * .31 + phase) * pixelScale * drift;
       target.z += Math.cos(time * .22 + phase) * pixelScale * drift * 2;
     }
-    if (!reducedMotion && !dragging.current) {
+    if (!staticMotion && !dragging.current) {
       // Small coupled springs let a pulled sphere gently tug its connections.
-      const tug = new THREE.Vector3();
+      const tug = scratch.tug.set(0, 0, 0);
       for (const anchor of anchors) {
         const current = positions.current.get(anchor.id);
         if (current) {
           const weight = item.kind === 'root' ? .025 : anchor.id === (item.kind === 'project' ? 'root' : item.spawnFrom) ? .09 : .035;
-          tug.addScaledVector(current.clone().sub(new THREE.Vector3(...anchor.position)), weight);
+          tug.addScaledVector(scratch.delta.copy(current).sub(scratch.anchor.set(...anchor.position)), weight);
         }
       }
       tug.clampLength(0, pixelScale * 9);
       target.add(tug);
     }
-    const step = Math.min(delta, 1 / 30);
     age.current += step;
     const positionChanged = group.current.position.distanceToSquared(target) > .000001;
-    if (reducedMotion) { group.current.position.copy(target); velocity.current.set(0, 0, 0); }
+    if (staticMotion || dragging.current) { group.current.position.copy(target); velocity.current.set(0, 0, 0); }
     else if (age.current >= 0) {
-      velocity.current.addScaledVector(target.clone().sub(group.current.position), step * 64);
+      velocity.current.addScaledVector(scratch.delta.copy(target).sub(group.current.position), step * 64);
       velocity.current.multiplyScalar(Math.exp(-step * 8.5));
       group.current.position.addScaledVector(velocity.current, step);
     }
-    const scaleTarget = !reducedMotion && age.current < 0 ? 0 : (hovered ? 1.05 : 1) * (pressed.current ? .94 : 1);
-    if (reducedMotion) { scaleValue.current = scaleTarget; scaleVelocity.current = 0; }
+    const scaleTarget = !staticMotion && age.current < 0 ? 0 : (hovered ? 1.05 : 1) * (pressed.current ? .94 : 1);
+    if (staticMotion) { scaleValue.current = scaleTarget; scaleVelocity.current = 0; }
     else {
       scaleVelocity.current += (scaleTarget - scaleValue.current) * step * 75;
       scaleVelocity.current *= Math.exp(-step * 10);
       scaleValue.current += scaleVelocity.current * step;
     }
     const squash = 1 - scaleValue.current;
-    shell.current?.scale.set(scaleValue.current * (1 + squash * .35), scaleValue.current * (1 - squash * .35), scaleValue.current);
-    if (label.current) label.current.style.opacity = reducedMotion ? '1' : String(THREE.MathUtils.clamp((scaleValue.current - .45) / .55, 0, 1));
+    shell.current?.scale.set(size * scaleValue.current * (1 + squash * .35), size * scaleValue.current * (1 - squash * .35), size * scaleValue.current);
+    if (label.current) {
+      const opacity = staticMotion ? '1' : String(THREE.MathUtils.clamp((scaleValue.current - .45) / .55, 0, 1));
+      if (label.current.style.opacity !== opacity) label.current.style.opacity = opacity;
+    }
     if (shell.current && !reducedMotion) {
       shell.current.rotation.y += step * (animate ? .12 + item.index % 4 * .035 : 0);
     }
     if (halo.current) {
-      ripple.current = reducedMotion ? 0 : Math.max(0, ripple.current - step * 1.8);
+      ripple.current = staticMotion ? 0 : Math.max(0, ripple.current - step * 1.8);
       halo.current.visible = ripple.current > 0;
       halo.current.quaternion.copy(camera.quaternion);
       halo.current.scale.setScalar(1 + (1 - ripple.current) * 1.2);
@@ -152,34 +178,40 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     }
     onPosition(item.id, group.current.position);
     // HTML labels need the next frame's updated world matrices after an immediate move.
-    if (ripple.current > 0 || (reducedMotion && positionChanged) || group.current.position.distanceTo(target) > .002 || velocity.current.length() > .01 || age.current < 0 || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
+    if (ripple.current > 0 || (staticMotion && positionChanged) || group.current.position.distanceToSquared(target) > .000004 || velocity.current.lengthSq() > .0001 || (!staticMotion && age.current < 0) || Math.abs(scaleValue.current - scaleTarget) > .002 || Math.abs(scaleVelocity.current) > .01) invalidate();
   });
   function down(event: ThreeEvent<PointerEvent>) {
-    event.stopPropagation(); pressed.current = true; dragging.current = true; moved.current = 0; releaseVelocity.current.set(0, 0, 0); last.current = { x: event.clientX, y: event.clientY, time: event.timeStamp }; onDrag(true);
+    if (event.button !== 0) return;
+    if (dragPointerRef.current !== null) { event.stopPropagation(); return; }
+    dragPointerRef.current = event.pointerId;
+    event.stopPropagation(); pressed.current = true; dragging.current = true; pointerId.current = event.pointerId; moved.current = 0;
+    if (group.current) offset.current.copy(group.current.position).sub(scratch.anchor.set(...item.position));
+    releaseVelocity.current.set(0, 0, 0); last.current.x = event.clientX; last.current.y = event.clientY; last.current.time = event.timeStamp; onDrag(true, cancelDrag);
     (event.target as unknown as { setPointerCapture: (id: number) => void }).setPointerCapture(event.pointerId);
     invalidate();
   }
   function move(event: ThreeEvent<PointerEvent>) {
-    if (!dragging.current) return;
+    if (!dragging.current || pointerId.current !== event.pointerId) return;
     event.stopPropagation();
     const dx = event.clientX - last.current.x; const dy = event.clientY - last.current.y;
     moved.current += Math.abs(dx) + Math.abs(dy);
     const depth = group.current ? camera.position.distanceTo(group.current.position) : camera.position.length();
     const pixel = 2 * depth * Math.tan(THREE.MathUtils.degToRad((camera as THREE.PerspectiveCamera).fov / 2)) / screen.height;
-    const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
-    const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
-    const movement = right.multiplyScalar(dx * pixel).addScaledVector(up, -dy * pixel);
+    const right = scratch.right.set(1, 0, 0).applyQuaternion(camera.quaternion);
+    const up = scratch.up.set(0, 1, 0).applyQuaternion(camera.quaternion);
+    const movement = scratch.movement.copy(right).multiplyScalar(dx * pixel).addScaledVector(up, -dy * pixel);
     offset.current.add(movement).clampLength(0, pixelScale * 85);
     releaseVelocity.current.lerp(movement.divideScalar(THREE.MathUtils.clamp((event.timeStamp - last.current.time) / 1000, .008, .05)), .45).clampLength(0, pixelScale * 260);
-    last.current = { x: event.clientX, y: event.clientY, time: event.timeStamp }; invalidate();
+    last.current.x = event.clientX; last.current.y = event.clientY; last.current.time = event.timeStamp; invalidate();
   }
   function up(event: ThreeEvent<PointerEvent>) {
-    if (!dragging.current) return;
-    event.stopPropagation(); pressed.current = false; dragging.current = false; onDrag(false);
+    if (!dragging.current || pointerId.current !== event.pointerId) return;
+    dragPointerRef.current = null;
+    event.stopPropagation(); pressed.current = false; dragging.current = false; pointerId.current = null; onDrag(false);
     (event.target as unknown as { releasePointerCapture: (id: number) => void }).releasePointerCapture(event.pointerId);
     offset.current.set(0, 0, 0);
     if (moved.current < 6 && item.onSelect) item.onSelect();
-    else if (!reducedMotion) {
+    else if (!staticMotion) {
       // Preserve the release direction briefly before the spring settles home.
       if (event.timeStamp - last.current.time < 100) velocity.current.addScaledVector(releaseVelocity.current, .35);
       scaleVelocity.current = .35;
@@ -187,7 +219,7 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
     invalidate();
   }
   return <group ref={group} name={`${item.kind}-${item.id}`} position={initialPosition}>
-    <mesh ref={shell} geometry={geometry} castShadow onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => { pressed.current = false; dragging.current = false; offset.current.set(0, 0, 0); onDrag(false); invalidate(); }} onPointerOver={event => { event.stopPropagation(); setHovered(true); }} onPointerOut={() => setHovered(false)}>
+    <mesh ref={shell} geometry={geometry} scale={size} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerOver={event => { event.stopPropagation(); setHovered(true); }} onPointerOut={() => setHovered(false)}>
       <meshPhysicalMaterial vertexColors color="#ffffff" metalness={.035}
         roughness={item.kind === 'leaf' ? .75 : item.kind === 'technology' ? .16 : item.muted ? .45 : .18}
         clearcoat={item.kind === 'leaf' ? 0 : item.muted ? .2 : .95}
@@ -205,33 +237,42 @@ function SphereNode({ item, animate, reducedMotion, onDrag, onPosition, labelPor
       </div>
     </Html>}
   </group>;
-}
+});
 
-function Connection({ start, end, active, positions, animate }: { start: Item; end: Item; active: boolean; positions: React.RefObject<Map<string, THREE.Vector3>>; animate: boolean }) {
+function Connection({ start, end, active, positions, animate, visible }: { start: Item; end: Item; active: boolean; positions: React.RefObject<Map<string, THREE.Vector3>>; animate: boolean; visible: boolean }) {
   const particle = useRef<THREE.Mesh>(null);
   const curveRef = useRef(new THREE.QuadraticBezierCurve3());
   const sample = useRef(new THREE.Vector3());
+  const endpoints = useMemo(() => [new THREE.Vector3(), new THREE.Vector3()], []);
+  const initialized = useRef(false);
+  const motionTime = useRef(0);
+  const invalidate = useThree(state => state.invalidate);
   const line = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(33 * 3), 3));
-    const result = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: end.color, transparent: true, opacity: active ? .52 : .18, depthWrite: false }));
+    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(33 * 3), 3).setUsage(THREE.DynamicDrawUsage));
+    const result = new THREE.Line(geometry, new THREE.LineBasicMaterial({ transparent: true, depthWrite: false }));
     result.frustumCulled = false;
     return result;
-  }, [active, end.color]);
+  }, []);
+  useEffect(() => { line.material.setValues({ color: end.color, opacity: active ? .52 : .18 }); invalidate(); }, [active, end.color, line, invalidate]);
   useEffect(() => () => { line.geometry.dispose(); line.material.dispose(); }, [line]);
-  useFrame(state => {
+  useFrame((_, delta) => {
+    if (!visible) return;
+    if (animate) motionTime.current += Math.min(delta, .05);
     const curve = curveRef.current;
-    const a = positions.current.get(start.id) ?? sample.current.set(...start.position);
-    curve.v0.copy(a);
-    const b = positions.current.get(end.id) ?? sample.current.set(...end.position);
-    curve.v2.copy(b); curve.v1.copy(curve.v0).lerp(b, .5); curve.v1.z -= .5;
-    const points = line.geometry.getAttribute('position');
-    for (let index = 0; index <= 32; index++) {
-      curve.getPoint(index / 32, sample.current);
-      points.setXYZ(index, sample.current.x, sample.current.y, sample.current.z);
+    const a = positions.current.get(start.id) ?? endpoints[0].set(...start.position);
+    const b = positions.current.get(end.id) ?? endpoints[1].set(...end.position);
+    if (!initialized.current || curve.v0.distanceToSquared(a) > .0000001 || curve.v2.distanceToSquared(b) > .0000001) {
+      initialized.current = true;
+      curve.v0.copy(a); curve.v2.copy(b); curve.v1.copy(a).lerp(b, .5); curve.v1.z -= .5;
+      const points = line.geometry.getAttribute('position');
+      for (let index = 0; index <= 32; index++) {
+        curve.getPoint(index / 32, sample.current);
+        points.setXYZ(index, sample.current.x, sample.current.y, sample.current.z);
+      }
+      points.needsUpdate = true;
     }
-    points.needsUpdate = true;
-    if (particle.current) particle.current.position.copy(curve.getPoint((state.clock.elapsedTime * .12 + end.index * .14) % 1, sample.current));
+    if (particle.current) particle.current.position.copy(curve.getPoint((motionTime.current * .12 + end.index * .14) % 1, sample.current));
   });
   return <><primitive object={line} />{active && animate && <mesh ref={particle}><sphereGeometry args={[.035, 10, 8]} /><meshBasicMaterial color={end.color} /></mesh>}</>;
 }
@@ -240,8 +281,10 @@ function OrbitalAtmosphere({ width, height, animate }: { width: number; height: 
   const field = useRef<THREE.Group>(null);
   const material = useRef<THREE.ShaderMaterial>(null);
   const { gl, size } = useThree();
+  const dpr = useThree(state => state.viewport.dpr);
   const count = size.width < 650 ? 90 : 140;
   const uniforms = useMemo(() => ({ uTime: { value: 0 }, uPixelRatio: { value: gl.getPixelRatio() } }), [gl]);
+  useEffect(() => { if (material.current) material.current.uniforms.uPixelRatio.value = dpr; }, [dpr]);
   const stars = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
     const points = new Float32Array(count * 3);
@@ -337,9 +380,66 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
   const controls = useRef<OrbitControlsImpl>(null);
   const positions = useRef(new Map<string, THREE.Vector3>());
   const [dragging, setDragging] = useState(false);
-  const { camera, size, invalidate } = useThree();
+  const dragPointerRef = useRef<number | null>(null);
+  const dragCancelRef = useRef<(() => void) | null>(null);
+  const mounted = useRef(true);
+  const { camera, size, invalidate, gl, setDpr, viewport } = useThree();
+  const resolutionTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const setInteractionQuality = useCallback((active: boolean) => {
+    clearTimeout(resolutionTimer.current);
+    if (!mounted.current) return;
+    if (active) setDpr(Math.min(1, viewport.initialDpr));
+    else resolutionTimer.current = setTimeout(() => { setDpr(viewport.initialDpr); invalidate(); }, 150);
+  }, [setDpr, viewport.initialDpr, invalidate]);
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; clearTimeout(resolutionTimer.current); };
+  }, []);
+  const handleDrag = useCallback((active: boolean, cancel?: () => void) => {
+    dragCancelRef.current = active ? cancel ?? null : null;
+    if (!mounted.current) return;
+    // Disable OrbitControls in this pointer event, before React's next render.
+    if (controls.current) controls.current.enabled = !active;
+    setInteractionQuality(active);
+    setDragging(active);
+  }, [setInteractionQuality]);
+  useEffect(() => {
+    // R3F clears pointer capture internally but does not forward native cancel
+    // events to mesh handlers. One canvas listener owns cancellation for all nodes.
+    const canvas = gl.domElement;
+    const cancel = () => dragCancelRef.current?.();
+    const cancelPointer = (event: PointerEvent) => { if (event.pointerId === dragPointerRef.current) cancel(); };
+    canvas.addEventListener('pointercancel', cancelPointer);
+    canvas.addEventListener('lostpointercapture', cancelPointer);
+    window.addEventListener('blur', cancel);
+    return () => {
+      canvas.removeEventListener('pointercancel', cancelPointer);
+      canvas.removeEventListener('lostpointercapture', cancelPointer);
+      window.removeEventListener('blur', cancel);
+    };
+  }, [gl]);
   const destination = useRef<THREE.Vector3 | null>(null);
   const lookAt = useRef(new THREE.Vector3());
+  const scratch = useMemo(() => ({ root: new THREE.Vector3(), screen: new THREE.Vector3(), direction: new THREE.Vector3(), destination: new THREE.Vector3() }), []);
+  const directionClock = useRef(1);
+  const initialView = useRef(props.initialView);
+  const skipInitialZoom = useRef(Boolean(props.initialView));
+  const onPosition = useCallback((id: string, position: THREE.Vector3) => {
+    const cached = positions.current.get(id);
+    if (cached) cached.copy(position); else positions.current.set(id, position.clone());
+  }, []);
+  const { onViewChange, onUnavailable, visible } = props;
+  const saveCamera = useCallback(() => {
+    if (controls.current) onViewChange({ position: camera.position.toArray(), target: controls.current.target.toArray() });
+  }, [camera, onViewChange]);
+  useEffect(() => () => saveCamera(), [saveCamera]);
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const lost = (event: Event) => { event.preventDefault(); saveCamera(); onUnavailable('context-lost'); };
+    canvas.addEventListener('webglcontextlost', lost);
+    return () => canvas.removeEventListener('webglcontextlost', lost);
+  }, [gl, saveCamera, onUnavailable]);
+  useEffect(() => { if (visible) invalidate(); else saveCamera(); }, [visible, invalidate, saveCamera]);
   const dense = size.height < 600;
   const compact = size.width < 650;
   const { selection, onProject, onTechnology, onReset } = props;
@@ -431,7 +531,7 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
         result.push({ id: `${project.slug}-tech-${index}`, kind: 'technology', label: tag, position, quiet: compact && selection.technology !== index,
           kickDirection: [focusSide, 0, 0], radius: (compact ? 11 : 15) * worldPerPixel,
           spawn: selectedPosition, spawnFrom: project.slug, delay: .06 + index * .055,
-          gradient: satelliteGradient(gradients[selection.project! % gradients.length]), color: colors[selection.project! % colors.length],
+          gradient: satelliteGradients[selection.project! % gradients.length], color: colors[selection.project! % colors.length],
           active: selection.technology === index, index, onSelect: () => onTechnology(index) });
       });
       if (selection.technology !== null) {
@@ -446,29 +546,48 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     }
     return result;
   }, [expanded, dense, compact, compactLeaves, selection, onReset, onProject, onTechnology, size.width, size.height, worldPerPixel]);
+  const [restoredIds] = useState(() => new Set(props.initialView ? items.map(item => item.id) : []));
+  const anchors = useMemo(() => new Map(items.map(item => [item.id, items.filter(anchor => (item.kind === 'root' && anchor.kind === 'project' && anchor.active) || anchor.id === (item.kind === 'project' ? 'root' : item.spawnFrom) || anchor.spawnFrom === item.id)])), [items]);
   useEffect(() => {
-    destination.current = new THREE.Vector3(0, 0, distance);
+    if (initialView.current && controls.current) {
+      camera.position.set(...initialView.current.position);
+      controls.current.target.set(...initialView.current.target);
+      lookAt.current.copy(controls.current.target);
+      controls.current.update(); initialView.current = undefined; invalidate(); return;
+    }
+    destination.current = scratch.destination.set(0, 0, distance);
     lookAt.current.set(0, 0, 0);
     invalidate();
-  }, [distance, props.view.reset, invalidate]);
+  }, [distance, props.view.reset, invalidate, camera, scratch]);
   useEffect(() => {
+    if (skipInitialZoom.current) { skipInitialZoom.current = false; return; }
     if (!controls.current) return;
     const zoomDistance = THREE.MathUtils.clamp(distance - props.view.zoom * 2, compact ? 13 : 9, Math.max(50, distance + 20));
-    const direction = camera.position.clone().sub(controls.current.target).normalize();
-    destination.current = controls.current.target.clone().addScaledVector(direction, zoomDistance);
+    const direction = scratch.direction.copy(camera.position).sub(controls.current.target).normalize();
+    destination.current = scratch.destination.copy(controls.current.target).addScaledVector(direction, zoomDistance);
     invalidate();
-  }, [props.view.zoom, props.view.reset, distance, compact, camera, invalidate]);
+  }, [props.view.zoom, props.view.reset, distance, compact, camera, invalidate, scratch]);
   useFrame((_, delta) => {
-    const rootScreen = (positions.current.get('root') ?? new THREE.Vector3(...items[0].position)).clone().project(camera);
-    for (const item of items) {
-      if (item.kind !== 'project') continue;
-      const screen = (positions.current.get(item.id) ?? new THREE.Vector3(...item.position)).clone().project(camera);
-      props.projectDirections.current.set(item.index, projectFocusSide((screen.x - rootScreen.x) * size.width, (screen.y - rootScreen.y) * size.height));
+    if (!props.visible) return;
+    directionClock.current += delta;
+    if (directionClock.current >= .08) {
+      directionClock.current = 0;
+      const rootPosition = positions.current.get('root');
+      const rootScreen = scratch.root;
+      if (rootPosition) rootScreen.copy(rootPosition); else rootScreen.set(...items[0].position);
+      rootScreen.project(camera);
+      for (const item of items) {
+        if (item.kind !== 'project') continue;
+        const position = positions.current.get(item.id), screen = scratch.screen;
+        if (position) screen.copy(position); else screen.set(...item.position);
+        screen.project(camera);
+        props.projectDirections.current.set(item.index, projectFocusSide((screen.x - rootScreen.x) * size.width, (screen.y - rootScreen.y) * size.height));
+      }
     }
     if (!destination.current || !controls.current) return;
-    const speed = props.reducedMotion ? 1 : 1 - Math.exp(-delta * 4);
+    const speed = props.reducedMotion || !props.animate ? 1 : 1 - Math.exp(-Math.min(delta, .05) * 4);
     camera.position.lerp(destination.current, speed); controls.current.target.lerp(lookAt.current, speed); controls.current.update();
-    if (camera.position.distanceTo(destination.current) < .01) destination.current = null; else invalidate();
+    if (camera.position.distanceToSquared(destination.current) < .0001) { destination.current = null; saveCamera(); } else invalidate();
   });
   const root = items[0];
   const interactionNode = items.find(item => item.id === props.interaction.nodeId);
@@ -476,21 +595,21 @@ function Scene(props: Props & { labelPortal: LabelPortal }) {
     <fog attach="fog" args={[sceneFog, distance + 10, distance + 55]} />
     <OrbitalAtmosphere width={size.width * worldPerPixel} height={size.height * worldPerPixel} animate={props.animate && !props.reducedMotion && props.visible} />
     <ambientLight intensity={.65} /><hemisphereLight args={['#dcecff', '#34495f', 1.35]} /><directionalLight position={[-6, 8, 6]} intensity={2.5} color="#faf8ff" /><directionalLight position={[4, -3, 3]} intensity={1.1} color="#9ed4f5" /><directionalLight position={[1, 4, -5]} intensity={.65} color="#d2c6f2" />
-    {expanded && items.filter(item => item.kind === 'project' && item.active).map(item => <Connection key={`root-${item.id}`} start={root} end={item} active positions={positions} animate={props.animate} />)}
-    {expanded && items.filter(item => item.kind === 'technology').map(item => <Connection key={`tech-${item.id}`} start={items.find(node => node.id === projects[props.selection.project!].slug)!} end={item} active={props.selection.technology === null || item.active} positions={positions} animate={props.animate} />)}
-    {props.selection.technology !== null && items.filter(item => item.kind === 'leaf').map(item => <Connection key={`leaf-${item.id}`} start={items.find(node => node.id === `${projects[props.selection.project!].slug}-tech-${props.selection.technology}`)!} end={item} active positions={positions} animate={props.animate} />)}
+    {expanded && items.filter(item => item.kind === 'project' && item.active).map(item => <Connection key={`root-${item.id}`} start={root} end={item} active positions={positions} animate={props.animate} visible={props.visible} />)}
+    {expanded && items.filter(item => item.kind === 'technology').map(item => <Connection key={`tech-${item.id}`} start={items.find(node => node.id === projects[props.selection.project!].slug)!} end={item} active={props.selection.technology === null || item.active} positions={positions} animate={props.animate} visible={props.visible} />)}
+    {props.selection.technology !== null && items.filter(item => item.kind === 'leaf').map(item => <Connection key={`leaf-${item.id}`} start={items.find(node => node.id === `${projects[props.selection.project!].slug}-tech-${props.selection.technology}`)!} end={item} active positions={positions} animate={props.animate} visible={props.visible} />)}
     {items.map(item => {
-      const separation = interactionNode ? new THREE.Vector3(...item.position).distanceTo(new THREE.Vector3(...interactionNode.position)) / worldPerPixel : Infinity;
+      const separation = interactionNode ? Math.hypot(item.position[0] - interactionNode.position[0], item.position[1] - interactionNode.position[1], item.position[2] - interactionNode.position[2]) / worldPerPixel : Infinity;
       const pulseStrength = props.interaction.nodeId === item.id ? 1 : item.kind === 'project' ? Math.max(0, 1 - separation / 120) * .2 : 0;
-      return <SphereNode pixelScale={worldPerPixel} anchors={items.filter(anchor => (item.kind === 'root' && anchor.kind === 'project' && anchor.active) || anchor.id === (item.kind === 'project' ? 'root' : item.spawnFrom) || anchor.spawnFrom === item.id)} pulse={pulseStrength > 0 ? props.interaction.revision : 0} pulseStrength={pulseStrength} positions={positions} labelPortal={props.labelPortal} key={item.id} item={item} animate={props.animate} reducedMotion={props.reducedMotion} onDrag={setDragging} onPosition={(id,position) => { const cached = positions.current.get(id); if (cached) cached.copy(position); else positions.current.set(id, position.clone()); }} />;
+      return <SphereNode pixelScale={worldPerPixel} anchors={anchors.get(item.id)!} pulse={pulseStrength > 0 ? props.interaction.revision : 0} pulseStrength={pulseStrength} positions={positions} labelPortal={props.labelPortal} key={item.id} item={item} animate={props.animate} reducedMotion={props.reducedMotion} onDrag={handleDrag} dragPointerRef={dragPointerRef} onPosition={onPosition} visible={props.visible} restorePosition={restoredIds.has(item.id)} />;
     })}
-    <OrbitControls ref={controls} makeDefault enabled={!dragging} enablePan={false} enableZoom={false} enableDamping={!props.reducedMotion} minPolarAngle={.45} maxPolarAngle={Math.PI * .7} onStart={() => { destination.current = null; }} />
+    <OrbitControls ref={controls} makeDefault enabled={!dragging} enablePan={false} enableZoom={false} enableDamping={!props.reducedMotion} minPolarAngle={.45} maxPolarAngle={Math.PI * .7} onStart={() => { destination.current = null; setInteractionQuality(true); }} onEnd={() => { setInteractionQuality(false); saveCamera(); }} />
   </>;
 }
 
-export default function ThreeProjectScene(props: Props) {
-  const labelPortal = useRef<HTMLDivElement>(null!);
-  return <div className="three-renderer"><div className="three-label-layer" ref={labelPortal} /><Canvas camera={{ position: [0, 0, 26], fov: 43 }} dpr={[1, 1.5]} frameloop={props.animate && props.visible ? 'always' : 'demand'} gl={defaults => {
+const initialCamera = { position: [0, 0, 26] as Point, fov: 43 };
+const sceneDpr: [number, number] = [1, 1.5];
+function createRenderer(defaults: THREE.WebGLRendererParameters) {
     const canvas = defaults.canvas as HTMLCanvasElement;
     const attributes: WebGLContextAttributes = { alpha: true, depth: true, stencil: false, powerPreference: 'default' };
     let context: WebGL2RenderingContext | null = null;
@@ -498,8 +617,9 @@ export default function ThreeProjectScene(props: Props) {
     if (!context) context = canvas.getContext('webgl2', { ...attributes, antialias: false });
     if (!context) throw new Error('Unable to create a WebGL 2 graphics context.');
     return new THREE.WebGLRenderer({ ...defaults, context, alpha: true, antialias: context.getContextAttributes()?.antialias ?? false });
-  }} onCreated={({ gl }) => {
-    gl.domElement.addEventListener('webglcontextlost', event => { event.preventDefault(); props.onUnavailable('context-lost'); }, { once: true });
-    props.onReady();
-  }}><Scene {...props} labelPortal={labelPortal} /></Canvas></div>;
+  }
+
+export default function ThreeProjectScene(props: Props) {
+  const labelPortal = useRef<HTMLDivElement>(null!);
+  return <div className="three-renderer"><div className="three-label-layer" ref={labelPortal} /><Canvas camera={initialCamera} dpr={sceneDpr} frameloop={!props.visible ? 'never' : props.animate ? 'always' : 'demand'} gl={createRenderer} onCreated={props.onReady}><Scene {...props} labelPortal={labelPortal} /></Canvas></div>;
 }

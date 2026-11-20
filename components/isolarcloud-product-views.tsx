@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { displayImage } from '@/lib/image-assets';
 import { useState } from 'react';
 import type { Project } from '@/lib/projects';
 import styles from './isolarcloud-case-study.module.css';
@@ -21,7 +22,7 @@ export function IsolarCloudProductViews({ project }: { project: Project }) {
     </div>
     <figure className={styles.productFigure}>
       <a href={screenshot.src} target="_blank" rel="noopener noreferrer" aria-label={`Open full screenshot: ${view.label}`}>
-        <Image src={screenshot.src} alt={screenshot.alt} width={screenshot.width} height={screenshot.height} sizes="(max-width: 700px) 92vw, 1152px" />
+        <Image src={displayImage(screenshot.src)} alt={screenshot.alt} width={screenshot.width} height={screenshot.height} sizes="auto, (max-width: 700px) 92vw, 1152px" />
         <span className={styles.imageAction}>Open full image</span>
       </a>
       <figcaption><div><h3>{view.title}</h3><p>{view.text}</p></div></figcaption>
