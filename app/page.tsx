@@ -30,7 +30,7 @@ const featuredProjects = [
   {
     slug: 'wordweave', context: 'Wordweave · Personal project',
     title: 'Language learning with AI',
-    reason: 'I built a browser extension and an AI-assisted English/German learning app, with contextual vocabulary, listening and speaking practice.',
+    reason: 'I’m building a tool I use in my own language learning, combining contextual vocabulary with AI-assisted reading, listening and speaking practice.',
   },
 ];
 
