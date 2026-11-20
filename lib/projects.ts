@@ -462,50 +462,54 @@ export const projects: Project[] = [
     links: [{ label: 'Source Code', href: 'https://github.com/Logic-syd/Love-Story-Theater' }]
   },
   {
-    kind: 'independent', slug: 'wordweave', number: '17', title: 'Wordweave — Learn Through Context', shortTitle: 'English and German reading with AI',
+    kind: 'independent', slug: 'wordweave', number: '17', title: 'Wordweave — Learn Through Context', shortTitle: 'English and German through everyday practice',
     graphTitle: 'Wordweave', category: 'Personal product · Full-stack AI language learning', organization: 'Independent project',
-    status: 'Public reading samples · Personal workspace',
-    description: 'An AI-assisted reader for native Chinese speakers learning technical English and German, with contextual word cards, spaced review and a companion browser extension.',
-    caseHeadings: { problem: 'English and German in context', approach: 'Generation validation, usage limits and vocabulary', delivery: 'Public samples and a manually installed extension' },
-    tags: ['Next.js / React', 'TypeScript / Zod', 'PostgreSQL / Prisma', 'LLM APIs / DeepSeek', 'Chrome Extension / MV3'], role: 'Independent full-stack developer · Web app and browser extension',
+    status: 'Reading, listening and speaking · In development',
+    description: 'I’m building Wordweave for Chinese speakers learning English and German. A browser extension keeps useful English expressions in everyday reading; the website brings contextual reading, vocabulary, listening and speaking practice together.',
+    caseHeadings: { problem: 'Practice that starts with everyday reading', approach: 'Engineering and learning design', delivery: 'The freemium roadmap' },
+    tags: ['Next.js / React', 'TypeScript / Zod', 'PostgreSQL / Prisma', 'LLM APIs / DeepSeek', 'Chrome Extension / MV3', 'IndexedDB'], role: 'Independent full-stack developer · Web app and browser extension',
     contributions: [
-      ['Responsive reading interface', 'Next.js pages and server API routes', 'Desktop word popovers and mobile word cards'],
+      ['Reading, listening and speaking interfaces', 'Next.js pages and server API routes', 'Desktop word popovers and mobile word cards'],
       ['Structured model-output validation', 'Stable paragraph alignment', 'Protected Markdown, code and links'],
-      ['Transactional article versions', 'Persistent generation quotas', 'Contextual vocabulary and review records'],
-      ['OpenAI-compatible model integration', 'Bounded parallel generation and retries', 'Per-request model usage accounting'],
-      ['In-page reading and original-text restoration', 'Optional bring-your-own-key AI mode', 'Local extension library and trusted key storage']
+      ['Earlier private-workspace schema and migrations', 'Transactional article versions', 'Server-side quotas and idempotency'],
+      ['Learner-supplied model credentials', 'Bounded parallel generation and retries', 'Validated output before saving'],
+      ['English webpage translation and source restoration', 'Free translation and optional AI', 'Session-only keys and bounded local caching'],
+      ['Browser-local articles and audio', 'Shared web vocabulary and learning progress', 'Local persistence without an account']
     ],
-    problem: 'A full translation can remove the expressions a learner wants to remember; a page full of unfamiliar words can interrupt the reading itself. I wanted to keep useful English and German in context, make the original easy to compare, and bring saved words back in later reading.',
+    problem: 'Choosing a lesson, preparing material or writing an AI prompt can become work before learning even starts. I want practice to begin with familiar content: encounter a useful expression, understand it in context, then use it again. The extension starts with English webpages; the website supports both English and German. Connecting browsing history to personalized practice is the next product step.',
     responsibilities: [
-      'Built the responsive reader, article library, contextual word cards and vocabulary review interface in Next.js, React and TypeScript.',
-      'Implemented server API routes, model integration and PostgreSQL persistence with Prisma within one Next.js application.',
-      'Designed generation validation, article versioning, duplicate-request handling and persistent usage limits.',
-      'Built the Manifest V3 extension for in-page reading, optional user-supplied AI credentials and a local article and vocabulary library.'
+      'Built the Next.js / React reading, listening and speaking interfaces, with daily material, source comparison, contextual word cards and vocabulary review.',
+      'Added browser-local articles, audio imports, vocabulary and progress with IndexedDB, plus optional AI requests using the learner’s own credentials.',
+      'Implemented generation validation, bounded retries and duplicate-request handling; retained the earlier Prisma / PostgreSQL backend and private API workflows.',
+      'Built a Manifest V3 extension with free translation, optional AI, progressive paragraph rendering, original-text restoration and bounded local caching.'
     ],
     decisions: [
       { title: 'Preserve the source', text: 'Markdown is parsed into stable paragraph IDs. Code blocks bypass the model; inline code and links use protected placeholders. The result must preserve paragraph order, IDs and protected content, so readers can compare each learning paragraph with its original.' },
-      { title: 'Validate before saving', text: 'Zod checks the model response structure, followed by paragraph, vocabulary and target-coverage checks. A PostgreSQL transaction saves the complete version and changes the active version together. Generation tokens reject stale saves, while a failed regeneration leaves the previous successful version available.' },
-      { title: 'Bound model work', text: 'Technical articles use bounded parallel chunks, an article-wide retry budget and ordered merging. Successful chunks are retained during retries. Database-backed permits and atomic counters limit concurrent work, input size and every outgoing model request, including retries. Idempotency keys and content hashes handle duplicate imports.' },
-      { title: 'Keep each word in context', text: 'Vocabulary identity includes language, lemma, part of speech and meaning. Each occurrence separately stores the current word form, grammar and source sentence. Explicit review choices drive the spaced schedule; finishing an article does not mark its words as mastered. Due German words can return in a new story.' },
-      { title: 'Separate the reading spaces', text: 'Eight fixed public samples keep progress and saved words in the browser. The password-protected personal workspace uses server-verified identity and PostgreSQL. Extension records stay in extension storage. These three spaces have explicit boundaries and do not silently merge their learning histories.' },
-      { title: 'Make extension modes explicit', text: 'The Manifest V3 extension extracts selected webpage content and can restore the original. Free translation and optional AI are separate choices. AI requests go directly to the user-selected provider; keys remain in trusted extension storage, outside page content scripts. Errors do not silently switch to a paid model.' }
+      { title: 'Browser-local learning', text: 'The web app keeps articles, imported audio, vocabulary and practice records in the browser. Reading, listening and speaking share a word bank within the same origin. Each word retains its meaning and source sentence; explicit review choices drive the spaced schedule, rather than treating a finished article as mastery. There is no automatic extension-to-website or cross-device sync.' },
+      { title: 'Bound model work', text: 'Optional AI calls go directly to the learner’s chosen provider using their own key. Zod and paragraph, code and vocabulary checks validate results before saving. Long text uses bounded parallel chunks, ordered merging and limited retries; cross-tab locks prevent duplicate generation. Failed regeneration keeps the original and previous successful version.' },
+      { title: 'Listening and speaking', text: 'Listening accepts local audio with an optional transcript, supports notes and dictation comparison, and saves imported audio in IndexedDB. Read Along provides sentence-by-sentence practice; the speaking practice view also supports recording and playback. System speech depends on installed voices. The app does not claim automatic transcription, pronunciation grading or accent removal.' },
+      { title: 'Extension boundaries', text: 'The current extension works on English webpages. Free translation and optional AI are separate choices, with completed paragraphs shown progressively and original text recoverable. Provider keys stay in trusted session storage, outside page content scripts. A bounded local cache avoids repeating identical work. The development build has no shared website library or account synchronization.' },
+      { title: 'Server-backed foundation', text: 'The earlier private workspace uses Next.js API routes, Prisma and PostgreSQL. Transactions save complete article versions, generation tokens reject stale saves, and database-backed permits, atomic usage counters and idempotency keys bound server work. That schema, migration history and private API remain in the repository; the current public learning flow uses browser storage instead.' },
+      { title: 'Mixed-language reading', text: 'Ong and Zhang (2018) and Renduchintala, Koehn and Eisner (2019) inform the choice to embed target-language vocabulary in familiar reading. This supports the product’s learning-design hypothesis; it does not establish Wordweave’s own vocabulary-retention results. Learning outcomes and continued use still need to be evaluated.' },
+      { title: 'Listening and shadowing research', text: 'Chang and Millett (2014) support exploring listening with text assistance. Foote and McDonough (2017) inform short imitation, recording and playback: their small study found improvements in fluency and perceived comprehensibility, but not accent ratings, and had no independent control group. These findings guide future guided practice; they do not validate this app’s sentence-repeat feature or guarantee the same outcomes.' }
     ],
-    delivery: 'The web app provides eight public English and German samples, with generation and private articles reserved for my personal workspace. The desktop Chrome / Edge extension is available for manual installation and has not been submitted to an extension store. Generation runs in the application process; it is not a durable job queue.',
-    flow: ['Source + learning goals', 'Validated model output', 'Contextual reading + review'],
+    delivery: 'I plan a free entry tier with paid extension personalization and larger allowances, followed by interest-based listening and guided speaking subscriptions. An optional account could carry a learning profile from browsing into practice; that connection and cloud sync are still planned. The commercial hypothesis is that a useful everyday extension can introduce people to the wider platform. Willingness to pay, learning outcomes and the effect of personalization on continued use remain to be validated.',
+    flow: ['Read in context', 'Save vocabulary', 'Listen + speak'],
     links: [
-      { label: 'Live Demo', href: 'https://wordweave-production.up.railway.app/' },
+      { label: 'Live Demo', href: 'https://weavie.netlify.app/' },
       { label: 'Source Code', href: 'https://github.com/Logic-syd/wordweave' }
     ],
     screenshots: [
-      { src: '/images/wordweave-english-reader.png', width: 1440, height: 900, label: 'Technical English', alt: 'Wordweave’s real Chinese-language reading interface, preserving English expressions inside a fixed public React learning sample.', caption: 'Technical English · Local capture of the public-sample reader.' },
-      { src: '/images/wordweave-german-reader.png', width: 1440, height: 900, label: 'German in context', alt: 'The Wordweave German sample reader with aligned original text and contextual vocabulary.', caption: 'German reading and vocabulary · Fixed public sample, captured locally.' },
-      { src: '/images/wordweave-extension-settings.png', width: 1280, height: 800, label: 'Browser extension', alt: 'The Wordweave extension settings screen with separate free-translation and optional AI modes.', caption: 'Extension settings · Source-repository capture of the version 0.2.1 settings UI.' }
+      { src: '/images/wordweave-reading-workspace.png', width: 1440, height: 900, label: 'Reading', alt: 'Wordweave’s bilingual reading workspace with a left import sidebar, contextual English vocabulary and the original article.', caption: 'Contextual reading · Current source build, captured locally with a bundled sample.' },
+      { src: '/images/wordweave-listening-workspace.png', width: 1440, height: 900, label: 'Listening', alt: 'Wordweave listening practice with a material inbox, playback controls, a comprehension question and optional transcript.', caption: 'Listening practice · Current source build, captured locally with a bundled sample.' },
+      { src: '/images/wordweave-speaking-workspace.png', width: 1440, height: 900, label: 'Speaking', alt: 'Wordweave Read Along with an article inbox and sentence-by-sentence English speaking practice.', caption: 'Read Along · Current source build, captured locally with a bundled passage.' }
     ],
     mobileScreenshots: [
-      { src: '/images/wordweave-mobile-reader.png', width: 390, height: 844, label: 'Contextual word card', alt: 'A contextual vocabulary card in Wordweave’s actual mobile sample reader.', caption: 'Mobile word card · Fixed public sample, captured locally.' }
+      { src: '/images/wordweave-mobile-word-card.png', width: 390, height: 844, label: 'Word card', alt: 'Wordweave’s mobile reader with a contextual vocabulary card beside a bundled reading sample.', caption: 'Mobile word card · Current source build, captured locally.' },
+      { src: '/images/wordweave-mobile-speaking.png', width: 390, height: 844, label: 'Speaking practice', alt: 'The mobile Wordweave Read Along interface showing an English passage and sentence controls.', caption: 'Mobile Read Along · Current source build, captured locally.' }
     ],
-    mobileDescription: 'The reader keeps explanations close to the passage: word cards appear as a floating panel on desktop and a bottom sheet on a phone.',
-    mobileHighlights: ['Compare each paragraph with its original.', 'Save an expression without leaving the article.', 'Keep public-sample progress in the current browser.'],
-    screenshotCredit: { label: 'Wordweave source and public-sample documentation', href: 'https://github.com/Logic-syd/wordweave' }
+    mobileDescription: 'The reading sidebar folds away on phones. Word cards stay close to the passage, and the Listen, Speak and Read entries connect the web app’s learning modes.',
+    mobileHighlights: ['Read with contextual word cards.', 'Practise short passages sentence by sentence.', 'Keep web vocabulary and progress in the current browser.'],
+    screenshotCredit: { label: 'Wordweave source used for these captures', href: 'https://github.com/Logic-syd/wordweave/tree/827f33a6669c18699e668e1a2d7e69fabcda6c6f' }
   }
 ];

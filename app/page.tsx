@@ -30,7 +30,7 @@ const featuredProjects = [
   {
     slug: 'wordweave', context: 'Wordweave · Personal project',
     title: 'Language learning with AI',
-    reason: 'I built a Next.js reader and browser extension, with contextual vocabulary, validated AI output and per-user generation limits.',
+    reason: 'I built a browser extension and an AI-assisted English/German learning app, with contextual vocabulary, listening and speaking practice.',
   },
 ];
 
