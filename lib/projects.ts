@@ -493,7 +493,7 @@ export const projects: Project[] = [
     delivery: 'The web app provides eight public English and German samples, with generation and private articles reserved for my personal workspace. The desktop Chrome / Edge extension is available for manual installation and has not been submitted to an extension store. Generation runs in the application process; it is not a durable job queue.',
     flow: ['Source + learning goals', 'Validated model output', 'Contextual reading + review'],
     links: [
-      { label: 'Live Demo', href: 'https://wordweave-production.up.railway.app/' },
+      { label: 'Live Demo', href: 'https://weavie.netlify.app/' },
       { label: 'Source Code', href: 'https://github.com/Logic-syd/wordweave' }
     ],
     screenshots: [
