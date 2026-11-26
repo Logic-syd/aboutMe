@@ -7,7 +7,7 @@ import styles from './portrait-cover.module.css';
 export function PortraitCover() {
   return <section className={styles.cover} aria-labelledby="town-title">
     <div className={styles.photograph} data-hero-portrait>
-      <Image src={displayImage(heroPhoto.src)} alt={heroPhoto.alt} width={heroPhoto.width} height={heroPhoto.height} sizes="100vw" preload />
+      <Image src={displayImage(heroPhoto.src)} alt={heroPhoto.alt} width={heroPhoto.width} height={heroPhoto.height} sizes="(max-width: 520px) max(1014px, calc((100svh - 148px) * 1.78)), (max-width: 800px) clamp(1014px, calc((100svh - 148px) * 1.78), 1567px), 100vw" preload />
     </div>
     <div className={styles.shade} aria-hidden="true" />
     <p className={styles.availability}>Based in Munich, Germany. Open to relocate.</p>

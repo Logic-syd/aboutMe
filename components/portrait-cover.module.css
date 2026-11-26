@@ -1,11 +1,11 @@
 .cover { position: relative; isolation: isolate; width: 100%; height: min(920px, calc(100svh - 80px)); min-height: 480px; color: #fff; overflow: hidden; }
 .photograph { position: absolute; inset: 0; z-index: -2; }
-.photograph img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 24%; }
+.photograph img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
 .shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, #13211dea, #13211d00 58%), linear-gradient(90deg, #13211d59, #13211d00 52%); pointer-events: none; }
 .availability { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 40px); padding: 9px 18px; border: 1px solid #ffffff70; border-radius: 40px; background: #f3f5efed; color: #243c31; font-size: 13px; line-height: 1.4; text-align: center; }
 .roleCard, .educationCard { position: absolute; display: flex; flex-direction: column; gap: 3px; padding: 15px 23px; border-radius: 13px; }
 .roleCard { top: 20%; left: 7%; rotate: -6deg; background: #29553e; color: #fff; }
-.educationCard { top: 34%; right: 7%; rotate: 5deg; background: #fbfcf8; color: #253a30; }
+.educationCard { top: 36%; left: 10%; rotate: 5deg; background: #fbfcf8; color: #253a30; }
 .roleCard span, .educationCard span { font-family: var(--editorial-serif), Georgia, serif; font-size: 27px; line-height: 1.1; }
 .roleCard small, .educationCard small { font-size: 12px; line-height: 1.5; }
 .languageCard { position: absolute; right: 5%; bottom: 27%; padding: 9px 15px; border: 1px solid #ffffffa1; border-radius: 30px; background: #23392ee8; color: #fff; font-size: 12px; rotate: -4deg; }
@@ -31,17 +31,17 @@
 }
 @media (max-width: 800px) {
   .cover { height: min(880px, calc(100svh - 148px)); min-height: 570px; }
-  .photograph img { object-position: 50% 26%; }
+  .photograph img { object-position: 85% 50%; }
   .identity { left: 24px; bottom: 96px; }
   .identity h1 { font-size: clamp(80px, 15vw, 130px); }
   .roleCard { top: 16%; left: 4%; }
-  .educationCard { top: 32%; right: 4%; }
+  .educationCard { top: 12%; left: auto; right: 4%; }
   .languageCard { display: none; }
   .skills { inset-inline: 24px; }
 }
 @media (max-width: 520px) {
   .cover { height: max(570px, calc(100svh - 148px)); }
-  .photograph img { object-position: 50% 30%; }
+  .photograph img { object-position: 79% 50%; }
   .availability { top: 15px; width: max-content; font-size: 11px; padding: 7px 13px; }
   .roleCard, .educationCard { top: 65px; padding: 9px 12px; border-radius: 9px; }
   .roleCard { left: 15px; rotate: -4deg; }
