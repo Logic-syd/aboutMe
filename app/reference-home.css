@@ -93,8 +93,10 @@
 .reference-home .life-gallery-photo:nth-child(2) { margin-top: 100px; }
 .reference-home .life-gallery-photo:nth-child(3) { width: 72%; margin-top: -70px; margin-left: 12%; }
 .reference-home .life-gallery-photo:nth-child(4) { width: 88%; margin-top: 20px; }
-.reference-home .life-gallery-photo .personal-photo-trigger { aspect-ratio: 4 / 3; height: auto; border: 0; border-radius: 3px; box-shadow: none; }
-.reference-home .life-gallery-photo:nth-child(n+3) .personal-photo-trigger { aspect-ratio: 3 / 4; }
+.reference-home .life-gallery-photo:nth-child(5) { margin-top: 12px; }
+.reference-home .life-gallery-photo:nth-child(6) { width: 86%; margin-top: 80px; justify-self: end; }
+.reference-home .life-gallery-photo .personal-photo-trigger { aspect-ratio: auto; height: auto; border: 0; border-radius: 3px; box-shadow: none; }
+.reference-home .life-gallery-photo .personal-photo-trigger img { display: block; width: 100%; height: auto; }
 .reference-home .life-gallery-photo figcaption { font-size: 13px; color: #e2e9df; margin-top: 12px; }
 .reference-home .life-gallery-photo .personal-photo-open { background: #f2f4ede8; color: #203c2c; }
 .reference-home .place-picker button, .reference-home .career-map-frame { background: #e5eae0; border: 1px solid var(--line); box-shadow: none; backdrop-filter: none; }
@@ -141,6 +143,7 @@
   .reference-home .life-gallery-photo:nth-child(2) { margin-top: 55px; }
   .reference-home .life-gallery-photo:nth-child(3) { margin-top: -25px; width: 90%; margin-left: 0; }
   .reference-home .life-gallery-photo:nth-child(4) { width: 100%; margin-top: 8px; }
+  .reference-home .life-gallery-photo:nth-child(6) { width: 100%; margin-top: 40px; }
   .reference-home .contact-inner h2 { font-size: 47px; }
 }
 @media (max-width: 600px) {

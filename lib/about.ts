@@ -6,6 +6,10 @@ export const education: Education = { school: 'Jilin University', degree: 'Bache
 export const profilePhoto: PersonalPhoto = { src: '/images/personal/current-office.jpg', alt: 'Yidan outside her current office in Munich', caption: 'Outside my current office · Munich', shortCaption: 'Working in Munich', width: 960, height: 1280, position: '50% 34%' };
 export const heroPhoto: PersonalPhoto = { src: '/images/personal/window-portrait.jpg', alt: 'Yidan sitting by a window in a soft pink blouse', caption: 'Yidan by the window', width: 960, height: 1280, previewCrop: { x: 170, y: 180, width: 600, height: 750 } };
 export const footballPhoto: PersonalPhoto = { src: '/images/personal/football-afternoon.jpg', alt: 'Yidan wearing a football shirt in a boat, with autumn trees behind her', caption: 'A football shirt and an afternoon on the water', shortCaption: 'An afternoon on the water', width: 960, height: 1280, position: '50% 45%' };
+export const outdoorPhotos: PersonalPhoto[] = [
+  { src: '/images/personal/snowy-lake.jpg', alt: 'Yidan at a table beside a lake, with snow-covered hills behind her', caption: 'By a snowy mountain lake', width: 1280, height: 960, fit: 'contain' },
+  { src: '/images/personal/snowy-trail.jpg', alt: 'Yidan holding a plush toy on a sunny, snowy hillside', caption: 'Sunshine in the snow', width: 960, height: 1280, fit: 'contain' },
+];
 export const personalPhotos: PersonalPhoto[] = [
   { src: '/images/personal/graduation-portrait.jpg', alt: 'Graduation portrait at Jilin University', caption: 'Graduation day · Jilin University', shortCaption: 'Jilin University', width: 1280, height: 960, position: '65% 50%' },
   { src: '/images/personal/graduation-classmates.jpg', alt: 'Graduation celebration with classmates', caption: 'Graduation with classmates', shortCaption: 'With classmates', width: 1280, height: 960, position: '40% 60%' },
