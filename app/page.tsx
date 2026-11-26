@@ -14,7 +14,7 @@ import { AboutMe } from '@/components/about-me';
 import { Contact, Footer, Header } from '@/components/site';
 import { PortraitCover } from '@/components/portrait-cover';
 import { PhotoViewer } from '@/components/photo-viewer';
-import { personalPhotos, footballPhoto, outdoorPhotos } from '@/lib/about';
+import { personalPhotos, footballPhoto, outdoorPhotos, laptopPhoto } from '@/lib/about';
 
 const editorialSerif = Instrument_Serif({ weight: '400', subsets: ['latin'], variable: '--editorial-serif', display: 'swap' });
 const editorialSans = Instrument_Sans({ subsets: ['latin'], variable: '--editorial-sans', display: 'swap' });
@@ -100,7 +100,7 @@ export default function Home() {
         <div className="section-heading"><div><h2 id="career-history-title">Experience</h2></div></div>
         <CareerExperience />
       </section>
-      <section id="gallery" className="life-gallery" aria-labelledby="gallery-title"><div className="shell"><div className="gallery-heading"><h2 id="gallery-title">A few moments</h2><p>From graduation to everyday life.</p></div><div className="life-gallery-grid">{[...personalPhotos, footballPhoto, ...outdoorPhotos].map(photo => <PhotoViewer photo={photo} key={photo.src} className="life-gallery-photo" sizes="(max-width: 600px) calc(100vw - 48px), (max-width: 800px) 40vw, 360px" />)}</div></div></section>
+      <section id="gallery" className="life-gallery" aria-labelledby="gallery-title"><div className="shell"><div className="gallery-heading"><h2 id="gallery-title">A few moments</h2><p>From graduation to everyday life.</p></div><div className="life-gallery-grid">{[...personalPhotos, footballPhoto, ...outdoorPhotos, laptopPhoto].map(photo => <PhotoViewer photo={photo} key={photo.src} className="life-gallery-photo" sizes="(max-width: 600px) calc(100vw - 48px), (max-width: 800px) 40vw, 360px" />)}</div></div></section>
       <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><h2 id="experience-title">Places</h2></div><p>Shanghai · Hangzhou · Berlin · Munich</p></div><CareerMap /></section>
       <Contact />
     </main>

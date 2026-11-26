@@ -96,6 +96,7 @@
 .reference-home .life-gallery-photo:nth-child(5) { margin-top: 12px; }
 .reference-home .life-gallery-photo:nth-child(6) { width: 86%; margin-top: 80px; justify-self: end; }
 .reference-home .life-gallery-photo:nth-child(7) { width: 78%; margin-top: -120px; margin-left: 10%; }
+.reference-home .life-gallery-photo:nth-child(8) { width: 86%; margin-top: 24px; justify-self: end; }
 .reference-home .life-gallery-photo .personal-photo-trigger { aspect-ratio: auto; height: auto; border: 0; border-radius: 3px; box-shadow: none; }
 .reference-home .life-gallery-photo .personal-photo-trigger img { display: block; width: 100%; height: auto; }
 .reference-home .life-gallery-photo figcaption { font-size: 13px; color: #e2e9df; margin-top: 12px; }
@@ -104,6 +105,7 @@
 .reference-home .contact-section { background: transparent; border-top: 1px solid var(--line); }
 .reference-home .contact-inner h2 { font-family: var(--editorial-serif), Georgia, serif; font-weight: 400; font-size: 58px; }
 @media (min-width: 801px) and (max-height: 760px) {
+  .reference-home .life-gallery-photo:nth-child(8) { width: 80%; margin-top: -16px; }
   .reference-home.pixel-portfolio main > section:not(:first-child) { padding-block: 32px; }
   .reference-home.pixel-portfolio .section-heading { margin-bottom: 23px; }
   .reference-home.pixel-portfolio .section-heading h2, .reference-home #skills > h2 { font-size: 58px; }
@@ -146,6 +148,7 @@
   .reference-home .life-gallery-photo:nth-child(4) { width: 100%; margin-top: 8px; }
   .reference-home .life-gallery-photo:nth-child(6) { width: 100%; margin-top: 40px; }
   .reference-home .life-gallery-photo:nth-child(7) { width: 90%; margin-top: -70px; margin-left: 0; }
+  .reference-home .life-gallery-photo:nth-child(8) { width: 100%; margin-top: 16px; }
   .reference-home .contact-inner h2 { font-size: 47px; }
 }
 @media (max-width: 600px) {

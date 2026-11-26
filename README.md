@@ -184,6 +184,8 @@ Two further owner-supplied photographs appear together in the Gallery: `snowy-la
 
 Language levels come directly from the owner: Mandarin Chinese (Native), English (C1), German (A2) and Cantonese (B2). `lib/profile.ts` supplies the visible language list and the Person schema's `knowsLanguage` entries. These are self-reported abilities, not certificate claims. The website remains in English; language abilities do not imply translated versions of every page.
 
+The eighth Gallery photograph, `laptop-portrait.jpg` (853 × 1280), is the owner's unchanged image of herself using a sticker-covered laptop. Its caption is “At my laptop”; no employer, project, location or date is inferred. A lazy-loaded WebP display copy retains the full portrait composition, and the photo dialog opens the original.
+
 About me includes the owner's confirmed Kilimanjaro summit and subsequent donation of notebooks, ballpoint pens and sanitary pads to a school, followed by her wish to do useful work and contribute to a better world. The two supplied photographs appear together in a separate Outside work row: `public/images/personal/kilimanjaro-summit.jpg` (2880 × 3840) and `public/images/personal/tanzania-school-visit.jpg` (960 × 1280). Both files are unchanged copies of the owner’s originals, displayed in their full portrait proportions with captions and an accessible enlarged view. The school, trip date and donation quantities have not been specified; the existing graduation and Munich photos retain their original context.
 
 Places shows city-life descriptions, personal memories and local maps. The former Work & projects tab and its duplicate project links have been removed; professional context remains in Experience and the project cases.
