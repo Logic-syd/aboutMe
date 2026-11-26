@@ -3,8 +3,11 @@
 import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
+import Image from 'next/image';
 import { projects } from '@/lib/projects';
 import { coreTechnologies } from '@/lib/profile';
+import { profilePhoto } from '@/lib/about';
+import { displayImage } from '@/lib/image-assets';
 import styles from './pixel-town.module.css';
 
 type PlaceId = 'studio' | 'cafe' | 'cabin' | 'bottles' | 'station' | 'post';
@@ -200,9 +203,14 @@ export function PixelTown() {
   </div>;
   return <section className={styles.townSection} aria-labelledby="town-title">
     <div className={styles.intro}>
+      <div className={styles.identity}>
+        <Image className={styles.portrait} src={displayImage(profilePhoto.src)} alt={profilePhoto.alt} width={profilePhoto.width} height={profilePhoto.height} sizes="(max-width: 800px) 100px, (max-height: 650px) 96px, (max-height: 760px) 124px, 140px" preload style={{ objectPosition: profilePhoto.position }} />
+        <div className={styles.identityText}>
+          <h1 id="town-title">Yidan Shao</h1>
+          <p className={styles.role}>Senior Frontend Engineer</p>
+        </div>
+      </div>
       <p className={styles.kicker}>Based in Munich, Germany. Open to relocate.</p>
-      <h1 id="town-title">Yidan Shao</h1>
-      <p className={styles.role}>Senior Frontend Engineer</p>
       <p className={styles.bio}>I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.</p>
       <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
       <div className={styles.skillContext}><p>Finance · Insurance · Energy · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
