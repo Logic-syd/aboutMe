@@ -10,6 +10,7 @@ export const laptopPhoto: PersonalPhoto = { src: '/images/personal/laptop-portra
 export const apronPhoto: PersonalPhoto = { src: '/images/personal/apron-portrait.jpg', alt: 'Yidan wearing a red-and-black patterned shirt and a grey apron indoors', caption: 'In an apron', width: 960, height: 1280, fit: 'contain' };
 export const bladePhoto: PersonalPhoto = { src: '/images/personal/long-blade-portrait.jpg', alt: 'Yidan holding a long-handled curved blade behind a red wooden stand', caption: 'A very tall blade', width: 960, height: 1280, fit: 'contain' };
 export const waterfallPhoto: PersonalPhoto = { src: '/images/personal/waterfall-portrait.jpg', alt: 'Yidan in a light checked dress beside turquoise water, small waterfalls and green foliage', caption: 'By the waterfalls', width: 960, height: 1280, fit: 'contain' };
+export const stoneWallPhoto: PersonalPhoto = { src: '/images/personal/stone-wall-portrait.jpg', alt: 'Yidan in a red-and-white checked outfit beside a wooden railing, with stone walls and flags behind her', caption: 'By the stone walls', width: 960, height: 1280, fit: 'contain' };
 export const outdoorPhotos: PersonalPhoto[] = [
   { src: '/images/personal/snowy-lake.jpg', alt: 'Yidan at a table beside a lake, with snow-covered hills behind her', caption: 'By a snowy mountain lake', width: 1280, height: 960, fit: 'contain' },
   { src: '/images/personal/snowy-trail.jpg', alt: 'Yidan holding a plush toy on a sunny, snowy hillside', caption: 'Sunshine in the snow', width: 960, height: 1280, fit: 'contain' },

@@ -192,6 +192,8 @@ The tenth Gallery photograph, `long-blade-portrait.jpg` (960 × 1280), shows the
 
 The eleventh Gallery photograph, `waterfall-portrait.jpg` (960 × 1280), shows the owner beside turquoise water and small waterfalls. The caption “By the waterfalls” does not infer a location or date. The lazy-loaded WebP keeps the full portrait composition, and the photo dialog opens the unchanged original.
 
+The twelfth Gallery photograph, `stone-wall-portrait.jpg` (960 × 1280), shows the owner in a red-and-white checked outfit beside a wooden railing and stone walls. Its caption is “By the stone walls”; no location or date has been supplied. It sits alongside the waterfall portrait on desktop, keeps its full composition in the lazy-loaded WebP preview, and opens the unchanged original in the photo dialog.
+
 About me includes the owner's confirmed Kilimanjaro summit and subsequent donation of notebooks, ballpoint pens and sanitary pads to a school, followed by her wish to do useful work and contribute to a better world. The two supplied photographs appear together in a separate Outside work row: `public/images/personal/kilimanjaro-summit.jpg` (2880 × 3840) and `public/images/personal/tanzania-school-visit.jpg` (960 × 1280). Both files are unchanged copies of the owner’s originals, displayed in their full portrait proportions with captions and an accessible enlarged view. The school, trip date and donation quantities have not been specified; the existing graduation and Munich photos retain their original context.
 
 Places shows city-life descriptions, personal memories and local maps. The former Work & projects tab and its duplicate project links have been removed; professional context remains in Experience and the project cases.
