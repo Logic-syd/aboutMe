@@ -8,6 +8,7 @@ export const heroPhoto: PersonalPhoto = { src: '/images/personal/window-portrait
 export const footballPhoto: PersonalPhoto = { src: '/images/personal/football-afternoon.jpg', alt: 'Yidan wearing a football shirt in a boat, with autumn trees behind her', caption: 'A football shirt and an afternoon on the water', shortCaption: 'An afternoon on the water', width: 960, height: 1280, position: '50% 45%' };
 export const laptopPhoto: PersonalPhoto = { src: '/images/personal/laptop-portrait.jpg', alt: 'Yidan using a sticker-covered laptop at a round table', caption: 'At my laptop', width: 853, height: 1280, fit: 'contain' };
 export const apronPhoto: PersonalPhoto = { src: '/images/personal/apron-portrait.jpg', alt: 'Yidan wearing a red-and-black patterned shirt and a grey apron indoors', caption: 'In an apron', width: 960, height: 1280, fit: 'contain' };
+export const bladePhoto: PersonalPhoto = { src: '/images/personal/long-blade-portrait.jpg', alt: 'Yidan holding a long-handled curved blade behind a red wooden stand', caption: 'A very tall blade', width: 960, height: 1280, fit: 'contain' };
 export const outdoorPhotos: PersonalPhoto[] = [
   { src: '/images/personal/snowy-lake.jpg', alt: 'Yidan at a table beside a lake, with snow-covered hills behind her', caption: 'By a snowy mountain lake', width: 1280, height: 960, fit: 'contain' },
   { src: '/images/personal/snowy-trail.jpg', alt: 'Yidan holding a plush toy on a sunny, snowy hillside', caption: 'Sunshine in the snow', width: 960, height: 1280, fit: 'contain' },

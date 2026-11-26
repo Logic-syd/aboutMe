@@ -98,6 +98,7 @@
 .reference-home .life-gallery-photo:nth-child(7) { width: 78%; margin-top: -120px; margin-left: 10%; }
 .reference-home .life-gallery-photo:nth-child(8) { width: 86%; margin-top: 24px; justify-self: end; }
 .reference-home .life-gallery-photo:nth-child(9) { width: 88%; margin-top: -80px; }
+.reference-home .life-gallery-photo:nth-child(10) { width: 86%; margin-top: 24px; justify-self: end; }
 .reference-home .life-gallery-photo .personal-photo-trigger { aspect-ratio: auto; height: auto; border: 0; border-radius: 3px; box-shadow: none; }
 .reference-home .life-gallery-photo .personal-photo-trigger img { display: block; width: 100%; height: auto; }
 .reference-home .life-gallery-photo figcaption { font-size: 13px; color: #e2e9df; margin-top: 12px; }
@@ -151,6 +152,7 @@
   .reference-home .life-gallery-photo:nth-child(7) { width: 90%; margin-top: -70px; margin-left: 0; }
   .reference-home .life-gallery-photo:nth-child(8) { width: 100%; margin-top: 16px; }
   .reference-home .life-gallery-photo:nth-child(9) { width: 100%; margin-top: -24px; }
+  .reference-home .life-gallery-photo:nth-child(10) { width: 100%; margin-top: 16px; }
   .reference-home .contact-inner h2 { font-size: 47px; }
 }
 @media (max-width: 600px) {
