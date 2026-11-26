@@ -9,6 +9,7 @@ export const footballPhoto: PersonalPhoto = { src: '/images/personal/football-af
 export const outdoorPhotos: PersonalPhoto[] = [
   { src: '/images/personal/snowy-lake.jpg', alt: 'Yidan at a table beside a lake, with snow-covered hills behind her', caption: 'By a snowy mountain lake', width: 1280, height: 960, fit: 'contain' },
   { src: '/images/personal/snowy-trail.jpg', alt: 'Yidan holding a plush toy on a sunny, snowy hillside', caption: 'Sunshine in the snow', width: 960, height: 1280, fit: 'contain' },
+  { src: '/images/personal/evening-portrait.jpg', alt: 'Yidan beside illuminated stone arches at night', caption: 'After dark', width: 960, height: 1280, fit: 'contain' },
 ];
 export const personalPhotos: PersonalPhoto[] = [
   { src: '/images/personal/graduation-portrait.jpg', alt: 'Graduation portrait at Jilin University', caption: 'Graduation day · Jilin University', shortCaption: 'Jilin University', width: 1280, height: 960, position: '65% 50%' },
