@@ -186,6 +186,8 @@ Language levels come directly from the owner: Mandarin Chinese (Native), English
 
 The eighth Gallery photograph, `laptop-portrait.jpg` (853 × 1280), is the owner's unchanged image of herself using a sticker-covered laptop. Its caption is “At my laptop”; no employer, project, location or date is inferred. A lazy-loaded WebP display copy retains the full portrait composition, and the photo dialog opens the original.
 
+The ninth photograph, `apron-portrait.jpg` (960 × 1280), retains the owner's supplied portrait in a patterned shirt and grey apron. The caption “In an apron” describes the image without assuming employment or an event. Its WebP preview is lazy-loaded, and the enlarged view uses the unchanged original.
+
 About me includes the owner's confirmed Kilimanjaro summit and subsequent donation of notebooks, ballpoint pens and sanitary pads to a school, followed by her wish to do useful work and contribute to a better world. The two supplied photographs appear together in a separate Outside work row: `public/images/personal/kilimanjaro-summit.jpg` (2880 × 3840) and `public/images/personal/tanzania-school-visit.jpg` (960 × 1280). Both files are unchanged copies of the owner’s originals, displayed in their full portrait proportions with captions and an accessible enlarged view. The school, trip date and donation quantities have not been specified; the existing graduation and Munich photos retain their original context.
 
 Places shows city-life descriptions, personal memories and local maps. The former Work & projects tab and its duplicate project links have been removed; professional context remains in Experience and the project cases.
