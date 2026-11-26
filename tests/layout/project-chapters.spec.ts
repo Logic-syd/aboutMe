@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { projects } from '../../lib/projects';
 import { siteUrl } from '../../lib/profile';
-import { profilePhoto } from '../../lib/about';
+import { heroPhoto } from '../../lib/about';
 
 async function expectCompleteScreens(page: Page) {
   const issues = await page.evaluate(() => {
@@ -255,10 +255,14 @@ test('interactive consoles keep a complete frame when results expand', async ({ 
 test('homepage keeps text navigation, compact side dots and top contact links', async ({ page }) => {
   await page.goto('/');
   const hero = page.locator('section[aria-labelledby="town-title"]');
-  await expect(hero.getByRole('img', { name: profilePhoto.alt, exact: true })).toBeInViewport({ ratio: 1 });
+  await expect(hero.locator('[data-hero-portrait]')).toBeInViewport({ ratio: 1 });
+  const portrait = hero.getByRole('img', { name: heroPhoto.alt, exact: true });
+  await expect(portrait).toBeVisible();
+  await expect.poll(() => portrait.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(hero.getByRole('heading', { name: 'Yidan Shao', exact: true })).toBeInViewport({ ratio: 1 });
   await expect(hero.getByLabel('Core technologies')).toBeVisible();
   await expect(hero.getByText('Three.js', { exact: true })).toBeVisible();
+  await expect(hero.getByRole('link', { name: 'Email me', exact: true })).toHaveAttribute('href', 'mailto:yidanshao622@gmail.com');
   await expect(hero.getByText('I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.', { exact: true })).toBeVisible();
   const workBuilding = hero.getByRole('button', { name: 'Explore Commercial work', exact: true });
   await workBuilding.click();

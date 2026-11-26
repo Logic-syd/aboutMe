@@ -4,6 +4,7 @@ export type PersonalPhoto = { src: string; alt: string; caption: string; width: 
 // Education and photo contexts are owner-confirmed. Display framing preserves the original files.
 export const education: Education = { school: 'Jilin University', degree: 'Bachelor’s degree', college: 'School of Software', context: 'A member of China’s Project 985 university initiative.' };
 export const profilePhoto: PersonalPhoto = { src: '/images/personal/current-office.jpg', alt: 'Yidan outside her current office in Munich', caption: 'Outside my current office · Munich', shortCaption: 'Working in Munich', width: 960, height: 1280, position: '50% 34%' };
+export const heroPhoto: PersonalPhoto = { src: '/images/personal/window-portrait.jpg', alt: 'Yidan sitting by a window in a soft pink blouse', caption: 'Yidan by the window', width: 960, height: 1280, previewCrop: { x: 170, y: 180, width: 600, height: 750 } };
 export const personalPhotos: PersonalPhoto[] = [
   { src: '/images/personal/graduation-portrait.jpg', alt: 'Graduation portrait at Jilin University', caption: 'Graduation day · Jilin University', shortCaption: 'Jilin University', width: 1280, height: 960, position: '65% 50%' },
   { src: '/images/personal/graduation-classmates.jpg', alt: 'Graduation celebration with classmates', caption: 'Graduation with classmates', shortCaption: 'With classmates', width: 1280, height: 960, position: '40% 60%' },

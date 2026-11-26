@@ -1,60 +1,55 @@
-/* A complete introduction beside the town, with native-feeling glass controls. */
+/* A portrait-led introduction; the town remains an interactive part of the first screen. */
 .townSection {
+  --portrait-width: 340px;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 32px var(--page-gutter) 28px;
+  padding: 28px var(--page-gutter);
   display: grid;
-  grid-template-columns: minmax(310px, min(38%, 440px)) minmax(0, 1fr);
-  gap: 36px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(68%, calc((100svh - 344px) / .62)));
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 'portrait intro' 'portrait town';
+  gap: 22px 48px;
+  align-items: start;
   color: var(--ink);
   font-family: var(--sans);
 }
-.intro { min-width: 0; }
-.identity { display: flex; align-items: center; gap: 22px; }
+.intro { grid-area: intro; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: center; }
 .identityText { min-width: 0; }
+.portraitColumn { grid-area: portrait; min-width: 0; max-width: 340px; }
+.portraitFrame { position: relative; width: min(100%, var(--portrait-width)); aspect-ratio: 4 / 5; overflow: hidden; border-radius: 16px; }
 .portrait {
+  position: absolute;
   display: block;
-  flex: 0 0 140px;
-  width: 140px;
-  height: 175px;
-  object-fit: cover;
-  border-radius: 16px;
+  max-width: none;
 }
 .kicker {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
+  grid-column: 1;
   color: var(--muted);
   font-size: 13px;
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0;
-  margin-top: 16px;
 }
 .intro h1 {
   margin: 0 0 8px;
-  font-size: clamp(36px, 3.1vw, 46px);
+  font-size: clamp(38px, 3.65vw, 54px);
   font-weight: 600;
   line-height: 1.05;
-  letter-spacing: -.055em;
+  letter-spacing: -.045em;
 }
-.role { font-size: clamp(18px, 1.55vw, 22px); line-height: 1.3; letter-spacing: -.6px; }
-.bio { max-width: 440px; margin-top: 18px; font-size: 15px; line-height: 1.65; color: var(--ink); }
-.skills { display: flex; flex-wrap: wrap; gap: 5px 11px; list-style: none; margin: 22px 0 0; padding: 0; }
+.role { font-size: clamp(18px, 1.65vw, 23px); line-height: 1.3; letter-spacing: -.6px; }
+.summary { margin-top: 20px; }
+.bio { font-size: 15px; line-height: 1.65; color: var(--ink); }
+.skills { display: flex; flex-wrap: wrap; gap: 5px 11px; list-style: none; margin: 18px 0 0; padding: 0; }
 .skills li { font-size: 14px; line-height: 1.6; font-weight: 500; white-space: nowrap; }
 .skills li:not(:last-child)::after { content: '·'; margin-left: 11px; color: var(--muted); }
-.skillContext { margin-top: 15px; }
-.skillContext p { font-size: 12px; line-height: 1.5; color: var(--muted); }
-.skillsLink { display: inline-flex; align-items: center; gap: 5px; margin-top: 7px; font-size: 12px; line-height: 1.5; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.skillsLink { display: inline-block; margin-top: 10px; font-size: 12px; line-height: 1.5; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 .skillsLink:hover { color: var(--primary); }
-.actions { margin-top: 22px; }
-.actions > a {
+.actions { grid-column: 2; grid-row: 1 / span 2; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.primaryAction {
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 25px;
+  justify-content: center;
   min-height: 47px;
   padding: 11px 22px;
   border-radius: 999px;
@@ -67,10 +62,13 @@
   line-height: 1.5;
   transition: background .2s, box-shadow .2s, transform .2s;
 }
-.actions svg { width: 20px; height: 20px; flex-shrink: 0; }
-.actions > a:hover { background: linear-gradient(180deg, #4a7059f2, #355740f2); box-shadow: inset 0 1px 0 #ffffff12, 0 9px 23px #36584026; transform: translateY(-1px); }
+.primaryAction:hover { background: linear-gradient(180deg, #4a7059f2, #355740f2); box-shadow: inset 0 1px 0 #ffffff12, 0 9px 23px #36584026; }
+.emailLink { display: inline-flex; align-items: center; min-height: 36px; padding: 4px 8px; font-size: 14px; line-height: 1.5; text-decoration: underline; text-underline-offset: 4px; }
+.emailLink:hover { color: var(--primary); }
 
 .gameWindow {
+  grid-area: town;
+  width: 100%;
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--glass-border);
@@ -141,51 +139,46 @@
 .previewSheet .preview h2 { font-size: 24px; }
 
 @media (min-width: 801px) and (max-height: 760px) {
-  .townSection { padding-block: 22px; gap: 30px; }
-  /* Keep the full town below the 64px header, with 44px padding and 100px of controls. */
-  .gameWindow { width: 100%; max-width: calc((100svh - 208px) / .62 + 2px); justify-self: end; }
-  .identity { gap: 18px; }
-  .portrait { flex-basis: 124px; width: 124px; height: 155px; }
-  .intro h1 { font-size: clamp(34px, 3.1vw, 42px); }
-  .kicker { margin-top: 14px; }
+  .townSection { padding-block: 20px; gap: 16px 36px; grid-template-columns: minmax(0, 1fr) minmax(0, min(68%, calc((100svh - 328px) / .62))); }
+  .intro { gap: 8px 18px; }
+  .intro h1 { font-size: 42px; }
   .role { font-size: 20px; }
-  .bio { margin-top: 14px; font-size: 14px; line-height: 1.6; }
+  .summary { margin-top: 16px; }
+  .bio { font-size: 14px; line-height: 1.6; }
+  .skills { margin-top: 14px; }
   .skills li { font-size: 13px; }
-  .skillContext { margin-top: 11px; }
-  .actions { margin-top: 17px; }
 }
 @media (min-width: 801px) and (max-height: 650px) {
-  .townSection { padding-block: 18px; gap: 24px; }
-  /* Compact controls occupy 90px; the section has 36px of vertical padding. */
-  .gameWindow { max-width: calc((100svh - 190px) / .62 + 2px); }
-  .identity { gap: 16px; }
-  .portrait { flex-basis: 96px; width: 96px; height: 120px; border-radius: 12px; }
-  .kicker { font-size: 12px; margin-top: 12px; }
-  .intro h1 { font-size: 33px; }
+  .townSection { --portrait-width: 288px; padding-block: 16px; gap: 14px 28px; grid-template-columns: minmax(0, 1fr) minmax(0, min(68%, calc((100svh - 306px) / .62))); }
+  .intro { gap: 6px 16px; }
+  .kicker { grid-column: 1 / -1; font-size: 12px; }
+  .intro h1 { font-size: 36px; }
   .role { font-size: 18px; }
-  .bio { margin-top: 12px; font-size: 13px; }
-  .skills { margin-top: 14px; }
-  .skillContext { margin-top: 9px; }
-  .skillContext p, .skillsLink { font-size: 11px; }
-  .actions { margin-top: 14px; }
-  .actions > a { min-height: 43px; padding: 9px 19px; font-size: 13px; }
+  .summary { margin-top: 14px; }
+  .bio { font-size: 13px; }
+  .skills { margin-top: 12px; gap: 4px 8px; }
+  .skills li:not(:last-child)::after { margin-left: 8px; }
+  .skillsLink { margin-top: 8px; }
+  .actions { grid-row: 1; gap: 2px; }
+  .primaryAction { min-height: 43px; padding: 9px 19px; font-size: 13px; }
+  .emailLink { min-height: 32px; font-size: 13px; }
   .windowBar { min-height: 42px; padding: 5px 12px; }
   .windowBar > span { font-size: 13px; }
   .locationNav { padding: 5px; }
   .locationNav button { min-height: 35px; font-size: 12px; }
 }
 @media (max-width: 800px) {
-  .townSection { display: flex; flex-direction: column; align-items: stretch; gap: 27px; padding-block: 29px 26px; }
-  .identity { gap: 18px; }
-  .portrait { flex-basis: 100px; width: 100px; height: 125px; border-radius: 12px; }
-  .intro h1 { font-size: 38px; }
+  .townSection { --portrait-width: 260px; grid-template-columns: minmax(0, .85fr) minmax(0, 1fr); grid-template-rows: auto auto auto; grid-template-areas: 'portrait intro' 'summary summary' 'town town'; gap: 24px 28px; padding-block: 28px; }
+  .portraitColumn { display: contents; }
+  .portraitFrame { grid-area: portrait; }
+  .intro { display: flex; flex-direction: column; align-items: flex-start; align-self: center; gap: 14px; }
+  .intro h1 { font-size: 42px; }
   .role { font-size: 20px; }
-  .kicker { margin-top: 16px; }
-  .bio { max-width: 540px; font-size: 15px; margin-top: 16px; }
+  .summary { grid-area: summary; margin: 0; max-width: 580px; }
+  .bio { font-size: 15px; }
   .skills li { font-size: 14px; }
-  .skillContext { margin-top: 12px; }
-  .skillContext p { font-size: 12px; }
-  .actions { margin-top: 19px; }
+  .actions { flex-direction: row; flex-wrap: wrap; gap: 8px 16px; margin-top: 2px; }
+  .emailLink { min-height: 44px; }
   .gameWindow { width: 100%; border-radius: 22px; }
   .windowBar { min-height: 44px; padding: 6px 10px; gap: 8px; }
   .windowBar > span { font-size: 12px; gap: 7px; }
@@ -202,10 +195,17 @@
   .previewClose { width: 40px; height: 40px; }
   .previewLinks a { min-height: 44px; }
 }
+@media (max-width: 600px) {
+  .townSection { --portrait-width: 340px; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: 'portrait' 'intro' 'summary' 'town'; gap: 22px; padding-block: 24px; }
+  .portraitFrame { width: min(100%, var(--portrait-width)); border-radius: 14px; }
+  .intro { gap: 11px; }
+  .intro h1 { font-size: 42px; }
+  .skills { margin-top: 14px; }
+}
 @media (max-width: 360px) {
+  .townSection { gap: 18px; }
   .kicker { font-size: 12px; }
-  .identity { gap: 14px; }
-  .intro h1 { font-size: 32px; }
+  .intro h1 { font-size: 38px; }
   .role { font-size: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {

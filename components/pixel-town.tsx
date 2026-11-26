@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { projects } from '@/lib/projects';
 import { coreTechnologies } from '@/lib/profile';
-import { profilePhoto } from '@/lib/about';
+import { heroPhoto } from '@/lib/about';
 import { displayImage } from '@/lib/image-assets';
 import styles from './pixel-town.module.css';
 
@@ -203,18 +203,22 @@ export function PixelTown() {
   </div>;
   return <section className={styles.townSection} aria-labelledby="town-title">
     <div className={styles.intro}>
-      <div className={styles.identity}>
-        <Image className={styles.portrait} src={displayImage(profilePhoto.src)} alt={profilePhoto.alt} width={profilePhoto.width} height={profilePhoto.height} sizes="(max-width: 800px) 100px, (max-height: 650px) 96px, (max-height: 760px) 124px, 140px" preload style={{ objectPosition: profilePhoto.position }} />
-        <div className={styles.identityText}>
-          <h1 id="town-title">Yidan Shao</h1>
-          <p className={styles.role}>Senior Frontend Engineer</p>
-        </div>
+      <div className={styles.identityText}>
+        <h1 id="town-title">Yidan Shao</h1>
+        <p className={styles.role}>Senior Frontend Engineer</p>
       </div>
       <p className={styles.kicker}>Based in Munich, Germany. Open to relocate.</p>
-      <p className={styles.bio}>I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.</p>
-      <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
-      <div className={styles.skillContext}><p>Finance · Insurance · Energy · Education</p><a className={styles.skillsLink} href="#skills">All skills <span aria-hidden="true">↓</span></a></div>
-      <div className={styles.actions}><a href="#work">View projects <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></a></div>
+      <div className={styles.actions}><a className={styles.primaryAction} href="#work">View projects</a><a className={styles.emailLink} href="mailto:yidanshao622@gmail.com">Email me</a></div>
+    </div>
+    <div className={styles.portraitColumn}>
+      <div className={styles.portraitFrame} data-hero-portrait>
+        <Image className={styles.portrait} src={displayImage(heroPhoto.src)} alt={heroPhoto.alt} width={heroPhoto.width} height={heroPhoto.height} sizes="(max-width: 360px) 500px, (max-width: 600px) 544px, (max-width: 800px) 416px, (max-height: 650px) 461px, 544px" preload style={heroPhoto.previewCrop ? { width: `${heroPhoto.width / heroPhoto.previewCrop.width * 100}%`, height: `${heroPhoto.height / heroPhoto.previewCrop.height * 100}%`, left: `${-heroPhoto.previewCrop.x / heroPhoto.previewCrop.width * 100}%`, top: `${-heroPhoto.previewCrop.y / heroPhoto.previewCrop.height * 100}%` } : undefined} />
+      </div>
+      <div className={styles.summary}>
+        <p className={styles.bio}>I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.</p>
+        <ul className={styles.skills} aria-label="Core technologies">{coreTechnologies.map(skill => <li key={skill}>{skill}</li>)}</ul>
+        <a className={styles.skillsLink} href="#skills">All skills</a>
+      </div>
     </div>
     <div ref={townFrame} className={styles.gameWindow} data-town-frame>
       <div className={styles.windowBar}><span>Explore my town</span><button onClick={() => setMotion(value => !value)} aria-pressed={!motion} aria-label={motion ? 'Pause motion' : 'Resume motion'}><svg aria-hidden="true" viewBox="0 0 16 16">{motion ? <path d="M4 3h3v10H4zM10 3h3v10h-3z" /> : <path d="m5 3 8 5-8 5z" />}</svg>{motion ? 'Pause' : 'Resume'}</button></div>
