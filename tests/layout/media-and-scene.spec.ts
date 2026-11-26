@@ -6,7 +6,7 @@ async function nextPaint(page: Page) {
 
 test('photo previews request display-sized assets and the dialog keeps the original', async ({ page }) => {
   await page.goto('/#about');
-  const photos = page.locator('.about-photo-timeline img, .outside-work-photos img');
+  const photos = page.locator('.life-gallery-grid img, .outside-work-photos img');
   for (const image of await photos.all()) {
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);

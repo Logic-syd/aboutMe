@@ -33,7 +33,7 @@ export function PhotoViewer({ photo, className = '', sizes = '300px' }: { photo:
         width: `${photo.width / crop.width * 100}%`, height: `${photo.height / crop.height * 100}%`,
         left: `${-crop.x / crop.width * 100}%`, top: `${-crop.y / crop.height * 100}%`,
       } : { objectFit: photo.fit ?? 'cover', objectPosition: photo.position ?? '50% 50%' }} />
-      <span className="personal-photo-open" aria-hidden="true">↗</span>
+      <span className="personal-photo-open" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></span>
     </button>
     <figcaption>{photo.shortCaption ?? photo.caption}</figcaption>
     <dialog ref={dialog} className="personal-photo-dialog" aria-labelledby={captionId} onClose={finishClosing} onCancel={finishClosing} onClick={event => { if (event.target === event.currentTarget) closePhoto(); }}>

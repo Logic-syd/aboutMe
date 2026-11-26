@@ -263,8 +263,8 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   await expect(hero.getByLabel('Core technologies')).toBeVisible();
   await expect(hero.getByText('Three.js', { exact: true })).toBeVisible();
   await expect(hero.getByRole('link', { name: 'Email me', exact: true })).toHaveAttribute('href', 'mailto:yidanshao622@gmail.com');
-  await expect(hero.getByText('I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.', { exact: true })).toBeVisible();
-  const workBuilding = hero.getByRole('button', { name: 'Explore Commercial work', exact: true });
+  await expect(page.getByText('I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.', { exact: true })).toBeVisible();
+  const workBuilding = page.getByRole('button', { name: 'Explore Commercial work', exact: true });
   await workBuilding.click();
   const preview = page.getByRole(page.viewportSize()!.width <= 800 ? 'dialog' : 'region', { name: 'Commercial projects.', exact: true });
   await expect(preview).toBeVisible();
@@ -281,11 +281,13 @@ test('homepage keeps text navigation, compact side dots and top contact links', 
   await expect(preview).toHaveCount(0);
   await expect(workBuilding).toBeFocused();
   if (page.viewportSize()!.width > 800) {
-    expect(await hero.evaluate(element => element.getBoundingClientRect().bottom), 'Core technologies and town fit the first screen').toBeLessThanOrEqual(page.viewportSize()!.height + 1);
+    expect(await hero.evaluate(element => element.getBoundingClientRect().height), 'Portrait introduction fits one screen').toBeLessThanOrEqual(page.viewportSize()!.height);
+    const town = page.locator('[data-town-frame]');
+    expect(await town.evaluate(element => element.getBoundingClientRect().height), 'The complete town fits one screen').toBeLessThanOrEqual(page.viewportSize()!.height);
   }
   const top = page.getByRole('navigation', { name: 'Main navigation', exact: true });
   const sidebar = page.locator('.floating-sections');
-  const expected = ['Projects', 'About', 'Experience', 'Places'];
+  const expected = ['Projects', 'About', 'Experience', 'Skills', 'Gallery', 'Places'];
   expect(await top.getByRole('link').evaluateAll(links => links.map(link => link.getAttribute('aria-label')))).toEqual(expected);
   for (const label of await top.locator('.nav-full-label').all()) await expect(label).toBeVisible();
   for (const name of expected) await expect(top.getByRole('link', { name, exact: true })).toBeVisible();

@@ -4,6 +4,14 @@ export const profileDescription = 'Senior Frontend Engineer in Munich, Germany. 
 // Short introduction; the complete list remains visible in the skills section.
 export const coreTechnologies = ['React', 'TypeScript', 'Vue', 'Next.js', 'Three.js'];
 
+// Language levels supplied by Yidan; these do not imply exam certificates.
+export const languages = [
+  { name: 'Mandarin Chinese', code: 'zh', level: 'Native' },
+  { name: 'English', code: 'en', level: 'C1' },
+  { name: 'German', code: 'de', level: 'A2' },
+  { name: 'Cantonese', code: 'yue', level: 'B2' },
+];
+
 // Public skills shared by the visible skills section and the search profile.
 export const technologyGroups = [
   { label: 'Web & mobile', skills: ['React', 'TypeScript', 'JavaScript', 'Vue', 'Next.js', 'React Native', 'uni-app', 'HTML', 'CSS'] },

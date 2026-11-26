@@ -1,0 +1,63 @@
+.cover { position: relative; isolation: isolate; width: 100%; height: min(920px, calc(100svh - 80px)); min-height: 480px; color: #fff; overflow: hidden; }
+.photograph { position: absolute; inset: 0; z-index: -2; }
+.photograph img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 24%; }
+.shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, #13211dea, #13211d00 58%), linear-gradient(90deg, #13211d59, #13211d00 52%); pointer-events: none; }
+.availability { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 40px); padding: 9px 18px; border: 1px solid #ffffff70; border-radius: 40px; background: #f3f5efed; color: #243c31; font-size: 13px; line-height: 1.4; text-align: center; }
+.roleCard, .educationCard { position: absolute; display: flex; flex-direction: column; gap: 3px; padding: 15px 23px; border-radius: 13px; }
+.roleCard { top: 20%; left: 7%; rotate: -6deg; background: #29553e; color: #fff; }
+.educationCard { top: 34%; right: 7%; rotate: 5deg; background: #fbfcf8; color: #253a30; }
+.roleCard span, .educationCard span { font-family: var(--editorial-serif), Georgia, serif; font-size: 27px; line-height: 1.1; }
+.roleCard small, .educationCard small { font-size: 12px; line-height: 1.5; }
+.languageCard { position: absolute; right: 5%; bottom: 27%; padding: 9px 15px; border: 1px solid #ffffffa1; border-radius: 30px; background: #23392ee8; color: #fff; font-size: 12px; rotate: -4deg; }
+.identity { position: absolute; bottom: 87px; left: max(5vw, calc((100vw - 1280px) / 2)); }
+.identity h1 { margin: 0; font-family: var(--handwritten), cursive; font-size: clamp(84px, 10.5vw, 160px); font-weight: 400; letter-spacing: -.045em; line-height: .95; color: #fff6e9; }
+.identity > p { margin: 14px 0 0 6px; font-size: clamp(18px, 1.9vw, 25px); line-height: 1.3; }
+.actions { display: flex; align-items: center; gap: 12px; margin: 22px 0 0 6px; }
+.actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 23px; border: 1px solid #ffffffb3; border-radius: 30px; background: #f9faf5; color: #253d31; font-size: 14px; line-height: 1.4; }
+.actions a:first-child { background: #29553e; color: #fff; border-color: #86a693; }
+.actions a:hover { background: #e3eadd; color: #193b2b; }
+.skills { position: absolute; inset: auto 5% 20px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 13px; border-top: 1px solid #ffffff42; font-size: 13px; }
+.skills ul { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 0; margin: 0; list-style: none; }
+.skills > a { white-space: nowrap; text-decoration: underline; text-underline-offset: 4px; }
+.cover a:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+@media (min-width: 801px) and (max-height: 650px) {
+  .cover { min-height: 0; }
+  .identity { bottom: 75px; }
+  .identity h1 { font-size: 94px; }
+  .identity > p { margin-top: 8px; font-size: 19px; }
+  .actions { margin-top: 12px; }
+  .roleCard, .educationCard { padding: 10px 18px; }
+  .roleCard span, .educationCard span { font-size: 23px; }
+}
+@media (max-width: 800px) {
+  .cover { height: min(880px, calc(100svh - 148px)); min-height: 570px; }
+  .photograph img { object-position: 50% 26%; }
+  .identity { left: 24px; bottom: 96px; }
+  .identity h1 { font-size: clamp(80px, 15vw, 130px); }
+  .roleCard { top: 16%; left: 4%; }
+  .educationCard { top: 32%; right: 4%; }
+  .languageCard { display: none; }
+  .skills { inset-inline: 24px; }
+}
+@media (max-width: 520px) {
+  .cover { height: max(570px, calc(100svh - 148px)); }
+  .photograph img { object-position: 50% 30%; }
+  .availability { top: 15px; width: max-content; font-size: 11px; padding: 7px 13px; }
+  .roleCard, .educationCard { top: 65px; padding: 9px 12px; border-radius: 9px; }
+  .roleCard { left: 15px; rotate: -4deg; }
+  .educationCard { right: 15px; rotate: 4deg; }
+  .roleCard span, .educationCard span { font-size: 19px; }
+  .roleCard small, .educationCard small { font-size: 10px; }
+  .identity { left: 21px; bottom: 106px; }
+  .identity h1 { font-size: 81px; }
+  .identity > p { margin: 10px 0 0; font-size: 18px; }
+  .actions { margin: 17px 0 0; gap: 9px; }
+  .actions a { padding: 10px 19px; }
+  .skills { align-items: flex-end; gap: 10px; font-size: 12px; }
+  .skills ul { gap: 7px 16px; max-width: 240px; }
+}
+@media (max-width: 360px) {
+  .roleCard span, .educationCard span { font-size: 17px; }
+  .roleCard small, .educationCard small { font-size: 9px; }
+  .identity h1 { font-size: 72px; }
+}

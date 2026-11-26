@@ -1,15 +1,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Caveat, Instrument_Sans, Instrument_Serif } from 'next/font/google';
+import './reference-home.css';
 import { displayImage } from '@/lib/image-assets';
 import { ProjectShowcase } from '@/components/project-showcase';
 import { ProjectLinks } from '@/components/project-links';
 import { PixelTown } from '@/components/pixel-town';
 import { CareerMap } from '@/components/career-map';
 import { projects } from '@/lib/projects';
-import { profileDescription, siteUrl, technologyGroups } from '@/lib/profile';
+import { languages, profileDescription, siteUrl, technologyGroups } from '@/lib/profile';
 import { CareerExperience } from '@/components/career-experience';
 import { AboutMe } from '@/components/about-me';
 import { Contact, Footer, Header } from '@/components/site';
+import { PortraitCover } from '@/components/portrait-cover';
+import { PhotoViewer } from '@/components/photo-viewer';
+import { personalPhotos, footballPhoto } from '@/lib/about';
+
+const editorialSerif = Instrument_Serif({ weight: '400', subsets: ['latin'], variable: '--editorial-serif', display: 'swap' });
+const editorialSans = Instrument_Sans({ subsets: ['latin'], variable: '--editorial-sans', display: 'swap' });
+const handwritten = Caveat({ weight: '400', subsets: ['latin'], variable: '--handwritten', display: 'swap' });
 
 const featuredProjects = [
   {
@@ -49,16 +58,19 @@ const profileSchema = {
     homeLocation: { '@type': 'City', name: 'Munich, Germany' },
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Jilin University' },
     sameAs: ['https://linkedin.com/in/yidanshao/', 'https://github.com/Logic-syd'],
+    knowsLanguage: languages.map(language => ({ '@type': 'Language', name: language.name, alternateName: language.code })),
     knowsAbout: [...technologyGroups.flatMap(group => group.skills), 'Energy platforms', 'Insurance payments', 'Premium collections', 'Claim payouts', 'Payment reconciliation', 'Education platforms', 'Full-stack development', 'AI applications', 'LLM API integration'],
   },
 };
 
 export default function Home() {
-  return <div id="top" className="pixel-portfolio">
+  return <div id="top" className={`pixel-portfolio reference-home ${editorialSerif.variable} ${editorialSans.variable} ${handwritten.variable}`}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema).replace(/</g, '\\u003c') }} />
     <Header sidebar />
     <main id="main">
-      <PixelTown />
+      <PortraitCover />
+      <div className="shell home-introduction"><p>I have over seven years of frontend experience, including large-scale, high-traffic systems. My personal projects now focus on full-stack development and AI applications.</p><a href="#town">Take a walk through my town</a></div>
+      <section id="town" className="shell town-chapter" aria-labelledby="town-map-title"><div className="section-heading"><h2 id="town-map-title">A town of things I’ve made</h2><p>Choose a building to explore.</p></div><PixelTown townOnly /></section>
       <section id="work" className="shell work-section" aria-labelledby="work-title">
         <div className="section-heading"><div><h2 id="work-title">Selected work</h2></div><div className="work-heading-links"><a href="#project-explorer" className="all-projects-link">All projects <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 9l5 5 5-5" /></svg></a></div></div>
         <ul className="featured-work-list" aria-label="Selected work and personal projects">{featuredProjects.map(project => <li key={project.slug}><Link href={`/projects/${project.slug}`} className="featured-work-link"><div><p className="featured-work-context">{project.context}</p><h3>{project.title}</h3><p className="featured-work-reason">{project.reason}</p></div><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></Link></li>)}</ul>
@@ -81,12 +93,14 @@ export default function Home() {
         <h2 id="skills-title">Skills</h2>
         <div className="skills-overview">{technologyGroups.map(group => <div className="skills-group" key={group.label}><h3>{group.label}</h3><ul>{group.skills.map(skill => <li key={skill}>{skill}</li>)}</ul></div>)}</div>
         <p className="skills-context">Payments experience: <Link href="/projects/ronghe-pay">premium collections, claim payouts and payment reconciliation</Link>.</p>
+        <div id="languages" className="language-profile" aria-labelledby="languages-title"><h3 id="languages-title">Languages</h3><dl>{languages.map(language => <div key={language.code}><dt>{language.name}</dt><dd>{language.level}</dd></div>)}</dl></div>
       </section>
       <AboutMe />
       <section id="career-history" className="shell experience-section professional-work-section" aria-labelledby="career-history-title">
         <div className="section-heading"><div><h2 id="career-history-title">Experience</h2></div></div>
         <CareerExperience />
       </section>
+      <section id="gallery" className="life-gallery" aria-labelledby="gallery-title"><div className="shell"><div className="gallery-heading"><h2 id="gallery-title">A few moments</h2><p>From graduation to everyday life.</p></div><div className="life-gallery-grid">{[...personalPhotos, footballPhoto].map(photo => <PhotoViewer photo={photo} key={photo.src} className="life-gallery-photo" sizes="(max-width: 600px) calc(100vw - 48px), (max-width: 800px) 40vw, 360px" />)}</div></div></section>
       <section id="experience" className="shell experience-section" aria-labelledby="experience-title"><div className="section-heading"><div><h2 id="experience-title">Places</h2></div><p>Shanghai · Hangzhou · Berlin · Munich</p></div><CareerMap /></section>
       <Contact />
     </main>

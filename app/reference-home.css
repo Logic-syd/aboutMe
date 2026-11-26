@@ -1,0 +1,151 @@
+/* Homepage design study based on the owner's reference. Case pages keep their theme. */
+.reference-home {
+  --paper: #f1f3ef;
+  --surface: #fafbf7;
+  --surface-soft: #e5e9e1;
+  --ink: #202d27;
+  --muted: #526158;
+  --primary: #2c593f;
+  --primary-hover: #1e422e;
+  --line: #cdd4cb;
+  --sans: var(--editorial-sans), Arial, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+.reference-home .site-header.craft-header { height: 80px; max-width: none; padding: 12px 3vw; gap: 24px; background: #f1f3eff2; border-bottom: 0; }
+.reference-home .wordmark { font-family: var(--editorial-serif), Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: -.04em; color: var(--primary); }
+.reference-home .craft-header .header-sections { flex: 1; max-width: 900px; margin-left: 0; border: 1px solid var(--line); border-radius: 40px; padding: 4px 6px; background: #f8faf4c9; }
+.reference-home .craft-header .header-sections .nav-sections { width: 100%; justify-content: space-around; gap: 3px; }
+.reference-home .craft-header .header-sections .nav-sections a { padding: 8px 15px; min-height: 44px; border-radius: 30px; font-size: 14px; font-weight: 500; letter-spacing: 0; }
+.reference-home .header-sections a[aria-current='location'] { background: #dbe2d7; box-shadow: 0 3px 9px #1a34231c; }
+.reference-home .header-sections a[aria-current='location']::after { display: none; }
+.reference-home .header-profile-links { gap: 17px; }
+.reference-home .header-profile-links a { font-size: 14px; }
+.reference-home .header-profile-links svg { width: 12px; height: 12px; }
+.reference-home .floating-sections { font-family: var(--sans); }
+.reference-home.pixel-portfolio main > section:not(:first-child) { padding-top: 52px; padding-bottom: 52px; }
+.reference-home.pixel-portfolio .section-heading { align-items: end; margin-bottom: 30px; gap: 24px; }
+.reference-home.pixel-portfolio .section-heading h2,
+.reference-home #skills > h2,
+.reference-home .about-introduction > h2 { font-family: var(--editorial-serif), Georgia, serif; font-weight: 400; font-size: clamp(48px, 5.5vw, 80px); letter-spacing: -.035em; line-height: 1.03; margin: 0; }
+.reference-home .section-heading > p { font-size: 14px; }
+.reference-home .home-introduction { display: flex; justify-content: space-between; align-items: center; gap: 56px; padding-top: 38px; padding-bottom: 38px; }
+.reference-home .home-introduction p { max-width: 790px; font-size: clamp(19px, 1.85vw, 26px); line-height: 1.5; letter-spacing: -.025em; }
+.reference-home .home-introduction > a { max-width: 150px; flex-shrink: 0; font-size: 14px; text-decoration: underline; text-underline-offset: 5px; }
+.reference-home.pixel-portfolio .town-chapter { padding-top: 20px; border-bottom: 1px solid var(--line); }
+.reference-home.pixel-portfolio .town-chapter h2 { font-size: clamp(35px, 3.5vw, 50px); }
+.reference-home [data-town-frame] { box-shadow: none; border-radius: 16px; }
+.reference-home .featured-work-list { display: block; padding: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; }
+.reference-home .featured-work-list li:nth-child(n) { padding: 0; border: 0; border-top: 1px solid var(--line); }
+.reference-home .featured-work-list li:last-child { border-bottom: 1px solid var(--line); }
+.reference-home .featured-work-link { min-height: 140px; padding: 28px 0; gap: 24px; border: 0; }
+.reference-home .featured-work-link:hover { background: transparent; color: var(--primary); }
+.reference-home .featured-work-link > div { display: grid; grid-template-columns: 1fr 1fr; column-gap: 60px; flex: 1; }
+.reference-home .featured-work-context { grid-column: 1; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.reference-home .featured-work-link h3 { grid-column: 1; font-family: var(--editorial-serif), Georgia, serif; font-size: clamp(28px, 2.8vw, 40px); font-weight: 400; line-height: 1.1; }
+.reference-home .featured-work-reason { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 15px; line-height: 1.65; max-width: 460px; }
+.reference-home .all-work-heading { margin-top: 48px; margin-bottom: 22px; }
+.reference-home .all-work-heading h3 { font-family: var(--editorial-serif), Georgia, serif; font-weight: 400; font-size: 40px; }
+.reference-home .graph-project-navigation { --catalog-glass: #fafbf7; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: none; backdrop-filter: none; }
+.reference-home .graph-project-navigation::before, .reference-home .graph-project-navigation::after { display: none; }
+.reference-home .graph-project-entry { background: transparent; border-color: var(--line); }
+.reference-home .graph-project-entry[data-selected='true'] { background: #e2e9de; }
+.reference-home .project-category-tabs { background: #e9ede5; }
+.reference-home .project-category-tabs button[aria-selected='true'] { background: #d2decd; box-shadow: none; }
+.reference-home .skills-section { border-block: 1px solid var(--line); }
+.reference-home .skills-overview { margin-top: 28px; gap: 28px; }
+.reference-home .skills-group { background: transparent; border: 0; box-shadow: none; padding: 0; }
+.reference-home .skills-group h3 { font-family: var(--editorial-serif), Georgia, serif; font-size: 26px; font-weight: 400; margin-bottom: 15px; }
+.reference-home .skills-group ul { gap: 8px 16px; }
+.reference-home .skills-group li { background: transparent; border: 0; padding: 0; font-size: 14px; }
+.reference-home .skills-context { margin-top: 26px; }
+.reference-home .language-profile { margin-top: 34px; scroll-margin-top: 100px; }
+.reference-home .language-profile h3 { font-family: var(--editorial-serif), Georgia, serif; font-size: 29px; font-weight: 400; margin-bottom: 17px; }
+.reference-home .language-profile dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 0; border: 1px solid var(--line); background: var(--line); }
+.reference-home .language-profile dl > div { padding: 19px 22px; background: var(--paper); }
+.reference-home .language-profile dt { font-family: var(--editorial-serif), Georgia, serif; font-size: 25px; line-height: 1.2; }
+.reference-home .language-profile dd { margin: 7px 0 0; font-size: 14px; color: var(--primary); }
+.reference-home .about-section { background: transparent; border: 0; }
+.reference-home .about-grid { column-gap: 70px; row-gap: 52px; }
+.reference-home .about-motivation { margin-top: 22px; max-width: 420px; font-size: 21px; line-height: 1.5; }
+.reference-home .about-current-project { margin-top: 34px; max-width: 440px; }
+.reference-home .about-current-project h3 { font-family: var(--editorial-serif), Georgia, serif; font-size: 32px; font-weight: 400; }
+.reference-home .about-current-project p { font-size: 15px; line-height: 1.8; margin-top: 14px; color: var(--muted); }
+.reference-home .about-current-project a { margin-top: 17px; }
+.reference-home .about-story-list > li { border: 0; padding: 0 0 22px; }
+.reference-home .about-story-list h3 { font-family: var(--editorial-serif), Georgia, serif; font-size: 29px; font-weight: 400; }
+.reference-home .about-outside-work { padding-top: 36px; padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+.reference-home .outside-work-story { border-left: 0; padding-left: 0; }
+.reference-home .outside-work-story h3 { font-family: var(--editorial-serif), Georgia, serif; font-size: clamp(35px, 4vw, 54px); font-weight: 400; }
+.reference-home .outside-work-photo .personal-photo-trigger { border-radius: 3px; box-shadow: none; border: 0; }
+.reference-home .career-history-browser { background: transparent; border: 0; border-radius: 0; box-shadow: none; backdrop-filter: none; }
+.reference-home .career-history-picker { border-bottom: 1px solid var(--line); }
+.reference-home .career-history-picker button { border: 1px solid var(--line); background: transparent; border-radius: 4px; }
+.reference-home .career-history-picker button[aria-pressed='true'] { background: #dce5d6; box-shadow: none; }
+.reference-home .career-history-detail { padding-inline: 0; }
+.reference-home .career-history-detail h3 { font-family: var(--editorial-serif), Georgia, serif; font-weight: 400; font-size: 38px; }
+.reference-home.pixel-portfolio .life-gallery { display: block; background: #182d25; color: #f2f4ed; padding-block: 60px; }
+.reference-home .gallery-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 38px; }
+.reference-home .gallery-heading h2 { font-family: var(--editorial-serif), Georgia, serif; font-size: clamp(54px, 7vw, 100px); font-weight: 400; }
+.reference-home .gallery-heading > p { color: #d0dacf; font-size: 14px; }
+.reference-home .life-gallery-grid { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; align-items: start; gap: 48px 8%; max-width: 980px; margin-inline: auto; }
+.reference-home .life-gallery-photo:nth-child(2) { margin-top: 100px; }
+.reference-home .life-gallery-photo:nth-child(3) { width: 72%; margin-top: -70px; margin-left: 12%; }
+.reference-home .life-gallery-photo:nth-child(4) { width: 88%; margin-top: 20px; }
+.reference-home .life-gallery-photo .personal-photo-trigger { aspect-ratio: 4 / 3; height: auto; border: 0; border-radius: 3px; box-shadow: none; }
+.reference-home .life-gallery-photo:nth-child(n+3) .personal-photo-trigger { aspect-ratio: 3 / 4; }
+.reference-home .life-gallery-photo figcaption { font-size: 13px; color: #e2e9df; margin-top: 12px; }
+.reference-home .life-gallery-photo .personal-photo-open { background: #f2f4ede8; color: #203c2c; }
+.reference-home .place-picker button, .reference-home .career-map-frame { background: #e5eae0; border: 1px solid var(--line); box-shadow: none; backdrop-filter: none; }
+.reference-home .contact-section { background: transparent; border-top: 1px solid var(--line); }
+.reference-home .contact-inner h2 { font-family: var(--editorial-serif), Georgia, serif; font-weight: 400; font-size: 58px; }
+@media (min-width: 801px) and (max-height: 760px) {
+  .reference-home.pixel-portfolio main > section:not(:first-child) { padding-block: 32px; }
+  .reference-home.pixel-portfolio .section-heading { margin-bottom: 23px; }
+  .reference-home.pixel-portfolio .section-heading h2, .reference-home #skills > h2 { font-size: 58px; }
+}
+@media (max-width: 1100px) and (min-width: 801px) {
+  .reference-home .site-header.craft-header { gap: 12px; padding-inline: 24px; }
+  .reference-home .craft-header .header-sections .nav-sections a { font-size: 13px; padding-inline: 9px; }
+  .reference-home .header-profile-links { gap: 12px; }
+  .reference-home .featured-work-link > div { column-gap: 30px; }
+}
+@media (max-width: 800px) {
+  .reference-home .site-header.craft-header { display: grid; grid-template-columns: auto 1fr; grid-template-rows: 36px 88px; height: 148px; padding: 8px 24px 12px; gap: 4px 0; }
+  .reference-home .craft-header .wordmark { height: auto; font-size: 29px; }
+  .reference-home .header-connect { grid-column: 2; grid-row: 1; justify-self: end; }
+  .reference-home .craft-header .header-sections { grid-column: 1 / -1; grid-row: 2; width: 100%; margin: 0; padding: 0; border-radius: 15px; }
+  .reference-home .craft-header .header-sections .nav-sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .reference-home .craft-header .header-sections .nav-sections a { justify-content: center; min-height: 44px; padding: 3px 7px; font-size: 12px; }
+  .reference-home .header-profile-links a { font-size: 12px; }
+  .reference-home.pixel-portfolio main > section:not(:first-child) { padding-block: 34px; }
+  .reference-home .home-introduction { flex-direction: column; align-items: start; gap: 16px; padding-block: 28px; }
+  .reference-home .home-introduction p { font-size: 20px; }
+  .reference-home .home-introduction > a { max-width: none; }
+  .reference-home.pixel-portfolio .section-heading { gap: 12px; margin-bottom: 23px; }
+  .reference-home.pixel-portfolio .section-heading h2, .reference-home #skills > h2, .reference-home .about-introduction > h2 { font-size: 52px; }
+  .reference-home .town-chapter .section-heading { align-items: start; flex-direction: column; }
+  .reference-home .featured-work-link { padding-block: 23px; min-height: 0; }
+  .reference-home .featured-work-link > div { display: block; }
+  .reference-home .featured-work-link h3 { font-size: 33px; }
+  .reference-home .featured-work-reason { margin-top: 12px; font-size: 14px; }
+  .reference-home .about-grid { gap: 35px; }
+  .reference-home .about-current-project { margin-top: 26px; }
+  .reference-home .language-profile dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reference-home .language-profile dl > div { padding: 17px; }
+  .reference-home .language-profile dt { font-size: 23px; }
+  .reference-home .gallery-heading { align-items: start; flex-direction: column; gap: 8px; }
+  .reference-home .gallery-heading h2 { font-size: 60px; }
+  .reference-home .life-gallery-grid { gap: 24px; }
+  .reference-home .life-gallery-photo:nth-child(2) { margin-top: 55px; }
+  .reference-home .life-gallery-photo:nth-child(3) { margin-top: -25px; width: 90%; margin-left: 0; }
+  .reference-home .life-gallery-photo:nth-child(4) { width: 100%; margin-top: 8px; }
+  .reference-home .contact-inner h2 { font-size: 47px; }
+}
+@media (max-width: 600px) {
+  .reference-home .life-gallery-grid { grid-template-columns: 1fr; gap: 32px; }
+  .reference-home .life-gallery-photo:nth-child(n) { width: 100%; margin: 0; }
+  .reference-home .life-gallery-photo:nth-child(2) { width: 88%; justify-self: end; }
+  .reference-home .life-gallery-photo:nth-child(3) { width: 86%; }
+}
